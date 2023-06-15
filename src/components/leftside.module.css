@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.left {
+  /* background-color: rgb(212, 16, 16); */
+  width: 15%;
+  height: 100vh;
+  float: left;
+
+}
+
+/* .left_side {} */
+
+.left_top {
+  height: 10vh;
+}
+
+.left_bottom {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.left_bottom img {
+  height: 200px;
+  width: 200px;
+}
+
+.arko_logo {
+  height: 100px;
+  width: 100px;
+}
+
+
+/* Media Queries */
+
+@media only screen and (min-width: 768px) {
+  .left {
+    width: 15%;
+    float: left;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .left_bottom img {
+    max-height: 150px;
+    max-width: 150px;
+  }
+
+  .arko_logo {
+    max-height: 75px;
+    max-width: 75px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .left_top {
+    height: 20vh;
+  }
+
+  .left_bottom {
+    height: 80vh;
+  }
+
+  .left_bottom img {
+    max-height: 100px;
+    max-width: 100px;
+  }
+
+  .arko_logo {
+    max-height: 50px;
+    max-width: 50px;
+  }
+}
