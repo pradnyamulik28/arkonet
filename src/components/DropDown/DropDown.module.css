@@ -1,0 +1,39 @@
+.selecttag select {
+  margin: 5px;
+  border-radius: 20px;
+  height: 2rem;
+  width: 100%;
+  padding: 0 10px 0 10px;
+  border: none;
+  box-shadow: 0 1px 2px black;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.selecttag::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  top: 45%;
+  margin-top: -5px;
+  border-top: 12px solid black;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  pointer-events: none;
+
+}
+
+
+label {
+  width: 15rem;
+  color: black;
+  font-weight: bold;
+}
+
+
+.selecttag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}

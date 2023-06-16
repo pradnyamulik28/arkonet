@@ -1,0 +1,31 @@
+ [
+  {
+    "val": "null",
+    "option_name": "----Select---"
+  },
+  {
+    "val": "CA",
+    "option_name": "CA"
+  },
+  {
+    "val": "Tax",
+    "option_name": "Tax"
+  },
+  {
+    "val": "Trp",
+    "option_name": "Trp"
+  },
+  {
+    "val": "Accountant",
+    "option_name": "Accountant"
+  },
+  {
+    "val": "Certified Consultant",
+    "option_name": "Certified Consultant"
+  },
+  {
+    "val": "Advocate",
+    "option_name": "Advocate"
+  }
+
+]
