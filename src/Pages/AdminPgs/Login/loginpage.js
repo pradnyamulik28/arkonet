@@ -7,7 +7,6 @@ const Loginpage = () => {
 
   const [pan, setPan] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
 
   const handlePanChange = (e) => {
     setPan(e.target.value);
@@ -36,14 +35,11 @@ const Loginpage = () => {
         setPan('');
         setPassword('');
       } else {
-
-        const errorData = await response.json();
-        setError(errorData.message);
+        console.error("Error during login.!!!")
       }
     } catch (error) {
 
-      console.error('Error during login:', error);
-      setError('An error occurred during login.');
+      console.error('Error while calling function.!!!');
     }
   };
 

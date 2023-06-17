@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './DropDown.module.css'
 
 
 const DropDown = (props) => {
-  const [selectedOption, setSelectedOption] = useState('');
+  // const [selectedOption, setSelectedOption] = useState('');
 
-  const handleSelectChange = (event) => {
-    event.preventDefault();
-    setSelectedOption(event.target.value);
-  };
+  // const handleSelectChange = (event) => {
+  //   event.preventDefault();
+  //   setSelectedOption(event.target.value);
+  // };
 
   // console.log(JSON.stringify(selectedOption));
   // console.log(props.value_array)
@@ -16,7 +16,7 @@ const DropDown = (props) => {
     <>
       <div className={styles.selecttag}>
         <label htmlFor={props.id}>{props.lblname}</label>
-        <select id={props.id} value={selectedOption} onChange={handleSelectChange}>
+        <select id={props.id} value={props.value} onChange={props.onChange} >
           {
             props.value_array.map((data) => {
               return (
