@@ -1,14 +1,12 @@
 import './App.css';
-import Registration from './Pages/AdminPgs/Registration/Registration';
-// import Loginpage from './Pages/AdminPgs/Login/loginpage';
+import AdminHome from './Pages/AdminPgs/admin_home';
 
 
 function App() {
   return (
     <div >
       <div >
-        {/* <Loginpage /> */}
-        <Registration />
+        <AdminHome />
       </div>
     </div>
   );

@@ -13,11 +13,20 @@
 }
 
 .regtitle {
-  margin-top: 20px;
+  margin: 30px 0 10px 0;
   text-align: center;
   text-shadow: 1px 1px 2px gray;
   font-weight: 400;
   font-size: larger;
+}
+
+.radio {
+  display: flex;
+  /* justify-content: space-evenly; */
+}
+
+.radiofield {
+  border: none;
 }
 
 .btn_submit {

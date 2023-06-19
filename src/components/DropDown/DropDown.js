@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './DropDown.module.css'
 
 
@@ -10,17 +10,17 @@ const DropDown = (props) => {
   //   setSelectedOption(event.target.value);
   // };
 
-  // console.log(JSON.stringify(selectedOption));
-  // console.log(props.value_array)
+
   return (
     <>
-      <div className={styles.selecttag}>
+      <div className={` form-group ${styles.selecttag}`}>
         <label htmlFor={props.id}>{props.lblname}</label>
-        <select id={props.id} value={props.value} onChange={props.onChange} >
+        <select id={props.id} value={props.value} onChange={props.onChange} name={props.name}>
+          <option value="">-- Select --</option>
           {
             props.value_array.map((data) => {
               return (
-                <option value={data?.val}>{data?.option_name}</option>
+                <option value={data.val}>{data.option_name}</option>
               )
             })
           }
