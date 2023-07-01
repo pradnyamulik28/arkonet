@@ -101,7 +101,7 @@ const Registration = () => {
                 <DropDown value_array={profesion_obj} lblname='Profession' name='profession' onChange={handleChange} value={formdata.profession} />
               </div>
               <div className={styles.userpan}>
-                <InputField placeholder='Enter your Pan' onChange={handleChange} lblname='Pan' name='pan' value={formdata.pan} />
+                <InputField placeholder='Enter your PAN' onChange={handleChange} lblname='PAN' name='pan' value={formdata.pan} />
               </div>
             </div>
             <div className={styles.second}>

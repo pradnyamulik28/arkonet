@@ -8,20 +8,20 @@ import RadioInput from '../../../components/RadioField/RadioInput';
 
 
 const URegistration = () => {
-  const residential_status = [
+  const residentialStatus = [
     {
-      val: " Business",
+      val: " Resident Indian",
       option_name: "Business"
     },
     {
-      val: "Servic",
+      val: "Non-Resident Indian",
       option_name: "Servic"
     }
   ];
 
   const [formdata, setFormdata] = useState({
     name: "",
-    datebirth: "",
+    dob: "",
     profession: "",
     pan: "",
     telephone: "",
@@ -31,7 +31,9 @@ const URegistration = () => {
     pin_Code: "",
     state: "",
     residential_status: "",
-    category: ""
+    category: "",
+    regId: ""
+
   });
   const handleChange = (e) => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
@@ -39,6 +41,10 @@ const URegistration = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+
+    var token = window.localStorage.getItem('token');
+    var regId = window.localStorage.getItem('regId');
     try {
 
 
@@ -46,16 +52,17 @@ const URegistration = () => {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+
         },
         body: JSON.stringify(formdata)
       }).then((result) => {
         console.log("result", result)
         if (result.status === 200) {
-          console.log("Data inserted successfully...")
           setFormdata({
             name: "",
-            datebirth: "",
+            dob: "",
             profession: "",
             pan: "",
             telephone: "",
@@ -65,9 +72,11 @@ const URegistration = () => {
             pin_Code: "",
             state: "",
             residential_status: "",
-            category: ""
+            category: "",
+            regId: `${regId}`
           });
           console.log(formdata.state)
+          console.log("Data inserted successfully...")
         } else {
           console.log("Data not inserted.!!")
 
@@ -78,20 +87,6 @@ const URegistration = () => {
       console.warn("Error on function calling...")
     }
 
-    // setFormdata({
-    //   name: "",
-    //   datebirth: "",
-    //   profession: "",
-    //   pan: "",
-    //   telephone: "",
-    //   mobile: "",
-    //   email: "",
-    //   address: "",
-    //   pin_Code: "",
-    //   state: "",
-    //   residential_status: "",
-    //   category: ""
-    // })
     console.log(JSON.stringify(formdata));
   };
 
@@ -114,14 +109,14 @@ const URegistration = () => {
                 <InputField placeholder='Enter your Name' onChange={handleChange} lblname='Name' name='name' value={formdata.name} />
               </div>
               <div className={styles.userdob}>
-                <InputField placeholder='Enter your DOB in YYYY-MM-DD' onChange={handleChange} lblname='DOB/DOI' name='datebirth' value={formdata.datebirth} />
+                <InputField placeholder='Enter your DOB in DD/MM/YYYY' onChange={handleChange} lblname='DOB/DOI' name='dob' value={formdata.dob} />
               </div>
 
               <div className={styles.userprofession}>
                 <DropDown value_array={profesion_obj} lblname='Profession' name='profession' onChange={handleChange} value={formdata.profession} />
               </div>
               <div className={styles.userpan}>
-                <InputField placeholder='Enter your Pan' onChange={handleChange} lblname='Pan' name='pan' value={formdata.pan} />
+                <InputField placeholder='Enter your PAN' onChange={handleChange} lblname='PAN' name='pan' value={formdata.pan} />
               </div>
             </div>
             <div className={styles.second}>
@@ -146,7 +141,7 @@ const URegistration = () => {
                 <DropDown value_array={States_obj} lblname='State' name='state' value={formdata.state} onChange={handleChange} />
               </div>
               <div className={styles.state}>
-                <DropDown value_array={residential_status} lblname='Residential Status' name='residential_status' value={formdata.residential_status} onChange={handleChange} />
+                <DropDown value_array={residentialStatus} lblname='Residential Status' name='residential_status' value={formdata.residential_status} onChange={handleChange} />
               </div>
 
               <div className={styles.btn_submit}>

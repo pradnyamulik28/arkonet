@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LeftSide from '../AdminPgs/SideBar/LeftSide';
-// import Registration from '../../AdminPgs/Registration/Registration';
-import styles from './admin_home.module.css';
+// import Registration from '../AdminPgs/Registration/Registration';
+import styles from '../AdminPgs/admin_home.module.css';
 import taxko from '../../Images/taxko_logo.png'
 import URegistration from '../UserPgs/URegistration/URegistration';
+// import Login from '../AdminPgs/Login/loginpage'
 const Admin_home_page = () => {
     return (
         <>
@@ -20,6 +21,7 @@ const Admin_home_page = () => {
                             </nav>
                             {/* <Registration /> */}
                             <URegistration />
+                            {/* <Login /> */}
                         </>
                     </div>
                 </div>

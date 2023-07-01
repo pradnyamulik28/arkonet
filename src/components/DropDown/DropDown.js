@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './DropDown.module.css'
 
 
 const DropDown = (props) => {
-  // const [selectedOption, setSelectedOption] = useState('');
 
-  // const handleSelectChange = (event) => {
-  //   event.preventDefault();
-  //   setSelectedOption(event.target.value);
-  // };
 
 
   return (

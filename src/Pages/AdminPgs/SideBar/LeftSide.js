@@ -15,6 +15,7 @@ const LeftSide = () => {
           <a href="/" className={styles.help_text}><h6>Help</h6></a>
         </div>
         <img className={`mx-3 ${styles.arko_logo}`} alt='logo' src={Cmpylogo} />
+        <h6 className={styles.poweredby}>POWERED BY</h6>
       </div>
     </div>
   );

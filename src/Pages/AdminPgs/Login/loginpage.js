@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import LeftSide from '../../../components/LeftSide/LeftSide';
+// import LeftSide from '../../../components/LeftSide/LeftSide';
 import styles from './loginpage.module.css';
+import axios from "axios";
+import { url_ } from '../../../Config';
 
 
 const Loginpage = () => {
 
-  const [pan, setPan] = useState('');
+  // const [formdata, setFormdata] = useState({
+  //   username: "",
+  //   password: ""
+  // });
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handlePanChange = (e) => {
-    setPan(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -18,25 +24,39 @@ const Loginpage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    // console.log(JSON.stringify({ username, password }));
+    const url = `${url_}/authenticate`;
+
+
 
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
+
+      axios({
+
+        url: url,
+
+        method: "POST",
+
         headers: {
-          'Content-Type': 'application/json',
+
+          'Content-Type': 'application/json'
+
         },
-        body: JSON.stringify({ pan, password }),
-      });
 
-      if (response.status === 200) {
+        data: JSON.stringify({ username, password }),
 
-        console.log('Login successful!');
+      })
 
-        setPan('');
-        setPassword('');
-      } else {
-        console.error("Error during login.!!!")
-      }
+        .then((res) => {
+          console.log(res)
+          localStorage.setItem('token', JSON.stringify(res.data));
+          // localStorage.setItem('user_id', JSON.stringify(res.data));
+          // localStorage.setItem('user_name', JSON.stringify(res.data));
+        })
+
+        .catch((err) => { console.log(err) });
+
+
     } catch (error) {
 
       console.error('Error while calling function.!!!');
@@ -57,15 +77,15 @@ const Loginpage = () => {
             </div>
           </div>
           <div className={styles.main}>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} autoComplete=''>
               <div className={styles.form}>
                 <div className={styles.user_id}>
                   <label htmlFor={styles.user_id}>User ID</label>
-                  <input type="text" placeholder="Enter your PAN" id="userid" value={pan} onChange={handlePanChange} />
+                  <input type="text" placeholder="Enter your PAN" id="userid" value={username} onChange={handleUsernameChange} name='username' />
                 </div>
                 <div className={styles.user_pass}>
                   <label htmlFor={styles.user_pass}>Pasword</label>
-                  <input type="text" placeholder="Enter your password" id="userpassword" value={password} onChange={handlePasswordChange} />
+                  <input type="text" placeholder="Enter your password" id="userpassword" value={password} onChange={handlePasswordChange} name='password' />
                 </div>
                 <div className={styles.btn_login}>
                   <button type="submit">LOGIN</button>
@@ -101,8 +121,8 @@ const Loginpage = () => {
           </div>
         </div>
       </div>
-      <LeftSide />
-    </div>
+      {/* <LeftSide /> */}
+    </div >
   );
 }
 
