@@ -1,30 +1,31 @@
 import React, { useState } from 'react';
-// import LeftSide from '../../../components/LeftSide/LeftSide';
 import styles from './loginpage.module.css';
 import axios from "axios";
 import { url_ } from '../../../Config';
+// import { useNavigate } from 'react-router-dom';
+import InputField from '../../../components/InputField/InputField';
+
+
 
 
 const Loginpage = () => {
 
-  // const [formdata, setFormdata] = useState({
-  //   username: "",
-  //   password: ""
-  // });
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const [formdata, setFormdata] = useState({
+    username: "",
+    password: ""
+
+
+  });
+  const handleChange = (e) => {
+    setFormdata({ ...formdata, [e.target.name]: e.target.value });
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // console.log(JSON.stringify({ username, password }));
+
+
     const url = `${url_}/authenticate`;
 
 
@@ -43,15 +44,17 @@ const Loginpage = () => {
 
         },
 
-        data: JSON.stringify({ username, password }),
+        data: JSON.stringify(formdata),
 
       })
 
         .then((res) => {
           console.log(res)
-          localStorage.setItem('token', JSON.stringify(res.data));
-          // localStorage.setItem('user_id', JSON.stringify(res.data));
-          // localStorage.setItem('user_name', JSON.stringify(res.data));
+          localStorage.setItem('token', JSON.stringify(res.data.token));
+          localStorage.setItem('user_name', JSON.stringify(res.data.user.name));
+          localStorage.setItem('user_id', JSON.stringify(res.data.user.regId));
+
+
         })
 
         .catch((err) => { console.log(err) });
@@ -80,16 +83,21 @@ const Loginpage = () => {
             <form onSubmit={handleLogin} autoComplete=''>
               <div className={styles.form}>
                 <div className={styles.user_id}>
-                  <label htmlFor={styles.user_id}>User ID</label>
-                  <input type="text" placeholder="Enter your PAN" id="userid" value={username} onChange={handleUsernameChange} name='username' />
+                  {/* <label htmlFor={styles.user_id}>User ID</label> */}
+                  <InputField placeholder='Enter your PAN' onChange={handleChange} name='username' value={formdata.username} lblname='PAN' />
+
+                  {/* <input type="text" placeholder="Enter your PAN" id="userid" value={username} onChange={handleUsernameChange} name='username' /> */}
                 </div>
                 <div className={styles.user_pass}>
-                  <label htmlFor={styles.user_pass}>Pasword</label>
-                  <input type="text" placeholder="Enter your password" id="userpassword" value={password} onChange={handlePasswordChange} name='password' />
+                  {/* <label htmlFor={styles.user_pass}>Pasword</label> */}
+                  <InputField placeholder='Enter your Password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
+                  {/* <input type="text" placeholder="Enter your password" id="userpassword" value={password} onChange={handlePasswordChange} name='password' /> */}
                 </div>
+
                 <div className={styles.btn_login}>
                   <button type="submit">LOGIN</button>
                 </div>
+
               </div>
             </form>
             <div className={styles.link}>

@@ -1,23 +1,32 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import InputField from '../../../components/InputField/InputField';
 import styles from './URegistration.module.css';
 import DropDown from '../../../components/DropDown/DropDown';
 import profesion_obj from './Prof.json';
 import States_obj from './States.json';
 import RadioInput from '../../../components/RadioField/RadioInput';
+import { url_ } from '../../../Config';
 
 
 const URegistration = () => {
   const residentialStatus = [
     {
       val: " Resident Indian",
-      option_name: "Business"
+      option_name: "Resident Indian"
     },
     {
       val: "Non-Resident Indian",
-      option_name: "Servic"
+      option_name: "Non-Resident Indian"
     }
   ];
+
+
+
+
+  var token = window.localStorage.getItem('token');
+  var userid = window.localStorage.getItem('user_id');
+
 
   const [formdata, setFormdata] = useState({
     name: "",
@@ -32,7 +41,8 @@ const URegistration = () => {
     state: "",
     residential_status: "",
     category: "",
-    regId: ""
+    userid: `${userid}`,
+
 
   });
   const handleChange = (e) => {
@@ -43,52 +53,98 @@ const URegistration = () => {
     event.preventDefault();
 
 
-    var token = window.localStorage.getItem('token');
-    var regId = window.localStorage.getItem('regId');
+    console.log(formdata)
+
+
+
+
+
+
+
+    const url = `${url_}/createclient`;
+
+
+    console.log(url)
     try {
 
+      // axios({
 
-      fetch("http://localhost:8081/client", {
+      //   url: url,
+
+      //   method: "POST",
+
+      //   headers: {
+
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer ${token}`,
+      //     'Access-Control-Allow-Origin': 'http://localhost:3000',
+      //     'Accept': 'application/json'
+      //   },
+
+      //   data: JSON.stringify(formdata),
+
+      // })
+
+
+
+
+
+      fetch(url, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-
+          'Authorization': `Token ${token}`,
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(formdata)
-      }).then((result) => {
-        console.log("result", result)
-        if (result.status === 200) {
-          setFormdata({
-            name: "",
-            dob: "",
-            profession: "",
-            pan: "",
-            telephone: "",
-            mobile: "",
-            email: "",
-            address: "",
-            pin_Code: "",
-            state: "",
-            residential_status: "",
-            category: "",
-            regId: `${regId}`
-          });
-          console.log(formdata.state)
-          console.log("Data inserted successfully...")
-        } else {
-          console.log("Data not inserted.!!")
-
-        }
       })
 
-    } catch (error) {
-      console.warn("Error on function calling...")
-    }
+        .then((res) => {
+          console.log(res)
+          if (res.status === 200) {
+            setFormdata({
+              name: "",
+              dob: "",
+              profession: "",
+              pan: "",
+              telephone: "",
+              mobile: "",
+              email: "",
+              address: "",
+              pin_Code: "",
+              state: "",
+              residential_status: "",
+              category: "",
+              userid: ""
 
-    console.log(JSON.stringify(formdata));
+            });
+            console.log(formdata.state)
+            console.log("Data inserted successfully...")
+          }
+
+        })
+
+        .catch((err) => { console.log(err) });
+
+
+    } catch (error) {
+
+      console.error('Error while calling function.!!!');
+    }
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -109,7 +165,7 @@ const URegistration = () => {
                 <InputField placeholder='Enter your Name' onChange={handleChange} lblname='Name' name='name' value={formdata.name} />
               </div>
               <div className={styles.userdob}>
-                <InputField placeholder='Enter your DOB in DD/MM/YYYY' onChange={handleChange} lblname='DOB/DOI' name='dob' value={formdata.dob} />
+                <InputField placeholder='Enter your DOB in YYYYY-MM-DD' onChange={handleChange} lblname='DOB/DOI' name='dob' value={formdata.dob} />
               </div>
 
               <div className={styles.userprofession}>

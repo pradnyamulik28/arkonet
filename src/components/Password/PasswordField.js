@@ -3,7 +3,7 @@ import styles from './PasswordField.module.css'
 
 const PasswordField = (props) => {
   return (
-    <>
+    <div>
       <div className={styles.dpass}>
         <label htmlFor={props.id}>{props.lblname}</label>
         <input
@@ -21,7 +21,7 @@ const PasswordField = (props) => {
         <span className={styles.medium2}></span>
         <span className={styles.strong}></span>
       </div>
-    </>
+    </div>
 
   );
 }

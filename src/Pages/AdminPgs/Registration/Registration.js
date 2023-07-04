@@ -5,6 +5,7 @@ import styles from './Registration.module.css';
 import DropDown from '../../../components/DropDown/DropDown';
 import profesion_obj from './Prof.json';
 import States_obj from './States.json';
+// import { Redirect } from 'react-router-dom';
 
 
 const Registration = () => {
@@ -62,6 +63,7 @@ const Registration = () => {
             password: "",
           });
           console.log(formdata.state)
+
         } else {
           console.log("Data not inserted.!!")
 

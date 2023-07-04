@@ -1,0 +1,48 @@
+ // const url = `${url_}/createclient`;
+    // console.log(url);
+    //   try {
+
+
+    //     fetch("http://localhost:8085/createclient", {
+    //       method: 'POST',
+    //       headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${token}`,
+    //         "Access-Control-Allow-Origin": "*"
+
+    //       },
+    //       body: JSON.stringify(formdata)
+    //     }).then((result) => {
+    //       console.log("result", result)
+    //       if (result.status === 200) {
+    //         setFormdata({
+    //           name: "",
+    //           dob: "",
+    //           profession: "",
+    //           pan: "",
+    //           telephone: "",
+    //           mobile: "",
+    //           email: "",
+    //           address: "",
+    //           pin_Code: "",
+    //           state: "",
+    //           residential_status: "",
+    //           category: "",
+    //           userid: ""
+
+    //         });
+    //         console.log(formdata.state)
+    //         console.log("Data inserted successfully...")
+    //       } else {
+    //         console.log("Data not inserted.!!")
+
+    //       }
+    //     })
+
+    //   } catch (error) {
+    //     console.warn("Error on function calling...")
+    //   }
+
+    //   console.log(JSON.stringify(formdata));
+    // };
