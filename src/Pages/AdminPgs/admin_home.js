@@ -10,8 +10,8 @@ import styles from '../AdminPgs/admin_home.module.css';
 import taxko from '../../Images/taxko_logo.png'
 import URegistration from '../UserPgs/URegistration/URegistration';
 import Login from '../AdminPgs/Login/loginpage'
-// import UDashboard from '../UserPgs/UDashboard/UDashboard';
-import Cards from "../../components/Cards/Cards";
+// import Cards from "../../components/Cards/Cards";
+import UDashboard from "../UserPgs/UDashboard/UDashboard";
 const Admin_home_page = () => {
     return (
 
@@ -31,12 +31,11 @@ const Admin_home_page = () => {
 
                         <Routes>
                             <Route path="/" element={<Login />} />
-                            <Route path="/register" element={<Registration />} />
-                            <Route exact path="/dashboard" element={<Cards />} />
-                            <Route exact path="/creatclient" element={<URegistration />} />
-
-                            {/* Route path="/" element={<Layout />}> */}
+                            <Route path="/reg" element={<Registration />} />
+                            <Route exact path="/dashboard" element={<UDashboard />} />
+                            <Route exact path="/clientreg" element={<URegistration />} />
                         </Routes>
+
 
 
                     </div>

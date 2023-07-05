@@ -57,48 +57,29 @@ const URegistration = () => {
 
 
 
-
-
-
-
     const url = `${url_}/createclient`;
 
 
     console.log(url)
     try {
 
-      // axios({
+      axios({
 
-      //   url: url,
+        url: url,
 
-      //   method: "POST",
+        method: "POST",
 
-      //   headers: {
-
-      //     'Content-Type': 'application/json',
-      //     'Authorization': `Bearer ${token}`,
-      //     'Access-Control-Allow-Origin': 'http://localhost:3000',
-      //     'Accept': 'application/json'
-      //   },
-
-      //   data: JSON.stringify(formdata),
-
-      // })
-
-
-
-
-
-      fetch(url, {
-        method: 'POST',
         headers: {
-          'Accept': 'application/json',
-          'Authorization': `Token ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formdata)
-      })
 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'Access-Control-Allow-Origin': '*',
+          'Accept': 'application/json'
+        },
+
+        data: JSON.stringify(formdata),
+
+      })
         .then((res) => {
           console.log(res)
           if (res.status === 200) {

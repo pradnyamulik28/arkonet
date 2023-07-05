@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import InputField from '../../../components/InputField/InputField';
 import PasswordField from '../../../components/Password/PasswordField';
 import styles from './Registration.module.css';
 import DropDown from '../../../components/DropDown/DropDown';
 import profesion_obj from './Prof.json';
 import States_obj from './States.json';
-// import { Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { url_ } from '../../../Config';
 
 
 const Registration = () => {
-
+  const Navigate = useNavigate();
   const [formdata, setFormdata] = useState({
     name: "",
     datebirth: "",
@@ -32,50 +34,68 @@ const Registration = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+
+    console.log(formdata)
+
+
+
+    const url = `${url_}/createuser`;
+
+
+    console.log(url)
+
     try {
 
+      axios({
 
-      fetch("http://localhost:8081/user", {
-        method: 'POST',
+        url: url,
+
+        method: "POST",
+
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formdata)
-      }).then((result) => {
-        console.log("result", result)
-        if (result.status === 200) {
-          console.log("Data inserted successfully...")
-          setFormdata({
-            name: "",
-            datebirth: "",
-            membership_No: "",
-            profession: "",
-            pan: "",
-            telephone: "",
-            mobile: "",
-            email: "",
-            office_Address: "",
-            pin_Code: "",
-            state: "",
-            whatsApp_Link: "",
-            investNow_Email: "",
-            password: "",
-          });
-          console.log(formdata.state)
 
-        } else {
-          console.log("Data not inserted.!!")
+        data: JSON.stringify(formdata),
 
-        }
       })
+        .then((result) => {
+          console.log("result", result)
+          if (result.status === 200) {
 
+            setFormdata({
+              name: "",
+              datebirth: "",
+              membership_No: "",
+              profession: "",
+              pan: "",
+              telephone: "",
+              mobile: "",
+              email: "",
+              office_Address: "",
+              pin_Code: "",
+              state: "",
+              whatsApp_Link: "",
+              investNow_Email: "",
+              password: "",
+            });
+            Navigate('/')
+            console.log(formdata.state)
+            console.log("Data inserted successfully...")
+
+          } else {
+            console.log("Data not inserted.!!")
+
+          }
+        })
+        .catch((err) => { console.log(err) });
     } catch (error) {
       console.warn("Error on function calling...")
     }
 
 
-    console.log(JSON.stringify(formdata));
   };
 
 

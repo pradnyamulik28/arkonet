@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import styles from './loginpage.module.css';
 import axios from "axios";
 import { url_ } from '../../../Config';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import InputField from '../../../components/InputField/InputField';
 
 
 
 
 const Loginpage = () => {
-
+  const Navigate = useNavigate();
 
   const [formdata, setFormdata] = useState({
     username: "",
@@ -53,7 +53,7 @@ const Loginpage = () => {
           localStorage.setItem('token', JSON.stringify(res.data.token));
           localStorage.setItem('user_name', JSON.stringify(res.data.user.name));
           localStorage.setItem('user_id', JSON.stringify(res.data.user.regId));
-
+          Navigate('/dashboard')
 
         })
 
@@ -80,7 +80,7 @@ const Loginpage = () => {
             </div>
           </div>
           <div className={styles.main}>
-            <form onSubmit={handleLogin} autoComplete=''>
+            <form onSubmit={handleLogin} autoComplete='off'>
               <div className={styles.form}>
                 <div className={styles.user_id}>
                   {/* <label htmlFor={styles.user_id}>User ID</label> */}
