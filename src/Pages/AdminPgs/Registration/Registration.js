@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import axios from "axios";
+// import axios from "axios";
 import InputField from '../../../components/InputField/InputField';
 import PasswordField from '../../../components/Password/PasswordField';
 import styles from './Registration.module.css';
 import DropDown from '../../../components/DropDown/DropDown';
 import profesion_obj from './Prof.json';
 import States_obj from './States.json';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 
 
 const Registration = () => {
-  const Navigate = useNavigate();
+  // const Navigate = useNavigate();
   const [formdata, setFormdata] = useState({
-    name: "",
+    name: " ",
     datebirth: "",
     membership_No: "",
     profession: "",
@@ -26,7 +26,7 @@ const Registration = () => {
     state: "",
     whatsApp_Link: "",
     investNow_Email: "",
-    password: "",
+    password: ""
   });
   const handleChange = (e) => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
@@ -47,18 +47,14 @@ const Registration = () => {
 
     try {
 
-      axios({
-
-        url: url,
-
-        method: "POST",
-
+      fetch(url, {
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
 
-        data: JSON.stringify(formdata),
+        body: JSON.stringify(formdata),
 
       })
         .then((result) => {
@@ -66,7 +62,7 @@ const Registration = () => {
           if (result.status === 200) {
 
             setFormdata({
-              name: "",
+              name: " ",
               datebirth: "",
               membership_No: "",
               profession: "",
@@ -81,8 +77,8 @@ const Registration = () => {
               investNow_Email: "",
               password: "",
             });
-            Navigate('/')
-            console.log(formdata.state)
+            // Navigate('/')
+            // console.log(formdata.state)
             console.log("Data inserted successfully...")
 
           } else {
@@ -111,7 +107,7 @@ const Registration = () => {
 
             <div className={styles.first}>
               <div className={styles.username}>
-                <InputField placeholder='Enter your Name' onChange={handleChange} lblname='Name' name='name' value={formdata.name} />
+                <InputField placeholder='Enter your DOB in YYYY-MM-DD' onChange={handleChange} lblname='Name' name='name' value={formdata.name} />
               </div>
               <div className={styles.userdob}>
                 <InputField placeholder='Enter your DOB in YYYY-MM-DD' onChange={handleChange} lblname='DOB/DOI' name='datebirth' value={formdata.datebirth} />
@@ -162,7 +158,7 @@ const Registration = () => {
                 <PasswordField placeholder='Re-enter password' lblname='Confirm Password' />
               </div>
               <div className={styles.btn_submit}>
-                <button type="submit">SUBMIT</button>
+                <button type="submit" onClick={handleSubmit}>SUBMIT</button>
               </div>
             </div>
           </form>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from "axios";
+// import axios from "axios";
 import InputField from '../../../components/InputField/InputField';
 import styles from './URegistration.module.css';
 import DropDown from '../../../components/DropDown/DropDown';
@@ -7,6 +7,10 @@ import profesion_obj from './Prof.json';
 import States_obj from './States.json';
 import RadioInput from '../../../components/RadioField/RadioInput';
 import { url_ } from '../../../Config';
+
+
+const token = window.localStorage.getItem('token');
+const userid = window.localStorage.getItem('user_id');
 
 
 const URegistration = () => {
@@ -24,27 +28,22 @@ const URegistration = () => {
 
 
 
-  var token = window.localStorage.getItem('token');
-  var userid = window.localStorage.getItem('user_id');
-
-
   const [formdata, setFormdata] = useState({
-    name: "",
-    dob: "",
-    profession: "",
-    pan: "",
-    telephone: "",
-    mobile: "",
-    email: "",
     address: "",
-    pin_Code: "",
+    email: "",
+    mobile: "",
+    pan: "",
+    pin_code: "",
+    profession: "",
     state: "",
-    residential_status: "",
+    telephone: "",
     category: "",
+    dob: "",
+    name: "",
+    residential_status: "",
     userid: `${userid}`,
-
-
   });
+
   const handleChange = (e) => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
   };
@@ -53,7 +52,7 @@ const URegistration = () => {
     event.preventDefault();
 
 
-    console.log(formdata)
+    // console.log(formdata)
 
 
 
@@ -61,72 +60,52 @@ const URegistration = () => {
 
 
     console.log(url)
+
     try {
 
-      axios({
-
-        url: url,
-
-        method: "POST",
-
+      fetch(url, {
+        method: 'POST',
         headers: {
-
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-          'Access-Control-Allow-Origin': '*',
-          'Accept': 'application/json'
+          'Authorization': `Bearer ${token}`
         },
 
-        data: JSON.stringify(formdata),
+        body: JSON.stringify(formdata),
 
+      }).then((result) => {
+        console.log("result", result)
+        if (result.status === 200) {
+          // 
+          setFormdata({
+            address: "",
+            email: "",
+            mobile: "",
+            pan: "",
+            pin_code: "",
+            profession: "",
+            state: "",
+            telephone: "",
+            category: "",
+            dob: "",
+            name: "",
+            residential_status: ""
+          });
+
+          // console.log(formdata.state)
+          console.log("Data inserted successfully...")
+
+        } else {
+          console.log("Data not inserted.!!")
+
+        }
       })
-        .then((res) => {
-          console.log(res)
-          if (res.status === 200) {
-            setFormdata({
-              name: "",
-              dob: "",
-              profession: "",
-              pan: "",
-              telephone: "",
-              mobile: "",
-              email: "",
-              address: "",
-              pin_Code: "",
-              state: "",
-              residential_status: "",
-              category: "",
-              userid: ""
-
-            });
-            console.log(formdata.state)
-            console.log("Data inserted successfully...")
-          }
-
-        })
-
         .catch((err) => { console.log(err) });
-
-
     } catch (error) {
-
-      console.error('Error while calling function.!!!');
+      console.warn("Error on function calling...")
     }
+
+
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   return (
@@ -172,7 +151,7 @@ const URegistration = () => {
             </div>
             <div className={styles.third}>
               <div className={styles.pin}>
-                <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={formdata.pin_Code} />
+                <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_code' value={formdata.pin_code} />
               </div>
               <div className={styles.state}>
                 <DropDown value_array={States_obj} lblname='State' name='state' value={formdata.state} onChange={handleChange} />
@@ -182,7 +161,7 @@ const URegistration = () => {
               </div>
 
               <div className={styles.btn_submit}>
-                <button type="submit">SUBMIT</button>
+                <button type="submit" onClick={handleSubmit}>SUBMIT</button>
               </div>
             </div>
           </form>
