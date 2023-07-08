@@ -4,7 +4,7 @@ import axios from "axios";
 import { url_ } from '../../../Config';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../../../components/InputField/InputField';
-
+import swal from 'sweetalert';
 
 
 
@@ -53,11 +53,18 @@ const Loginpage = () => {
           localStorage.setItem('token', JSON.stringify(res.data.token));
           localStorage.setItem('user_name', JSON.stringify(res.data.user.name));
           localStorage.setItem('user_id', JSON.stringify(res.data.user.regId));
+
+          console.log(res.data.token)
+          swal("Success", "Loged in successfully.", "success");
           Navigate('/dashboard')
 
         })
 
-        .catch((err) => { console.log(err) });
+        .catch((err) => {
+
+          swal("Failed!", "Login failed, Please try again!!!", "error");
+          console.log(err)
+        });
 
 
     } catch (error) {
@@ -80,7 +87,7 @@ const Loginpage = () => {
             </div>
           </div>
           <div className={styles.main}>
-            <form onSubmit={handleLogin} autoComplete='off'>
+            <form onSubmit={handleLogin} autoComplete=''>
               <div className={styles.form}>
                 <div className={styles.user_id}>
                   {/* <label htmlFor={styles.user_id}>User ID</label> */}

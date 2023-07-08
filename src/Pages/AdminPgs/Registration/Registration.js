@@ -6,12 +6,13 @@ import styles from './Registration.module.css';
 import DropDown from '../../../components/DropDown/DropDown';
 import profesion_obj from './Prof.json';
 import States_obj from './States.json';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
-
+import swal from 'sweetalert';
 
 const Registration = () => {
-  // const Navigate = useNavigate();
+  const Navigate = useNavigate();
+
   const [formdata, setFormdata] = useState({
     name: " ",
     datebirth: "",
@@ -32,8 +33,14 @@ const Registration = () => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
   };
 
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
+
 
 
     console.log(formdata)
@@ -60,7 +67,6 @@ const Registration = () => {
         .then((result) => {
           console.log("result", result)
           if (result.status === 200) {
-
             setFormdata({
               name: " ",
               datebirth: "",
@@ -77,11 +83,14 @@ const Registration = () => {
               investNow_Email: "",
               password: "",
             });
-            // Navigate('/')
-            // console.log(formdata.state)
+            swal("Success", "Registration successfully. You can login now.", "success");
+            Navigate('/')
+
             console.log("Data inserted successfully...")
 
           } else {
+
+            swal("Failed!", "Registration failed.!!!!", "error");
             console.log("Data not inserted.!!")
 
           }

@@ -1,14 +1,12 @@
 import './App.css';
-import AdminHome from './Pages/AdminPgs/admin_home';
-
+import Adminhome from './Pages/AdminPgs/Adminhome';
 
 function App() {
   return (
+    <div >
+      <Adminhome />
 
-
-    <AdminHome />
-
-
+    </div>
   );
 }
 

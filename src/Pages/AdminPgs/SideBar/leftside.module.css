@@ -1,10 +1,14 @@
+.container {
+  border: 2px solid red;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   align-content: space-evenly;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .taxo_logo {
@@ -26,14 +30,24 @@
   position: fixed;
   max-width: 10%;
   width: 10%;
-  bottom: 0;
+  bottom: 1em;
+  left: 7%;
 }
 
 .poweredby {
   color: gray;
   font-size: 9px;
   position: fixed;
-  bottom: 10%;
+  bottom: 17%;
+  left: 7%;
+}
+
+.version {
+  color: rgb(0, 0, 0);
+  font-size: 9px;
+  position: fixed;
+  bottom: 5%;
+  left: 10%;
 }
 
 @media only screen and (max-width: 800px) {

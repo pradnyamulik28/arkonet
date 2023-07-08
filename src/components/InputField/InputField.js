@@ -13,7 +13,8 @@ const InputField = (props) => {
         id={props.id}
         className={`form-control ${styles.className}`}
         value={props.value}
-        onChange={props.onChange} />
+        onChange={props.onChange}
+      />
     </div >
   );
 }
