@@ -1,0 +1,28 @@
+ [
+  
+  {
+    "val": "Chartered Accountant",
+    "option_name": "Chartered Accountant"
+  },
+  {
+    "val": "Tax Consultant",
+    "option_name": "Tax Consultant"
+  },
+  {
+    "val": "Tax Return Preparer",
+    "option_name": "Tax Return Preparer (TRP)"
+  },
+  {
+    "val": "Accountant",
+    "option_name": "Accountant"
+  },
+  {
+    "val": "Certified Consultant",
+    "option_name": "Certified Consultant"
+  },
+  {
+    "val": "Advocate",
+    "option_name": "Advocate"
+  }
+
+]

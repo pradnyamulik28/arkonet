@@ -76,12 +76,16 @@ button:active {
   transform: translateY(4px);
 }
 
-.link a {
+.link {
   display: flex;
-  justify-content: flex-end;
-  /* margin: 10px; */
-  color: yellow;
-  /* text-shadow: 2px 4px 4px gray; */
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.link a {
+
+  color: #dada3e;
   font-size: large;
 }
 

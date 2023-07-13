@@ -1,0 +1,42 @@
+.Cbtn_submit input {
+  height: 2rem;
+  width: 15rem;
+  border-radius: 10px;
+  border: none;
+  background-color: yellow;
+  color: white;
+  font-weight: bolder;
+  font-size: 23px;
+  text-shadow: 2px 3px 5px #000000;
+  cursor: pointer;
+  box-shadow: 0 1px 2px black;
+}
+
+
+input:active {
+  box-shadow: 4px 2px 5px 0 gray;
+  transform: translateY(4px);
+}
+
+.round {
+  border-radius: 20px;
+  height: 2rem;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  box-shadow: 0 1px 2px black;
+}
+
+.container {
+  background-color: rgb(216, 255, 255);
+  box-shadow: 0 1px 2px black;
+  border-radius: 20px;
+}
+
+.search {
+  position: absolute;
+  right: 3%;
+  top: 20%;
+
+
+}

@@ -1,3 +1,12 @@
 .input {
   margin: 0 5px 0 5px;
 }
+
+
+
+.manadatory {
+  color: red;
+  font-size: 22px;
+  margin: 0 10px;
+
+}

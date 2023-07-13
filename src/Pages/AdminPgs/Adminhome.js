@@ -11,7 +11,10 @@ import taxko from '../../Images/taxko_logo.png'
 import URegistration from '../ClientPgs/URegistration/URegistration';
 import Login from './Login/loginpage'
 // import Cards from "../../components/Cards/Cards";
-import UDashboard from "../ClientPgs/UDashboard/UDashboard";
+import Dashboard from "../AdminPgs/DashBoard/DashBoard";
+import Uupdate from '../ClientPgs/UUpdate/Uupdate';
+import TotalClient from './TotalClients/TotalClient';
+import IncomeClient from './IncomeClient/IncomeClient';
 
 const Adminhome = () => {
   return (
@@ -33,8 +36,11 @@ const Adminhome = () => {
               <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/reg" element={<Registration />} />
-                <Route exact path="/dashboard" element={<UDashboard />} />
+                <Route exact path="/dashboard" element={<Dashboard />} />
                 <Route exact path="/clientreg" element={<URegistration />} />
+                <Route exact path="/update/:id" element={<Uupdate />} />
+                <Route exact path="/tc" element={<TotalClient />} />
+                <Route exact path="/tic" element={<IncomeClient />} />
               </Routes>
 
 

@@ -37,3 +37,11 @@ label {
   align-items: center;
   position: relative;
 }
+
+
+.manadatory {
+  color: red;
+  font-size: 22px;
+  margin: 0 10px;
+
+}

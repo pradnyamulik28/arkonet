@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './loginpage.module.css';
 import axios from "axios";
 import { url_ } from '../../../Config';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import InputField from '../../../components/InputField/InputField';
 import swal from 'sweetalert';
 
@@ -50,9 +50,18 @@ const Loginpage = () => {
 
         .then((res) => {
           console.log(res)
-          localStorage.setItem('token', JSON.stringify(res.data.token));
-          localStorage.setItem('user_name', JSON.stringify(res.data.user.name));
-          localStorage.setItem('user_id', JSON.stringify(res.data.user.regId));
+          // Clear localStorage
+          // localStorage.clear();
+
+          // Save new JWT token to localStorage
+          const jwtToken = res.data.token;
+          const user_id = res.data.user.regId;
+          const user_name = res.data.user.name;
+
+          localStorage.setItem('jwtToken', jwtToken);
+
+          localStorage.setItem('user_name', user_name);
+          localStorage.setItem('user_id', user_id);
 
           console.log(res.data.token)
           swal("Success", "Loged in successfully.", "success");
@@ -108,7 +117,8 @@ const Loginpage = () => {
               </div>
             </form>
             <div className={styles.link}>
-              <a href="/">Forget Password</a>
+              <Link to="/reg">New to TAXKO? Click Here</Link>
+              <Link to="/">Forget Password</Link>
             </div>
           </div>
 

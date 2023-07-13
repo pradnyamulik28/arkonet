@@ -30,7 +30,7 @@
   position: fixed;
   max-width: 10%;
   width: 10%;
-  bottom: 1em;
+  bottom: 8%;
   left: 7%;
 }
 
@@ -38,8 +38,8 @@
   color: gray;
   font-size: 9px;
   position: fixed;
-  bottom: 17%;
-  left: 7%;
+  bottom: 10%;
+  left: 8%;
 }
 
 .version {
@@ -47,7 +47,7 @@
   font-size: 9px;
   position: fixed;
   bottom: 5%;
-  left: 10%;
+  left: 11%;
 }
 
 @media only screen and (max-width: 800px) {

@@ -1,0 +1,10 @@
+ [
+  {
+    "val" :"Resident Indian",
+    "option_name": "Resident Indian"
+  },
+  {
+    "val": "Non-Resident Indian",
+    "option_name": "Non-Resident Indian"
+  }
+]
