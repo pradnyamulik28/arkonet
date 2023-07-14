@@ -5,16 +5,15 @@ import styles from './Uupdate.module.css';
 import DropDown from '../../../components/DropDown/DropDown';
 import Uprofesion_obj from '../../../ObjData/CProf.json';
 import States_obj from '../../../ObjData/States.json';
-import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 
-// import { url_ } from '../../../Config';
+import { url_ } from '../../../Config';
 import { useParams } from 'react-router-dom';
 
 const Uupdate = () => {
-  const Navigate = useNavigate();
+
   const user_id = window.localStorage.getItem('user_id');
-  // const storedToken = window.localStorage.getItem('jwtToken');
+  const storedToken = window.localStorage.getItem('jwtToken');
   const { id } = useParams();
 
   const [values, setValues] = useState({
@@ -33,9 +32,7 @@ const Uupdate = () => {
 
   })
 
-  // const url = `${url_}/client/${user_id}/` + id;
-  const url = 'https://gorest.co.in/public/v2/users/' + id;
-  console.log(url);
+
   useEffect(() => {
     GetClient();
 
@@ -46,27 +43,34 @@ const Uupdate = () => {
   function GetClient() {
     try {
 
-      fetch(url, {
+      fetch(`${url_}/getClientById/${user_id}/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${storedToken}`
+          'Authorization': `Bearer ${storedToken}`
         }
       })
         .then(response => response.json())
         .then(res => {
           console.log(res);
           setValues({
+            address: res.address,
             email: res.email,
-            name: res.name
-
+            mobile: res.mobile,
+            pan: res.pan,
+            pin_code: res.pin_code,
+            profession: res.profession,
+            state: res.state,
+            telephone: res.telephone,
+            dob: res.dob,
+            name: res.name,
+            userid: `${user_id}`,
           })
-          swal("Success", "Data updated successfully.", "success");
-          Navigate('/')
+
         })
         .catch(error => {
 
-          swal("Failed!", " Failed to update.!!!!", "error");
+
           console.log(error)
         });
     } catch (error) {
@@ -81,20 +85,28 @@ const Uupdate = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    const url = `${url_}/updateClient/${id}`;
+    console.log(url);
     try {
 
-      fetch('https://gorest.co.in/public/v2/users/' + id, {
+      fetch(url, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${storedToken}`
-        }
+          'Authorization': `Bearer ${storedToken}`
+        },
+
+        body: JSON.stringify(values),
       })
         .then(res => {
+          swal("Success", "Data updated successfully.", "success");
+
           console.log(values)
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          swal("Failed!", " Failed to update.!!!!", "error");
+          console.log(error)
+        });
     } catch (error) {
       console.warn("Error on function calling...")
     }

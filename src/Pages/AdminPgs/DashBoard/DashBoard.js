@@ -8,12 +8,12 @@ const DashBoard = () => {
   const storedToken = window.localStorage.getItem('jwtToken');
 
   const tcurl = `${url_}/client/${user_id}`;
-  const [cdata, setCdata] = useState(0);
+  // const [cdata, setCdata] = useState();
   const [Totalclient, setTotalclient] = useState();
 
 
   const ticurl = `${url_}/getClientByIncomeTax/${user_id}`;
-  const [icdata, setIcdata] = useState();
+  // const [icdata, setIcdata] = useState();
   const [Totalincomeclient, setTotalincomeclient] = useState();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const DashBoard = () => {
       })
         .then(response => response.json())
         .then(data => {
-          setCdata(data)
+          // setCdata(data)
           console.log("TC", data)
           setTotalclient(data.length)
 
@@ -57,10 +57,10 @@ const DashBoard = () => {
       })
         .then(response => response.json())
         .then(data => {
-          setIcdata(data)
+          // setIcdata(data)
           console.log("IC", data)
           setTotalincomeclient(data.length)
-          console.log(Totalincomeclient)
+
         })
         .catch(error => console.log(error));
     } catch (error) {

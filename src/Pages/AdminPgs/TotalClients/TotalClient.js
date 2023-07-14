@@ -7,8 +7,7 @@ import { url_ } from '../../../Config';
 const TotalClient = () => {
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
-  // const url = `${url_}/client/${user_id}`;
-  const url = 'https://gorest.co.in/public/v2/users';
+  const url = `${url_}/client/${user_id}`;
 
 
   const [tcdata, setTcdata] = useState([]);
@@ -21,14 +20,13 @@ const TotalClient = () => {
   function totalClient() {
     try {
 
-      fetch(url)
-        // , {
-        //   method: 'GET',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     'Authorization': `Bearer ${storedToken}`
-        //   }
-        // })
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${storedToken}`
+        }
+      })
         .then(response => response.json())
         .then(data => {
           setTcdata(data)
@@ -86,8 +84,8 @@ const TotalClient = () => {
 
             {
               tcdata.map((items) => {
-                return <tr key={items.id} >
-                  <td>{items.id}</td>
+                return <tr key={items.clientId} >
+                  <td>{items.clientId}</td>
                   <td>{items.name}</td>
                   <td>{items.pan}</td>
                   <td>{items.mobile}</td>
@@ -98,7 +96,7 @@ const TotalClient = () => {
                     </svg>
                   </Link></td>
                   <td>
-                    <Link to={`/update/${items.id}`} >Edit</Link>
+                    <Link to={`/Cupdate/${items.clientId}`} >Edit</Link>
                   </td>
                 </tr>
               })

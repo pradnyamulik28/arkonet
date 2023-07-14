@@ -38,7 +38,7 @@ const Adminhome = () => {
                 <Route path="/reg" element={<Registration />} />
                 <Route exact path="/dashboard" element={<Dashboard />} />
                 <Route exact path="/clientreg" element={<URegistration />} />
-                <Route exact path="/update/:id" element={<Uupdate />} />
+                <Route exact path="/Cupdate/:id" element={<Uupdate />} />
                 <Route exact path="/tc" element={<TotalClient />} />
                 <Route exact path="/tic" element={<IncomeClient />} />
               </Routes>

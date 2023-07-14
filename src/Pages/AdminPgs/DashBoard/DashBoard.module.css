@@ -27,15 +27,14 @@
 }
 
 .abtn {
-  /* height: 2rem; */
+
   width: 8rem;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
   background-color: yellow;
   color: white;
-  /* font-weight: bolder; */
-  /* font-size: 23px; */
+
   text-shadow: 2px 3px 5px #000000;
-  margin-top: 16%;
+  margin-top: 5%;
   cursor: pointer;
 }

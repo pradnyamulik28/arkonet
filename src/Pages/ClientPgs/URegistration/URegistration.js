@@ -33,7 +33,7 @@ const URegistration = () => {
     email: "",
     mobile: "",
     pan: "",
-    pin_code: "",
+    pin_Code: "",
     profession: "",
     state: "",
     telephone: "",
@@ -99,7 +99,7 @@ const URegistration = () => {
               category: "",
               dob: "",
               name: "",
-              pin_code: "",
+              pin_Code: "",
               userid: `${user_id}`,
               residential_status: ""
             });
@@ -171,7 +171,7 @@ const URegistration = () => {
             </div>
             <div className={styles.third}>
               <div className={styles.pin}>
-                <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_code' value={formdata.pin_code} />
+                <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={formdata.pin_Code} />
               </div>
               <div className={styles.state}>
                 <DropDown value_array={States_obj} lblname='State' name='state' value={formdata.state} onChange={handleChange} />
