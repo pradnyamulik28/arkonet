@@ -22,7 +22,7 @@ const Uupdate = () => {
     email: "",
     mobile: "",
     pan: "",
-    pin_code: "",
+    pin_Code: "",
     profession: "",
     state: "",
     telephone: "",
@@ -58,7 +58,7 @@ const Uupdate = () => {
             email: res.email,
             mobile: res.mobile,
             pan: res.pan,
-            pin_code: res.pin_code,
+            pin_Code: res.pin_Code,
             profession: res.profession,
             state: res.state,
             telephone: res.telephone,
@@ -131,7 +131,7 @@ const Uupdate = () => {
             <InputField type='number' placeholder='Enter your Mobile' onChange={handleChange} lblname='Mobile' name='mobile' value={values.mobile} />
             <InputField placeholder='Enter your Email' onChange={handleChange} lblname='Email' name='email' value={values.email} />
             <InputField placeholder='Enter your office address' onChange={handleChange} lblname=' Addresss' name='address' value={values.address} />
-            <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_code' value={values.pin_code} />
+            <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_code' value={values.pin_Code} />
             <DropDown value_array={States_obj} lblname='State' name='state' value={values.state} onChange={handleChange} />
 
 
