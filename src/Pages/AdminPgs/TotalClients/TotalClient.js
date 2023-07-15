@@ -83,9 +83,9 @@ const TotalClient = () => {
 
 
             {
-              tcdata.map((items) => {
-                return <tr key={items.clientId} >
-                  <td>{items.clientId}</td>
+              tcdata.map((items, index) => {
+                return <tr key={index} >
+                  <td>{index + 1}</td>
                   <td>{items.name}</td>
                   <td>{items.pan}</td>
                   <td>{items.mobile}</td>

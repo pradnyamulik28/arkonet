@@ -34,8 +34,8 @@ const DashBoard = () => {
         .then(response => response.json())
         .then(data => {
           // setCdata(data)
-          console.log("TC", data)
           setTotalclient(data.length)
+          console.log("TC", data)
 
         })
         .catch(error => console.log(error));
@@ -58,8 +58,9 @@ const DashBoard = () => {
         .then(response => response.json())
         .then(data => {
           // setIcdata(data)
-          console.log("IC", data)
+
           setTotalincomeclient(data.length)
+          console.log("IC", data)
 
         })
         .catch(error => console.log(error));

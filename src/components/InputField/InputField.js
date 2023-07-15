@@ -14,6 +14,7 @@ const InputField = (props) => {
         className='form-control '
         value={props.value}
         onChange={props.onChange}
+        maxLength={props.maxLength}
       />
     </div >
   );

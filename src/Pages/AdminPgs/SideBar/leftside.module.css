@@ -28,8 +28,9 @@
 
 .arko_logo {
   position: fixed;
-  max-width: 10%;
-  width: 10%;
+  max-width: 15%;
+  width: 13%;
+  height: 4%;
   bottom: 8%;
   left: 7%;
 }
@@ -38,8 +39,8 @@
   color: gray;
   font-size: 9px;
   position: fixed;
-  bottom: 10%;
-  left: 8%;
+  bottom: 12%;
+  left: 10%;
 }
 
 .version {
@@ -47,7 +48,7 @@
   font-size: 9px;
   position: fixed;
   bottom: 5%;
-  left: 11%;
+  left: 12%;
 }
 
 @media only screen and (max-width: 800px) {

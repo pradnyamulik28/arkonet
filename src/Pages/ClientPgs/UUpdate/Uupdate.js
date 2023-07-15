@@ -131,7 +131,7 @@ const Uupdate = () => {
             <InputField type='number' placeholder='Enter your Mobile' onChange={handleChange} lblname='Mobile' name='mobile' value={values.mobile} />
             <InputField placeholder='Enter your Email' onChange={handleChange} lblname='Email' name='email' value={values.email} />
             <InputField placeholder='Enter your office address' onChange={handleChange} lblname=' Addresss' name='address' value={values.address} />
-            <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_code' value={values.pin_Code} />
+            <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={values.pin_Code} />
             <DropDown value_array={States_obj} lblname='State' name='state' value={values.state} onChange={handleChange} />
 
 

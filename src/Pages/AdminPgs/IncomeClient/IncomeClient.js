@@ -32,7 +32,7 @@ const IncomeClient = () => {
         .then(response => response.json())
         .then(data => {
           setCdata(data)
-          console.log("TC", cdata)
+          console.log("IC", cdata)
 
         })
         .catch(error => console.log(error));
@@ -86,9 +86,9 @@ const IncomeClient = () => {
 
 
             {
-              cdata.map((items) => {
-                return <tr key={items.clientId} >
-                  <td>{items.clientId}</td>
+              cdata.map((items, index) => {
+                return <tr key={index} >
+                  <td>{index + 1}</td>
                   <td>{items.name}</td>
                   <td>{items.pan}</td>
                   <td>{items.mobile}</td>
