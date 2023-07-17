@@ -15,6 +15,7 @@ import Dashboard from "../AdminPgs/DashBoard/DashBoard";
 import Uupdate from '../ClientPgs/UUpdate/Uupdate';
 import TotalClient from './TotalClients/TotalClient';
 import IncomeClient from './IncomeClient/IncomeClient';
+import FileUplode from './FileUplode/FileUplode';
 
 const Adminhome = () => {
   return (
@@ -41,6 +42,7 @@ const Adminhome = () => {
                 <Route exact path="/Cupdate/:id" element={<Uupdate />} />
                 <Route exact path="/tc" element={<TotalClient />} />
                 <Route exact path="/tic" element={<IncomeClient />} />
+                <Route exact path="/file" element={<FileUplode />} />
               </Routes>
 
 

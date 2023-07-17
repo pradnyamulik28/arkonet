@@ -8,6 +8,10 @@ import { Link } from 'react-router-dom';
 
 const LeftSide = () => {
 
+  const handleLogout = () => {
+    localStorage.clear();
+  };
+
   return (
     <div className="container" >
       <div className={`${styles.sidebar}`}>
@@ -15,7 +19,9 @@ const LeftSide = () => {
           <Link to='/dashboard'>
             <img className={styles.taxo_logo} src={Applogo} alt="" />
           </Link>
-          <a href="/" className={styles.help_text}><h6>Help</h6></a>
+          <Link to="#" className={styles.help_text}><h6>Help</h6></Link>
+          <Link to="/dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
+          <Link to="/" className={styles.logout_text} onClick={handleLogout}><h6>Logout</h6></Link>
         </div>
 
         <div className={styles.help}>

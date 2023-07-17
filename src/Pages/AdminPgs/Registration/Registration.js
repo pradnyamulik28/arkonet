@@ -51,14 +51,16 @@ const Registration = () => {
     event.preventDefault();
 
 
-    if (formdata.pan.length !== 10 || !formdata.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
-      swal("Failed!", "Enter valid 10 digit PAN!!", "error");
-      return;
-    }
+
 
     if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.email) {
       swal("Failed!", "Please fill the mandatory field !!", "error");
       console.log(formdata)
+      return;
+    }
+
+    if (formdata.pan.length !== 10 || !formdata.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
+      swal("Failed!", "Enter valid 10 digit PAN!!", "error");
       return;
     } else {
 

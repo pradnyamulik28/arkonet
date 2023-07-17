@@ -26,6 +26,18 @@
   left: 11%;
 }
 
+.dash_text {
+  position: fixed;
+  top: 30%;
+  left: 11%;
+}
+
+.logout_text {
+  position: fixed;
+  top: 35%;
+  left: 11%;
+}
+
 .arko_logo {
   position: fixed;
   max-width: 15%;
