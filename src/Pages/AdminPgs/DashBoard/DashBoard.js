@@ -33,9 +33,12 @@ const DashBoard = () => {
       })
         .then(response => response.json())
         .then(data => {
-          // setCdata(data)
-          setTotalclient(data.length)
-          console.log("TC", data)
+          if (data == null) {
+            setTotalclient(0)
+          } else {
+            setTotalclient(data.length)
+          }
+
 
         })
         .catch(error => console.log(error));
