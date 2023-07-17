@@ -52,6 +52,7 @@ const DashBoard = () => {
         })
         .catch(error => console.log(error));
     } catch (error) {
+
       console.warn("Error on function calling...")
     }
 
