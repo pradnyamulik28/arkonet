@@ -31,9 +31,18 @@ const DashBoard = () => {
           'Authorization': `Bearer ${storedToken}`
         }
       })
-        .then(response => response.json())
+        .then(response => {
+	if (!response.ok) {
+          if (response.status === 401) {
+		setTotalclient(0);
+		return;
+	}}
+        else{
+	     return response.json()
+	}
+	})
         .then(data => {
-          if (data == null) {
+          if (data == null || data == undefined) {
             setTotalclient(0)
           } else {
             setTotalclient(data.length)
