@@ -7,61 +7,19 @@ const DashBoard = () => {
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
 
-  const tcurl = `${url_}/CountOfClient/${user_id}`;
-  // const [cdata, setCdata] = useState();
+  const url = `${url_}/counts/${user_id}`;
   const [Totalclient, setTotalclient] = useState();
+  const [TotalIncomeclient, setTotalIncomeclient] = useState();
 
-
-  const ticurl = `${url_}/CountOfClientByIncomeTax/${user_id}`;
-  // const [icdata, setIcdata] = useState();
-  const [Totalincomeclient, setTotalincomeclient] = useState();
 
   useEffect(() => {
     totalClient();
-    totalIncomeClient();
   }, []);
 
   function totalClient() {
     try {
 
-      fetch(tcurl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${storedToken}`
-        }
-      })
-        .then(response => {
-          if (!response.ok) {
-            if (response.status === 401) {
-              setTotalclient(0);
-              return;
-            }
-          }
-          else {
-            return response.json()
-          }
-        })
-        .then(data => {
-          if (data == null || data == undefined) {
-            setTotalclient(0)
-          } else {
-            setTotalclient(data)
-          }
-
-        })
-        .catch(error => console.log(error));
-    } catch (error) {
-
-      console.warn("Error on function calling...")
-    }
-
-  }
-
-  function totalIncomeClient() {
-    try {
-
-      fetch(ticurl, {
+      fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -70,11 +28,9 @@ const DashBoard = () => {
       })
         .then(response => response.json())
         .then(data => {
-          if (data == null || data == undefined) {
-            setTotalincomeclient(0)
-          } else {
-            setTotalincomeclient(data)
-          }
+          setTotalclient(data.totalClientCount)
+          setTotalIncomeclient(data.incomeTaxClientCount)
+          console.log("TC", data)
 
         })
         .catch(error => console.log(error));
@@ -82,6 +38,8 @@ const DashBoard = () => {
       console.warn("Error on function calling...")
     }
   }
+
+
 
 
 
@@ -99,7 +57,7 @@ const DashBoard = () => {
                 <h5 className={`card-title font-weight-bold ${styles.green}`}>FY 2023-24</h5>
                 <div className={styles.count}>
                   <Link to="/tc" className={` card-link ${styles.black}`}>Total Clients<h6 className={`${styles.black} font-weight-bold`}>{Totalclient}</h6></Link>
-                  <Link to="/tic" className={`card-link ${styles.green}  `}>Income Tax<h6 className={`${styles.black} font-weight-bold`}>{Totalincomeclient}</h6></Link>
+                  <Link to="/tic" className={`card-link ${styles.green}  `}>Income Tax<h6 className={`${styles.black} font-weight-bold`}>{TotalIncomeclient}</h6></Link>
                 </div>
                 <Link to='/clientreg' ><input type="submit" value="ADD CLIENT" className={` ${styles.abtn}`} /></Link>
                 <h6 className={`${styles.green} mt-3`}>As on date</h6>
