@@ -7,12 +7,12 @@ const DashBoard = () => {
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
 
-  const tcurl = `${url_}/client/${user_id}`;
+  const tcurl = `${url_}/CountOfClient/${user_id}`;
   // const [cdata, setCdata] = useState();
   const [Totalclient, setTotalclient] = useState();
 
 
-  const ticurl = `${url_}/getClientByIncomeTax/${user_id}`;
+  const ticurl = `${url_}/CountOfClientByIncomeTax/${user_id}`;
   // const [icdata, setIcdata] = useState();
   const [Totalincomeclient, setTotalincomeclient] = useState();
 
@@ -32,22 +32,22 @@ const DashBoard = () => {
         }
       })
         .then(response => {
-	if (!response.ok) {
-          if (response.status === 401) {
-		setTotalclient(0);
-		return;
-	}}
-        else{
-	     return response.json()
-	}
-	})
+          if (!response.ok) {
+            if (response.status === 401) {
+              setTotalclient(0);
+              return;
+            }
+          }
+          else {
+            return response.json()
+          }
+        })
         .then(data => {
           if (data == null || data == undefined) {
             setTotalclient(0)
           } else {
-            setTotalclient(data.length)
+            setTotalclient(data)
           }
-
 
         })
         .catch(error => console.log(error));
@@ -69,10 +69,11 @@ const DashBoard = () => {
       })
         .then(response => response.json())
         .then(data => {
-          // setIcdata(data)
-
-          setTotalincomeclient(data.length)
-          console.log("IC", data)
+          if (data == null || data == undefined) {
+            setTotalincomeclient(0)
+          } else {
+            setTotalincomeclient(data)
+          }
 
         })
         .catch(error => console.log(error));
