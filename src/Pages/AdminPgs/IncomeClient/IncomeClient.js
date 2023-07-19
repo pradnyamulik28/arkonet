@@ -32,7 +32,7 @@ const IncomeClient = () => {
         .then(response => response.json())
         .then(data => {
           setCdata(data)
-          console.log("IC", cdata)
+          console.log("IC", data)
 
         })
         .catch(error => console.log(error));

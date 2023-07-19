@@ -7,7 +7,7 @@ import { url_ } from '../../../Config';
 const TotalClient = () => {
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
-  const url = `${url_}/client/${user_id}`;
+  const url = `${url_}/getClientByUserid/${user_id}`;
 
 
   const [tcdata, setTcdata] = useState([]);
