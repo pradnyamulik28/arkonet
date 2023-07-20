@@ -5,7 +5,7 @@ const PasswordField = (props) => {
   return (
     <div>
       <div className={styles.dpass}>
-        <label htmlFor={props.id}>{props.lblname}</label>
+        <label htmlFor={props.id}>{props.lblname}<span className={styles.pmanadatory}>{props.manadatory}</span></label>
         <input
           placeholder={props.placeholder}
           type={props.type}

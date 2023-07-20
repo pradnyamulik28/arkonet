@@ -90,7 +90,7 @@ const IncomeClient = () => {
                 return <tr key={index} >
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <td>{items.pan}</td>
+                  <Link to=""><td>{items.pan}</td></Link>
                   <td>{items.mobile}</td>
                   <td><Link to="/update" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope-at" viewBox="0 0 16 16">

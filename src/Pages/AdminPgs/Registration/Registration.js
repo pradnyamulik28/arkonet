@@ -53,7 +53,7 @@ const Registration = () => {
 
 
 
-    if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.email) {
+    if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.email || !formdata.password) {
       swal("Failed!", "Please fill the mandatory field !!", "error");
       console.log(formdata)
       return;
@@ -155,7 +155,7 @@ const Registration = () => {
 
               <InputField placeholder='Enter your office address' onChange={handleChange} lblname='Office Addresss' name='office_Address' value={formdata.office_Address} />
 
-              <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={formdata.pin_Code} />
+              <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={formdata.pin_Code} maxLength='6' />
 
               <DropDown value_array={States_obj} lblname='State' name='state' value={formdata.state} onChange={handleChange} />
 
@@ -163,7 +163,7 @@ const Registration = () => {
 
               <InputField placeholder='Enter your investnow email' onChange={handleChange} lblname='InvestNow Email' name='investNow_Email' value={formdata.investNow_Email} />
 
-              <PasswordField type='password' placeholder='Enter your password' onChange={handleChange} lblname='Password' name='password' value={formdata.password} />
+              <PasswordField type='password' placeholder='Enter your password' onChange={handleChange} lblname='Password' name='password' value={formdata.password} manadatory='*' />
 
               <PasswordField type='password' placeholder='Re-enter password' lblname='Confirm Password' />
 

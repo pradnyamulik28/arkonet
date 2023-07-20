@@ -63,18 +63,18 @@ const URegistration = () => {
     event.preventDefault();
 
 
-
+    if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.category) {
+      swal("Failed!", "Please fill the mandatory field !!", "error");
+      console.log(formdata)
+      return;
+    }
 
     if (formdata.pan.length !== 10 || !formdata.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
       swal("Failed!", "Enter valid 10 digit PAN!!", "error");
       return;
     }
+    else {
 
-    if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile) {
-      swal("Failed!", "Please fill the mandatory field !!", "error");
-      console.log(formdata)
-      return;
-    } else {
 
 
       const url = `${url_}/createclient`;
@@ -171,7 +171,7 @@ const URegistration = () => {
 
             <InputField placeholder='Enter your office address' onChange={handleChange} lblname=' Addresss' name='address' value={formdata.address} />
 
-            <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={formdata.pin_Code} />
+            <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={formdata.pin_Code} maxLength='6' />
 
             <DropDown value_array={States_obj} lblname='State' name='state' value={formdata.state} onChange={handleChange} />
 
