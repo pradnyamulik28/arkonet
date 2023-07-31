@@ -15,7 +15,9 @@ import Dashboard from "../AdminPgs/DashBoard/DashBoard";
 import Uupdate from '../ClientPgs/UUpdate/Uupdate';
 import TotalClient from './TotalClients/TotalClient';
 import IncomeClient from './IncomeClient/IncomeClient';
-import FileUplode from './FileUplode/FileUplode';
+import DocFolder from './DocFolder/DocFolder';
+import FileUpload from './FileUpload/FileUpload'
+import ResetPass from './ResetPass/ResetPass';
 
 const Adminhome = () => {
   return (
@@ -42,7 +44,9 @@ const Adminhome = () => {
                 <Route exact path="/Cupdate/:id" element={<Uupdate />} />
                 <Route exact path="/tc" element={<TotalClient />} />
                 <Route exact path="/tic" element={<IncomeClient />} />
-                <Route exact path="/file" element={<FileUplode />} />
+                <Route exact path="/file/:id" element={<DocFolder />} />
+                <Route exact path="/fileupload/:id/:year" element={<FileUpload />} />
+                <Route exact path="/resetpass" element={<ResetPass />} />
               </Routes>
 
 

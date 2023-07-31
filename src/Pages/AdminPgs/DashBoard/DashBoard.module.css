@@ -1,5 +1,5 @@
 .cardd {
-  width: 21rem;
+  width: 22rem;
   border-radius: 15px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -12,6 +12,11 @@
   flex-direction: row;
   justify-content: space-between;
   text-align: center;
+}
+
+.ntf h6 {
+  font-weight: bold;
+  font-size: 14px;
 }
 
 

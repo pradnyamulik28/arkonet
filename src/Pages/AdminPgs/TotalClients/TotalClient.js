@@ -5,39 +5,46 @@ import { url_ } from '../../../Config';
 // import swal from 'sweetalert';
 
 const TotalClient = () => {
-  const user_id = window.localStorage.getItem('user_id');
-  const storedToken = window.localStorage.getItem('jwtToken');
-  const url = `${url_}/getClientByUserid/${user_id}`;
-
 
   const [tcdata, setTcdata] = useState([]);
 
   useEffect(() => {
+
+    const totalClient = () => {
+
+      const user_id = window.localStorage.getItem('user_id');
+      const storedToken = window.localStorage.getItem('jwtToken');
+      const url = `${url_}/getClientByUserid/${user_id}`;
+
+
+
+      try {
+
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${storedToken}`
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            setTcdata(data)
+            console.log("TC", data)
+
+          })
+          .catch(error => console.log(error));
+      } catch (error) {
+        console.warn("Error on function calling...")
+      }
+    };
+
     totalClient();
+
   }, []);
 
 
-  function totalClient() {
-    try {
 
-      fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${storedToken}`
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          setTcdata(data)
-          console.log("TC", data)
-
-        })
-        .catch(error => console.log(error));
-    } catch (error) {
-      console.warn("Error on function calling...")
-    }
-  }
 
 
   return (
@@ -87,7 +94,7 @@ const TotalClient = () => {
                 return <tr key={index} >
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <td>{items.pan}</td>
+                  <Link to={`/file/${items.clientId}`} className='h6'><td>{items.pan}</td></Link>
                   <td>{items.mobile}</td>
                   <td><Link to="" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope-at" viewBox="0 0 16 16">
@@ -96,7 +103,7 @@ const TotalClient = () => {
                     </svg>
                   </Link></td>
                   <td>
-                    <Link to={`/Cupdate/${items.clientId}`} >Edit</Link>
+                    <Link to={`/Cupdate/${items.clientId}`} ><h6>Edit</h6></Link>
                   </td>
                 </tr>
               })

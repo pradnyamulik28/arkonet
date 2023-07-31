@@ -15,6 +15,7 @@ const InputField = (props) => {
         value={props.value}
         onChange={props.onChange}
         maxLength={props.maxLength}
+        autoComplete='off'
       />
     </div >
   );

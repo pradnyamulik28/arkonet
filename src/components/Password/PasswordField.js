@@ -13,7 +13,8 @@ const PasswordField = (props) => {
           id={props.id}
           className={props.className}
           value={props.value}
-          onChange={props.onChange} />
+          onChange={props.onChange}
+          autoComplete='off' />
       </div>
       <div className={styles.passindicator}>
         <span className={styles.weak}></span>

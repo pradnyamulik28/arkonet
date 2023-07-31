@@ -77,7 +77,7 @@ const Loginpage = () => {
 
 
     } catch (error) {
-
+      swal("Failed!", "Server Down !! Please try again!!!!", "error");
       console.error('Error while calling function.!!!');
     }
   };
@@ -146,7 +146,7 @@ const Loginpage = () => {
           </div>
         </div>
       </div>
-      {/* <LeftSide /> */}
+
     </div >
   );
 }

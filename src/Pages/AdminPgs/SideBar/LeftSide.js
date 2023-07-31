@@ -22,6 +22,7 @@ const LeftSide = () => {
           <Link to="#" className={styles.help_text}><h6>Help</h6></Link>
           <Link to="/dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
           <Link to="/" className={styles.logout_text} onClick={handleLogout}><h6>Logout</h6></Link>
+          <Link to="/resetpass" className={` ${styles.reset_text}`} ><h6>Reset Password</h6></Link>
         </div>
 
         <div className={styles.help}>

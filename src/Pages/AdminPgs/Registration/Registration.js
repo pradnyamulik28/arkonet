@@ -116,7 +116,10 @@ const Registration = () => {
 
             }
           })
-          .catch((err) => { console.log(err) });
+          .catch((err) => {
+            swal("Failed!", "Server Down !! Please try again!!!!", "error");
+            console.log(err)
+          });
       } catch (error) {
         console.warn("Error on function calling...")
       }
@@ -133,7 +136,7 @@ const Registration = () => {
           <span> REGISTRATION FORM</span>
         </div>
         <div className={styles.regform}>
-          <form action="/" onSubmit={handleSubmit}>
+          <form action="/" onSubmit={handleSubmit} >
 
             <div className={styles.first}>
 

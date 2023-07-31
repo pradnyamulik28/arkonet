@@ -24,7 +24,7 @@
 }
 
 
-label {
+.selecttag label {
   width: 15rem;
   color: black;
   font-weight: bold;

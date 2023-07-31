@@ -90,7 +90,7 @@ const IncomeClient = () => {
                 return <tr key={index} >
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <Link to=""><td>{items.pan}</td></Link>
+                  <Link to={`/file/${items.clientId}`} className='h6'><td>{items.pan}</td></Link>
                   <td>{items.mobile}</td>
                   <td><Link to="/update" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope-at" viewBox="0 0 16 16">
@@ -99,7 +99,7 @@ const IncomeClient = () => {
                     </svg>
                   </Link></td>
                   <td>
-                    <Link to={`/Cupdate/${items.clientId}`} >Edit</Link>
+                    <Link to={`/Cupdate/${items.clientId}`} ><h6>Edit</h6></Link>
                   </td>
                 </tr>
               })

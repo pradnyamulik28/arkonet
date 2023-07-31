@@ -38,6 +38,12 @@
   left: 11%;
 }
 
+.reset_text {
+  position: fixed;
+  top: 40%;
+  left: 11%;
+}
+
 .arko_logo {
   position: fixed;
   max-width: 15%;
