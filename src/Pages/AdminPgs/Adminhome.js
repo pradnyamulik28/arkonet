@@ -18,6 +18,7 @@ import IncomeClient from './IncomeClient/IncomeClient';
 import DocFolder from './DocFolder/DocFolder';
 import FileUpload from './FileUpload/FileUpload'
 import ResetPass from './ResetPass/ResetPass';
+import ChangePass from './ChangePass/ChangePass';
 
 const Adminhome = () => {
   return (
@@ -46,7 +47,8 @@ const Adminhome = () => {
                 <Route exact path="/tic" element={<IncomeClient />} />
                 <Route exact path="/file/:id" element={<DocFolder />} />
                 <Route exact path="/fileupload/:id/:year" element={<FileUpload />} />
-                <Route exact path="/resetpass" element={<ResetPass />} />
+                <Route exact path="/forgetpass" element={<ResetPass />} />
+                <Route exact path="/changepass" element={<ChangePass />} />
               </Routes>
 
 

@@ -118,7 +118,7 @@ const Loginpage = () => {
             </form>
             <div className={styles.link}>
               <Link to="/reg">New to TAXKO? Click Here</Link>
-              <Link to="/">Forget Password</Link>
+              <Link to="/forgetpass">Forget Password</Link>
             </div>
           </div>
 

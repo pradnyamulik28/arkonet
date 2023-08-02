@@ -1,0 +1,51 @@
+.title {
+  font-size: 2em;
+  text-shadow: 0 1px 2px gray;
+}
+
+input {
+  border-radius: 20px;
+  height: 2rem;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  box-shadow: 0 1px 2px black;
+}
+
+.btn button {
+
+
+  height: 3rem;
+  width: 15rem;
+  border-radius: 10px;
+  border: none;
+  background-color: yellow;
+  color: white;
+  /* font-weight: bolder; */
+  font-size: 23px;
+  text-shadow: 2px 3px 5px #000000;
+  cursor: pointer;
+}
+
+
+button:active {
+  box-shadow: 4px 2px 5px 0 gray;
+  transform: translateY(4px);
+}
+
+.line {
+
+  /* Increase this as per requirement */
+  padding-bottom: 1px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  width: fit-content;
+}
+
+.hover {
+  cursor: pointer;
+}
+
+.hover:active {
+  transform: translateY(4px);
+}

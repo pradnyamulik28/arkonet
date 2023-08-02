@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import style from "./FileUpload.module.css";
 import upload from './upload.png';
-import Swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 import { url_ } from '../../../Config';
-import axios from 'axios';
+import swal from 'sweetalert';
 
 const FileUpload = () => {
 
@@ -13,82 +13,83 @@ const FileUpload = () => {
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [ShowPopup, setShowPopup] = useState(false);
+
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    // setSelectedFile(file);
-    if (file == null) {
-      console.log("FILE is not uploaded.")
-    } else {
-      console.log(" File is uploaded", file.name)
-      setShowPopup(true);
-      handleFileUpload(file);
-    }
-    console.log(typeof (file), file)
-  };
 
-  const handleFileUpload = (file) => {
-    console.log(ShowPopup);
 
-    if (ShowPopup === true) {
-      Swal({
-        title: 'Upload file?',
-        text: 'Are you sure you want to upload the selected file?',
+    if (file) {
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
         icon: 'warning',
-        buttons: ['Cancel', 'Upload'],
-        dangerMode: true,
-      }).then((willUpload) => {
-        if (willUpload) {
-
-
-          const url = `${url_}/upload`;
-          const formData = new FormData();
-          formData.append('clientid', id);
-          formData.append('userid', user_id);
-          formData.append('accountyear', year);
-          formData.append('file', file);
-
-          axios.post(url, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': `Bearer ${storedToken}`
-            },
-          }).then((response) => {
-
-
-            // console.log(JSON.stringify(response.data));
-
-            console.log('File uploaded successfully:', response.data);
-          }).catch((error) => {
-
-            console.error('Error uploading file:', error);
-          });
-
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, confirm!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          performAction(file);
         } else {
-          Swal('Upload canceled!', '', 'error');
+          console.log("Uploade is canceled.")
         }
       });
-
     } else {
-
-      console.log('No file selected.');
+      console.log("No file selected")
     }
+
   };
 
 
+  function performAction(file) {
+
+
+    const uploadurl = `${url_}/upload`;
 
 
 
 
 
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("userid", user_id);
+    formdata.append("clientid", id);
+    formdata.append("accountyear", year);
+    formdata.append("filednotfiled", "NO");
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch(uploadurl, requestOptions)
+      .then(response => {
+        response.json();
+        console.log(response.status)
+        if (response.status === 200) {
+          swal("Success.", "File Uploaded Successfully.", "success");
+
+          console.log("Action has been confirmed!");
 
 
+        } else {
+          swal("Failed", "Failed to upload file!!", "error");
+
+        }
+      })
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
 
 
-
-
+  }
 
 
 
