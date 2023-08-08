@@ -22,8 +22,6 @@ const DocFolder = () => {
   const lastFiveYearsArray = getLastFiveYears();
 
   console.log(lastFiveYearsArray)
-  console.log(`${lastFiveYearsArray[5]}-${lastFiveYearsArray[4]}`)
-  console.log(id)
 
 
 
@@ -42,7 +40,7 @@ const DocFolder = () => {
 
 
             <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <Link to={`/fileupload/${id}/${`${lastFiveYearsArray[1]}-${lastFiveYearsArray[0]}`}`}>
+              <Link to={`/fileupload/${id}/${`${lastFiveYearsArray[1]}-${lastFiveYearsArray[0]}`}`} >
                 <div className={styles.card} id={styles.card1}>
                   <div className={styles.icon}>
                     <p className={styles.icons}>

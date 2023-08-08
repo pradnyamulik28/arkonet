@@ -1,24 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from "./FileUpload.module.css";
 import upload from './upload.png';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
-import { url_ } from '../../../Config';
-import swal from 'sweetalert';
+// import { url_ } from '../../../Config';
+// // import swal from 'sweetalert';
+const arrayOffilenames = [
+  "Acknowledgement",
+  "Statement of Total Income",
+  "Balance Sheet",
+  "Profit and Loss",
+  "26AS",
+  "Tax Challan",
+  "1",
+  "2"
+];
 
 const FileUpload = () => {
 
+
+
   const { id } = useParams();
-  const { year } = useParams();
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
+  const { year } = useParams();
+
+
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
 
 
 
-  const handleFileChange = (event) => {
+
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:8085/getfile/1/1/2022-2023", requestOptions)
+      .then(response => response.json())
+      .then(data => {
+
+        const extractedNamesWithIndex = data.map((file, index) => {
+          const parts = file.fileName.split('1_1_2022-2023_');
+          const extractedName = parts[1].split('.pdf')[0];
+          return { index: index + 1, name: extractedName };
+        });
+        const extractedNames = extractedNamesWithIndex.map(item => item.name);
+        setSelectedFiles(extractedNames)
+        console.log(data)
+        console.log(extractedNames)
+      })
+      .catch(error => console.log('error', error));
+
+
+  }, []);
+
+
+  const handleFileUpload = (index) => (event) => {
     const file = event.target.files[0];
-
 
     if (file) {
 
@@ -32,7 +77,36 @@ const FileUpload = () => {
         confirmButtonText: 'Yes, confirm!'
       }).then((result) => {
         if (result.isConfirmed) {
-          performAction(file);
+
+          var myHeaders = new Headers();
+          myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+          var formdata = new FormData();
+          formdata.append("file", file);
+          formdata.append("userid", user_id);
+          formdata.append("clientid", id);
+          formdata.append("accountyear", year);
+          formdata.append("filename", arrayOffilenames[index]);
+
+          var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow'
+          };
+
+          fetch("http://localhost:8085/upload", requestOptions)
+            .then(response => {
+              response.text();
+              window.location.reload();
+            })
+            .then(result => {
+              console.log(result)
+
+            })
+            .catch(error => console.log('error', error));
+
+
         } else {
           console.log("Uploade is canceled.")
         }
@@ -44,54 +118,13 @@ const FileUpload = () => {
   };
 
 
-  function performAction(file) {
-
-
-    const uploadurl = `${url_}/upload`;
 
 
 
 
 
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-    var formdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("userid", user_id);
-    formdata.append("clientid", id);
-    formdata.append("accountyear", year);
-    formdata.append("filednotfiled", "NO");
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: formdata,
-      redirect: 'follow'
-    };
-
-    fetch(uploadurl, requestOptions)
-      .then(response => {
-        response.json();
-        console.log(response.status)
-        if (response.status === 200) {
-          swal("Success.", "File Uploaded Successfully.", "success");
-
-          console.log("Action has been confirmed!");
-
-
-        } else {
-          swal("Failed", "Failed to upload file!!", "error");
-
-        }
-      })
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-
-
-  }
-
-
+  // Filter arrayOffilenames to get elements not present in extractedNames
+  const elementsNotPresent = arrayOffilenames.filter(item => !selectedFiles.includes(item));
 
 
   return (
@@ -136,102 +169,36 @@ const FileUpload = () => {
                 </div>
               </div>
             </div>
+            <div className='container'>
+              <div className="row m-4">
 
-            <div className="maindocuments">
-              <div className="row">
 
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div className={`${style.filebox}`} id={`${style.fb1}`}>
-                    <div className={`${style.uploadsymbol}`}>
-                      <input type="file" onChange={handleFileChange} id="akn" />
-                      <label htmlFor="akn"><img src={upload} alt="" /><h6>Upload File</h6></label>
+                {selectedFiles.map((name, index) => (
+                  <div className="col-6" key={index}>
+                    <div className={`${style.file_upload} `}>
+                      <i className="bi bi-file-earmark-pdf-fill"></i>
+                      <h6 className={style.filename_text}>{name}</h6>
                     </div>
-                    <p>Acknowledgement</p>
                   </div>
-                </div>
+                ))}
 
-
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div className={`${style.filebox}`} id={`${style.fb2}`}>
-                    <div className={`${style.uploadsymbol}`}>
-                      <input type="file" onChange={handleFileChange} id="inc" />
-                      <label htmlFor="inc"><img src={upload} alt="" /><h6>Upload File</h6></label>
+                {elementsNotPresent.map((name, index) => (
+                  <div key={index} className='col-6'>
+                    <div className={style.file_upload}>
+                      <div className={style.image_upload_wrap}>
+                        <input className={style.file_upload_input} type='file' onChange={handleFileUpload(index)} />
+                        <div className={style.drag_text}>
+                          <img src={upload} alt="" />
+                          <h4>Upload File</h4>
+                        </div>
+                      </div>
+                      <h6 className={style.filename_text}>{name}</h6>
                     </div>
-                    <p>Statement of Total Income</p>
                   </div>
-                </div>
-
-
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div className={`${style.filebox}`} id={`${style.fb3}`}>
-                    <div className={`${style.uploadsymbol}`}>
-                      <input type="file" onChange={handleFileChange} id="bs" />
-                      <label htmlFor="bs"><img src={upload} alt="" /><h6>Upload File</h6></label>
-                    </div>
-                    <p>Balannce Sheet</p>
-                  </div>
-                </div>
-
-
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div className={`${style.filebox}`} id={`${style.fb4}`}>
-                    <div className={`${style.uploadsymbol}`}>
-                      <input type="file" onChange={handleFileChange} id="pl" />
-                      <label htmlFor="pl"><img src={upload} alt="" /><h6>Upload File</h6></label>
-                    </div>
-                    <p>Profit & Loss</p>
-                  </div>
-                </div>
-
-
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div className={`${style.filebox}`} id={`${style.fb5}`}>
-                    <div className={`${style.uploadsymbol}`}>
-                      <input type="file" onChange={handleFileChange} id="26AS" />
-                      <label htmlFor="26AS"><img src={upload} alt="" /><h6>Upload File</h6></label>
-                    </div>
-                    <p>26AS</p>
-                  </div>
-                </div>
-
-
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div className={`${style.filebox}`} id={`${style.fb6}`}>
-                    <div className={`${style.uploadsymbol}`}>
-                      <input type="file" onChange={handleFileChange} id="tax" />
-                      <label htmlFor="tax"><img src={upload} alt="" /><h6>Upload File</h6></label>
-                    </div>
-                    <p>Tax Challan</p>
-                  </div>
-                </div>
-
-
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div className={`${style.filebox}`} id={`${style.fb7}`}>
-                    <div className={`${style.uploadsymbol}`}>
-                      <input type="file" onChange={handleFileChange} id="od" />
-                      <label htmlFor="od"><img src={upload} alt="" /><h6>Upload File</h6></label>
-                    </div>
-                    <p>Other Document</p>
-                  </div>
-                </div>
-
-
-                <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div className={`${style.filebox}`} id={`${style.fb8}`}>
-                    <div className={`${style.uploadsymbol}`}>
-                      <input type="file" onChange={handleFileChange} id="xlsheet" />
-                      <label htmlFor="xlsheet"><img src={upload} alt="" /><h6>Upload File</h6></label>
-                    </div>
-                    <p>Esxcel Sheet</p>
-                  </div>
-                  <div className={`${style.uploadsymbol}`}>
-                  </div>
-
-                </div>
-
+                ))}
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -240,3 +207,4 @@ const FileUpload = () => {
 }
 
 export default FileUpload;
+

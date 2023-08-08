@@ -10,7 +10,6 @@ import styles from '../AdminPgs/Adminhome.module.css';
 import taxko from '../../Images/taxko_logo.png'
 import URegistration from '../ClientPgs/URegistration/URegistration';
 import Login from './Login/loginpage'
-// import Cards from "../../components/Cards/Cards";
 import Dashboard from "../AdminPgs/DashBoard/DashBoard";
 import Uupdate from '../ClientPgs/UUpdate/Uupdate';
 import TotalClient from './TotalClients/TotalClient';
@@ -47,6 +46,7 @@ const Adminhome = () => {
                 <Route exact path="/tic" element={<IncomeClient />} />
                 <Route exact path="/file/:id" element={<DocFolder />} />
                 <Route exact path="/fileupload/:id/:year" element={<FileUpload />} />
+
                 <Route exact path="/forgetpass" element={<ResetPass />} />
                 <Route exact path="/changepass" element={<ChangePass />} />
               </Routes>

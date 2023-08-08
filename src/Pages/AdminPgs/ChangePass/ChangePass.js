@@ -83,15 +83,15 @@ const ChangePass = () => {
     <div>
       <div className="container">
         <div className={`${style.title} row m - 5 mt - 5 `}>Change Password</div>
-        <div className="row m-4 d-flex flex-column">
+        <div className={`${style.changePass} row m-4 d-flex flex-column `}>
           <label htmlFor="">Current Password</label>
           <input type="password" value={data.oldPassword} onChange={handleChange} name='oldPassword' placeholder='Enter registered password ....' autoComplete='off' />
         </div>
-        <div className="row m-4 d-flex flex-column">
+        <div className={`${style.changePass} row m-4 d-flex flex-column `}>
           <label htmlFor="">New Password</label>
           <input type="password" value={data.newPassword} onChange={handleChange} name='newPassword' placeholder='Enter new password ....' autoComplete='off' />
         </div>
-        <div className="row m-4 d-flex flex-column">
+        <div className={`${style.changePass} row m-4 d-flex flex-column `}>
           <label htmlFor="">Confirm Password</label>
           <input type="password" value={data.confirmpass} onChange={handleChange} name='confirmpass' placeholder='Enter confirm password ....' autoComplete='off' />
         </div>

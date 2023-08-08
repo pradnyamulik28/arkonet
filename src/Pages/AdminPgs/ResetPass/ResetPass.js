@@ -171,15 +171,15 @@ const ResetPass = () => {
     <div>
       <div className="container">
         <div className={`${style.title} row m-5 mt-5 `}>Forget Password</div>
-        <div className="row m-4 d-flex flex-column">
-          <label htmlFor="">Enter Registered PAN</label>
+        <div className={`row m-4 d-flex flex-column ${style.reset_input}`}>
+          <label htmlFor=""><b>Enter Registered PAN</b></label>
           <input type="text" value={data.pan} onChange={handleChange} name='pan' placeholder='Enter Registered PAN....' autoComplete='off' />
         </div>
         <div className="row m-2 d-flex justify-content-end mr-4">
           <span onClick={SendOTP} className={`${style.line} ${style.hover}`}>Send OTP</span>
         </div>
         <div className='row m-4 mt-5'>
-          <div className="col-6">
+          <div className={`col-6 ${style.reset_input}`}>
             <input type="text" onChange={handleChange} value={data.otp} name='otp' placeholder='Enter the OTP....' autoComplete='off' />
           </div>
           <div className={`col-6 ${style.btn} d-flex justify-content-center`}>
@@ -189,12 +189,12 @@ const ResetPass = () => {
 
         <div className="row m-4 d-flex flex-column">
 
-          <div className="row m-4">
-            <label htmlFor="">New Password</label>
+          <div className={`row m-4 ${style.reset_input}`}>
+            <label htmlFor=""><b>New Password</b></label>
             <input type="password" onChange={handleChange} value={data.newPassword} name='newPassword' placeholder='Enter new password....' autoComplete='off' />
           </div>
-          <div className="row m-4">
-            <label htmlFor="">Confirm New Password</label>
+          <div className={`row m-4 ${style.reset_input}`}>
+            <label htmlFor=""><b>Confirm New Password</b></label>
             <input type="password" onChange={handleChange} value={data.confirmpassword} name='confirmpassword' placeholder='Re-enter new password....' autoComplete='off' />
           </div>
           <div className={`row d-flex justify-content-center ${style.btn}`}>
