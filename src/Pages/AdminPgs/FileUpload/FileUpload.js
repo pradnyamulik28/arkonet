@@ -3,18 +3,8 @@ import style from "./FileUpload.module.css";
 import upload from './upload.png';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
-// import { url_ } from '../../../Config';
-// // import swal from 'sweetalert';
-const arrayOffilenames = [
-  "Acknowledgement",
-  "Statement of Total Income",
-  "Balance Sheet",
-  "Profit and Loss",
-  "26AS",
-  "Tax Challan",
-  "1",
-  "2"
-];
+import { url_ } from '../../../Config';
+
 
 const FileUpload = () => {
 
@@ -26,13 +16,31 @@ const FileUpload = () => {
   const { year } = useParams();
 
 
-  const [selectedFiles, setSelectedFiles] = useState([]);
 
-
-
-
-
+  const [dbfilename, setDbfilename] = useState([]);
+  const originalfilename = [
+    "Acknowledgement",
+    "Statement of Total Income",
+    "Balance Sheet",
+    "Profit and Loss",
+    "26AS",
+    "Tax Challan",
+    "1",
+    "2"
+  ];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    GetFile();
+    SendCountData();
+  }, []);
+
+  const filenameStatusArray = originalfilename.map(filename => ({
+    filename: filename,
+    status: dbfilename.includes(filename)
+  }));
+
+
+  const GetFile = () => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
@@ -42,27 +50,65 @@ const FileUpload = () => {
       redirect: 'follow'
     };
 
-    fetch("http://localhost:8085/getfile/1/1/2022-2023", requestOptions)
+    fetch(`${url_}/getfile/${user_id}/${id}/${year}`, requestOptions)
       .then(response => response.json())
       .then(data => {
 
-        const extractedNamesWithIndex = data.map((file, index) => {
+        const extractedNames = data.map(file => {
           const parts = file.fileName.split('1_1_2022-2023_');
           const extractedName = parts[1].split('.pdf')[0];
-          return { index: index + 1, name: extractedName };
+          return extractedName;
         });
-        const extractedNames = extractedNamesWithIndex.map(item => item.name);
-        setSelectedFiles(extractedNames)
-        console.log(data)
-        console.log(extractedNames)
+        setDbfilename(extractedNames)
+
+
       })
       .catch(error => console.log('error', error));
+  }
+
+  const SendCountData = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var raw = JSON.stringify({
+      "userid": `${user_id}`,
+      "clientid": `${id}`,
+      "accountyear": `${year}`,
+      "filednotfiled": "No"
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch(`${url_}/saveData`, requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
 
 
-  }, []);
+  const UpdateFileData = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
+    var requestOptions = {
+      method: 'PUT',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
 
-  const handleFileUpload = (index) => (event) => {
+    fetch(`${url_}/updateFiledNotFiled?userid=${user_id}&clientid=${id}&accountyear=${year}`, requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+
+  const handleFileUpload = (event, filename) => {
     const file = event.target.files[0];
 
     if (file) {
@@ -86,7 +132,7 @@ const FileUpload = () => {
           formdata.append("userid", user_id);
           formdata.append("clientid", id);
           formdata.append("accountyear", year);
-          formdata.append("filename", arrayOffilenames[index]);
+          formdata.append("filename", filename);
 
           var requestOptions = {
             method: 'POST',
@@ -95,9 +141,11 @@ const FileUpload = () => {
             redirect: 'follow'
           };
 
-          fetch("http://localhost:8085/upload", requestOptions)
+          fetch(`${url_}/upload`, requestOptions)
             .then(response => {
               response.text();
+              console.log(file)
+              console.log(filename)
               window.location.reload();
             })
             .then(result => {
@@ -122,11 +170,6 @@ const FileUpload = () => {
 
 
 
-
-  // Filter arrayOffilenames to get elements not present in extractedNames
-  const elementsNotPresent = arrayOffilenames.filter(item => !selectedFiles.includes(item));
-
-
   return (
 
     <div className={`${style.container}`}>
@@ -146,7 +189,7 @@ const FileUpload = () => {
                 <div className="col">
 
                   <label className={`${style.switch}`}>
-                    <input type='checkbox' />
+                    <input type='checkbox' onClick={UpdateFileData} />
                     <span className={`${style.slider} ${style.round}`}></span>
                   </label>
 
@@ -173,29 +216,29 @@ const FileUpload = () => {
               <div className="row m-4">
 
 
-                {selectedFiles.map((name, index) => (
-                  <div className="col-6" key={index}>
-                    <div className={`${style.file_upload} `}>
-                      <i className="bi bi-file-earmark-pdf-fill"></i>
-                      <h6 className={style.filename_text}>{name}</h6>
-                    </div>
+
+                {filenameStatusArray.map(item => (
+                  <div className='col-6'>
+                    {item.status ? (
+                      <div className={style.file_upload}>
+                        <i className="bi bi-file-earmark-pdf-fill"></i>
+                        <h6 className={style.filename_text} key={item.filename}>{item.filename}</h6>
+                      </div>
+                    ) : (
+                      <div className={style.file_upload}>
+                        <div className={style.image_upload_wrap}>
+                          <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.filename)} />
+                          <div className={style.drag_text}>
+                            <img src={upload} alt="" />
+                            <h4>Upload File</h4>
+                          </div>
+                        </div>
+                        <h6 className={style.filename_text} key={item.filename}>{item.filename}</h6>
+                      </div>
+                    )}
                   </div>
                 ))}
 
-                {elementsNotPresent.map((name, index) => (
-                  <div key={index} className='col-6'>
-                    <div className={style.file_upload}>
-                      <div className={style.image_upload_wrap}>
-                        <input className={style.file_upload_input} type='file' onChange={handleFileUpload(index)} />
-                        <div className={style.drag_text}>
-                          <img src={upload} alt="" />
-                          <h4>Upload File</h4>
-                        </div>
-                      </div>
-                      <h6 className={style.filename_text}>{name}</h6>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
 

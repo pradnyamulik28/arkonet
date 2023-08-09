@@ -29,7 +29,7 @@
 }
 
 .app_title {
-  color: yellow;
+  color: #ffd401;
   font-weight: bolder;
   font-size: 60px;
   letter-spacing: 20px;
@@ -50,7 +50,7 @@
 }
 
 .btn_login button {
-  height: 2rem;
+  height: 3rem;
   width: 15rem;
   border-radius: 10px;
   border: none;
@@ -79,8 +79,9 @@ button:active {
 
 .link a {
 
-  color: #dada3e;
-  font-size: large;
+  color: #ffd401;
+
+  font-size: larger;
 }
 
 .footer {

@@ -41,6 +41,7 @@
   text-shadow: 2px 3px 5px #000000;
   margin: 10px;
   cursor: pointer;
+  /* width: 10em; */
 }
 
 button:active {
