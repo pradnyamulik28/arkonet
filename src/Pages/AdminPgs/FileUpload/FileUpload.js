@@ -20,100 +20,102 @@ const FileUpload = () => {
   const [dbfilename, setDbfilename] = useState([]);
   const originalfilename = [
     "Acknowledgement",
-    "Statement of Total Income",
-    "Balance Sheet",
-    "Profit and Loss",
+    "Statement_of_Total_Income",
+    "Balance_Sheet",
+    "Profit_and_Loss",
     "26AS",
-    "Tax Challan",
-    "1",
-    "2"
+    "Tax_Challan",
+    "Others_1",
+    "Others_1"
   ];
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
-    GetFile();
-    SendCountData();
+    fetchData();
   }, []);
 
-  const filenameStatusArray = originalfilename.map(filename => ({
-    filename: filename,
-    status: dbfilename.includes(filename)
-  }));
+  const fetchData = async () => {
+    try {
+      await getFile();
 
 
-  const GetFile = () => {
-    var myHeaders = new Headers();
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+
+  const getFile = async () => {
+    const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-    var requestOptions = {
+    const requestOptions = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow'
     };
 
-    fetch(`${url_}/getfile/${user_id}/${id}/${year}`, requestOptions)
-      .then(response => response.json())
-      .then(data => {
+    try {
+      const response = await fetch(`${url_}/getfile/${user_id}/${id}/${year}`, requestOptions);
+      const data = await response.json();
 
-        const extractedNames = data.map(file => {
-          const parts = file.fileName.split('1_1_2022-2023_');
-          const extractedName = parts[1].split('.pdf')[0];
-          return extractedName;
-        });
-        setDbfilename(extractedNames)
-
-
-      })
-      .catch(error => console.log('error', error));
-  }
-
-  const SendCountData = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-    var raw = JSON.stringify({
-      "userid": `${user_id}`,
-      "clientid": `${id}`,
-      "accountyear": `${year}`,
-      "filednotfiled": "No"
-    });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch(`${url_}/saveData`, requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-  }
+      const extractedNames = data.map(file => {
+        const parts = file.fileName.split(`${user_id}_${id}_${year}_`);
+        const extractedName = parts[1].split('.pdf')[0];
+        return extractedName;
+      });
+      setDbfilename(extractedNames);
+    } catch (error) {
+      console.error('An error occurred while fetching files:', error);
+    }
+  };
 
 
-  const UpdateFileData = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-    var requestOptions = {
-      method: 'PUT',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
+  const filenameStatusArray = originalfilename.map(filename => ({
+    filename,
+    status: dbfilename.includes(filename)
+  }));
 
-    fetch(`${url_}/updateFiledNotFiled?userid=${user_id}&clientid=${id}&accountyear=${year}`, requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-  }
 
-  const handleFileUpload = (event, filename) => {
+
+  // const handleCheckboxChange = () => {
+
+
+
+
+  //   setIsChecked(!isChecked);
+
+  //   if (!isChecked === true) {
+
+  //     var myHeaders = new Headers();
+  //     myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+  //     var requestOptions = {
+  //       method: 'PUT',
+  //       headers: myHeaders,
+  //       redirect: 'follow'
+  //     };
+
+  //     fetch(`http://localhost:8085/updateFiledNotFiled?userid=${user_id}&clientid=${id}&accountyear=${year}`, requestOptions)
+  //       .then(response => response.text())
+  //       .then(result => console.log(result))
+  //       .catch(error => console.log('error', error));
+
+  //     console.log("Checked")
+  //   } else {
+  //     console.log("Not Checked")
+
+  //   }
+
+
+
+
+  // }
+
+  const handleFileUpload = async (event, filename) => {
     const file = event.target.files[0];
 
     if (file) {
-
-      Swal.fire({
+      const result = await Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
         icon: 'warning',
@@ -121,49 +123,63 @@ const FileUpload = () => {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, confirm!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-
-          var myHeaders = new Headers();
-          myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-          var formdata = new FormData();
-          formdata.append("file", file);
-          formdata.append("userid", user_id);
-          formdata.append("clientid", id);
-          formdata.append("accountyear", year);
-          formdata.append("filename", filename);
-
-          var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: formdata,
-            redirect: 'follow'
-          };
-
-          fetch(`${url_}/upload`, requestOptions)
-            .then(response => {
-              response.text();
-              console.log(file)
-              console.log(filename)
-              window.location.reload();
-            })
-            .then(result => {
-              console.log(result)
-
-            })
-            .catch(error => console.log('error', error));
-
-
-        } else {
-          console.log("Uploade is canceled.")
-        }
       });
-    } else {
-      console.log("No file selected")
-    }
 
+      if (result.isConfirmed) {
+
+
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+        const formdata = new FormData();
+        formdata.append("file", file);
+        formdata.append("userid", user_id);
+        formdata.append("clientid", id);
+        formdata.append("accountyear", year);
+        formdata.append("filename", filename);
+
+        const requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: formdata,
+          redirect: 'follow'
+        };
+
+        try {
+          const response = await fetch("http://localhost:8085/upload", requestOptions);
+          const responseData = await response.text();
+          console.log(responseData)
+          if (response.status === 200) {
+            await Swal.fire(
+              'Success.',
+              `${responseData}`,
+              'success'
+            )
+            window.location.reload();
+
+          } else {
+            Swal.fire(
+              'Failed!',
+              `${responseData}`,
+              'error'
+            )
+          }
+        } catch (error) {
+          console.log('Error:', error);
+          if (error.response) {
+            console.log('Response Status:', error.response.status);
+            console.log('Response Data:', await error.response.text());
+          }
+        }
+      } else {
+        console.log("Upload is canceled.");
+        window.location.reload();
+      }
+    } else {
+      console.log("No file selected");
+    }
   };
+
 
 
 
@@ -172,8 +188,8 @@ const FileUpload = () => {
 
   return (
 
-    <div className={`${style.container}`}>
-      <div className="row">
+    <div className="container">
+      <div className="row m-5">
 
 
         <div className="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="maindiv">
@@ -189,7 +205,7 @@ const FileUpload = () => {
                 <div className="col">
 
                   <label className={`${style.switch}`}>
-                    <input type='checkbox' onClick={UpdateFileData} />
+                    <input type='checkbox' />
                     <span className={`${style.slider} ${style.round}`}></span>
                   </label>
 
@@ -218,7 +234,7 @@ const FileUpload = () => {
 
 
                 {filenameStatusArray.map(item => (
-                  <div className='col-6'>
+                  <div className='col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6'>
                     {item.status ? (
                       <div className={style.file_upload}>
                         <i className="bi bi-file-earmark-pdf-fill"></i>
@@ -246,6 +262,7 @@ const FileUpload = () => {
         </div>
       </div>
     </div>
+
   );
 }
 

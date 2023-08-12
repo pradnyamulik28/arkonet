@@ -9,13 +9,13 @@ const DashBoard = () => {
   const [Totalclient, setTotalclient] = useState();
   const [TotalIncomeclient, setTotalIncomeclient] = useState();
 
+  const user_id = window.localStorage.getItem('user_id');
+  const storedToken = window.localStorage.getItem('jwtToken');
 
   useEffect(() => {
 
     const totalClient = () => {
 
-      const user_id = window.localStorage.getItem('user_id');
-      const storedToken = window.localStorage.getItem('jwtToken');
       const url = `${url_}/counts/${user_id}`;
 
 
@@ -43,11 +43,36 @@ const DashBoard = () => {
     };
 
     totalClient();
-
+    FileCount();
   }, []);
 
 
+  const FileCount = () => {
 
+
+
+
+
+    try {
+
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(`http://localhost:8085/filedNotfiledCounts/${user_id}`, requestOptions)
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+
+    } catch (error) {
+      console.warn("Error on function calling...")
+    }
+  };
 
 
 
