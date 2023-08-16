@@ -92,7 +92,7 @@ const Loginpage = () => {
             </div>
             <div className={styles.app_title}>TAXKO</div>
             <div className={styles.app_desp}>
-              Best cloud based storage platfrom for all Business owners and individuals to manage their Tax Filling data
+              Best cloud based storage platfrom for all Businesses and individuals to manage their Tax Filling data
             </div>
           </div>
           <div className={styles.main}>

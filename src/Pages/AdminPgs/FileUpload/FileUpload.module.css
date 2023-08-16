@@ -291,3 +291,54 @@ input:checked+.slider:before {
   display: flex;
   justify-content: center;
 }
+
+
+/* //////////////////////////////////////////////// */
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+.checkbox_custom {
+  position: absolute;
+  top: 8px;
+  left: 34px;
+  width: 20px;
+  /* Adjust the size as needed */
+  height: 20px;
+  /* Adjust the size as needed */
+  background-color: rgb(241, 241, 241);
+  border: 1px solid #c7c7c7;
+  /* Add your preferred border styles */
+  border-radius: 4px;
+  /* Adjust as needed */
+}
+
+.checkbox_tick {
+  position: absolute;
+  top: 3px;
+  left: 8%;
+  /* transform: translate(-50%, -50%); */
+  width: 16px;
+  height: 9px;
+  border: 2px solid #3903fd;
+  border-top: none;
+  border-right: none;
+  transform: rotate(308deg);
+  display: none;
+}
+
+.checkbox:checked+.checkbox_custom .checkbox_tick {
+  display: block;
+  /* Show the tick when the checkbox is checked */
+}
+
+.checkbox_label {
+  position: absolute;
+  /* display: inline-block; */
+  /* margin-right: 10px; */
+  top: 6px;
+}

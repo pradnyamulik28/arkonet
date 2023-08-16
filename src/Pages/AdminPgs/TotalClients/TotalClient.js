@@ -31,7 +31,6 @@ const TotalClient = () => {
           .then(data => {
             setTcdata(data)
             console.log("TC", data)
-
           })
           .catch(error => console.log(error));
       } catch (error) {

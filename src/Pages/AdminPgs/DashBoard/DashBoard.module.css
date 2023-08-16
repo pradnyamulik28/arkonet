@@ -43,3 +43,17 @@
   margin-top: 5%;
   cursor: pointer;
 }
+
+.table th {
+  vertical-align: middle;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 15px;
+}
+
+
+.table td,
+.table th {
+  padding: 0.5rem;
+  vertical-align: top;
+  border-top: 0px solid #dee2e6 !important;
+}

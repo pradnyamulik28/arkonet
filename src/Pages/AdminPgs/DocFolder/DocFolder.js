@@ -191,8 +191,7 @@ const DocFolder = () => {
 
   const sendCountData = async (year) => {
     const Year = `${year - 1}-${year}`;
-    console.log(Year)
-    console.log(`/fileupload/${id}/${year - 1}-${year}`)
+
 
 
 
@@ -241,8 +240,8 @@ const DocFolder = () => {
                       </p>
                     </div>
                     <div className={`${getFolderColor(index)} ${styles.cont} h6`}>
-                      <h5>A.Y {year}-{year - 1}</h5>
-                      <p>Financial Year {year}-{year - 1}</p>
+                      <h5>A.Y {year - 1}-{year}</h5>
+                      <p>Financial Year {year - 1}-{year}</p>
                     </div>
                   </div>
                 </Link>
