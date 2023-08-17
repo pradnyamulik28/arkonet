@@ -26,8 +26,8 @@ const FileUpload = () => {
     "Profit_and_Loss",
     "26AS",
     "Tax_Challan",
-    "Others_1",
-    "Others_1"
+    "Excel",
+    "Others"
   ];
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const FileUpload = () => {
     try {
       const response = await fetch(`${url_}/getfile/${user_id}/${id}/${year}`, requestOptions);
       const data = await response.json();
-      // console.log(data)
+      console.log(data)
       const extractedNames = data.map(file => {
         const fileid = file.id;
         const parts = file.fileName.split(`${user_id}_${id}_${year}_`);
@@ -255,6 +255,79 @@ const FileUpload = () => {
   };
 
 
+
+  const DeleteFile = async () => {
+
+
+    try {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, confirm!'
+      });
+
+      if (result.isConfirmed) {
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+        var raw = JSON.stringify(selectedFiles);
+
+        var requestOptions = {
+          method: 'DELETE',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+
+        const response = await fetch("http://localhost:8085/deletefile", requestOptions);
+        const responseData = await response.text();
+        console.log(responseData)
+        if (response.status === 200) {
+          await Swal.fire(
+            'Success.',
+            `${responseData}`,
+            'success'
+          )
+          window.location.reload();
+
+        } else {
+          Swal.fire(
+            'Failed!',
+            `${responseData}`,
+            'error'
+          )
+        }
+
+        console.log(selectedFiles)
+
+
+      } else {
+        console.log("Canceled the delete!");
+      }
+    } catch (error) {
+      console.log("Failed to call function!!!");
+
+      console.log('Error:', error);
+      if (error.response) {
+        console.log('Response Status:', error.response.status);
+        console.log('Response Data:', error.response.text());
+      }
+    }
+
+
+
+
+
+
+  }
+
   return (
 
     <div className="container">
@@ -290,10 +363,10 @@ const FileUpload = () => {
                   <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button>
                 </div>
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="delet">
-                  <h2 className="icons"><i className="fa-solid fa-trash-can"></i></h2>
+                  <h2 className="icons"><i className="fa-solid fa-trash-can" onClick={DeleteFile}></i></h2>
                 </div>
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="share">
-                  <h2 className="icons"><i className="fa-solid fa-share-from-square" onClick={() => console.log(selectedFiles)}></i></h2>
+                  <h2 className="icons"><i className="fa-solid fa-share-from-square" ></i></h2>
                 </div>
               </div>
             </div>
