@@ -50,10 +50,7 @@ const Loginpage = () => {
 
         .then((res) => {
           console.log(res)
-          // Clear localStorage
-          // localStorage.clear();
 
-          // Save new JWT token to localStorage
           const jwtToken = res.data.token;
           const user_id = res.data.user.regId;
           const user_name = res.data.user.name;
@@ -71,7 +68,7 @@ const Loginpage = () => {
 
         .catch((err) => {
 
-          swal("Failed!", "Login failed, Please try again!!!", "error");
+          swal("Failed!", `${err.message}`, "error");
           console.log(err)
         });
 

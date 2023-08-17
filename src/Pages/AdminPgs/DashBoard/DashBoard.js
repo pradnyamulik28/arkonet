@@ -69,8 +69,6 @@ const DashBoard = () => {
         .then(response => response.json())
         .then(data => {
           setFiledata(data)
-          console.log(data)
-
         })
         .then(result => console.log(result))
         .catch(error => console.log('error', error));

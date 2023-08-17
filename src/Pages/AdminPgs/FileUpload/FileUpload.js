@@ -15,6 +15,7 @@ const FileUpload = () => {
   const storedToken = window.localStorage.getItem('jwtToken');
   const { year } = useParams();
 
+
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileResponse, setFileResponse] = useState(false);
   const [dbfilename, setDbfilename] = useState([]);
@@ -58,11 +59,12 @@ const FileUpload = () => {
     try {
       const response = await fetch(`${url_}/getfile/${user_id}/${id}/${year}`, requestOptions);
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       const extractedNames = data.map(file => {
+        const fileid = file.id;
         const parts = file.fileName.split(`${user_id}_${id}_${year}_`);
         const extractedName = parts[1].split('.pdf')[0];
-        return extractedName;
+        return { fileid, extractedName };
       });
       setDbfilename(extractedNames);
     } catch (error) {
@@ -97,10 +99,28 @@ const FileUpload = () => {
 
 
 
-  const filenameStatusArray = originalfilename.map(filename => ({
-    filename,
-    status: dbfilename.includes(filename)
-  }));
+  const filenameStatusArray = originalfilename.map(filename => {
+    const matchingFile = dbfilename.find(file => {
+      return file.extractedName === filename || file.fileid.toString() === filename;
+    });
+
+    if (matchingFile) {
+      return { filename, status: true, fileId: matchingFile.fileid };
+    } else {
+      return { filename, status: false };
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
 
 
   const handleToggle = async () => {
@@ -224,6 +244,16 @@ const FileUpload = () => {
   };
 
 
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const handleCheckboxChange = (event, fileId) => {
+    if (event.target.checked) {
+      setSelectedFiles(prevSelectedFiles => [...prevSelectedFiles, fileId]);
+    } else {
+      setSelectedFiles(prevSelectedFiles => prevSelectedFiles.filter(id => id !== fileId));
+    }
+  };
+
 
   return (
 
@@ -263,7 +293,7 @@ const FileUpload = () => {
                   <h2 className="icons"><i className="fa-solid fa-trash-can"></i></h2>
                 </div>
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="share">
-                  <h2 className="icons"><i className="fa-solid fa-share-from-square"></i></h2>
+                  <h2 className="icons"><i className="fa-solid fa-share-from-square" onClick={() => console.log(selectedFiles)}></i></h2>
                 </div>
               </div>
             </div>
@@ -273,14 +303,8 @@ const FileUpload = () => {
 
 
                 {filenameStatusArray.map(item => (
-                  <div className='col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                  <div className='col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6' key={item.fileId}>
                     {item.status ? (
-                      // <div className={style.file_upload}>
-                      //   <i className="bi bi-file-earmark-pdf-fill"></i>
-                      //   <h6 className={style.filename_text} key={item.filename}>{item.filename}</h6>
-                      // </div>
-
-
                       <div>
 
                         <div className={style.file_upload}>
@@ -289,6 +313,7 @@ const FileUpload = () => {
                               <input
                                 type="checkbox"
                                 className={style.checkbox}
+                                onChange={event => handleCheckboxChange(event, item.fileId)}
                               />
                               <span className={style.checkbox_custom}>
                                 <span className={style.checkbox_tick}></span>
@@ -296,7 +321,7 @@ const FileUpload = () => {
                             </label>
                           )}
                           <i className="bi bi-file-earmark-pdf-fill"></i>
-                          <h6 className={style.filename_text} key={item.filename}>
+                          <h6 className={style.filename_text} >
                             {item.filename}
                           </h6>
                         </div>
