@@ -143,8 +143,8 @@ const DashBoard = () => {
                     <thead>
                       <tr>
                         <th scope="col" >Assessment Year</th>
-                        <th scope="col" className={`${styles.green} `}>Filled</th>
-                        <th scope="col" className={`text-danger `}>Not Filled</th>
+                        <th scope="col" className={`${styles.green} `}>Filed</th>
+                        <th scope="col" className={`text-danger `}>Not Filed</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -171,58 +171,6 @@ const DashBoard = () => {
 
         </div>
 
-
-
-
-
-        {/* <div className="row">
-          <div className="col-sm-7">
-            <div className={`card m-4 ${styles.cardd} `} >
-
-              <div className={`m-4 w-100`}>
-                <div className="top d-flex justify-content-between">
-                  <h3 className={`card-title font-weight-bold ${styles.green} `}>Income Tax</h3>
-                  <h3><i className={`fa-solid fa-ellipsis-vertical ${styles.green} `}  ></i></h3>
-                </div>
-                <div >
-
-                  <div className={styles.count}>
-                    <div className={`mr-2 font-weight-bold ${styles.ntf}`}>Assessment Year
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                    </div>
-
-                    <div className={`font-weight-bold text-success ${styles.ntf}`}>Filled
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                    </div>
-
-                    <div className={`font-weight-bold text-danger ${styles.ntf}`}>Not Filled
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                      <h6 className={`mt-4`}>{Totalclient}</h6>
-                    </div>
-
-
-                  </div>
-                  <small >Last updated on 19 May 2023</small>
-
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-        </div> */}
       </div>
     </div >
   );

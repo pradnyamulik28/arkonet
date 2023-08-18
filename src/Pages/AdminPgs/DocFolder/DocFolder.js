@@ -190,7 +190,10 @@ const DocFolder = () => {
 
 
   const sendCountData = async (year) => {
-    const Year = `${year - 1}-${year}`;
+
+    const shortYear = year.toString().slice(-2);
+    const yearRange = `${year - 1}-${shortYear}`;
+
 
 
 
@@ -202,7 +205,7 @@ const DocFolder = () => {
     const raw = JSON.stringify({
       "userid": user_id,
       "clientid": id,
-      "accountyear": Year,
+      "accountyear": yearRange,
       "filednotfiled": "No"
     });
 
@@ -221,6 +224,8 @@ const DocFolder = () => {
     } catch (error) {
       console.error('An error occurred while sending count data:', error);
     }
+
+    console.log(yearRange)
   };
 
   return (
@@ -231,7 +236,7 @@ const DocFolder = () => {
           <div className="row">
             {lastFiveYearsArray.map((year, index) => (
               <div key={index} className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <Link to={`/fileupload/${id}/${year - 1}-${year}`} onClick={() => sendCountData(year)}> {/* Pass the year to SendData */}
+                <Link to={`/fileupload/${id}/${year - 1}-${year.toString().slice(-2)}`} onClick={() => sendCountData(year)}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
                     <div className={styles.icon}>
                       <p className={styles.icons}>
@@ -240,8 +245,8 @@ const DocFolder = () => {
                       </p>
                     </div>
                     <div className={`${getFolderColor(index)} ${styles.cont} h6`}>
-                      <h5>A.Y {year - 1}-{year}</h5>
-                      <p>Financial Year {year - 1}-{year}</p>
+                      <h5>A.Y {year - 1}-{year.toString().slice(-2)}</h5>
+                      <p>Financial Year {year - 1}-{year.toString().slice(-2)}</p>
                     </div>
                   </div>
                 </Link>

@@ -62,11 +62,13 @@ const FileUpload = () => {
       console.log(data)
       const extractedNames = data.map(file => {
         const fileid = file.id;
+        const filePath = file.filePath;
         const parts = file.fileName.split(`${user_id}_${id}_${year}_`);
         const extractedName = parts[1].split('.pdf')[0];
-        return { fileid, extractedName };
+        return { fileid, extractedName, filePath };
       });
       setDbfilename(extractedNames);
+
     } catch (error) {
       console.error('An error occurred while fetching files:', error);
     }
@@ -105,7 +107,7 @@ const FileUpload = () => {
     });
 
     if (matchingFile) {
-      return { filename, status: true, fileId: matchingFile.fileid };
+      return { filename, status: true, fileId: matchingFile.fileid, filePath: matchingFile.filePath };
     } else {
       return { filename, status: false };
     }
@@ -320,13 +322,11 @@ const FileUpload = () => {
         console.log('Response Data:', error.response.text());
       }
     }
-
-
-
-
-
-
   }
+
+  const openFileInNewPage = (filePath) => {
+    window.open(filePath, '_blank');
+  };
 
   return (
 
@@ -393,7 +393,7 @@ const FileUpload = () => {
                               </span>
                             </label>
                           )}
-                          <i className="bi bi-file-earmark-pdf-fill"></i>
+                          <i className="bi bi-file-earmark-pdf-fill" onDoubleClick={() => openFileInNewPage(item.filePath)}></i>
                           <h6 className={style.filename_text} >
                             {item.filename}
                           </h6>
@@ -422,7 +422,7 @@ const FileUpload = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
 
   );
 }
