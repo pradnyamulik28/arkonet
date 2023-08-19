@@ -174,71 +174,95 @@ const FileUpload = () => {
     const file = event.target.files[0];
 
     if (file) {
-      const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, confirm!'
-      });
+      if (filename.toLowerCase().includes('excel')) {
+        if (file.name.endsWith('.xlsx')) {
 
-      if (result.isConfirmed) {
-
-
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-        const formdata = new FormData();
-        formdata.append("file", file);
-        formdata.append("userid", user_id);
-        formdata.append("clientid", id);
-        formdata.append("accountyear", year);
-        formdata.append("filename", filename);
-
-        const requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: formdata,
-          redirect: 'follow'
-        };
-
-        try {
-          const response = await fetch("http://localhost:8085/upload", requestOptions);
-          const responseData = await response.text();
-          console.log(responseData)
-          if (response.status === 200) {
-            await Swal.fire(
-              'Success.',
-              `${responseData}`,
-              'success'
-            )
-            window.location.reload();
-
-          } else {
-            Swal.fire(
-              'Failed!',
-              `${responseData}`,
-              'error'
-            )
-          }
-        } catch (error) {
-          console.log('Error:', error);
-          if (error.response) {
-            console.log('Response Status:', error.response.status);
-            console.log('Response Data:', await error.response.text());
-          }
+          FileUpload(file, filename);
+        } else {
+          Swal.fire(
+            'Invalid File Type!',
+            "Please select a valid file type (XLSX).",
+            "error"
+          );
         }
+      } else if (file.name.endsWith('.pdf')) {
+
+        FileUpload(file, filename);
       } else {
-        console.log("Upload is canceled.");
-        window.location.reload();
+        Swal.fire(
+          'Invalid File Type!',
+          "Please select a valid file type (PDF).",
+          "error"
+        );
       }
     } else {
       console.log("No file selected");
     }
   };
 
+  async function FileUpload(file, filename) {
+
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, confirm!'
+    });
+
+    if (result.isConfirmed) {
+
+
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+      const formdata = new FormData();
+      formdata.append("file", file);
+      formdata.append("userid", user_id);
+      formdata.append("clientid", id);
+      formdata.append("accountyear", year);
+      formdata.append("filename", filename);
+
+      const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      };
+
+      try {
+        const response = await fetch("http://localhost:8085/upload", requestOptions);
+        const responseData = await response.text();
+        console.log(responseData)
+        if (response.status === 200) {
+          await Swal.fire(
+            'Success.',
+            `${responseData}`,
+            'success'
+          )
+          window.location.reload();
+
+        } else {
+          Swal.fire(
+            'Failed!',
+            `${responseData}`,
+            'error'
+          )
+        }
+      } catch (error) {
+        console.log('Error:', error);
+        if (error.response) {
+          console.log('Response Status:', error.response.status);
+          console.log('Response Data:', await error.response.text());
+        }
+      }
+    } else {
+      console.log("Upload is canceled.");
+      window.location.reload();
+    }
+  }
 
 
   const toggleCodeVisibility = () => {
@@ -324,8 +348,29 @@ const FileUpload = () => {
     }
   }
 
-  const openFileInNewPage = (filePath) => {
-    window.open(filePath, '_blank');
+  const openFileInNewPage = async (fileId) => {
+    // window.open(filePath, '_blank');
+    try {
+
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(`http://localhost:8085/openfile/${fileId}`, requestOptions)
+        .then(response => response.blob())
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const newTab = window.open(url, '_blank');
+          newTab.focus();
+        })
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   return (
@@ -393,7 +438,13 @@ const FileUpload = () => {
                               </span>
                             </label>
                           )}
-                          <i className="bi bi-file-earmark-pdf-fill" onDoubleClick={() => openFileInNewPage(item.filePath)}></i>
+
+                          {item.filename.toLowerCase().includes('excel') ? (
+                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={() => openFileInNewPage(item.fileId)}></i>
+                          ) : (
+                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => openFileInNewPage(item.fileId)}></i>
+                          )}
+
                           <h6 className={style.filename_text} >
                             {item.filename}
                           </h6>
@@ -428,4 +479,13 @@ const FileUpload = () => {
 }
 
 export default FileUpload;
+
+
+
+
+
+
+
+
+///////////////////////////////
 
