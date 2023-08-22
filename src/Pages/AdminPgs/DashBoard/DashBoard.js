@@ -34,7 +34,7 @@ const DashBoard = () => {
           .then(data => {
             setTotalclient(data.totalClientCount)
             setTotalIncomeclient(data.incomeTaxClientCount)
-            console.log("TC", data)
+            // console.log("TC", data)
 
           })
           .catch(error => console.log(error));
@@ -65,10 +65,12 @@ const DashBoard = () => {
         redirect: 'follow'
       };
 
-      fetch(`http://localhost:8085/filedNotfiledCounts/${user_id}`, requestOptions)
+      fetch(`${url_}/filedNotfiledCounts/${user_id}`, requestOptions)
         .then(response => response.json())
         .then(data => {
-          setFiledata(data)
+          const sortedData = data.sort((a, b) => b.accountyear.localeCompare(a.accountyear));
+          setFiledata(sortedData)
+          console.log(sortedData)
         })
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
