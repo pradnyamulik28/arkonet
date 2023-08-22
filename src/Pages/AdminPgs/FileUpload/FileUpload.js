@@ -233,7 +233,7 @@ const FileUpload = () => {
       };
 
       try {
-        const response = await fetch("http://localhost:8085/upload", requestOptions);
+        const response = await fetch(`${url_}/upload`, requestOptions);
         const responseData = await response.text();
         console.log(responseData)
         if (response.status === 200) {
@@ -312,7 +312,7 @@ const FileUpload = () => {
         };
 
 
-        const response = await fetch("http://localhost:8085/deletefile", requestOptions);
+        const response = await fetch(`${url_}/deletefile`, requestOptions);
         const responseData = await response.text();
         console.log(responseData)
         if (response.status === 200) {
@@ -361,7 +361,7 @@ const FileUpload = () => {
         redirect: 'follow'
       };
 
-      fetch(`http://localhost:8085/openfile/${fileId}`, requestOptions)
+      fetch(`${url_}/openfile/${fileId}`, requestOptions)
         .then(response => response.blob())
         .then(blob => {
           const url = URL.createObjectURL(blob);
