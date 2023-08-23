@@ -369,9 +369,10 @@ const FileUpload = () => {
 
   // Open File code 
 
-  const [pdfContent, setPDFContent] = useState('');
 
-  const fetchPDFContent = async (file_ID) => {
+  const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
+
+  const openPdfInNewTab = async (file_ID) => {
     try {
       const response = await fetch(`${url_}/openfile/${file_ID}`, {
         method: 'GET',
@@ -384,25 +385,28 @@ const FileUpload = () => {
         throw new Error('Network response was not ok');
       }
 
-      const pdfText = await response.text();
-      console.log(pdfText)
-      setPDFContent(pdfText);
-      openPDFInNewTab(pdfText);
+      const arrayBuffer = await response.arrayBuffer();
+      const pdfBlob = new Blob([arrayBuffer], { type: 'application/pdf' });
+      const blobUrl = URL.createObjectURL(pdfBlob);
+
+      setPdfBlobUrl(blobUrl);
+
+      const pdfWindow = window.open(blobUrl, '_blank');
+
+      pdfWindow.addEventListener('beforeunload', () => {
+        URL.revokeObjectURL(blobUrl);
+      });
     } catch (error) {
-      console.error('Error fetching PDF content:', error);
+      console.error('Error fetching or opening PDF:', error);
     }
   };
 
-  const openPDFInNewTab = async (pdfText) => {
-    try {
-      const pdfBytes = new Uint8Array([...pdfText].map(char => char.charCodeAt(0)));
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      window.open(url, '_blank');
-    } catch (error) {
-      console.error('Error opening PDF in new tab:', error);
-    }
-  };
+
+
+
+
+
+
   /////////////////////////////////////////////////////////////////////////////////////////////////
   return (
 
@@ -479,9 +483,9 @@ const FileUpload = () => {
                           )}
 
                           {item.filename.toLowerCase().includes('excel') ? (
-                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={() => fetchPDFContent(item.fileId)}></i>
+                            <i className="bi bi-file-earmark-excel-fill text-success" ></i>
                           ) : (
-                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => fetchPDFContent(item.fileId)}></i>
+                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => openPdfInNewTab(item.fileId)}></i>
                           )}
 
                           <h6 className={style.filename_text} >
