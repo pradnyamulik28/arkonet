@@ -46,6 +46,14 @@ const FileUpload = () => {
     }
   };
 
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //  Fetch file Code
+
+
   const getFile = async () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -74,6 +82,33 @@ const FileUpload = () => {
     }
   };
 
+
+  const filenameStatusArray = originalfilename.map(filename => {
+    const matchingFile = dbfilename.find(file => {
+      return file.extractedName === filename || file.fileid.toString() === filename;
+    });
+
+    if (matchingFile) {
+      return { filename, status: true, fileId: matchingFile.fileid, filePath: matchingFile.filePath };
+    } else {
+      return { filename, status: false };
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //  Toggle Switch Code
+
+
   const GetFileResponse = async () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -98,32 +133,6 @@ const FileUpload = () => {
       console.error('An error occurred while fetching files:', error);
     }
   };
-
-
-
-  const filenameStatusArray = originalfilename.map(filename => {
-    const matchingFile = dbfilename.find(file => {
-      return file.extractedName === filename || file.fileid.toString() === filename;
-    });
-
-    if (matchingFile) {
-      return { filename, status: true, fileId: matchingFile.fileid, filePath: matchingFile.filePath };
-    } else {
-      return { filename, status: false };
-    }
-  });
-
-
-
-
-
-
-
-
-
-
-
-
 
   const handleToggle = async () => {
     if (fileResponse === true) {
@@ -169,6 +178,10 @@ const FileUpload = () => {
       }
     }
   };
+  /////////////////////////////////////////////////////////////////////////////////////////////
+
+  // File Upload Code
+
 
   const handleFileUpload = async (event, filename) => {
     const file = event.target.files[0];
@@ -264,6 +277,9 @@ const FileUpload = () => {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //  Select button code
 
   const toggleCodeVisibility = () => {
     setCodeVisible(!codeVisible);
@@ -280,7 +296,9 @@ const FileUpload = () => {
     }
   };
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // Delete file Code
 
   const DeleteFile = async () => {
 
@@ -347,32 +365,45 @@ const FileUpload = () => {
       }
     }
   }
+  ///////////////////////////////////////////////////////////////////////////////////////////////
 
-  const openFileInNewPage = async (fileId) => {
-    // window.open(filePath, '_blank');
+  // Open File code 
+
+  const [pdfContent, setPDFContent] = useState('');
+
+  const fetchPDFContent = async (file_ID) => {
     try {
-
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-      var requestOptions = {
+      const response = await fetch(`${url_}/openfile/${file_ID}`, {
         method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-      };
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      });
 
-      fetch(`${url_}/openfile/${fileId}`, requestOptions)
-        .then(response => response.blob())
-        .then(blob => {
-          const url = URL.createObjectURL(blob);
-          const newTab = window.open(url, '_blank');
-          newTab.focus();
-        })
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const pdfText = await response.text();
+      console.log(pdfText)
+      setPDFContent(pdfText);
+      openPDFInNewTab(pdfText);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching PDF content:', error);
     }
   };
 
+  const openPDFInNewTab = async (pdfText) => {
+    try {
+      const pdfBytes = new Uint8Array([...pdfText].map(char => char.charCodeAt(0)));
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    } catch (error) {
+      console.error('Error opening PDF in new tab:', error);
+    }
+  };
+  /////////////////////////////////////////////////////////////////////////////////////////////////
   return (
 
     <div className="container">
@@ -408,10 +439,18 @@ const FileUpload = () => {
                   <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button>
                 </div>
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="delet">
-                  <h2 className="icons"><i className="fa-solid fa-trash-can" onClick={DeleteFile}></i></h2>
+                  <h2 className="icons">
+                    {codeVisible && (
+                      <i className="fa-solid fa-trash-can" onClick={DeleteFile}></i>
+                    )}
+                  </h2>
                 </div>
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="share">
-                  <h2 className="icons"><i className="fa-solid fa-share-from-square" ></i></h2>
+                  <h2 className="icons">
+                    {codeVisible && (
+                      <i className="fa-solid fa-share-from-square" ></i>
+                    )}
+                  </h2>
                 </div>
               </div>
             </div>
@@ -440,9 +479,9 @@ const FileUpload = () => {
                           )}
 
                           {item.filename.toLowerCase().includes('excel') ? (
-                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={() => openFileInNewPage(item.fileId)}></i>
+                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={() => fetchPDFContent(item.fileId)}></i>
                           ) : (
-                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => openFileInNewPage(item.fileId)}></i>
+                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => fetchPDFContent(item.fileId)}></i>
                           )}
 
                           <h6 className={style.filename_text} >
