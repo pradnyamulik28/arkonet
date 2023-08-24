@@ -1,60 +1,53 @@
 import styles from './TotalClient.module.css';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { url_ } from '../../../Config';
-// import swal from 'sweetalert';
 
 const TotalClient = () => {
-
   const [tcdata, setTcdata] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
+  const totalClient = useCallback(() => {
+    const user_id = window.localStorage.getItem('user_id');
+    const storedToken = window.localStorage.getItem('jwtToken');
+    const url = `${url_}/getClientByUserid/${user_id}`;
 
-    const totalClient = () => {
-
-      const user_id = window.localStorage.getItem('user_id');
-      const storedToken = window.localStorage.getItem('jwtToken');
-      const url = `${url_}/getClientByUserid/${user_id}`;
-
-
-
-      try {
-
-        fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${storedToken}`
-          }
+    try {
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${storedToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setTcdata(data);
+          console.log("TC", data);
         })
-          .then(response => response.json())
-          .then(data => {
-            setTcdata(data)
-            console.log("TC", data)
-          })
-          .catch(error => console.log(error));
-      } catch (error) {
-        console.warn("Error on function calling...")
-      }
-    };
-
-    totalClient();
-
+        .catch(error => console.log(error));
+    } catch (error) {
+      console.warn("Error on function calling...");
+    }
   }, []);
 
-
-
-
+  useEffect(() => {
+    totalClient();
+  }, [totalClient]);
 
   return (
     <div>
-
-
       <div>
         <form>
           <div className="form-row m-4">
             <div className="col-9">
-              <input type="text" className={`form-control ${styles.round}`} placeholder="Search Client" />
+              <input
+                type="text"
+                className={`form-control ${styles.round}`}
+                placeholder="Search Client by Name"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
               <div className={styles.search}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
@@ -68,12 +61,9 @@ const TotalClient = () => {
             </div>
           </div>
         </form>
-      </div >
+      </div>
 
-      <div className={` container m-8 ${styles.container}`}>
-
-
-
+      <div className={`container m-8 ${styles.container}`}>
         <table className="table">
           <thead >
             <tr>
@@ -86,11 +76,12 @@ const TotalClient = () => {
             </tr>
           </thead>
           <tbody>
-
-
-            {
-              tcdata.map((items, index) => {
-                return <tr key={index} >
+            {tcdata
+              .filter(item =>
+                item.name.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+              .map((items, index) => (
+                <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
                   <Link to={`/file/${items.clientId}`} className='h6'><td>{items.pan}</td></Link>
@@ -105,15 +96,11 @@ const TotalClient = () => {
                     <Link to={`/Cupdate/${items.clientId}`} ><h6>Edit</h6></Link>
                   </td>
                 </tr>
-              })
-            }
-
+              ))}
           </tbody>
         </table>
-
       </div>
-
-    </div >
+    </div>
   );
 }
 
