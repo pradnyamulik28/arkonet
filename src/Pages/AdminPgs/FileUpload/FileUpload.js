@@ -370,9 +370,43 @@ const FileUpload = () => {
   // Open File code 
 
 
+  // const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
+
+
+  // const openPdfInNewTab = async (file_ID) => {
+  //   try {
+  //     const response = await fetch(`${url_}/openfile/${file_ID}`, {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: `Bearer ${storedToken}`,
+  //       },
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+
+  //     const arrayBuffer = await response.arrayBuffer();
+  //     const pdfBlob = new Blob([arrayBuffer], { type: 'application/pdf' });
+  //     const blobUrl = URL.createObjectURL(pdfBlob);
+
+  //     setPdfBlobUrl(blobUrl);
+
+  //     const pdfWindow = window.open(blobUrl, '_blank');
+
+  //     pdfWindow.addEventListener('beforeunload', () => {
+  //       URL.revokeObjectURL(blobUrl);
+  //     });
+  //   } catch (error) {
+  //     console.error('Error fetching or opening PDF:', error);
+  //   }
+  // };
+
+
+
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
 
-  const openPdfInNewTab = async (file_ID) => {
+  const openFileAndDownload = async (contentType, fileName, file_ID) => {
     try {
       const response = await fetch(`${url_}/openfile/${file_ID}`, {
         method: 'GET',
@@ -386,23 +420,26 @@ const FileUpload = () => {
       }
 
       const arrayBuffer = await response.arrayBuffer();
-      const pdfBlob = new Blob([arrayBuffer], { type: 'application/pdf' });
-      const blobUrl = URL.createObjectURL(pdfBlob);
+      const fileBlob = new Blob([arrayBuffer], { type: `application/${contentType}` });
+      const blobUrl = URL.createObjectURL(fileBlob);
 
-      setPdfBlobUrl(blobUrl);
-
-      const pdfWindow = window.open(blobUrl, '_blank');
-
-      pdfWindow.addEventListener('beforeunload', () => {
+      if (contentType === 'pdf') {
+        setPdfBlobUrl(blobUrl);
+        const pdfWindow = window.open(blobUrl, '_blank');
+        pdfWindow.addEventListener('beforeunload', () => {
+          URL.revokeObjectURL(blobUrl);
+        });
+      } else if (contentType === 'xlsx') {
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = fileName;
+        link.click();
         URL.revokeObjectURL(blobUrl);
-      });
+      }
     } catch (error) {
-      console.error('Error fetching or opening PDF:', error);
+      console.error(`Error fetching or downloading ${contentType.toUpperCase()} file:`, error);
     }
   };
-
-
-
 
 
 
@@ -483,9 +520,9 @@ const FileUpload = () => {
                           )}
 
                           {item.filename.toLowerCase().includes('excel') ? (
-                            <i className="bi bi-file-earmark-excel-fill text-success" ></i>
+                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={() => openFileAndDownload('xlsx', 'spreadsheet.xlsx', item.fileId)}></i>
                           ) : (
-                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => openPdfInNewTab(item.fileId)}></i>
+                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => openFileAndDownload('pdf', 'document.pdf', item.fileId)}></i>
                           )}
 
                           <h6 className={style.filename_text} >
