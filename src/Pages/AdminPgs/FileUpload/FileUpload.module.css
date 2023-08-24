@@ -259,7 +259,7 @@ input:checked+.slider:before {
 
 .image_upload_wrap {
   margin-top: 2px;
-  border: 2px dashed gray;
+  border: 2px dashed #9ba4ab;
   border-radius: 10px;
   position: relative;
 }
@@ -271,7 +271,7 @@ input:checked+.slider:before {
 }
 
 .drag_text h3 {
-  color: gray;
+  color: #9ba4ab;
   padding: 0 0;
   font-weight: bold;
 }

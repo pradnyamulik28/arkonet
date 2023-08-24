@@ -22,7 +22,7 @@
 
 .green {
 
-  color: rgb(10, 233, 10);
+  color: rgb(13, 194, 13);
 
 }
 
@@ -36,7 +36,7 @@
   width: 8rem;
   border-radius: 5px;
   border: none;
-  background-color: yellow;
+  background-color: #ffd401;
   color: white;
   height: 2em;
   text-shadow: 2px 3px 5px #000000;

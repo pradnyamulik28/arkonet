@@ -3,7 +3,7 @@
   width: 15rem;
   border-radius: 10px;
   border: none;
-  background-color: yellow;
+  background-color: #ffd401;
   color: white;
   font-weight: bolder;
   font-size: 20px;
@@ -14,7 +14,7 @@
 
 
 input:active {
-  box-shadow: 4px 2px 5px 0 gray;
+  box-shadow: 4px 2px 5px 0 #9ba4ab;
   transform: translateY(4px);
 }
 
