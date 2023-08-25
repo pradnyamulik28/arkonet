@@ -37,18 +37,18 @@ const Adminhome = () => {
               </nav>
 
               <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/reg" element={<Registration />} />
-                <Route exact path="/dashboard" element={<Dashboard />} />
-                <Route exact path="/clientreg" element={<URegistration />} />
-                <Route exact path="/Cupdate/:id" element={<Uupdate />} />
-                <Route exact path="/tc" element={<TotalClient />} />
-                <Route exact path="/tic" element={<IncomeClient />} />
-                <Route exact path="/file/:id" element={<DocFolder />} />
-                <Route exact path="/fileupload/:id/:year" element={<FileUpload />} />
+                <Route path="admin/" element={<Login />} />
+                <Route path="admin/reg" element={<Registration />} />
+                <Route exact path="admin/dashboard" element={<Dashboard />} />
+                <Route exact path="admin/clientreg" element={<URegistration />} />
+                <Route exact path="admin/Cupdate/:id" element={<Uupdate />} />
+                <Route exact path="admin/tc" element={<TotalClient />} />
+                <Route exact path="admin/tic" element={<IncomeClient />} />
+                <Route exact path="admin/file/:id" element={<DocFolder />} />
+                <Route exact path="admin/fileupload/:id/:year" element={<FileUpload />} />
 
-                <Route exact path="/forgetpass" element={<ResetPass />} />
-                <Route exact path="/changepass" element={<ChangePass />} />
+                <Route exact path="admin/forgetpass" element={<ResetPass />} />
+                <Route exact path="admin/changepass" element={<ChangePass />} />
               </Routes>
 
 
