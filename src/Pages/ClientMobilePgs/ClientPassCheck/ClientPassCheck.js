@@ -1,14 +1,16 @@
-import arkonet from "../images/Arkonet.jpg";
-import style from "../style.module.css";
+import arkonet from "../../../Images/Arkonet.jpg";
+import style from "./ClientPassCheck.module.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { url_ } from '../Config';
+import { url_ } from '../../../Config';
 import { useLocation } from 'react-router-dom';
 
-function PasswordCheck() {
-  // const isPassNull = useLocation().state.isPasswordNull;
-  const isPassNull = false;
-  console.log("password ", isPassNull)
+function ClientPassCheck() {
+  const { isPasswordNull, clientid } = useLocation().state; //Get Password status and Clientid(PAN) from route
+
+  //const {isPasswordNull,clientid}={isPasswordNull:false,clientid:"PAVAN1999J"};
+
+  //console.log("password ",isPasswordNull,clientid)
 
 
   const [credentials, setCredentials] = useState({
@@ -43,13 +45,13 @@ function PasswordCheck() {
   //---------------Set New Password -----------------------------
   const handleSetPassword = async () => {
     if (credentials.Upassword === credentials.confirmpassword && (credentials.Upassword !== "" || credentials.confirmpassword !== "")) {
-      console.log("Password Match");
+      console.log("Password Match", credentials.Upassword, credentials.confirmpassword);
+      //-----Code to Set Password -----------
+
     }
     else {
-      console.log("Password Mismatch");
+      console.log("Password : ", credentials.Upassword, "Confirm : ", credentials.confirmpassword);
     }
-
-
 
   };
 
@@ -61,7 +63,7 @@ function PasswordCheck() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      username: "PAVAN1999J",//credentials.UID,
+      username: clientid,//Recieved From Previous Page
       password: credentials.Upassword,
     });
 
@@ -87,7 +89,7 @@ function PasswordCheck() {
         const user_id = data.user.regId;
         localStorage.setItem("user_id", user_id);
         storeJwtData(data.user)
-        Navigate(`/folder`, { state: { clientid: "1" } });
+        Navigate(`/clientdocfolder`, { state: { clientid: "1" } });
 
       })
       .catch((error) => console.log("error", error));
@@ -96,8 +98,8 @@ function PasswordCheck() {
 
 
   function handleButtonClick() {
-
-    if (isPassNull) {
+    console.log("Client Id : ", clientid);
+    if (isPasswordNull) {
       //Code to Set the Password
       handleSetPassword();
 
@@ -124,17 +126,17 @@ function PasswordCheck() {
       <div className={`${style.inputs}`}>
         <form className={`${style.form}`}>
           <label htmlFor="password" className={`${style.labels}`}>
-            {isPassNull ? "Set your Password" : "Enter Your Password"}
+            {isPasswordNull ? "Set your Password" : "Enter Your Password"}
           </label>
           <input
             type="password"
             id="Upassword"
             name="Upassword"
-            placeholder={`${isPassNull ? "Set your Password" : "Enter your Password"}`}
+            placeholder={`${isPasswordNull ? "Set your Password" : "Enter your Password"}`}
             value={credentials.Upassword}
             onChange={handleChange}
           />
-          {isPassNull ?
+          {isPasswordNull &&
             <>
               <label htmlFor="confirmpassword" className={`${style.labels}`}>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -146,7 +148,7 @@ function PasswordCheck() {
                 placeholder="Confirm Password"
                 value={credentials.confirmpassword}
                 onChange={handleChange}
-              /></> : <></>
+              /></>
           }
         </form>
       </div>
@@ -154,7 +156,7 @@ function PasswordCheck() {
       {/* Button */}
       <div className={`${style.button}`}>
         <button type="button" ld={`${style.login}`} onClick={handleButtonClick}>
-          {isPassNull ? "Set Password" : "Login"}
+          {isPasswordNull ? "Set Password" : "Login"}
         </button>
         <a href="previous link" id={`${style.forgot}`}>
           <u>Forgot Password?</u>
@@ -186,4 +188,4 @@ function PasswordCheck() {
   );
 }
 
-export default PasswordCheck;
+export default ClientPassCheck;

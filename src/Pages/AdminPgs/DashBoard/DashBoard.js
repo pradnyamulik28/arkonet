@@ -95,20 +95,20 @@ const DashBoard = () => {
               <div className={`m-3 w-100 `}>
                 <h5 className={`card-title font-weight-bold ${styles.green}`}>FY 2023-24</h5>
                 <div className={styles.count}>
-                  <Link to="/tc" className={` h6 card-link ${styles.black}`}>Total Clients
+                  <Link to="tc" className={` h6 card-link ${styles.black}`}>Total Clients
                     <h6 className={`${styles.black} font-weight-bold`}>{Totalclient}</h6>
 
                   </Link>
-                  <Link to="/tic" className={`h6 card-link ${styles.green}  `}>Income Tax
+                  <Link to="tic" className={`h6 card-link ${styles.green}  `}>Income Tax
                     <h6 className={`${styles.black} font-weight-bold`}>{TotalIncomeclient}</h6>
                   </Link>
                 </div>
-                <Link to='/clientreg' ><input type="submit" value="ADD CLIENT" className={` h6 ${styles.abtn}`} /></Link>
+                <Link to='clientreg' ><input type="submit" value="ADD CLIENT" className={` h6 ${styles.abtn}`} /></Link>
                 <h6 className={`${styles.green} `}>As on date</h6>
               </div>
             </div>
           </div>
-          <div className="col-sm-6">
+          {/* <div className="col-sm-6">
             <div className={`card m-4 ${styles.cardd} text-center`} >
               <h2 className='ml-4'>&lt;</h2>
               <div className={`m-3 w-100`}>
@@ -123,7 +123,7 @@ const DashBoard = () => {
                 <h6 className={`${styles.green} text-primary`}>As on date</h6>
               </div>
             </div>
-          </div>
+          </div> */}
 
         </div>
 

@@ -56,7 +56,7 @@ const TotalClient = () => {
             </div>
             <div className="col-2">
               <div className={`${styles.Cbtn_submit}`}>
-                <Link to='/clientreg'><input type="submit" value="ADD CLIENT" /></Link>
+                <Link to='clientreg'><input type="submit" value="ADD CLIENT" /></Link>
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@ const TotalClient = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <Link to={`/file/${items.clientId}`} className='h6'><td>{items.pan}</td></Link>
+                  <Link to={`file/${items.clientId}`} className='h6'><td>{items.pan}</td></Link>
                   <td>{items.mobile}</td>
                   <td><Link to="" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope-at" viewBox="0 0 16 16">
@@ -93,7 +93,7 @@ const TotalClient = () => {
                     </svg>
                   </Link></td>
                   <td>
-                    <Link to={`/Cupdate/${items.clientId}`} ><h6>Edit</h6></Link>
+                    <Link to={`Cupdate/${items.clientId}`} ><h6>Edit</h6></Link>
                   </td>
                 </tr>
               ))}

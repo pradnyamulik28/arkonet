@@ -16,13 +16,13 @@ const LeftSide = () => {
     <div className="container" >
       <div className={`${styles.sidebar}`}>
         <div className={styles.help}>
-          <Link to='/dashboard'>
+          <Link to='dashboard'>
             <img className={styles.taxo_logo} src={Applogo} alt="" />
           </Link>
           <Link to="#" className={styles.help_text}><h6>Help</h6></Link>
-          <Link to="/dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
-          <Link to="/" className={styles.logout_text} onClick={handleLogout}><h6>Logout</h6></Link>
-          <Link to="/changepass" className={` ${styles.reset_text}`} ><h6>Change Password</h6></Link>
+          <Link to="dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
+          <Link to="" className={styles.logout_text} onClick={handleLogout}><h6>Logout</h6></Link>
+          <Link to="changepass" className={` ${styles.reset_text}`} ><h6>Change Password</h6></Link>
         </div>
 
         <div className={styles.help}>

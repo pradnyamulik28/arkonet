@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import style from "./FileView.module.css";
-import upload from './upload.png';
+import style from "./ClientFileView.module.css";
 import Swal from 'sweetalert2';
-import { useParams } from 'react-router-dom';
-import { url_ } from '../Config';
+import { url_ } from '../../../Config';
 import { useLocation } from 'react-router-dom';
 
-
-
-
-const FileDownload = () => {
+const ClientFileView = () => {
 
   const id = useLocation().state.clientid;
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
   const year = useLocation().state.year;
-
   // console.log(year,id)
-
 
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileResponse, setFileResponse] = useState(false);
@@ -43,7 +36,6 @@ const FileDownload = () => {
       await getFile();
       await GetFileResponse();
 
-
     } catch (error) {
       console.error('An error occurred:', error);
     }
@@ -58,6 +50,7 @@ const FileDownload = () => {
 
 
   const getFile = async () => {
+
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
@@ -98,7 +91,7 @@ const FileDownload = () => {
     }
   });
 
-
+  console.log("FileStatusArray", filenameStatusArray)
 
 
 
@@ -113,6 +106,7 @@ const FileDownload = () => {
 
 
   const GetFileResponse = async () => {
+
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
@@ -137,50 +131,6 @@ const FileDownload = () => {
     }
   };
 
-  const handleToggle = async () => {
-    if (fileResponse === true) {
-      console.log("It's TRUE");
-    } else {
-      try {
-        const result = await Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, confirm!'
-        });
-
-        if (result.isConfirmed) {
-          var myHeaders = new Headers();
-          myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-          var requestOptions = {
-            method: 'PUT',
-            headers: myHeaders,
-            redirect: 'follow'
-          };
-
-          fetch(`${url_}/updateFiledNotFiled/${user_id}/${id}/${year}`, requestOptions)
-            .then(response => console.log(response.status))
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-          window.location.reload();
-        } else {
-          console.log("Canceled the toggle!");
-        }
-      } catch (error) {
-        console.log("Failed to call function!!!");
-
-        console.log('Error:', error);
-        if (error.response) {
-          console.log('Response Status:', error.response.status);
-          console.log('Response Data:', error.response.text());
-        }
-      }
-    }
-  };
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -249,44 +199,28 @@ const FileDownload = () => {
   /////////////////////////////////////////////////////////////////////////////////////////////////
   return (
 
-    <div className="container">
-      <div className="row m-5">
-
-
-        <div className="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="maindiv">
-
+    <div className="container mt-3">
+      <div className="row">
+        <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="maindiv">
           <div className="container">
-
-
             <div className="uphead">
               <div className="row">
                 <div className="col">
                   <h1><b>Income Tax</b></h1>
                 </div>
-                {/*  <div className="col">
-
-                  <label className={`${style.switch}`}>
-                     <input type="checkbox" checked={fileResponse} onChange={handleToggle} />
-                    <span className={`${style.slider} ${style.round}`}></span>
-                  </label>  
-
-                </div>*/}
               </div>
               <h6 className={`${style.headpara}`}>A.Y {year}</h6>
             </div>
 
-
             <div className={`${style.neckbar}`}>
-              <div className="row">
-                <div className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" id="select">
-                  <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button>
-                </div>
+              <div className="row mt-1">
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="delet">
                   <h2 className="icons">
-                    {/*} {codeVisible && (
-                      <i className="fa-solid fa-trash-can" onClick={DeleteFile}></i>
-                    )}   */}
+
                   </h2>
+                </div>
+                <div className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" id="select">
+                  <button type="button" className={`btn btn-danger ${style.btns}`} onClick={toggleCodeVisibility}>Select</button>
                 </div>
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="share">
                   <h2 className="icons">
@@ -298,15 +232,12 @@ const FileDownload = () => {
               </div>
             </div>
             <div className='container'>
-              <div className="row m-4">
-
-
+              <div className="row mt-3">
 
                 {filenameStatusArray.map(item => (
-                  <div className='col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6' key={item.fileId}>
-                    {item.status ? (
-                      <div>
-
+                  <>
+                    {item.status && (
+                      <div className='col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6' key={item.fileId}>
                         <div className={style.file_upload}>
                           {codeVisible && (
                             <label className={style.checkbox_label}>
@@ -332,13 +263,8 @@ const FileDownload = () => {
                           </h6>
                         </div>
                       </div>
-
-
-                    ) : (
-                      <div >
-                      </div>
                     )}
-                  </div>
+                  </>
                 ))}
 
               </div>
@@ -352,4 +278,6 @@ const FileDownload = () => {
   );
 }
 
-export default FileDownload;
+export default ClientFileView;
+
+

@@ -1,26 +1,23 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route
 } from "react-router-dom";
 
 import Adminhome from './Pages/AdminPgs/Adminhome';
-import ClientPages from './Pages/ClientMobilePgs/ClientPages';
+// import ClientPages from './Pages/ClientMobilePgs/ClientPages';
 
 function App() {
   return (
-    // <div >
-    //   <Adminhome />
-    //   <ClientPages />
-    // </div>
+
     <div>
       <Router>
-        <Switch>
+        <Routes>
 
-          <Route path='/admin' element={<Adminhome />} />
-          <Route path='/client' element={<ClientPages />} />
-        </Switch>
+          <Route path='/admin/*' element={<Adminhome />} />
+          {/* <Route path='/client/*' element={<ClientPages />} /> */}
+        </Routes>
       </Router>
     </div>
 

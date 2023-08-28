@@ -1,14 +1,14 @@
 
 import React from 'react';
-import styles from './DocFolder.module.css';
+import styles from './ClientDocFolder.module.css';
 import { Link } from 'react-router-dom';
-import { url_ } from '../Config';
+import { url_ } from '../../../Config';
 import { useLocation } from 'react-router-dom'
 
 
-const DocFolder = () => {
-  const id = useLocation().state.clientid;
-  //console.log(" client id : ",id)
+const ClientDocFolder = () => {
+  const id = useLocation().state.clientid; //Get Client Id parameter from route
+
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
 
@@ -39,7 +39,7 @@ const DocFolder = () => {
           <div className="row">
             {lastFiveYearsArray.map((year, index) => (
               <div key={index} className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <Link to={`/viewfile`}
+                <Link to={`/clientfileview`}
                   className={`${styles.linktab}`}
                   state={{ clientid: id, year: `${year - 1}-${year.toString().slice(-2)}` }}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
@@ -64,4 +64,4 @@ const DocFolder = () => {
   );
 }
 
-export default DocFolder;
+export default ClientDocFolder;

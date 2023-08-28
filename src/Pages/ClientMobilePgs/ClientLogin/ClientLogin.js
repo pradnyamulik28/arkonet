@@ -1,6 +1,5 @@
-
-import arkonet from "../../../Images/Arkonet - Logo_page-0001.jpg";
-import style from "../style.module.css";
+import arkonet from "../../../Images/Arkonet.jpg";
+import style from "./ClientLogin.module.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
@@ -22,9 +21,10 @@ function ClientLogin() {
 
   const handleLogin = async () => {
 
+    const jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQQVZBTjE5OTlKIiwiaWF0IjoxNjkzMDMxMzI5LCJleHAiOjE2OTMwMzMxMjl9.rM5ZIHXgnHHsv6DK1UUlmawClwuAW8DNVqlb9Tg1DR8"
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQQVZBTjE5OTlKIiwiaWF0IjoxNjkyOTQzNTM3LCJleHAiOjE2OTI5NDUzMzd9.CUPw2X7oeDfZIPiMrqzOhDlEqva_TKmGYW-DteAEgvo");
+    myHeaders.append("Authorization", `Bearer ${jwtToken}`);
 
     var requestOptions = {
       method: 'GET',
@@ -41,8 +41,14 @@ function ClientLogin() {
         }
       })
       .then((data) => {
-
-        Navigate(`/passwordcheck`, { state: { isPasswordNull: data.isPasswordNull, clientid: credentials.UID } })
+        //Pass Password Status,clientid(PAN) to next page
+        Navigate(`/clientpasscheck`,
+          {
+            state: {
+              isPasswordNull: data.isPasswordNull,
+              clientid: credentials.UID
+            }
+          })
 
       })
       .catch(error => console.log('error', error));

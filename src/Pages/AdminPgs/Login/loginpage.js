@@ -62,7 +62,7 @@ const Loginpage = () => {
 
           console.log(res.data.token)
           swal("Success", "Loged in successfully.", "success");
-          Navigate('/dashboard')
+          Navigate('dashboard')
 
         })
 
@@ -106,7 +106,10 @@ const Loginpage = () => {
                   <InputField placeholder='Enter your Password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
                   {/* <input type="text" placeholder="Enter your password" id="userpassword" value={password} onChange={handlePasswordChange} name='password' /> */}
                 </div>
-
+                {/* <div className={styles.link}>
+                  <Link to="/reg">New to TAXKO? Click Here</Link>
+                  <Link to="/forgetpass">Forget Password</Link>
+                </div> */}
                 <div className={styles.btn_login}>
                   <button type="submit">LOGIN</button>
                 </div>
@@ -114,8 +117,8 @@ const Loginpage = () => {
               </div>
             </form>
             <div className={styles.link}>
-              <Link to="/reg">New to TAXKO? Click Here</Link>
-              <Link to="/forgetpass">Forget Password</Link>
+              <Link to="reg">New to TAXKO? Click Here</Link>
+              <Link to="forgetpass">Forget Password</Link>
             </div>
           </div>
 

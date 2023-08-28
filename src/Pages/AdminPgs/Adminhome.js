@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  // BrowserRouter as Switch,
   Routes,
   Route
 } from "react-router-dom";
@@ -22,42 +22,55 @@ import ChangePass from './ChangePass/ChangePass';
 const Adminhome = () => {
   return (
     <div>
-      <Router>
+      {/* <Switch> */}
 
-        <div className="container-fluid">
-          <div className="row">
-            <div className={`col-sm-3 col-md-3 col-lg-3 col-xl-3`}>
-              <LeftSide />
-            </div>
-            <div className={`col-sm-9 col-md-9 col-lg-9 col-xl-9`}>
+      <div className="container-fluid">
+        <div className="row">
+          <div className={`col-sm-3 col-md-3 col-lg-3 col-xl-3`}>
+            <LeftSide />
+          </div>
+          <div className={`col-sm-9 col-md-9 col-lg-9 col-xl-9`}>
 
-              <nav className={styles.navclass}>
-                <img src={taxko} alt="" />
-                <span className={styles.taxko_text}>TAXKO</span>
-              </nav>
+            <nav className={styles.navclass}>
+              <img src={taxko} alt="" />
+              <span className={styles.taxko_text}>TAXKO</span>
+            </nav>
 
-              <Routes>
-                <Route path="admin/" element={<Login />} />
-                <Route path="admin/reg" element={<Registration />} />
-                <Route exact path="admin/dashboard" element={<Dashboard />} />
-                <Route exact path="admin/clientreg" element={<URegistration />} />
-                <Route exact path="admin/Cupdate/:id" element={<Uupdate />} />
-                <Route exact path="admin/tc" element={<TotalClient />} />
-                <Route exact path="admin/tic" element={<IncomeClient />} />
-                <Route exact path="admin/file/:id" element={<DocFolder />} />
-                <Route exact path="admin/fileupload/:id/:year" element={<FileUpload />} />
+            <Routes>
+              <Route exact path='' element={<Login />} />
+              <Route path="reg" element={<Registration />} />
+              <Route path="forgetpass" element={<ResetPass />} />
 
-                <Route exact path="admin/forgetpass" element={<ResetPass />} />
-                <Route exact path="admin/changepass" element={<ChangePass />} />
-              </Routes>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="dashboard/clientreg" element={<URegistration />} />
+
+              <Route path="dashboard/tc" element={<TotalClient />} />
+              <Route path="dashboard/tc/clientreg" element={<URegistration />} />
+              <Route path="dashboard/tc/Cupdate/:id" element={<Uupdate />} />
+              <Route path="dashboard/tc/file/:id" element={<DocFolder />} />
+              <Route path="dashboard/tc/file/:id/fileupload/:id/:year" element={<FileUpload />} />
+
+              <Route path="dashboard/tic" element={<IncomeClient />} />
+              <Route path="dashboard/tic/clientreg" element={<URegistration />} />
+              <Route path="dashboard/tic/Cupdate/:id" element={<Uupdate />} />
+              <Route path="dashboard/tic/file/:id" element={<DocFolder />} />
+              <Route path="dashboard/tic/file/:id/fileupload/:id/:year" element={<FileUpload />} />
+
+              <Route exact path="changepass" element={<ChangePass />} />
+            </Routes>
 
 
 
-            </div>
           </div>
         </div>
+      </div>
 
-      </Router>
+
+      {/* </Switch> */}
+
+
+
+
     </div>
   );
 }

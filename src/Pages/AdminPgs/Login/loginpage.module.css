@@ -60,7 +60,7 @@
   font-weight: bolder;
   font-size: 23px;
   text-shadow: 2px 3px 5px #000000;
-  margin-top: 50px;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
@@ -94,6 +94,6 @@ button:active {
 
 .follow,
 .icon a {
-  margin: 15px;
+  margin: 0 15px;
   color: #9ba4ab;
 }

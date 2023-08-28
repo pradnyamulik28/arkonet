@@ -236,7 +236,7 @@ const DocFolder = () => {
           <div className="row">
             {lastFiveYearsArray.map((year, index) => (
               <div key={index} className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <Link to={`/fileupload/${id}/${year - 1}-${year.toString().slice(-2)}`} onClick={() => sendCountData(year)}> {/* Pass the year to SendData */}
+                <Link to={`fileupload/${id}/${year - 1}-${year.toString().slice(-2)}`} onClick={() => sendCountData(year)}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
                     <div className={styles.icon}>
                       <p className={styles.icons}>

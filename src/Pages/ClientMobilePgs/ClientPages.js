@@ -1,36 +1,22 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
 
+import React from "react";
+import { Route, Routes } from 'react-router-dom';
 
+import ClientLogin from "./ClientLogin/ClientLogin";
+import ClientDocFolder from './ClientDocFolder/ClientDocFolder';
+import ClientFileView from "./ClientFileView/ClientFileView";
+import ClientPassCheck from "./ClientPassCheck/ClientPassCheck"
 
-import ClientLogin from '../ClientMobilePgs/ClientLogin/ClientLogin'
-
-const ClientPages = () => {
+function ClientPages() {
   return (
-    <div>
-      <Router>
 
-        <div className="container-fluid">
-          <div className="row">
+    <Routes>
+      <Route path="" element={<ClientLogin />} />
+      <Route path="clientpasscheck" element={<ClientPassCheck />} />
+      <Route exact path="clientdocfolder" element={<ClientDocFolder />} />
+      <Route exact path="clientfileview" element={<ClientFileView />} />
+    </Routes>
 
-
-            <Routes>
-              <Route path="/" element={<ClientLogin />} />
-
-            </Routes>
-
-
-
-
-          </div>
-        </div>
-
-      </Router>
-    </div>
   );
 }
 

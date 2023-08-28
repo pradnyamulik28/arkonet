@@ -11,7 +11,6 @@ import { url_ } from '../../../Config';
 import { useParams } from 'react-router-dom';
 
 const Uupdate = () => {
-
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
   const { id } = useParams();
@@ -100,7 +99,7 @@ const Uupdate = () => {
       })
         .then(res => {
           swal("Success", "Data updated successfully.", "success");
-
+          window.history.back();
           console.log(values)
         })
         .catch(error => {
