@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './PasswordField.module.css'
 
 const PasswordField = (props) => {
+
   return (
     <div>
       <div className={styles.dpass}>
@@ -17,10 +18,10 @@ const PasswordField = (props) => {
           autoComplete='off' />
       </div>
       <div className={styles.passindicator}>
-        <span className={styles.weak}></span>
-        <span className={styles.medium1}></span>
-        <span className={styles.medium2}></span>
-        <span className={styles.strong}></span>
+        <span className={styles.weak} strenghtScore={props.strenghtScore}></span>
+        <span className={styles.medium1} strenghtScore={props.strenghtScore}></span>
+        <span className={styles.medium2} strenghtScore={props.strenghtScore}></span>
+        <span className={styles.strong} strenghtScore={props.strenghtScore}></span>
       </div>
     </div>
 

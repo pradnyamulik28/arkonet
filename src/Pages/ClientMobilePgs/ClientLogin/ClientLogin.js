@@ -5,59 +5,53 @@ import { useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 
 function ClientLogin() {
+  const Navigate=useNavigate();
+
   const [credentials, setCredentials] = useState({
     UID: "",
-  });
-
-  const Navigate = useNavigate();
-
+  }); 
+  
 
   function handleChange(e) {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
 
-
-
-
   const handleLogin = async () => {
 
-    const jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQQVZBTjE5OTlKIiwiaWF0IjoxNjkzMDMxMzI5LCJleHAiOjE2OTMwMzMxMjl9.rM5ZIHXgnHHsv6DK1UUlmawClwuAW8DNVqlb9Tg1DR8"
 
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${jwtToken}`);
+  //------------------Check the password status------------
 
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
 
-    fetch(`${url_}/client/isPasswordNull?pan=${credentials.UID}`, requestOptions)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Login error");
-        }
-      })
-      .then((data) => {
-        //Pass Password Status,clientid(PAN) to next page
-        Navigate(`/clientpasscheck`,
-          {
-            state: {
-              isPasswordNull: data.isPasswordNull,
-              clientid: credentials.UID
-            }
-          })
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 
-      })
-      .catch(error => console.log('error', error));
+var raw = JSON.stringify({
+  "pan": credentials.UID
+});
 
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch(`${url_}/client/isPasswordNull`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+    //Pass Password Status,clientpan) to next page
+            Navigate(`/clientpasscheck`,
+            { state: { isPasswordNull:result.isPasswordNull, 
+                        clientpan:credentials.UID }}) 
+  })
+  .catch(error => console.log('error', error));
 
   };
 
   return (
-    // main class
+    <div className={`${style.outercontainer}`}>
+    {/*  main class */}
     <div className={`${style.maincontainer}`}>
       {/* Header */}
       <div className={`${style.header}`}>
@@ -81,13 +75,13 @@ function ClientLogin() {
             value={credentials.UID}
             onChange={handleChange}
           />
-
+         
         </form>
       </div>
 
       {/* Button */}
       <div className={`${style.button}`}>
-        <button type="button" ld={`${style.login}`} onClick={handleLogin}>
+        <button type="button" className={`${style.login}`} onClick={handleLogin}>
           Next
         </button>
         <a href="previous link" id={`${style.forgot}`}>
@@ -116,6 +110,7 @@ function ClientLogin() {
           </a>
         </div>
       </div>
+    </div>
     </div>
   );
 }
