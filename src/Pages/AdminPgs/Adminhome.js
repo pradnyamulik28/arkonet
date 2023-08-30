@@ -4,7 +4,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import LeftSide from '../AdminPgs/SideBar/LeftSide';
+import LeftSide from './SideBarold/LeftSide';
 import Registration from '../AdminPgs/Registration/Registration';
 import styles from '../AdminPgs/Adminhome.module.css';
 import taxko from '../../Images/taxko_logo.png'
@@ -18,6 +18,7 @@ import DocFolder from './DocFolder/DocFolder';
 import FileUpload from './FileUpload/FileUpload'
 import ResetPass from './ResetPass/ResetPass';
 import ChangePass from './ChangePass/ChangePass';
+import Help from './Help/Help';
 
 const Adminhome = () => {
   return (
@@ -40,6 +41,7 @@ const Adminhome = () => {
               <Route exact path='' element={<Login />} />
               <Route path="reg" element={<Registration />} />
               <Route path="forgetpass" element={<ResetPass />} />
+              <Route path="help" element={<Help />} />
 
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="dashboard/clientreg" element={<URegistration />} />

@@ -1,0 +1,100 @@
+.container {
+  border: 2px solid red;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  align-content: space-evenly;
+  /* height: 100vh; */
+}
+
+.taxo_logo {
+  position: fixed;
+  max-width: 10%;
+  width: 10%;
+  top: 1em;
+  left: 7%;
+  text-decoration: underline;
+}
+
+.help_text {
+  position: fixed;
+  top: 25%;
+  left: 11%;
+}
+
+.dash_text {
+  position: fixed;
+  top: 30%;
+  left: 11%;
+}
+
+.logout_text {
+  position: fixed;
+  top: 35%;
+  left: 11%;
+}
+
+.reset_text {
+  position: fixed;
+  top: 40%;
+  left: 11%;
+}
+
+.arko_logo {
+  position: fixed;
+  max-width: 15%;
+  width: 13%;
+  height: 4%;
+  bottom: 8%;
+  left: 7%;
+}
+
+.poweredby {
+  color: #9ba4ab;
+  font-size: 9px;
+  position: fixed;
+  bottom: 12%;
+  left: 10%;
+}
+
+.version {
+  color: rgb(0, 0, 0);
+  font-size: 9px;
+  position: fixed;
+  bottom: 5%;
+  left: 12%;
+}
+
+@media only screen and (max-width: 800px) {
+  .help_text {
+    position: fixed;
+    top: 35%;
+    left: 10%;
+    text-decoration: underline;
+  }
+
+  .arko_logo {
+    position: fixed;
+    max-width: 14%;
+    width: 14%;
+    bottom: 0;
+  }
+
+  .taxo_logo {
+    position: fixed;
+    max-width: 13%;
+    width: 13%;
+    top: 1em;
+    left: 6%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+}

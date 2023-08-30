@@ -48,27 +48,33 @@ const Loginpage = () => {
 
       })
 
-        .then((res) => {
-          console.log(res)
+        .then((result) => {
+          console.log("result", result)
+          if (result.status === 200) {
 
-          const jwtToken = res.data.token;
-          const user_id = res.data.user.regId;
-          const user_name = res.data.user.name;
+            const jwtToken = result.data.token;
+            const user_id = result.data.user.regId;
+            const user_name = result.data.user.name;
 
-          localStorage.setItem('jwtToken', jwtToken);
+            localStorage.setItem('jwtToken', jwtToken);
+            localStorage.setItem('user_name', user_name);
+            localStorage.setItem('user_id', user_id);
+            localStorage.setItem('LogedIn', 'true');
 
-          localStorage.setItem('user_name', user_name);
-          localStorage.setItem('user_id', user_id);
+            console.log(result.data.token)
+            swal("Success", "Loged in successfully.", "success");
+            Navigate('dashboard')
+          } else {
 
-          console.log(res.data.token)
-          swal("Success", "Loged in successfully.", "success");
-          Navigate('dashboard')
 
+            console.log("Login failed.!!")
+
+          }
         })
 
         .catch((err) => {
+          swal("Failed!", "Invalid login credential !!!!", "error");
 
-          swal("Failed!", `${err.message}`, "error");
           console.log(err)
         });
 
@@ -89,7 +95,7 @@ const Loginpage = () => {
             </div>
             <div className={styles.app_title}>TAXKO</div>
             <div className={styles.app_desp}>
-              Best cloud based storage platfrom for all Businesses and individuals to manage their Tax Filling data
+              Best cloud based storage platform for all businesses and individuals to manage their tax filling data.
             </div>
           </div>
           <div className={styles.main}>
@@ -103,7 +109,7 @@ const Loginpage = () => {
                 </div>
                 <div className={styles.user_pass}>
                   {/* <label htmlFor={styles.user_pass}>Pasword</label> */}
-                  <InputField placeholder='Enter your Password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
+                  <InputField placeholder='Enter your password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
                   {/* <input type="text" placeholder="Enter your password" id="userpassword" value={password} onChange={handlePasswordChange} name='password' /> */}
                 </div>
                 {/* <div className={styles.link}>
@@ -111,7 +117,7 @@ const Loginpage = () => {
                   <Link to="/forgetpass">Forget Password</Link>
                 </div> */}
                 <div className={styles.btn_login}>
-                  <button type="submit">LOGIN</button>
+                  <button type="submit">Login</button>
                 </div>
 
               </div>

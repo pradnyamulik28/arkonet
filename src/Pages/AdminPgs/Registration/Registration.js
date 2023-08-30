@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-// import axios from "axios";
-import InputField from '../../../components/InputField/InputField';
-import PasswordField from '../../../components/Password/PasswordField';
 import styles from './Registration.module.css';
-import DropDown from '../../../components/DropDown/DropDown';
-import Aprofesion_obj from '../../../ObjData/AProf.json';
-import States_obj from '../../../ObjData/States.json';
 import { useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import swal from 'sweetalert';
+import formfields from './formfields';
+import InputType from "./InputType"
 
 const Registration = () => {
   const Navigate = useNavigate();
 
+
+  //Tocheck Password strength
+  const [strenghtScore, setStrenghtScore] = useState("null");
+  const zxcvbn = require("zxcvbn");
+
+
+  //const [buttonDisable,setButtonDisable]=useState(true);
   const [formdata, setFormdata] = useState({
-    name: " ",
+    name: "",
     datebirth: "",
     membership_No: "",
     profession: "",
@@ -27,19 +30,41 @@ const Registration = () => {
     state: "",
     whatsApp_Link: "",
     investNow_Email: "",
-    password: ""
+    password: "",
+    confirmpassword: ""
   });
+
+
+
+
+
+
   const handleChange = (e) => {
-
     const { name, value } = e.target;
-
-    if (name === 'mobile' || name === 'telephone') {
-      const numericValue = value.replace(/\D/g, '');
+    if (name === "mobile" || name === "telephone") {
+      const numericValue = value.replace(/\D/g, "");
       setFormdata({ ...formdata, [e.target.name]: numericValue });
+      e.target.value = numericValue;
     } else {
       setFormdata({ ...formdata, [e.target.name]: e.target.value });
-    }
+      if (name === "password") {
+        if (value !== "") {
+          const pass = zxcvbn(value);
+          console.log(pass.score);
+          setStrenghtScore(pass.score);
+        }
+        else {
+          setStrenghtScore("null");
+        }
+      }
 
+
+      //Code to : to check two passwords
+      if (name === "confirmpassword" && formdata.password !== value) {
+        console.log("Password mismatch");
+      }
+
+    }
 
   };
 
@@ -49,20 +74,22 @@ const Registration = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-
-
-
-    if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.email || !formdata.password) {
+    if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.email || !formdata.password || !formdata.confirmpassword) {
       swal("Failed!", "Please fill the mandatory field !!", "error");
-      console.log(formdata)
       return;
     }
 
     if (formdata.pan.length !== 10 || !formdata.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
+
       swal("Failed!", "Enter valid 10 digit PAN!!", "error");
       return;
-    } else {
+    }
+    if (formdata.password !== formdata.confirmpassword) {
+
+      swal("Failed!", "Password and Confirm-Password Should Match!!", "error");
+      return;
+    }
+    else {
 
       console.log(formdata)
 
@@ -89,7 +116,7 @@ const Registration = () => {
             console.log("result", result)
             if (result.status === 200) {
               setFormdata({
-                name: " ",
+                name: "",
                 datebirth: "",
                 membership_No: "",
                 profession: "",
@@ -103,9 +130,10 @@ const Registration = () => {
                 whatsApp_Link: "",
                 investNow_Email: "",
                 password: "",
+                confirmpassword: ""
               });
               swal("Success", "Registration successfully. You can login now.", "success");
-              Navigate('/')
+              Navigate('/admin/')
 
               console.log("Data inserted successfully...")
 
@@ -123,6 +151,7 @@ const Registration = () => {
       } catch (error) {
         console.warn("Error on function calling...")
       }
+
     }
 
   };
@@ -136,48 +165,32 @@ const Registration = () => {
           <span> REGISTRATION FORM</span>
         </div>
         <div className={styles.regform}>
-          <form action="/" onSubmit={handleSubmit} >
-
+          <form action="" onSubmit={handleSubmit}>
             <div className={styles.first}>
+              {formfields.map((formfield) => (
+                <InputType
+                  key={"k" + formfield.id}
+                  labelname={formfield.labelname}
+                  name={formfield.name}
+                  type={formfield.type}
+                  placeholder={formfield.placeholder}
+                  value={formdata.value}
+                  mandatory={formfield.mandatory}
+                  onChange={handleChange}
+                  strenghtScore={formfield.name === "password" ? strenghtScore : ""}
+                />
+              ))}
 
-              <InputField placeholder='Enter your Name' onChange={handleChange} lblname='Name' name='name' value={formdata.name} manadatory='*' />
-
-              <InputField placeholder='Enter your DOB in YYYY-MM-DD' onChange={handleChange} lblname='DOB/DOI' name='datebirth' value={formdata.datebirth} />
-
-              <InputField placeholder='Enter your Membership Number' onChange={handleChange} lblname='Membership Number' name='membership_No' value={formdata.membership_No} />
-
-              <DropDown value_array={Aprofesion_obj} lblname='Profession' name='profession' onChange={handleChange} value={formdata.profession} manadatory='*' />
-
-              <InputField placeholder='Enter your PAN' onChange={handleChange} lblname='PAN' name='pan' value={formdata.pan} manadatory='*' />
-
-              <InputField placeholder='Enter your Telephone' onChange={handleChange} lblname='Telephone' name='telephone' value={formdata.telephone} maxLength='11' />
-
-              <InputField placeholder='Enter your Mobile' onChange={handleChange} lblname='Mobile' name='mobile' value={formdata.mobile} manadatory='*' maxLength='10' />
-
-              <InputField placeholder='Enter your Email' onChange={handleChange} lblname='Email' name='email' value={formdata.email} manadatory='*' />
-
-              <InputField placeholder='Enter your office address' onChange={handleChange} lblname='Office Addresss' name='office_Address' value={formdata.office_Address} />
-
-              <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={formdata.pin_Code} maxLength='6' />
-
-              <DropDown value_array={States_obj} lblname='State' name='state' value={formdata.state} onChange={handleChange} />
-
-              <InputField placeholder='Enter your whatsapp link' onChange={handleChange} lblname='WhatsApp Link' name='whatsApp_Link' value={formdata.whatsApp_Link} />
-
-              <InputField placeholder='Enter your investnow email' onChange={handleChange} lblname='InvestNow Email' name='investNow_Email' value={formdata.investNow_Email} />
-
-              <PasswordField type='password' placeholder='Enter your password' onChange={handleChange} lblname='Password' name='password' value={formdata.password} manadatory='*' />
-
-              <PasswordField type='password' placeholder='Re-enter password' lblname='Confirm Password' />
 
               <div className={styles.btn_submit}>
-                <button type="submit" onClick={handleSubmit}>SUBMIT</button>
+                <button type="submit" onClick={handleSubmit}>
+                  SUBMIT
+                </button>
               </div>
             </div>
           </form>
         </div>
       </div>
-
     </div>
   );
 }
