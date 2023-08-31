@@ -52,35 +52,27 @@ import React, { useEffect, useState } from 'react';
 import styles from './leftside.module.css';
 import Applogo from '../../../Images/taxko_logo.jpeg'
 import Cmpylogo from '../../../Images/Arkonet - Logo_page-0001.jpg'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 const LeftSide = () => {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
   useEffect(() => {
-
-
     function isLocalStorageNotEmpty() {
       return localStorage.length > 0;
     }
 
-    // Usage
     if (isLocalStorageNotEmpty()) {
-      console.log("Local storage contains data.");
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
     } else {
-      console.log("Local storage is empty.");
-      setIsLoggedIn(false)
+      setIsLoggedIn(false);
     }
-
-
-
-  }, []);
-
+  });
 
 
   const handleLogout = () => {
     localStorage.clear();
+
   };
 
 
@@ -89,13 +81,13 @@ const LeftSide = () => {
     <div className="container">
       <div className={`${styles.sidebar}`}>
         <div className={styles.help}>
-          <Link to='dashboard'>
+          <Link to={""}>
             <img className={styles.taxo_logo} src={Applogo} alt="" />
           </Link>
           {isLoggedIn ? (
             <>
-              <Link to="" className={styles.dash_text}><h6>Dashboard</h6></Link>
               <Link to="" className={styles.logout_text} onClick={handleLogout}><h6>Logout</h6></Link>
+              <Link to="dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
               <Link to="changepass" className={` ${styles.reset_text}`} ><h6>Change Password</h6></Link>
             </>
           ) : (

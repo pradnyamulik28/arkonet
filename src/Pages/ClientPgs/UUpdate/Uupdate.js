@@ -116,7 +116,7 @@ const Uupdate = () => {
       <form action="/" onSubmit={handleSubmit}>
         <div className={styles.right}>
           <div className={styles.regtitle}>
-            <span>CLIENT REGISTRATION FORM</span>
+            <span>CLIENT UPDATE FORM</span>
             <div className={styles.ubtn_submit}>
               <button type="submit" onClick={handleSubmit}>UPDATE</button>
             </div>

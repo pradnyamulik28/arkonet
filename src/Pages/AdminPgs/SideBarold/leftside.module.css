@@ -24,24 +24,28 @@
   position: fixed;
   top: 25%;
   left: 11%;
+  color: black;
 }
 
 .dash_text {
   position: fixed;
   top: 30%;
   left: 11%;
+  color: black;
 }
 
 .logout_text {
   position: fixed;
   top: 35%;
   left: 11%;
+  color: black;
 }
 
 .reset_text {
   position: fixed;
   top: 40%;
   left: 11%;
+  color: black;
 }
 
 .arko_logo {

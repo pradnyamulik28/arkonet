@@ -39,7 +39,7 @@ const Adminhome = () => {
 
             <Routes>
               <Route exact path='' element={<Login />} />
-              <Route path="reg" element={<Registration />} />
+              <Route path="User_registration" element={<Registration />} />
               <Route path="forgetpass" element={<ResetPass />} />
               <Route path="help" element={<Help />} />
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './loginpage.module.css';
 import axios from "axios";
 import { url_ } from '../../../Config';
@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 
 
 const Loginpage = () => {
+
   const Navigate = useNavigate();
 
   const [formdata, setFormdata] = useState({
@@ -25,63 +26,41 @@ const Loginpage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-
     const url = `${url_}/authenticate`;
 
-
-
     try {
-
-      axios({
-
+      const result = await axios({
         url: url,
-
         method: "POST",
-
         headers: {
-
           'Content-Type': 'application/json'
-
         },
-
         data: JSON.stringify(formdata),
+      });
 
-      })
+      if (result.status === 200) {
+        const jwtToken = result.data.token;
+        const user_id = result.data.user.regId;
+        const user_name = result.data.user.name;
 
-        .then((result) => {
-          console.log("result", result)
-          if (result.status === 200) {
+        localStorage.setItem('jwtToken', jwtToken);
+        localStorage.setItem('user_name', user_name);
+        localStorage.setItem('user_id', user_id);
+        localStorage.setItem('LogedIn', 'true');
 
-            const jwtToken = result.data.token;
-            const user_id = result.data.user.regId;
-            const user_name = result.data.user.name;
-
-            localStorage.setItem('jwtToken', jwtToken);
-            localStorage.setItem('user_name', user_name);
-            localStorage.setItem('user_id', user_id);
-            localStorage.setItem('LogedIn', 'true');
-
-            console.log(result.data.token)
-            swal("Success", "Loged in successfully.", "success");
-            Navigate('dashboard')
-          } else {
-
-
-            console.log("Login failed.!!")
-
-          }
-        })
-
-        .catch((err) => {
-          swal("Failed!", "Invalid login credential !!!!", "error");
-
-          console.log(err)
-        });
-
-
+        await swal("Success", "Logged in successfully.", "success");
+        Navigate('dashboard');
+        await window.location.reload();
+      } else {
+        console.log("Login failed.!!");
+      }
     } catch (error) {
-      swal("Failed!", "Server Down !! Please try again!!!!", "error");
-      console.error('Error while calling function.!!!');
+      swal("Failed!", "Invalid login credential !!!", "error");
+      setFormdata({
+        username: "",
+        password: ""
+      });
+      console.log(error);
     }
   };
 
@@ -102,20 +81,13 @@ const Loginpage = () => {
             <form onSubmit={handleLogin} autoComplete=''>
               <div className={styles.form}>
                 <div className={styles.user_id}>
-                  {/* <label htmlFor={styles.user_id}>User ID</label> */}
                   <InputField placeholder='Enter your PAN' onChange={handleChange} name='username' value={formdata.username} lblname='PAN' />
 
-                  {/* <input type="text" placeholder="Enter your PAN" id="userid" value={username} onChange={handleUsernameChange} name='username' /> */}
                 </div>
                 <div className={styles.user_pass}>
-                  {/* <label htmlFor={styles.user_pass}>Pasword</label> */}
                   <InputField placeholder='Enter your password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
-                  {/* <input type="text" placeholder="Enter your password" id="userpassword" value={password} onChange={handlePasswordChange} name='password' /> */}
                 </div>
-                {/* <div className={styles.link}>
-                  <Link to="/reg">New to TAXKO? Click Here</Link>
-                  <Link to="/forgetpass">Forget Password</Link>
-                </div> */}
+
                 <div className={styles.btn_login}>
                   <button type="submit">Login</button>
                 </div>
@@ -123,7 +95,7 @@ const Loginpage = () => {
               </div>
             </form>
             <div className={styles.link}>
-              <Link to="reg">New to TAXKO? Click Here</Link>
+              <Link to="User_registration">New to TAXKO? Click Here</Link>
               <Link to="forgetpass">Forget Password</Link>
             </div>
           </div>

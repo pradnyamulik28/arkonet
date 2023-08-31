@@ -6,9 +6,8 @@
   margin: auto;
 }
 
-.regtitle {
+.regtitle span {
   margin: 30px 0 10px 0;
-  text-align: center;
   text-shadow: 1px 1px 2px #9ba4ab;
   font-weight: 400;
   font-size: larger;

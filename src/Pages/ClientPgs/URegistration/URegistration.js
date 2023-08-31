@@ -140,7 +140,7 @@ const URegistration = () => {
   return (
     <div>
       <div className={styles.right}>
-        <div className={styles.regtitle}>
+        <div className={styles.regtitle} style={{ textAlign: 'center' }}>
           <span>CLIENT REGISTRATION FORM</span>
         </div>
         <div className={styles.regform}>

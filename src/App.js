@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Adminhome from './Pages/AdminPgs/Adminhome';
-// import ClientPages from './Pages/ClientMobilePgs/ClientPages';
+import ClientPages from './Pages/ClientMobilePgs/ClientPages';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Routes>
 
           <Route path='/admin/*' element={<Adminhome />} />
-          {/* <Route path='/client/*' element={<ClientPages />} /> */}
+          <Route path='/client/*' element={<ClientPages />} />
         </Routes>
       </Router>
     </div>

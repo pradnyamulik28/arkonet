@@ -4,16 +4,13 @@
 
 
 
-a {
+.folderlink {
   text-decoration: none;
   font-size: 10px;
   color: black;
 }
 
-img {
-  width: 70%;
-  height: auto;
-}
+
 
 .icon {
   display: flex;

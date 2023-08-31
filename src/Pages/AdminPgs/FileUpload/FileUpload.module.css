@@ -5,19 +5,16 @@
   margin: 5%;
 }
 
-body {
-  width: 100vw;
-  height: 100vh;
-}
 
-a {
+
+/* a {
   text-decoration: none;
   font-size: 10px;
   color: black;
   margin-bottom: 5%;
-}
+} */
 
-img {
+.drag_text img {
   width: 70%;
   height: auto;
 }

@@ -72,7 +72,7 @@ const Registration = () => {
 
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.email || !formdata.password || !formdata.confirmpassword) {
       swal("Failed!", "Please fill the mandatory field !!", "error");
@@ -80,81 +80,68 @@ const Registration = () => {
     }
 
     if (formdata.pan.length !== 10 || !formdata.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
-
       swal("Failed!", "Enter valid 10 digit PAN!!", "error");
       return;
     }
     if (formdata.password !== formdata.confirmpassword) {
-
       swal("Failed!", "Password and Confirm-Password Should Match!!", "error");
       return;
-    }
-    else {
-
-      console.log(formdata)
-
-
+    } else {
+      console.log(formdata);
 
       const url = `${url_}/createuser`;
 
-
-      console.log(url)
+      console.log(url);
 
       try {
-
-        fetch(url, {
+        const response = await fetch(url, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-
           body: JSON.stringify(formdata),
+        });
 
-        })
-          .then((result) => {
-            console.log("result", result)
-            if (result.status === 200) {
-              setFormdata({
-                name: "",
-                datebirth: "",
-                membership_No: "",
-                profession: "",
-                pan: "",
-                telephone: "",
-                mobile: "",
-                email: "",
-                office_Address: "",
-                pin_Code: "",
-                state: "",
-                whatsApp_Link: "",
-                investNow_Email: "",
-                password: "",
-                confirmpassword: ""
-              });
-              swal("Success", "Registration successfully. You can login now.", "success");
-              Navigate('/admin/')
+        const result = await response.json();
 
-              console.log("Data inserted successfully...")
-
-            } else {
-
-              swal("Failed!", "Registration failed.!!!!", "error");
-              console.log("Data not inserted.!!")
-
-            }
-          })
-          .catch((err) => {
-            swal("Failed!", "Server Down !! Please try again!!!!", "error");
-            console.log(err)
+        if (result.status === 'NOT_FOUND') {
+          swal("Failed!", `${result.message}`, "error");
+        } else if (result.status === 'UNAUTHORIZED') {
+          swal("Failed!", `${result.message}`, "error");
+        } else {
+          setFormdata({
+            name: "",
+            datebirth: "",
+            membership_No: "",
+            profession: "",
+            pan: "",
+            telephone: "",
+            mobile: "",
+            email: "",
+            office_Address: "",
+            pin_Code: "",
+            state: "",
+            whatsApp_Link: "",
+            investNow_Email: "",
+            password: "",
+            confirmpassword: ""
           });
+          swal("Success", "Registration successfully. You can login now.", "success");
+          Navigate('/admin/')
+
+        }
+        console.log(result)
+
+
+
       } catch (error) {
-        console.warn("Error on function calling...")
+        swal("Failed!", "Server Down !! Please try again!!!!", "error");
+        console.log(error);
       }
-
     }
-
   };
+
 
 
 
