@@ -191,62 +191,62 @@ const Registration = () => {
 
 
 
-      // const url = `${url_}/createuser`;
+      const url = `${url_}/createuser`;
 
 
-      // console.log(url)
+      console.log(url)
 
-      // try {
+      try {
 
-      //   fetch(url, {
-      //     method: 'POST',
-      //     headers: {
-      //       'Accept': 'application/json',
-      //       'Content-Type': 'application/json'
-      //     },
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
 
-      //     body: JSON.stringify(formdata),
+          body: JSON.stringify(formdata),
 
-      //   })
-      //     .then((result) => {
-      //       console.log("result", result)
-      //       if (result.status === 200) {
-      //         setFormdata({
-      //           name: "",
-      //           datebirth: "",
-      //           membership_No: "",
-      //           profession: "",
-      //           pan: "",
-      //           telephone: "",
-      //           mobile: "",
-      //           email: "",
-      //           office_Address: "",
-      //           pin_Code: "",
-      //           state: "",
-      //           whatsApp_Link: "",
-      //           investNow_Email: "",
-      //           password: "",
-      //           confirmpassword: ""
-      //         });
-      //         swal("Success", "Registration successfully. You can login now.", "success");
-      //         Navigate('/admin/')
+        })
+          .then((result) => {
+            console.log("result", result)
+            if (result.status === 200) {
+              setFormdata({
+                name: "",
+                datebirth: "",
+                membership_No: "",
+                profession: "",
+                pan: "",
+                telephone: "",
+                mobile: "",
+                email: "",
+                office_Address: "",
+                pin_Code: "",
+                state: "",
+                whatsApp_Link: "",
+                investNow_Email: "",
+                password: "",
+                confirmpassword: ""
+              });
+              swal("Success", "Registration successfully. You can login now.", "success");
+              Navigate('/admin/')
 
-      //         console.log("Data inserted successfully...")
+              console.log("Data inserted successfully...")
 
-      //       } else {
+            } else {
 
-      //         swal("Failed!", "Registration failed.!!!!", "error");
-      //         console.log("Data not inserted.!!")
+              swal("Failed!", "Registration failed.!!!!", "error");
+              console.log("Data not inserted.!!")
 
-      //       }
-      //     })
-      //     .catch((err) => {
-      //       swal("Failed!", "Server Down !! Please try again!!!!", "error");
-      //       console.log(err)
-      //     });
-      // } catch (error) {
-      //   console.warn("Error on function calling...")
-      // }
+            }
+          })
+          .catch((err) => {
+            swal("Failed!", "Server Down !! Please try again!!!!", "error");
+            console.log(err)
+          });
+      } catch (error) {
+        console.warn("Error on function calling...")
+      }
 
     }
 
