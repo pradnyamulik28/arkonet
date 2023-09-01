@@ -1,0 +1,7 @@
+.errormsg p{
+    color: red;
+}
+.errormsg{
+position: absolute;
+margin-top: 4rem;
+}

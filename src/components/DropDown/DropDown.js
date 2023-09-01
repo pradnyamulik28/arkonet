@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './DropDown.module.css'
+import ValidationError from '../ValidationError/ValidationError';
 
 
 const DropDown = (props) => {
@@ -22,6 +23,9 @@ const DropDown = (props) => {
         }
 
       </select>
+      {props.name==="profession" && (
+        !props.isProfessionNull && <ValidationError validationmsg={props.validationmsg} />
+      )}
 
     </div>
 

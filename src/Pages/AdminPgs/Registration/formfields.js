@@ -7,7 +7,8 @@ const formfields = [
       name: "name",
       type: "text",
       placeholder: "Enter your name",
-      mandatory:true
+      mandatory:true,
+      validationmsg:"Fill the name"
     },
     {
         labelname: "DOB/DOI",
@@ -15,7 +16,8 @@ const formfields = [
         name: "datebirth",
         type: "date",
         placeholder: "",
-        mandatory:false
+        mandatory:false,
+        validationmsg:""
       },
      {
         labelname: "Membership Number",
@@ -23,7 +25,8 @@ const formfields = [
         name: "membership_No",
         type: "text",
         placeholder: "Enter your Membership Number",
-        mandatory:false
+        mandatory:false,
+        validationmsg:""
       },
      {
         labelname: "Profession",
@@ -31,7 +34,8 @@ const formfields = [
         name: "profession",
         type: "dropdown",
         placeholder: "",
-        mandatory:true
+        mandatory:true,
+        validationmsg:"Select Profession"
       },
     {
       labelname: "PAN",
@@ -39,7 +43,8 @@ const formfields = [
       name: "pan",
       type: "text",
       placeholder: "Enter your PAN",
-      mandatory:true
+      mandatory:true,
+      validationmsg:"Enter Valid PAN"
     },
     {
       labelname: "Telephone",
@@ -47,7 +52,8 @@ const formfields = [
       name: "telephone",
       type: "text",
       placeholder: "Enter your Telephone",
-      mandatory:false
+      mandatory:false,
+      validationmsg:""
     },
     {
       labelname: "Mobile",
@@ -55,7 +61,8 @@ const formfields = [
       name: "mobile",
       type: "text",
       placeholder: "Enter your Mobile",
-      mandatory:true
+      mandatory:true,
+      validationmsg:"Enter Valid Mobile Number"
     },
     {
       labelname: "Email",
@@ -63,7 +70,8 @@ const formfields = [
       name: "email",
       type: "text",
       placeholder: "Enter your Email",
-      mandatory:true
+      mandatory:true,
+      validationmsg:"Enter Valid Email"
     },
     {
       labelname: "Office Addresss",
@@ -71,7 +79,8 @@ const formfields = [
       name: "office_Address",
       type: "text",
       placeholder: "Enter your office address",
-      mandatory:false
+      mandatory:false,
+      validationmsg:""
     },
     {
         labelname: "Pin Code",
@@ -79,7 +88,8 @@ const formfields = [
         name: "pin_Code",
         type: "text",
         placeholder: "Enter your pin",
-        mandatory:false
+        mandatory:false,
+        validationmsg:""
       },
      {
         labelname: "State",
@@ -87,7 +97,8 @@ const formfields = [
         name: "state",
         type: "dropdown",
         placeholder: "",
-        mandatory:false
+        mandatory:false,
+        validationmsg:""
       },
       {
         labelname: "WhatsApp Link",
@@ -95,7 +106,8 @@ const formfields = [
         name: "whatsApp_Link",
         type: "text",
         placeholder: "Enter your whatsapp link",
-        mandatory:false
+        mandatory:false,
+        validationmsg:""
       },
       {
         labelname: "InvestNow Email",
@@ -103,7 +115,8 @@ const formfields = [
         name: "investNow_Email",
         type: "text",
         placeholder: "Enter your investnow email",
-        mandatory:false
+        mandatory:false,
+        validationmsg:""
       },
       {
         labelname: "Password",
@@ -111,7 +124,8 @@ const formfields = [
         name: "password",
         type: "password",
         placeholder: "Enter your password",
-        mandatory:true
+        mandatory:true,
+        validationmsg:""
       },
       {
         labelname: "Confirm Password",
@@ -119,7 +133,8 @@ const formfields = [
         name: "confirmpassword",
         type: "password",
         placeholder: "Re-enter password",
-        mandatory:true
+        mandatory:true,
+        validationmsg:"Password Mismatch"
       }
   ];
   export default formfields;
