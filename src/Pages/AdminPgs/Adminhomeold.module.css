@@ -18,11 +18,10 @@
   letter-spacing: 0.3em;
   text-align: center;
 }
-  @media only screen and (max-width: 600px) {
-  .sidebarview{
-      display: none;
+
+@media only screen and (max-width: 600px) {
+  .navclass {
+    display: flex;
   }
-}
-.navclass{
-  display: none;
+
 }

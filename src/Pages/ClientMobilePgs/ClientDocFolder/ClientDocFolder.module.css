@@ -82,7 +82,8 @@ img {
   color: #567df4;
 }
 
-p {
+.cont,
+.icon {
   font-size: 0.75em;
 }
 

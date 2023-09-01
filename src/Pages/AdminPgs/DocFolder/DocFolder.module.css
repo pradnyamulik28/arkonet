@@ -55,7 +55,8 @@
   color: #567df4;
 }
 
-p {
+.icon,
+.cont {
   font-size: 0.75em;
 }
 

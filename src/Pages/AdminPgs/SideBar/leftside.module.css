@@ -1,100 +1,85 @@
-.container {
-  border: 2px solid red;
-}
 
-.sidebar {
+.container *{
+  /* background-color: green; */
+}
+.container{
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  height: -webkit-fill-availabel;
+  transition: box-shadow .3s;
+  float: left;
+}
+.help{
+  justify-content: center;
+  align-items: center; 
+}
+.container:hover{
+  box-shadow: 5px 5px 20px 1px #e9e9e9;  /*comment this to remove box-shadow */
+}
+.clogo{
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  align-content: space-evenly;
-  /* height: 100vh; */
+  max-width: 100%;
+  width: 100%;
+  margin: 10% 0 0 5%;
 }
 
-.taxo_logo {
-  position: fixed;
-  max-width: 10%;
-  width: 10%;
-  top: 1em;
-  left: 7%;
-  text-decoration: underline;
+.helpbar{
+  margin: 10% 0 50% 5%;
 }
 
+/* Individual starts */
 .help_text {
-  position: fixed;
-  top: 25%;
-  left: 11%;
+  margin: 2%;
 }
-
 .dash_text {
-  position: fixed;
-  top: 30%;
-  left: 11%;
+  margin: 2%;
 }
-
 .logout_text {
-  position: fixed;
-  top: 35%;
-  left: 11%;
+  margin: 2%;
 }
-
 .reset_text {
-  position: fixed;
-  top: 40%;
-  left: 11%;
+  margin: 2%;
+}
+.helpbar h6{
+  font-size: 2em;
+}
+/* Individual ends */
+.copyright h5{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.50rem;
+  margin: 0 0 5% 0;
+  color: rgb(158, 158, 158);
 }
 
-.arko_logo {
-  position: fixed;
-  max-width: 15%;
-  width: 13%;
-  height: 4%;
-  bottom: 8%;
-  left: 7%;
-}
-
-.poweredby {
-  color: #9ba4ab;
-  font-size: 9px;
-  position: fixed;
-  bottom: 12%;
-  left: 10%;
-}
-
-.version {
-  color: rgb(0, 0, 0);
-  font-size: 9px;
-  position: fixed;
-  bottom: 5%;
-  left: 12%;
-}
-
-@media only screen and (max-width: 800px) {
-  .help_text {
-    position: fixed;
-    top: 35%;
-    left: 10%;
-    text-decoration: underline;
-  }
-
-  .arko_logo {
-    position: fixed;
-    max-width: 14%;
-    width: 14%;
-    bottom: 0;
-  }
-
-  .taxo_logo {
-    position: fixed;
-    max-width: 13%;
-    width: 13%;
-    top: 1em;
-    left: 6%;
-  }
+.copyright img{
+  margin-top: -2%;
+  margin-bottom: 10%;
+  margin-left: 14%;
 }
 
 @media only screen and (max-width: 600px) {
   .sidebar {
     display: none;
   }
+}
+@media only screen and (min-width: 1300px) {
+  .clogo{
+    display: flex;
+    max-width: 70%;
+    width: 70%;
+  } 
+  .copyright h5{
+    font-size: 1rem;
+  }
+}
+.copyright{
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+  width: 100%;
+  margin: 50% 0 10% 5%;
 }

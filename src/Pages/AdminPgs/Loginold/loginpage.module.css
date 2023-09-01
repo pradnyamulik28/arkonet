@@ -1,31 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+
+
+
 .right {
-  width: 75vw;
-  /* height: 100vh; */
+  /* background-color: rgb(208, 255, 0); */
+  /* width: 70%; */
+  height: 100vh;
   float: right;
-  position: relative;
-  left: 1rem;
+
+}
+
+
+.right_body {
+  margin: 0 100px;
 }
 
 .header,
 .main {
-  margin: 4rem 2rem;
+  margin: 4rem 3rem;
 }
 
 .greet,
 .app_desp {
   color: #9ba4ab;
-  margin: 2rem 0 0 0;
-  font-size: 1.5rem;
+  margin: 30px 0 0 0;
+  font-size: 20px;
 }
 
 .app_title {
   color: #ffd401;
   font-weight: bolder;
-  font-size: 2rem;
+  font-size: 60px;
   letter-spacing: 20px;
-  overflow: hidden;
 }
 
 .user_id,
@@ -34,6 +41,7 @@
   flex-direction: column;
   margin: 10px;
 }
+
 
 .form {
   display: flex;
@@ -65,12 +73,15 @@ button:active {
 .link {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
+
 .link a {
+
   color: #ffd401;
-  font-size: 1.2rem;
+
+  font-size: larger;
 }
 
 .footer {
@@ -78,32 +89,11 @@ button:active {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
 }
 
 .follow,
 .icon a {
   margin: 0 15px;
-  color: #19191a;
-}
-
-.followtxt {
-  font-size: 0.90rem;
   color: #9ba4ab;
-}
-
-.icon {
-  display: flex;
-  flex-direction: row;
-}
-
-@media only screen and (max-width: 1000px) {
-  .link a {
-    font-size: 1rem;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .right {
-    width: 100vw;
-  }
 }
