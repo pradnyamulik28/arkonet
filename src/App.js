@@ -14,13 +14,11 @@ function App() {
     <div>
       <Router>
         <Routes>
-        <Route path='/*' element={<Adminhome />} />
-          {/* <Route path='/admin/*' element={<Adminhome />} /> */}
-          {/* <Route path='/client/*' element={<ClientPages />} /> */}
+          <Route path='/admin/*' element={<Adminhome />} />
+          <Route path='/client/*' element={<ClientPages />} />
         </Routes>
       </Router>
     </div>
-
   );
 }
 

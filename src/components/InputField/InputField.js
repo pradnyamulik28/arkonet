@@ -4,44 +4,43 @@ import ValidationError from '../ValidationError/ValidationError'
 
 const InputField = (props) => {
 
-  const properties={
-    placeholder:props.placeholder,
-    type:props.type,
-    name:props.name,
-    id:props.id,
-    className:'form-control ',
-    value:props.value,
-    onChange:props.onChange,
-    maxLength:props.maxLength,
-    autoComplete:'off'
+  const properties = {
+    placeholder: props.placeholder,
+    type: props.type,
+    name: props.name,
+    id: props.id,
+    className: 'form-control ',
+    value: props.value,
+    onChange: props.onChange,
+    maxLength: props.maxLength,
+    autoComplete: 'off'
   }
 
-if(props.type==="date")
-{
-  properties.max=new Date().toISOString().split('T')[0];
-}
+  if (props.type === "date") {
+    properties.max = new Date().toISOString().split('T')[0];
+  }
 
 
   return (
-    <div className={`form-group ${styles.inputfield}`} >
+    <div className={` ${styles.inputfield} mb-4`} >
       <label htmlFor={props.id}>{props.lblname}<span className={styles.manadatory}>{props.manadatory}</span></label>
       <input
-        {...properties}        
+        {...properties}
       />
-      
-      {props.name==="name" && (
+
+      {props.name === "name" && (
         !props.isNameNull && <ValidationError validationmsg={props.validationmsg} />
       )}
-      {props.name==="email" && (
+      {props.name === "email" && (
         !props.isValidEmail && <ValidationError validationmsg={props.validationmsg} />
       )}
-      {props.name==="mobile" && (
+      {props.name === "mobile" && (
         !props.isValidMobile && <ValidationError validationmsg={props.validationmsg} />
       )}
-      {props.name==="pan" && (
+      {props.name === "pan" && (
         !props.isValidPAN && <ValidationError validationmsg={props.validationmsg} />
       )}
-      
+
     </div >
   );
 }

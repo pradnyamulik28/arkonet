@@ -22,6 +22,8 @@ const Registration = () => {
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
   
 
+
+
   //const [buttonDisable,setButtonDisable]=useState(true);
   const [formdata, setFormdata] = useState({
     name: "",
@@ -56,24 +58,24 @@ const Registration = () => {
 
       case "name":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
-        if(!e.target.value){
+        if (!e.target.value) {
           setIsNameNull(false);
         }
-        else{
+        else {
           setIsNameNull(true);
         }
         break;
 
-      
+
       case "profession":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
-        if(!e.target.value){
+        if (!e.target.value) {
           setIsProfessionNull(false);
         }
-        else{
+        else {
           setIsProfessionNull(true);
         }
-          break;
+        break;
 
 
       case "email":
@@ -83,12 +85,12 @@ const Registration = () => {
         setIsValidEmail(emailPattern.test(e.target.value));
         break;
 
-        case "pan":
-          setFormdata({ ...formdata, [e.target.name]: e.target.value });
-          //---Basic PAN Validation
-          const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-          setIsValidPAN(panPattern.test(e.target.value));
-          break;
+      case "pan":
+        setFormdata({ ...formdata, [e.target.name]: e.target.value });
+        //---Basic PAN Validation
+        const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+        setIsValidPAN(panPattern.test(e.target.value));
+        break;
 
       case "mobile":
         setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
@@ -125,7 +127,7 @@ const Registration = () => {
         break;
 
 
-      case "confirmpassword" :
+      case "confirmpassword":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
 
 
@@ -137,7 +139,6 @@ const Registration = () => {
         }
         break;
 
-        
       default:
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
     }
@@ -147,109 +148,106 @@ const Registration = () => {
   };
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-   
-      if(!formdata.name){
-        setIsNameNull(false);
-      }
 
-      if(!formdata.profession){
-        setIsProfessionNull(false)
-      }
-
-      //--- Email Validation
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setIsValidEmail(emailPattern.test(formdata.email));
-     
-       
-        //--- PAN Validation
-        const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-        setIsValidPAN(panPattern.test(formdata.pan));          
-   
-      
-      // mobile validation
-      const mobilePattern = /^[789]\d{9}$/;
-      setIsValidMobile(mobilePattern.test(formdata.mobile));
-           
-      //---check Password match-----
-      if (formdata.password !== formdata.confirmpassword
-        || (formdata.password ==="" || formdata.confirmpassword==="")) {
-        setIsPasswordMatch(false);  console.log("password mismatch")      
-      }      
-
-      //-------Check Form Fields----------
-      if (!formdata.name || !formdata.profession || 
-        !isValidPAN || !isValidMobile || !isValidEmail || !isPasswordMatch) {
-        swal.fire("Failed!", "Please fill the mandatory field !!", "error");
-        console.log(formdata)
-        return;
-      }
-    else {
-
-      console.log(formdata)
-
-
-
-      // const url = `${url_}/createuser`;
-
-
-      // console.log(url)
-
-      // try {
-
-      //   fetch(url, {
-      //     method: 'POST',
-      //     headers: {
-      //       'Accept': 'application/json',
-      //       'Content-Type': 'application/json'
-      //     },
-
-      //     body: JSON.stringify(formdata),
-
-      //   })
-      //     .then((result) => {
-      //       console.log("result", result)
-      //       if (result.status === 200) {
-      //         setFormdata({
-      //           name: "",
-      //           datebirth: "",
-      //           membership_No: "",
-      //           profession: "",
-      //           pan: "",
-      //           telephone: "",
-      //           mobile: "",
-      //           email: "",
-      //           office_Address: "",
-      //           pin_Code: "",
-      //           state: "",
-      //           whatsApp_Link: "",
-      //           investNow_Email: "",
-      //           password: "",
-      //           confirmpassword: ""
-      //         });
-      //         swal("Success", "Registration successfully. You can login now.", "success");
-      //         Navigate('/admin/')
-
-      //         console.log("Data inserted successfully...")
-
-      //       } else {
-
-      //         swal("Failed!", "Registration failed.!!!!", "error");
-      //         console.log("Data not inserted.!!")
-
-      //       }
-      //     })
-      //     .catch((err) => {
-      //       swal("Failed!", "Server Down !! Please try again!!!!", "error");
-      //       console.log(err)
-      //     });
-      // } catch (error) {
-      //   console.warn("Error on function calling...")
-      // }
-
+    if (!formdata.name) {
+      setIsNameNull(false);
     }
 
+    if (!formdata.profession) {
+      setIsProfessionNull(false);
+    }
+
+    // Email Validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValidEmail(emailPattern.test(formdata.email));
+
+    // PAN Validation
+    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    setIsValidPAN(panPattern.test(formdata.pan));
+
+    // Mobile Validation
+    const mobilePattern = /^[789]\d{9}$/;
+    setIsValidMobile(mobilePattern.test(formdata.mobile));
+
+    // Check Password Match
+    if (
+      formdata.password !== formdata.confirmpassword ||
+      (formdata.password === "" || formdata.confirmpassword === "")
+    ) {
+      setIsPasswordMatch(false);
+      console.log("password mismatch");
+    }
+
+    // Check Form Fields
+    if (
+      !formdata.name ||
+      !formdata.profession ||
+      !isValidPAN ||
+      !isValidMobile ||
+      !isValidEmail ||
+      !isPasswordMatch
+    ) {
+      swal.fire("Failed!", "Please fill the mandatory fields!!", "error");
+      console.log(formdata);
+      return;
+    } else {
+      const url = `${url_}/createuser`;
+      console.log(url);
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formdata),
+        });
+
+        const result = await response.json()
+        console.log("response", result);
+
+        if (result.status === "NOT_FOUND") {
+          swal.fire("Failed!", `${result.message}`, "error");
+        } else if (result.status === "UNAUTHORIZED") {
+          swal.fire("Failed!", `${result.message}`, "error");
+        } else {
+          setFormdata({
+            name: "",
+            datebirth: "",
+            membership_No: "",
+            profession: "",
+            pan: "",
+            telephone: "",
+            mobile: "",
+            email: "",
+            office_Address: "",
+            pin_Code: "",
+            state: "",
+            whatsApp_Link: "",
+            investNow_Email: "",
+            password: "",
+            confirmpassword: "",
+          });
+          swal.fire(
+            "Success",
+            "Registration successful. You can log in now.",
+            "success"
+          );
+          Navigate("/admin/");
+        }
+
+      } catch (error) {
+        swal.fire(
+          "Failed!",
+          "Server Down!! Please try again later!!!!",
+          "error"
+        );
+        console.error(error);
+      }
+    }
   };
 
 
@@ -275,15 +273,15 @@ const Registration = () => {
                   onChange={handleChange}
                   validationmsg={formfield.validationmsg}
                   strenghtScore={formfield.name === "password" ? strenghtScore : ""}
-                  isNameNull={formfield.name==="name" && isNameNull}
-                  isValidEmail={formfield.name==="email"&& isValidEmail}
-                  isValidMobile={formfield.name==="mobile"&& isValidMobile}
-                  isValidPAN={formfield.name==="pan"&& isValidPAN}
-                  isPasswordMatch={formfield.name==="confirmpassword" && isPasswordMatch}  
-                  isProfessionNull={formfield.name==="profession" && isProfessionNull}                
+                  isNameNull={formfield.name === "name" && isNameNull}
+                  isValidEmail={formfield.name === "email" && isValidEmail}
+                  isValidMobile={formfield.name === "mobile" && isValidMobile}
+                  isValidPAN={formfield.name === "pan" && isValidPAN}
+                  isPasswordMatch={formfield.name === "confirmpassword" && isPasswordMatch}
+                  isProfessionNull={formfield.name === "profession" && isProfessionNull}
                 />
               ))}
-              <div className={styles.btn_submit}>
+              <div className={`${styles.btn_submit} mt-4`}>
                 <button type="submit" onClick={handleSubmit}>
                   SUBMIT
                 </button>

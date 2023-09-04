@@ -16,7 +16,8 @@ body {
 .container {
   margin: 5%;
 }
-.outercontainer{
+
+.outercontainer {
   height: 100vh;
   width: 100vw;
   height: -webkit-fill-availabel;
@@ -24,20 +25,20 @@ body {
   overflow: hidden;
 }
 
-.maincontainer{
+.maincontainer {
   height: 100vh;
   width: 100vw;
   justify-content: center;
   align-items: center;
 }
 
-
+/* 
 a {
   text-decoration: none;
   font-size: 10px;
   color: black;
   margin-bottom: 5%;
-}
+} */
 
 img {
   width: 70%;
@@ -65,9 +66,9 @@ h1 {
   font-size: 2rem;
 }
 
-p {
+/* p {
   font-size: 0.75em;
-}
+} */
 
 #copyrights {
   position: relative;
@@ -111,11 +112,13 @@ p {
   border-radius: 50px;
   margin: 3px;
 }
-.btns{
+
+.btns {
   width: 7rem;
   height: 2.1rem;
   border-radius: 15px;
 }
+
 input:checked+.button {
   background-color: #14c511;
 
