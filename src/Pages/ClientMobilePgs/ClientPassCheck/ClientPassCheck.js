@@ -1,13 +1,18 @@
 import arkonet from "../../../Images/Arkonet.jpg";
 import style from "./ClientPassCheck.module.css";
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import { useLocation } from 'react-router-dom';
+//import { CONFIRM_KEY } from "sweetalert/typings/modules/options/buttons";
 
 function ClientPassCheck() {
-  const {isPasswordNull,clientpan}=useLocation().state; //Get Password status and Clientid(PAN) from route
-
+  
+  // const {isPasswordNull,clientpan}=useLocation().state; //Get Password status and Clientid(PAN) from route
+ 
+  const clientpan=useLocation().state.clientpan;
+  const [isPasswordNull,setIsPasswordNull]=useState(useLocation().state.isPasswordNull);
+  
   const [credentials, setCredentials] = useState({
     Upassword: "",
     confirmpassword:""
@@ -90,6 +95,8 @@ const handleSetPassword = async () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+    console.log(clientpan,credentials.Upassword)
+
     var raw = JSON.stringify({
       clientusername: clientpan,
       clientpassword: credentials.Upassword,
@@ -107,10 +114,13 @@ const handleSetPassword = async () => {
       .then((data) => {
         const jwtToken = data.token;
         localStorage.setItem("jwtToken", jwtToken);
-        const client_id = data.user.clientId;
+        const client_id = data.client.clientId;
+            
         localStorage.setItem("client_id", client_id);
-        storeJwtData(data.user);
-        Navigate(`/clientdocfolder`, { state: { clientid: client_id } });
+        storeJwtData(data.client);
+                
+        Navigate(`clientdocfolder`, { state: { clientid: client_id } });
+        
       })
       .catch((error) => console.log("error", error));
   };
@@ -118,7 +128,7 @@ const handleSetPassword = async () => {
 
  function handleButtonClick()
  {
-  console.log("Client Id : ",clientpan);
+  //console.log("Client Id : ",clientpan);
   if(isPasswordNull)
   {
       //Code to Set the Password
@@ -130,18 +140,24 @@ const handleSetPassword = async () => {
     handleLogin();
   }
 
-
-
  }
+
+ const handleForgotPass =()=> {
+  setIsPasswordNull(true);
+  setCredentials({Upassword: "",
+  confirmpassword:""});
+};
+
+
   return (
     <div className={`${style.outercontainer}`}>
     {/*  main class */}
     <div className={`${style.maincontainer}`}>
       {/* Header */}
       <div className={`${style.header}`}>
-        <a href="previous link" id={`${style.welcome}`}>
+        <Link to="/client" id={`${style.welcome}`}>
           &lt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
-        </a>
+        </Link>
         <h2>TAXKO</h2>
       </div>
 
@@ -158,6 +174,7 @@ const handleSetPassword = async () => {
             placeholder={`${isPasswordNull ? "Set your Password" : "Enter your Password"}`}
             value={credentials.Upassword}
             onChange={handleChange}
+            autoComplete="off"
           />
           {isPasswordNull &&
           <>
@@ -171,6 +188,7 @@ const handleSetPassword = async () => {
            placeholder="Confirm Password"
            value={credentials.confirmpassword}
            onChange={handleChange}
+           autoComplete="off"
          /></> 
            }
         </form>
@@ -181,28 +199,31 @@ const handleSetPassword = async () => {
         <button type="button" className={`${style.login}`} onClick={handleButtonClick}>
         {isPasswordNull ? "Set Password" : "Login"}
         </button>
-        <a href="previous link" id={`${style.forgot}`}>
+        {/* <a href="previous link" id={`${style.forgot}`} onClick={handleForgotPass}>
           <u>Forgot Password?</u>
-        </a>
+        </a> */}
+        <p id={`${style.forgot}`} onClick={handleForgotPass}>
+          <u>Forgot Password?</u>
+        </p>
       </div>
 
       {/* Copyright */}
       <div className={`${style.copyright}`}>
-        <a href="previous link" id={`${style.devs}`}>
+        <p  id={`${style.devs}`}>
           Developed & Managed by
-        </a>
-        <img src={arkonet} alt="" id={`${style.arkonet}`} />
-        <a href="previous link" id={`${style.social}`}>
+        </p>
+        <a href="https://www.arkonetglobal.com/"><img src={arkonet} alt="" id={`${style.arkonet}`} /></a>
+        <a href="" id={`${style.social}`}>
           Follow us on
         </a>
         <div className={`${style.handles}`}>
           <a href="previous link" id={`${style.instagram}`}>
             <i className="fa-brands fa-instagram" style={{ color: "#05022c" }}></i>
           </a>
-          <a href="previous link" id={`${style.twitter}`}>
+          <a href="" id={`${style.twitter}`}>
             <i className="fa-brands fa-twitter" style={{ color: "#05022c" }}></i>
           </a>
-          <a href="previous link" id={`${style.facebook}`}>
+          <a href="" id={`${style.facebook}`}>
             <i className="fa-brands fa-facebook-f" style={{ color: "#05022c" }}></i>
           </a>
         </div>

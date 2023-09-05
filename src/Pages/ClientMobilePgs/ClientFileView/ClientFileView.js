@@ -217,7 +217,7 @@ const ClientFileView = () => {
                    
                   </h2>
                 </div>
-                <div className="col-5 col-sm-4 col-md-3 col-lg-2 col-xl-2" id="select">
+                <div className="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2" id="select">
                 <button type="button" className={`btn btn-danger ${style.btns}`} onClick={toggleCodeVisibility}>Select</button>
                 </div>
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="share">
@@ -235,7 +235,7 @@ const ClientFileView = () => {
                 {filenameStatusArray.map(item => (
                   <>
                     {item.status && item.filename!=="Excel" &&(
-                      <div className='col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6' key={item.fileId}>
+                      <div className={`col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ${style.smallcol}`} key={item.fileId}>
                         <div className={style.file_upload}>
                           {codeVisible && (
                             <label className={style.checkbox_label}>

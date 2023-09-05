@@ -38,8 +38,8 @@ const ClientDocFolder = () => {
           <h1><b>Income Tax</b></h1>
           <div className="row">
             {lastFiveYearsArray.map((year, index) => (
-              <div key={index} className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <Link to={`/clientfileview`}  
+              <div key={index} className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
+                <Link to={`clientfileview`}  
                 className={`${styles.linktab}`} 
                 state={{clientid:id,year:`${year - 1}-${year.toString().slice(-2)}`}}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>

@@ -3,6 +3,7 @@ import style from "./ClientLogin.module.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
+import swal from "sweetalert2";
 
 function ClientLogin() {
   const Navigate = useNavigate();
@@ -59,9 +60,9 @@ function ClientLogin() {
       <div className={`${style.maincontainer}`}>
         {/* Header */}
         <div className={`${style.header}`}>
-          <a href="previous link" id={`${style.welcome}`}>
-            &lt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
-          </a>
+          <p  id={`${style.welcome}`}>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
+          </p>
           <h2>TAXKO</h2>
         </div>
 
@@ -78,6 +79,8 @@ function ClientLogin() {
               placeholder="&nbsp;&nbsp;&nbsp;&nbsp;Enter Your PAN"
               value={credentials.UID}
               onChange={handleChange}
+              autoComplete="off"
+              autoCapitalize='true'
             />
 
           </form>
@@ -88,17 +91,17 @@ function ClientLogin() {
           <button type="button" className={`${style.login}`} onClick={handleLogin}>
             Next
           </button>
-          <a href="previous link" id={`${style.forgot}`}>
+          {/* <a href="previous link" id={`${style.forgot}`}>
             <u>Forgot Password?</u>
-          </a>
+          </a> */}
         </div>
 
         {/* Copyright */}
         <div className={`${style.copyright}`}>
-          <a href="" id={`${style.devs}`}>
+          <p id={`${style.devs}`}>
             Developed & Managed by
-          </a>
-          <img src={arkonet} alt="" id={`${style.arkonet}`} />
+          </p>
+          <a href="https://www.arkonetglobal.com/"><img src={arkonet} alt="" id={`${style.arkonet}`} /></a>
           <a href="" id={`${style.social}`}>
             Follow us on
           </a>

@@ -9,14 +9,12 @@ import ClientPassCheck from "./ClientPassCheck/ClientPassCheck"
 
 function ClientPages() {
   return (
-
     <Routes>
       <Route path="" element={<ClientLogin />} />
       <Route path="clientpasscheck" element={<ClientPassCheck />} />
-      <Route exact path="clientdocfolder" element={<ClientDocFolder />} />
-      <Route exact path="clientfileview" element={<ClientFileView />} />
+      <Route path="clientpasscheck/clientdocfolder" element={<ClientDocFolder />} />
+      <Route path="clientpasscheck/clientdocfolder/clientfileview" element={<ClientFileView />} />
     </Routes>
-
   );
 }
 
