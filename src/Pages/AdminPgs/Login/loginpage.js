@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './loginpage.module.css';
 import axios from "axios";
 import { url_ } from '../../../Config';
@@ -49,7 +49,7 @@ const Loginpage = () => {
 
         await swal("Success", "Logged in successfully.", "success");
         Navigate('dashboard');
-        await window.location.reload();
+
       } else {
         console.log("Login failed.!!");
       }
@@ -64,48 +64,45 @@ const Loginpage = () => {
   };
 
   return (
-    <div className={styles.right}>
-      <div className={styles.right_body}>
-        <div className={styles.header}>
-          <div className={styles.greet}>
-            <h3>Welcome</h3>
-          </div>
-          <div className={styles.app_title}>TAXKO</div>
-          <div className={styles.app_desp}>
-            Best cloud based storage platfrom for all Businesses and individuals to manage their tax filling data.
-          </div>
-        </div>
-        <div className={styles.main}>
-          <form onSubmit={handleLogin} autoComplete=''>
-            <div className={styles.form}>
-              <div className={styles.user_id}>
-                {/* <label htmlFor={styles.user_id}>User ID</label> */}
-                <InputField placeholder='Enter your PAN' onChange={handleChange} name='username' value={formdata.username} lblname='PAN' />
 
-                {/* <input type="text" placeholder="Enter your PAN" id="userid" value={username} onChange={handleUsernameChange} name='username' /> */}
-              </div>
-              <div className={styles.user_pass}>
-                {/* <label htmlFor={styles.user_pass}>Pasword</label> */}
-                <InputField placeholder='Enter your Password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
-                {/* <input type="text" placeholder="Enter your password" id="userpassword" value={password} onChange={handlePasswordChange} name='password' /> */}
-              </div>
-              {/* <div className={styles.link}>
-                  <Link to="/reg">New to TAXKO? Click Here</Link>
-                  <Link to="/forgetpass">Forget Password</Link>
-                </div> */}
-              <div className={styles.btn_login}>
-                <button type="submit">LOGIN</button>
-              </div>
+    <div className="container">
 
+
+      <div className={styles.right}>
+        <div className={styles.right_body}>
+          <div className={styles.header}>
+            <div className={styles.greet}>
+              <h3>Welcome</h3>
             </div>
-          </form>
-          <div className={styles.link}>
-            <Link to="User_registration">New to TAXKO? Click Here</Link>
-            <Link to="forgetpass">Forget Password</Link>
+            <div className={styles.app_title}>TAXKO</div>
+            <div className={styles.app_desp}>
+              Best cloud based storage platfrom for all Businesses and individuals to manage their tax filling data.
+            </div>
           </div>
-        </div>
+          <div className={styles.main}>
+            <form onSubmit={handleLogin} autoComplete=''>
+              <div className={styles.form}>
+                <div className={styles.user_id}>
+                  <InputField placeholder='Enter your PAN' onChange={handleChange} name='username' value={formdata.username} lblname='PAN' />
 
-        {/* <div className={styles.footer}>
+                </div>
+                <div className={styles.user_pass}>
+                  <InputField placeholder='Enter your Password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
+                </div>
+
+                <div className={styles.btn_login}>
+                  <button type="submit">LOGIN</button>
+                </div>
+
+              </div>
+            </form>
+            <div className={styles.link}>
+              <Link to="User_registration">New to TAXKO? Click Here</Link>
+              <Link to="forgetpass">Forget Password</Link>
+            </div>
+          </div>
+
+          {/* <div className={styles.footer}>
           <div className={styles.follow}>
             <h6 className={`${styles.followtxt}`}>Follow Us On</h6>
           </div>
@@ -127,9 +124,9 @@ const Loginpage = () => {
             </svg></a></h1>
           </div>
         </div> */}
+        </div>
       </div>
     </div>
-
   );
 }
 

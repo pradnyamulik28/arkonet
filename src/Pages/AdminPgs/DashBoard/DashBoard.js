@@ -9,6 +9,7 @@ const DashBoard = () => {
   const [Totalclient, setTotalclient] = useState();
   const [TotalIncomeclient, setTotalIncomeclient] = useState();
   const [filedata, setFiledata] = useState([]);
+  const [latestupdatedata, setLatestupdatedata] = useState();
 
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
@@ -45,6 +46,7 @@ const DashBoard = () => {
 
     totalClient();
     FileCount();
+    LatestUpdate();
   }, []);
 
 
@@ -81,13 +83,38 @@ const DashBoard = () => {
   };
 
 
+  const LatestUpdate = () => {
 
+    const url = `${url_}/maxLastUpdateDate/${user_id}`;
+
+
+
+    try {
+
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${storedToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setLatestupdatedata(data.lastUpdateDate)
+
+        })
+        .catch(error => console.log(error));
+    } catch (error) {
+      console.warn("Error on function calling...")
+    }
+  };
   return (
 
 
 
     <div>
       <div className="container">
+
         <div className="row">
           <div className="col-sm-6">
             <div className={`card m-4 ${styles.cardd} text-center`} >
@@ -103,8 +130,8 @@ const DashBoard = () => {
                     <h6 className={`${styles.black} font-weight-bold`}>{TotalIncomeclient}</h6>
                   </Link>
                 </div>
-                <Link to='clientreg' ><input type="submit" value="ADD CLIENT" className={` h6 ${styles.abtn}`} /></Link>
                 <h6 className={`${styles.green} `}>As on date</h6>
+                <Link to='clientreg' ><input type="submit" value="ADD CLIENT" className={` h6 ${styles.abtn}`} /></Link>
               </div>
             </div>
           </div>
@@ -162,7 +189,7 @@ const DashBoard = () => {
                     </tbody>
                   </table>
 
-                  <small >Last updated on 19 May 2023</small>
+                  <small >Last updated on {latestupdatedata}</small>
 
 
                 </div>

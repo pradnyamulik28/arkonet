@@ -34,16 +34,25 @@
   color: black;
 }
 
-.logout_text {
+
+
+.reset_text {
   position: fixed;
   top: 35%;
   left: 11%;
   color: black;
 }
 
-.reset_text {
+.logout_text {
   position: fixed;
   top: 40%;
+  left: 11%;
+  color: black;
+}
+
+.login_text {
+  position: fixed;
+  top: 45%;
   left: 11%;
   color: black;
 }

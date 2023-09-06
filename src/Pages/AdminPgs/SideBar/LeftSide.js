@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './leftside.module.css';
 import Applogo from '../../../Images/taxko_logo.jpeg'
 import Cmpylogo from '../../../Images/Arkonet - Logo_page-0001.jpg'
@@ -8,19 +8,8 @@ import { Link } from 'react-router-dom';
 
 const LeftSide = () => {
 
-  const [isLoggedIn, setIsLoggedIn] = useState();
 
-  useEffect(() => {
-    function isLocalStorageNotEmpty() {
-      return localStorage.length > 0;
-    }
 
-    if (isLocalStorageNotEmpty()) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  });
 
 
   const handleLogout = () => {
@@ -41,7 +30,7 @@ const LeftSide = () => {
             <div className={`col-12 ${styles.helpbar}`}>
               <Link to="#" className={styles.help_text}><h6>Help</h6></Link>
               <Link to="dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
-              <Link to="" className={styles.logout_text} onClick={handleLogout}><h6>Logout</h6></Link>
+              <Link to="" className={styles.logout_text} onClick={handleLogout}><h6>{isLoggedIn ? ("Logout") : ("Login")}</h6></Link>
               <Link to="changepass" className={` ${styles.reset_text}`} ><h6>Change Password</h6></Link>
             </div>
           ) : (

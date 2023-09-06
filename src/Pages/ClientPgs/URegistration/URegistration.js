@@ -8,7 +8,7 @@ import States_obj from '../../../ObjData/States.json';
 import ResidentialStatus from '../../../ObjData/ResidentialStatus.json'
 import RadioInput from '../../../components/RadioField/RadioInput';
 import { url_ } from '../../../Config';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -19,9 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const URegistration = () => {
 
-  const Navigate = useNavigate();
-
-
+  const navigate = useNavigate();
   // Access JWT token and remove double quotes
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
@@ -59,81 +57,89 @@ const URegistration = () => {
 
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
 
     if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.category) {
-      swal("Failed!", "Please fill the mandatory field !!", "error");
-      console.log(formdata)
+      swal.fire("Failed!", "Please fill the mandatory field !!", "error");
+
       return;
     }
 
     if (formdata.pan.length !== 10 || !formdata.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
-      swal("Failed!", "Enter valid 10 digit PAN!!", "error");
+      swal.fire("Failed!", "Enter valid 10 digit PAN!!", "error");
       return;
+    }
+
+    if (formdata.mobile.length !== 10) {
+      swal.fire("Failed!", "Enter valid 10 digit mobile number!!", "error");
+
     }
     else {
 
 
-
       const url = `${url_}/createclient`;
-
-
-      console.log(url)
+      console.log(url);
 
       try {
-
-        fetch(url, {
-          method: 'POST',
+        const response = await fetch(url, {
+          method: "POST",
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${storedToken}`
           },
-
           body: JSON.stringify(formdata),
+        });
 
-        }).then((result) => {
-          if (result.status === 200) {
-            // 
-            setFormdata({
-              address: "",
-              email: "",
-              mobile: "",
-              pan: "",
-              profession: "",
-              state: "",
-              telephone: "",
-              category: "",
-              dob: "",
-              name: "",
-              pin_Code: "",
-              userid: `${user_id}`,
-              residential_status: ""
-            });
-            swal("Success", "Data inserted successfully.", "success");
-            Navigate('/dashboard')
-            console.log(storedToken)
-            console.log(formdata)
+        const result = await response.json()
+        console.log("response", result);
+        if (response.ok) {
+          // Check if the response status is in the 200-299 range, which indicates success.
+          // if (result.status === "NOT_FOUND" || result.status === "UNAUTHORIZED") {
+          //   swal.fire("Failed!", `${result.message}`, "error");
+          // } else {
+          setFormdata({
+            address: "",
+            email: "",
+            mobile: "",
+            pan: "",
+            pin_Code: "",
+            profession: "",
+            state: "",
+            telephone: "",
+            category: "",
+            dob: "",
+            name: "",
+            residential_status: "",
+            userid: `${user_id}`,
+          });
 
-          } else {
-            swal("Failed!", "Data not inserted !!", "error");
-            console.log(storedToken)
-            console.log(formdata)
-
+          swal.fire("Success", "Data inserted successfully.", "success");
+          navigate(-1);
+          // }
+        } else {
+          // Handle non-successful HTTP responses here
+          // swal.fire("Failed!", "Server returned an error.", "error");
+          if (result.status === "NOT_FOUND" || result.status === "UNAUTHORIZED") {
+            swal.fire("Failed!", `${result.message}`, "error");
           }
-        })
-          .catch((err) => { console.log(err) });
+        }
+
       } catch (error) {
-        console.warn("Error on function calling...")
+        swal.fire(
+          "Failed!",
+          "Server Down!! Please try again later!!!!",
+          "error"
+        );
+
       }
-      console.log(formdata)
+
+
+
+
+
     }
-
-
-
-
-
   };
 
 

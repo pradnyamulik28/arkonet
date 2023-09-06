@@ -21,6 +21,7 @@ import ChangePass from './ChangePass/ChangePass';
 import Help from './Help/Help';
 
 const Adminhome = () => {
+
   return (
     <div>
       {/* <Switch> */}
@@ -30,6 +31,7 @@ const Adminhome = () => {
           <div className={`col-sm-3 col-md-3 col-lg-3 col-xl-3`}>
             <LeftSide />
           </div>
+
           <div className={`col-sm-9 col-md-9 col-lg-9 col-xl-9`}>
 
             <nav className={styles.navclass}>
