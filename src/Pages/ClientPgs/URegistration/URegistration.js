@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 
-import InputField from '../../../components/InputField/InputField';
 import styles from './URegistration.module.css';
-import DropDown from '../../../components/DropDown/DropDown';
-import Uprofesion_obj from '../../../ObjData/CProf.json';
-import States_obj from '../../../ObjData/States.json';
-import ResidentialStatus from '../../../ObjData/ResidentialStatus.json'
+
 import RadioInput from '../../../components/RadioField/RadioInput';
 import { url_ } from '../../../Config';
 import swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
+import formfields from './formfields';
+import InputType from "./InputType"
 
 
 
@@ -19,12 +17,19 @@ import { useNavigate } from 'react-router-dom';
 
 const URegistration = () => {
 
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
   // Access JWT token and remove double quotes
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
   // const cleanedToken = window.storedToken.replace(/^"(.*)"$/, '$1');
 
+
+
+  const [isNameNull, setIsNameNull] = useState(true);
+  const [isProfessionNull, setIsProfessionNull] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isValidMobile, setIsValidMobile] = useState(true);
+  const [isValidPAN, setIsValidPAN] = useState(true);
 
   const [formdata, setFormdata] = useState({
     address: "",
@@ -46,12 +51,62 @@ const URegistration = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    //=============================================================================
+    switch (name) {
 
-    if (name === 'mobile' || name === 'telephone') {
-      const numericValue = value.replace(/\D/g, '');
-      setFormdata({ ...formdata, [e.target.name]: numericValue });
-    } else {
-      setFormdata({ ...formdata, [e.target.name]: e.target.value });
+      case "name":
+        setFormdata({ ...formdata, [e.target.name]: e.target.value });
+        if (!e.target.value) {
+          setIsNameNull(false);
+        }
+        else {
+          setIsNameNull(true);
+        }
+        break;
+
+
+      case "profession":
+        setFormdata({ ...formdata, [e.target.name]: e.target.value });
+        if (!e.target.value) {
+          setIsProfessionNull(false);
+        }
+        else {
+          setIsProfessionNull(true);
+        }
+        break;
+
+
+      case "email":
+        setFormdata({ ...formdata, [e.target.name]: e.target.value });
+        //---Basic Email Validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setIsValidEmail(emailPattern.test(e.target.value));
+        break;
+
+      case "pan":
+        setFormdata({ ...formdata, [e.target.name]: e.target.value });
+        //---Basic PAN Validation
+        const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+        setIsValidPAN(panPattern.test(e.target.value));
+        break;
+
+      case "mobile":
+        setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
+        e.target.value = value.replace(/\D/g, "");
+        // Basic mobile validation
+        const mobilePattern = /^[789]\d{9}$/;
+        setIsValidMobile(mobilePattern.test(e.target.value));
+        break;
+
+      case "telephone":
+        setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
+        e.target.value = value.replace(/\D/g, "");
+        break;
+
+
+
+      default:
+        setFormdata({ ...formdata, [e.target.name]: e.target.value });
     }
 
 
@@ -61,24 +116,44 @@ const URegistration = () => {
     event.preventDefault();
 
 
-    if (!formdata.name || !formdata.profession || !formdata.pan || !formdata.mobile || !formdata.category) {
-      swal.fire("Failed!", "Please fill the mandatory field !!", "error");
 
+
+    if (!formdata.name) {
+      setIsNameNull(false);
+    }
+
+    if (!formdata.profession) {
+      setIsProfessionNull(false);
+    }
+
+    // Email Validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValidEmail(emailPattern.test(formdata.email));
+
+    // PAN Validation
+    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    setIsValidPAN(panPattern.test(formdata.pan));
+
+    // Mobile Validation
+    const mobilePattern = /^[789]\d{9}$/;
+    setIsValidMobile(mobilePattern.test(formdata.mobile));
+
+
+
+    // Check Form Fields
+    if (
+      !formdata.name ||
+      !formdata.profession ||
+      !isValidPAN ||
+      !isValidMobile ||
+      !isValidEmail ||
+      !formdata.category
+
+    ) {
+      swal.fire("Failed!", "Please fill the mandatory fields!!", "error");
+      console.log(formdata);
       return;
-    }
-
-    if (formdata.pan.length !== 10 || !formdata.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
-      swal.fire("Failed!", "Enter valid 10 digit PAN!!", "error");
-      return;
-    }
-
-    if (formdata.mobile.length !== 10) {
-      swal.fire("Failed!", "Enter valid 10 digit mobile number!!", "error");
-
-    }
-    else {
-
-
+    } else {
       const url = `${url_}/createclient`;
       console.log(url);
 
@@ -92,13 +167,15 @@ const URegistration = () => {
           body: JSON.stringify(formdata),
         });
 
+
         const result = await response.json()
         console.log("response", result);
-        if (response.ok) {
-          // Check if the response status is in the 200-299 range, which indicates success.
-          // if (result.status === "NOT_FOUND" || result.status === "UNAUTHORIZED") {
-          //   swal.fire("Failed!", `${result.message}`, "error");
-          // } else {
+
+        if (result.status === "NOT_FOUND") {
+          swal.fire("Failed!", `${result.message}`, "error");
+        } else if (result.status === "UNAUTHORIZED") {
+          swal.fire("Failed!", `${result.message}`, "error");
+        } else {
           setFormdata({
             address: "",
             email: "",
@@ -114,33 +191,28 @@ const URegistration = () => {
             residential_status: "",
             userid: `${user_id}`,
           });
-
-          swal.fire("Success", "Data inserted successfully.", "success");
-          navigate(-1);
-          // }
-        } else {
-          // Handle non-successful HTTP responses here
-          // swal.fire("Failed!", "Server returned an error.", "error");
-          if (result.status === "NOT_FOUND" || result.status === "UNAUTHORIZED") {
-            swal.fire("Failed!", `${result.message}`, "error");
-          }
+          swal.fire(
+            "Success",
+            "Registered successful.",
+            "success"
+          );
+          Navigate(-1)
         }
-
       } catch (error) {
         swal.fire(
           "Failed!",
           "Server Down!! Please try again later!!!!",
           "error"
         );
-
+        console.error(error);
       }
-
-
-
-
-
     }
   };
+
+
+
+
+
 
 
   return (
@@ -158,30 +230,26 @@ const URegistration = () => {
 
             </div>
 
-
-            <InputField placeholder='Enter your Name' onChange={handleChange} lblname='Name' name='name' value={formdata.name} manadatory='*' />
-
-            <InputField placeholder='Enter your DOB in YYYYY-MM-DD' onChange={handleChange} lblname='DOB/DOI' name='dob' value={formdata.dob} />
-
-            <DropDown value_array={Uprofesion_obj} lblname='Profession' name='profession' onChange={handleChange} value={formdata.profession} manadatory='*' />
-
-
-            <InputField placeholder='Enter your PAN' onChange={handleChange} lblname='PAN' name='pan' value={formdata.pan} manadatory='*' />
-
-
-            <InputField type='text' placeholder='Enter your Telephone' onChange={handleChange} lblname='Telephone' name='telephone' value={formdata.telephone} maxLength='11' />
-
-            <InputField type='text' placeholder='Enter your Mobile' onChange={handleChange} lblname='Mobile' name='mobile' value={formdata.mobile} manadatory='*' maxLength='10' />
-
-            <InputField placeholder='Enter your Email' onChange={handleChange} lblname='Email' name='email' value={formdata.email} />
-
-            <InputField placeholder='Enter your office address' onChange={handleChange} lblname=' Addresss' name='address' value={formdata.address} />
-
-            <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={formdata.pin_Code} maxLength='6' />
-
-            <DropDown value_array={States_obj} lblname='State' name='state' value={formdata.state} onChange={handleChange} />
-
-            <DropDown value_array={ResidentialStatus} lblname='Residential Status' name='residential_status' value={formdata.residential_status} onChange={handleChange} />
+            {formfields.map((formfield) => (
+              <InputType
+                key={"k" + formfield.id}
+                labelname={formfield.labelname}
+                name={formfield.name}
+                type={formfield.type}
+                placeholder={formfield.placeholder}
+                value={formdata.value}
+                mandatory={formfield.mandatory}
+                onChange={handleChange}
+                validationmsg={formfield.validationmsg}
+                // strengh/tScore={formfield.name === "password" ? strenghtScore : ""}
+                isNameNull={formfield.name === "name" && isNameNull}
+                isValidEmail={formfield.name === "email" && isValidEmail}
+                isValidMobile={formfield.name === "mobile" && isValidMobile}
+                isValidPAN={formfield.name === "pan" && isValidPAN}
+                // isPasswordMatch={formfield.name === "confirmpassword" && isPasswordMatch}
+                isProfessionNull={formfield.name === "profession" && isProfessionNull}
+              />
+            ))}
 
 
             <div className={styles.btn_submit}>

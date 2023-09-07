@@ -47,14 +47,25 @@ const DashBoard = () => {
     totalClient();
     FileCount();
     LatestUpdate();
-  }, []);
+  });
+
+
+  // const currentYear = new Date().getFullYear();
+  // const [backyr, setBackyr] = useState(currentYear);
+
+  // const YearCall = (action) => {
+  //   if (action === 'SUB') {
+  //     setBackyr(backyr - 1);
+  //     console.log(backyr)
+  //   } else if (action === 'ADD') {
+  //     setBackyr(backyr + 1);
+  //     console.log(backyr)
+  //   }
+  // };
+
 
 
   const FileCount = () => {
-
-
-
-
 
     try {
 
@@ -72,7 +83,7 @@ const DashBoard = () => {
         .then(data => {
           const sortedData = data.sort((a, b) => b.accountyear.localeCompare(a.accountyear));
           setFiledata(sortedData)
-          console.log(sortedData)
+
         })
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -118,9 +129,10 @@ const DashBoard = () => {
         <div className="row">
           <div className="col-sm-6">
             <div className={`card m-4 ${styles.cardd} text-center`} >
-              <h2 className='ml-4'>&lt;</h2>
+              {/* <h2 className='ml-4' style={{ cursor: "pointer" }} onClick={() => YearCall('SUB')}>&lt;</h2> */}
               <div className={`m-3 w-100 `}>
-                <h5 className={`card-title font-weight-bold ${styles.green}`}>FY 2023-24</h5>
+                {/* <h5 className={`card-title font-weight-bold ${styles.green}`}>F.Y. {backyr - 1}-{backyr.toString().slice(-2)}</h5> */}
+                <h5 className={`card-title font-weight-bold ${styles.green}`}>F.Y. 2022-23</h5>
                 <div className={styles.count}>
                   <Link to="tc" className={` h6 card-link ${styles.black}`}>Total Clients
                     <h6 className={`${styles.black} font-weight-bold`}>{Totalclient}</h6>
@@ -133,6 +145,10 @@ const DashBoard = () => {
                 <h6 className={`${styles.green} `}>As on date</h6>
                 <Link to='clientreg' ><input type="submit" value="ADD CLIENT" className={` h6 ${styles.abtn}`} /></Link>
               </div>
+              {/* 
+              {backyr !== currentYear && (
+                <h2 className='mr-4' style={{ cursor: "pointer" }} onClick={() => YearCall('ADD')}>&gt;</h2>
+              )} */}
             </div>
           </div>
           {/* <div className="col-sm-6">

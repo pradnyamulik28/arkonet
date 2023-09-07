@@ -9,15 +9,12 @@ const LeftSide = () => {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
   useEffect(() => {
-    function isLocalStorageNotEmpty() {
-      return localStorage.length > 0;
-    }
+    const locallength = localStorage.length;
 
-    if (isLocalStorageNotEmpty > 0) {
-      setIsLoggedIn(true)
+    if (locallength > 0) {
+      setIsLoggedIn(true);
     }
-    setIsLoggedIn(isLocalStorageNotEmpty());
-  }, []);
+  });
 
   const handleLogout = () => {
     localStorage.clear();
@@ -29,7 +26,7 @@ const LeftSide = () => {
   return (
     <div className="container">
       <div className={`${styles.sidebar}`}>
-        <div className={styles.help}>
+        <div className={`d-flex flex-column justify-content-evenly ${styles.navbar}  `}>
           <Link to={""}>
             <img className={styles.taxo_logo} src={Applogo} alt="" />
           </Link>

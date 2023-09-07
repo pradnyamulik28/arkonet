@@ -19,6 +19,7 @@ const FileUpload = () => {
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileResponse, setFileResponse] = useState(false);
   const [dbfilename, setDbfilename] = useState([]);
+  const [dbfilelength, setDbfilelength] = useState([]);
   const originalfilename = [
     "Acknowledgement",
     "Statement_of_Total_Income",
@@ -33,7 +34,6 @@ const FileUpload = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
 
   const fetchData = async () => {
     try {
@@ -68,6 +68,7 @@ const FileUpload = () => {
       const response = await fetch(`${url_}/getfile/${user_id}/${id}/${year}`, requestOptions);
       const data = await response.json();
       console.log(data)
+      setDbfilelength(data.length)
       const extractedNames = data.map(file => {
         const fileid = file.id;
         const filePath = file.filePath;
@@ -76,7 +77,6 @@ const FileUpload = () => {
         return { fileid, extractedName, filePath };
       });
       setDbfilename(extractedNames);
-
     } catch (error) {
       console.error('An error occurred while fetching files:', error);
     }
@@ -367,41 +367,6 @@ const FileUpload = () => {
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
-  // Open File code 
-
-
-  // const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
-
-
-  // const openPdfInNewTab = async (file_ID) => {
-  //   try {
-  //     const response = await fetch(`${url_}/openfile/${file_ID}`, {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: `Bearer ${storedToken}`,
-  //       },
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-
-  //     const arrayBuffer = await response.arrayBuffer();
-  //     const pdfBlob = new Blob([arrayBuffer], { type: 'application/pdf' });
-  //     const blobUrl = URL.createObjectURL(pdfBlob);
-
-  //     setPdfBlobUrl(blobUrl);
-
-  //     const pdfWindow = window.open(blobUrl, '_blank');
-
-  //     pdfWindow.addEventListener('beforeunload', () => {
-  //       URL.revokeObjectURL(blobUrl);
-  //     });
-  //   } catch (error) {
-  //     console.error('Error fetching or opening PDF:', error);
-  //   }
-  // };
-
 
 
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
@@ -477,7 +442,10 @@ const FileUpload = () => {
             <div className={`${style.neckbar}`}>
               <div className="row">
                 <div className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" id="select">
-                  <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button>
+                  {dbfilelength > 0
+                    ? <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button>
+                    : null}
+                  {/* <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button> */}
                 </div>
                 <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="delet">
                   <h2 className="icons">

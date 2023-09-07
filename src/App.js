@@ -19,6 +19,7 @@ function App() {
           <Route path='/client/*' element={<ClientPages />} />
         </Routes>
       </Router>
+
     </div>
 
   );

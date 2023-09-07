@@ -11,6 +11,8 @@
   /* height: 100vh; */
 }
 
+
+
 .taxo_logo {
   position: fixed;
   max-width: 10%;
@@ -20,42 +22,18 @@
   text-decoration: underline;
 }
 
-.help_text {
+
+.navbar {
   position: fixed;
   top: 25%;
-  left: 11%;
-  color: black;
 }
 
-.dash_text {
-  position: fixed;
-  top: 30%;
-  left: 11%;
+.navbar a {
   color: black;
+  margin-top: 1rem;
 }
 
 
-
-.reset_text {
-  position: fixed;
-  top: 35%;
-  left: 11%;
-  color: black;
-}
-
-.logout_text {
-  position: fixed;
-  top: 40%;
-  left: 11%;
-  color: black;
-}
-
-.login_text {
-  position: fixed;
-  top: 45%;
-  left: 11%;
-  color: black;
-}
 
 .arko_logo {
   position: fixed;

@@ -244,9 +244,9 @@ const DocFolder = () => {
                         <i className={`fa-solid fa-ellipsis-vertical ${getFolderColor(index)}`} id={styles.icon_right}></i>
                       </p>
                     </div>
-                    <div className={`${getFolderColor(index)} ${styles.cont} h6`}>
+                    <div className={`${getFolderColor(index)} ${styles.cont}`}>
                       <h5>A.Y {year - 1}-{year.toString().slice(-2)}</h5>
-                      <p>Financial Year {year - 1}-{year.toString().slice(-2)}</p>
+                      <p >Financial Year {year - 1}-{year.toString().slice(-2)}</p>
                     </div>
                   </div>
                 </Link>
