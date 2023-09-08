@@ -65,6 +65,11 @@ const Registration = () => {
           setIsNameNull(true);
         }
         break;
+      
+        case "membership_No":
+        setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
+        e.target.value = value.replace(/\D/g, "");
+        break;
 
 
       case "profession":
