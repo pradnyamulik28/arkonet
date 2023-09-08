@@ -37,8 +37,22 @@ function ClientLogin() {
       redirect: 'follow'
     };
 
-    fetch(`${url_}/client/isPasswordNull`, requestOptions)
-      .then(response => response.json())
+    await fetch(`${url_}/client/isPasswordNull`, requestOptions)
+      .then(response => {
+        if (response.status === 404) {
+          swal.fire("Failed!", "Invalid login credential !!!", "error");
+          setCredentials({UID: "",});
+          // Handle 404 Not Found error here
+          // For example: throw new Error('Resource not found');
+        } else if (response.status === 401) {
+          swal("Failed!", "Unauthorised !!!", "error");
+          setCredentials({UID: "",});
+          // Handle 401 Unauthorized error here
+          // For example: throw new Error('Unauthorized');
+        }
+        
+        return response.json();
+      })
       .then(result => {
         console.log(result)
         //Pass Password Status,clientpan) to next page

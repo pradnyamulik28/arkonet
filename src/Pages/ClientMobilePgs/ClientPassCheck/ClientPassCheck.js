@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useNavigate,Link } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import { useLocation } from 'react-router-dom';
+import swal from "sweetalert2";
 //import { CONFIRM_KEY } from "sweetalert/typings/modules/options/buttons";
 
 function ClientPassCheck() {
@@ -110,7 +111,20 @@ const handleSetPassword = async () => {
     };
 
     await fetch(`${url_}/client/authenticate`, requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 404) {
+          swal.fire("Failed!", "Invalid login credential !!!", "error");
+          setCredentials({Upassword:"",});
+          // Handle 404 Not Found error here
+          // For example: throw new Error('Resource not found');
+        } else if (response.status === 401) {
+          swal.fire("Failed!", "Invalid login credential !!!", "error");
+          setCredentials({Upassword:""});
+          // Handle 401 Unauthorized error here
+          // For example: throw new Error('Unauthorized');
+        }
+        return response.json();
+      })
       .then((data) => {
         const jwtToken = data.token;
         localStorage.setItem("jwtToken", jwtToken);
