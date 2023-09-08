@@ -14,7 +14,7 @@ function ClientPages() {
       <Route path="" element={<ClientLogin />} />
       <Route path="clientpasscheck" element={<ClientPassCheck />} />
       <Route exact path="clientdocfolder" element={<ClientDocFolder />} />
-      <Route exact path="clientfileview" element={<ClientFileView />} />
+      <Route exact path="clientdocfolder/clientfileview" element={<ClientFileView />} />
     </Routes>
 
   );

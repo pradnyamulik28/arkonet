@@ -6,15 +6,17 @@ import Cmpylogo from '../../../Images/Arkonet - Logo_page-0001.jpg'
 import { Link } from 'react-router-dom';
 
 const LeftSide = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   useEffect(() => {
-    const locallength = localStorage.length;
 
-    if (locallength > 0) {
+    if (localStorage.length > 0) {
       setIsLoggedIn(true);
     }
-  });
+  }, []);
+
+
 
   const handleLogout = () => {
     localStorage.clear();
@@ -27,7 +29,7 @@ const LeftSide = () => {
     <div className="container">
       <div className={`${styles.sidebar}`}>
         <div className={`d-flex flex-column justify-content-evenly ${styles.navbar}  `}>
-          <Link to={""}>
+          <Link to={"dashboard"}>
             <img className={styles.taxo_logo} src={Applogo} alt="" />
           </Link>
           {isLoggedIn ? (
@@ -38,7 +40,7 @@ const LeftSide = () => {
             </>
           ) : (
             <>
-              <Link to="" className={styles.login_text} ><h6>Login</h6></Link>
+
               <Link to="help" className={styles.help_text}><h6>Help</h6></Link>
             </>
           )}

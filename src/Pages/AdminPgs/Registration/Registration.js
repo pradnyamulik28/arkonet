@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Registration.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import swal from 'sweetalert2';
 import formfields from './formfields';
@@ -254,8 +254,9 @@ const Registration = () => {
   return (
     <div>
       <div className={styles.right}>
-        <div className={styles.regtitle}>
+        <div className={`${styles.regtitle} d-flex justify-content-around mb-2`}>
           <span> REGISTRATION FORM</span>
+          <Link to="/admin/"  ><span>Login</span></Link>
         </div>
         <div className={styles.regform}>
           <form action="" onSubmit={handleSubmit}>

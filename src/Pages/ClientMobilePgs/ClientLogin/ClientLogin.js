@@ -3,6 +3,7 @@ import style from "./ClientLogin.module.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
+import swal from "sweetalert2";
 
 function ClientLogin() {
   const Navigate = useNavigate();
@@ -36,8 +37,22 @@ function ClientLogin() {
       redirect: 'follow'
     };
 
-    fetch(`${url_}/client/isPasswordNull`, requestOptions)
-      .then(response => response.json())
+    await fetch(`${url_}/client/isPasswordNull`, requestOptions)
+      .then(response => {
+        if (response.status === 404) {
+          swal.fire("Failed!", "Invalid login credential !!!", "error");
+          setCredentials({ UID: "", });
+          // Handle 404 Not Found error here
+          // For example: throw new Error('Resource not found');
+        } else if (response.status === 401) {
+          swal("Failed!", "Unauthorised !!!", "error");
+          setCredentials({ UID: "", });
+          // Handle 401 Unauthorized error here
+          // For example: throw new Error('Unauthorized');
+        }
+
+        return response.json();
+      })
       .then(result => {
         console.log(result)
         //Pass Password Status,clientpan) to next page
@@ -59,9 +74,9 @@ function ClientLogin() {
       <div className={`${style.maincontainer}`}>
         {/* Header */}
         <div className={`${style.header}`}>
-          <a href="previous link" id={`${style.welcome}`}>
-            &lt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
-          </a>
+          <p id={`${style.welcome}`}>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
+          </p>
           <h2>TAXKO</h2>
         </div>
 
@@ -78,6 +93,8 @@ function ClientLogin() {
               placeholder="&nbsp;&nbsp;&nbsp;&nbsp;Enter Your PAN"
               value={credentials.UID}
               onChange={handleChange}
+              autoComplete="off"
+              autoCapitalize='true'
             />
 
           </form>
@@ -88,34 +105,35 @@ function ClientLogin() {
           <button type="button" className={`${style.login}`} onClick={handleLogin}>
             Next
           </button>
-          <a href="previous link" id={`${style.forgot}`}>
+          {/* <a href="previous link" id={`${style.forgot}`}>
             <u>Forgot Password?</u>
-          </a>
+          </a> */}
         </div>
 
         {/* Copyright */}
         <div className={`${style.copyright}`}>
-          <a href="" id={`${style.devs}`}>
+          <p id={`${style.devs}`}>
             Developed & Managed by
-          </a>
-          <img src={arkonet} alt="" id={`${style.arkonet}`} />
-          <a href="" id={`${style.social}`}>
+          </p>
+          <a href="https://www.arkonetglobal.com/"><img src={arkonet} alt="" id={`${style.arkonet}`} /></a>
+          <a href="#" id={`${style.social}`}>
             Follow us on
           </a>
           <div className={`${style.handles}`}>
-            <a href="" id={`${style.instagram}`}>
+            <a href="#" id={`${style.instagram}`}>
               <i className="fa-brands fa-instagram" style={{ color: "#05022c" }}></i>
             </a>
-            <a href="" id={`${style.twitter}`}>
+            <a href="#" id={`${style.twitter}`}>
               <i className="fa-brands fa-twitter" style={{ color: "#05022c" }}></i>
             </a>
-            <a href="" id={`${style.facebook}`}>
+            <a href="#" id={`${style.facebook}`}>
               <i className="fa-brands fa-facebook-f" style={{ color: "#05022c" }}></i>
             </a>
           </div>
         </div>
       </div>
     </div>
+    // </div>
   );
 }
 

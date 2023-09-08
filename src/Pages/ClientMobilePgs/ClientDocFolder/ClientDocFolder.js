@@ -7,8 +7,8 @@ import { useLocation } from 'react-router-dom'
 
 
 const ClientDocFolder = () => {
-  const  id  = useLocation().state.clientid; //Get Client Id parameter from route
-  
+  const id = useLocation().state.clientid; //Get Client Id parameter from route
+
 
 
   function getLastFiveYears() {
@@ -32,35 +32,35 @@ const ClientDocFolder = () => {
 
   return (
     <div className={`${styles.outercontainer}`}>
-    <div className={`container mt-3 ${styles.maincontainer}`}>
-      <div className="row" >
-        <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-5" id={styles.maindiv}>
-          <h1><b>Income Tax</b></h1>
-          <div className="row">
-            {lastFiveYearsArray.map((year, index) => (
-              <div key={index} className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <Link to={`/clientfileview`}  
-                className={`${styles.linktab}`} 
-                state={{clientid:id,year:`${year - 1}-${year.toString().slice(-2)}`}}> {/* Pass the year to SendData */}
-                  <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
-                    <div className={styles.icon}>
-                      <p className={styles.icons}>
-                        <i className={`bi bi-folder-fill ${getFolderColor(index)}`} id={styles.icon_left}></i>
-                        <i className={`fa-solid fa-ellipsis-vertical ${getFolderColor(index)}`} id={styles.icon_right}></i>
-                      </p>
+      <div className={`container mt-3 ${styles.maincontainer}`}>
+        <div className="row" >
+          <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-5" id={styles.maindiv}>
+            <h1><b>Income Tax</b></h1>
+            <div className="row">
+              {lastFiveYearsArray.map((year, index) => (
+                <div key={index} className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
+                  <Link to={`clientfileview`}
+                    className={`${styles.linktab}`}
+                    state={{ clientid: id, year: `${year - 1}-${year.toString().slice(-2)}` }}> {/* Pass the year to SendData */}
+                    <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
+                      <div className={styles.icon}>
+                        <p className={styles.icons}>
+                          <i className={`bi bi-folder-fill ${getFolderColor(index)}`} id={styles.icon_left}></i>
+                          <i className={`fa-solid fa-ellipsis-vertical ${getFolderColor(index)}`} id={styles.icon_right}></i>
+                        </p>
+                      </div>
+                      <div className={`${getFolderColor(index)} ${styles.cont} h6`}>
+                        <h5>A.Y {year - 1}-{year.toString().slice(-2)}</h5>
+                        <p>Financial Year {year - 1}-{year.toString().slice(-2)}</p>
+                      </div>
                     </div>
-                    <div className={`${getFolderColor(index)} ${styles.cont} h6`}>
-                      <h5>A.Y {year - 1}-{year.toString().slice(-2)}</h5>
-                      <p>Financial Year {year - 1}-{year.toString().slice(-2)}</p>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            ))}
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

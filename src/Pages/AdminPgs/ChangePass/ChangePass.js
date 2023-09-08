@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import style from './ChangePass.module.css'
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import { url_ } from '../../../Config';
 
 const ChangePass = () => {
@@ -16,68 +16,54 @@ const ChangePass = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const user_id = window.localStorage.getItem('user_id');
     const storedToken = window.localStorage.getItem('jwtToken');
 
-
-
-
     if (data.newPassword === data.confirmpass) {
-
-
-
       const changeurl = `${url_}/changePassword/${user_id}`;
 
       try {
-
         var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-        var formdata = new FormData();
-        formdata.append("oldPassword", `${data.oldPassword}`);
-        formdata.append("newPassword", `${data.newPassword}`);
+        var raw = JSON.stringify({
+          "oldPassword": data.oldPassword,
+          "newPassword": data.newPassword
+        });
 
         var requestOptions = {
           method: 'PUT',
           headers: myHeaders,
-          body: formdata,
+          body: raw,
           redirect: 'follow'
         };
 
-        fetch(changeurl, requestOptions)
-          .then(response => {
-            response.json();
-            console.log(response.status)
-            if (response.status === 200) {
-              swal("Success.", "Password changed successfully.", "success");
-              setData({
-                oldPassword: "",
-                newPassword: "",
-                confirmpass: ""
-              })
-              console.log(data)
-            } else {
-              swal("Failed", "Failed to change password!!", "error");
-
-            }
-          })
-
-          .catch(error => console.log('error', error));
-
-
-
+        const response = await fetch(changeurl, requestOptions);
+        const result = await response.text();
+        console.log(response.status);
+        console.log(result);
+        if (response.status === 401) {
+          swal.fire("Failed!", `${result}`, "error");
+        } else {
+          swal.fire("Success", `Password changed successful.`, "success");
+          setData({
+            oldPassword: "",
+            newPassword: "",
+            confirmpass: ""
+          });
+        }
       } catch (error) {
-        console.warn("Error on function calling...")
+        swal.fire("Failed!", `${error}`, "error");
       }
 
-
-
     } else {
-      swal("Failed!", "Passsword doesn't match!!", "error");
-
+      swal.fire("Failed!", "Password doesn't match!!", "error");
     }
-  }
+  };
+
+
 
   return (
     <div>
@@ -107,3 +93,9 @@ const ChangePass = () => {
 }
 
 export default ChangePass;
+
+
+
+
+
+
