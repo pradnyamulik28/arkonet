@@ -93,6 +93,10 @@ h1 {
   }
 }
 
+
+
+
+
 .button {
   background-color: rgb(243, 81, 81);
   width: 50px;
@@ -117,6 +121,17 @@ h1 {
   width: 7rem;
   height: 2.1rem;
   border-radius: 15px;
+}
+
+
+
+.btndiv {
+  gap: 2rem;
+  align-items: center;
+}
+
+.btndiv h2 {
+  display: flex;
 }
 
 input:checked+.button {

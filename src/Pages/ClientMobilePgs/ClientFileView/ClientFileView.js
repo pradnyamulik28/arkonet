@@ -184,7 +184,7 @@ const ClientFileView = () => {
               </div>
 
               <div className={`${style.neckbar}`}>
-                {filesAvailable > 0 && <div className={`d-flex justify-content-around flex-wrap `}>
+                {filesAvailable > 0 && <div className={`d-flex justify-content-center flex-wrap ${style.btndiv}`}>
                   <button
                     type="button"
                     className={`btn btn-danger ${style.btns}`}
