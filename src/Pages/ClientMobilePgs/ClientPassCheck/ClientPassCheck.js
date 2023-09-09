@@ -140,8 +140,9 @@ function ClientPassCheck() {
   };
 
 
-  function handleButtonClick() {
+  function handleButtonClick(event) {
     //console.log("Client Id : ",clientpan);
+    event.preventDefault();
     if (isPasswordNull) {
       //Code to Set the Password
       handleSetPassword();

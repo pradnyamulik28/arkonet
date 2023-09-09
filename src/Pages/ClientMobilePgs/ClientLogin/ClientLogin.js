@@ -17,8 +17,8 @@ function ClientLogin() {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
 
-  const handleLogin = async () => {
-
+  async function handleLogin(e) {
+    e.preventDefault();
 
     //------------------Check the password status------------
 

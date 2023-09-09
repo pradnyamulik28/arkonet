@@ -184,7 +184,7 @@ const ClientFileView = () => {
               </div>
 
               <div className={`${style.neckbar}`}>
-                {filesAvailable > 0 && <div className={`d-flex justify-content-center flex-wrap ${style.btndiv}`}>
+                {filesAvailable > 0 && <div className={`d-flex justify-content-around flex-wrap `}>
                   <button
                     type="button"
                     className={`btn btn-danger ${style.btns}`}
@@ -260,7 +260,7 @@ const ClientFileView = () => {
                   <div class="card-body">
                     <h5 class="card-title">Sorry..!!</h5>
                     <p class="card-text">No File Available to display</p>
-                    <Link to="/client/clientdocfolder" class="btn btn-primary">
+                    <Link to="/client/clientdocfolder" state={{ clientid: client_id, year: year }} class="btn btn-primary">
                       Go Back
                     </Link>
                   </div>
