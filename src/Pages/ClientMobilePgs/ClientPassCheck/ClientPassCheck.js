@@ -226,17 +226,17 @@ function ClientPassCheck() {
             Developed & Managed by
           </p>
           <a href="https://www.arkonetglobal.com/"><img src={arkonet} alt="" id={`${style.arkonet}`} /></a>
-          <a href="#" id={`${style.social}`}>
+          <a href="" id={`${style.social}`}>
             Follow us on
           </a>
           <div className={`${style.handles}`}>
-            <a href="#" id={`${style.instagram}`}>
+            <a href="previous link" id={`${style.instagram}`}>
               <i className="fa-brands fa-instagram" style={{ color: "#05022c" }}></i>
             </a>
-            <a href="#" id={`${style.twitter}`}>
+            <a href="" id={`${style.twitter}`}>
               <i className="fa-brands fa-twitter" style={{ color: "#05022c" }}></i>
             </a>
-            <a href="#" id={`${style.facebook}`}>
+            <a href="" id={`${style.facebook}`}>
               <i className="fa-brands fa-facebook-f" style={{ color: "#05022c" }}></i>
             </a>
           </div>
