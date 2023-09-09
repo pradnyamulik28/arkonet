@@ -119,6 +119,14 @@ h1 {
   border-radius: 15px;
 }
 
+.btndiv{
+  gap:2rem;
+  align-items: center;
+}
+.btndiv h2{
+  display: flex;
+}
+
 input:checked+.button {
   background-color: #14c511;
 
@@ -263,6 +271,7 @@ input:checked+.slider:before {
 
 .file_upload {
   background-color: #ffffff;
+  position: relative;
   width: 100%;
   margin: 0 auto;
   padding: 20px;
@@ -337,8 +346,8 @@ input:checked+.slider:before {
 
 .checkbox_custom {
   position: absolute;
-  top: 8px;
-  left: 34px;
+  /* top: 8px;
+  left: 34px; */
   width: 1rem;
   /* Adjust the size as needed */
   height: 1rem;
@@ -373,7 +382,18 @@ input:checked+.slider:before {
   position: absolute;
   /* display: inline-block; */
   /* margin-right: 10px; */
-  top: 6px;
+  top: 8%;
+  left: 30%;
+}
+
+
+.nocontent{
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 @media (max-width: 215px) {
 .smallcol{
