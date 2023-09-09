@@ -260,7 +260,7 @@ const ClientFileView = () => {
                   <div class="card-body">
                     <h5 class="card-title">Sorry..!!</h5>
                     <p class="card-text">No File Available to display</p>
-                    <Link to="" class="btn btn-primary">
+                    <Link to="/client/clientpasscheck/clientdocfolder" state={{clientid:client_id,year:year}} class="btn btn-primary">
                       Go Back
                     </Link>
                   </div>
