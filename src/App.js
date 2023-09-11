@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,19 +11,6 @@ import ClientPages from './Pages/ClientMobilePgs/ClientPages';
 function App() {
 
 
-  useEffect(() => {
-    // Add an event listener to clear local storage when the user leaves the page
-    window.addEventListener('beforeunload', () => {
-      localStorage.clear();
-    });
-
-    // Remove the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('beforeunload', () => {
-        localStorage.clear();
-      });
-    };
-  }, []);
   return (
 
     <div>
