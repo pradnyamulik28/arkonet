@@ -13,7 +13,8 @@ const InputField = (props) => {
     value: props.value,
     onChange: props.onChange,
     maxLength: props.maxLength,
-    autoComplete: 'off'
+    autoComplete: 'off',
+    disabled: props.disabled
   }
 
   if (props.type === "date") {
