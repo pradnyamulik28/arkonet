@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   // BrowserRouter as Switch,
   Routes,
@@ -19,9 +19,23 @@ import FileUpload from './FileUpload/FileUpload'
 import ResetPass from './ResetPass/ResetPass';
 import ChangePass from './ChangePass/ChangePass';
 import Help from './Help/Help';
+import Protected from '../../Protected';
 
 const Adminhome = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.length > 0) {
+      setIsLoggedIn(true)
+    }
+  }, []);
+
+
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+  };
 
   return (
     <div>
@@ -30,7 +44,7 @@ const Adminhome = () => {
       <div className="container-fluid">
         <div className="row">
           <div className={`col-sm-3 col-md-3 col-lg-3 col-xl-3`}>
-            <LeftSide />
+            <LeftSide isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
           </div>
 
           <div className={`col-sm-9 col-md-9 col-lg-9 col-xl-9`}>
@@ -46,22 +60,22 @@ const Adminhome = () => {
               <Route path="forgetpass" element={<ResetPass />} />
               <Route path="help" element={<Help />} />
 
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="dashboard/clientreg" element={<URegistration />} />
+              <Route path="dashboard" element={<Protected Cmp={Dashboard} />} />
+              <Route path="dashboard/clientreg" element={<Protected Cmp={URegistration} />} />
 
-              <Route path="dashboard/tc" element={<TotalClient />} />
-              <Route path="dashboard/tc/clientreg" element={<URegistration />} />
-              <Route path="dashboard/tc/Cupdate/:id" element={<Uupdate />} />
-              <Route path="dashboard/tc/file/:id" element={<DocFolder />} />
-              <Route path="dashboard/tc/file/:id/fileupload/:id/:year" element={<FileUpload />} />
+              <Route path="dashboard/tc" element={<Protected Cmp={TotalClient} />} />
+              <Route path="dashboard/tc/clientreg" element={<Protected Cmp={URegistration} />} />
+              <Route path="dashboard/tc/Cupdate/:id" element={<Protected Cmp={Uupdate} />} />
+              <Route path="dashboard/tc/file/:id" element={<Protected Cmp={DocFolder} />} />
+              <Route path="dashboard/tc/file/:id/fileupload/:id/:year" element={<Protected Cmp={FileUpload} />} />
 
               <Route path="dashboard/tic" element={<IncomeClient />} />
-              <Route path="dashboard/tic/clientreg" element={<URegistration />} />
-              <Route path="dashboard/tic/Cupdate/:id" element={<Uupdate />} />
-              <Route path="dashboard/tic/file/:id" element={<DocFolder />} />
-              <Route path="dashboard/tic/file/:id/fileupload/:id/:year" element={<FileUpload />} />
+              <Route path="dashboard/tic/clientreg" element={<Protected Cmp={URegistration} />} />
+              <Route path="dashboard/tic/Cupdate/:id" element={<Protected Cmp={Uupdate} />} />
+              <Route path="dashboard/tic/file/:id" element={<Protected Cmp={DocFolder} />} />
+              <Route path="dashboard/tic/file/:id/fileupload/:id/:year" element={<Protected Cmp={FileUpload} />} />
 
-              <Route exact path="changepass" element={<ChangePass />} />
+              <Route exact path="changepass" element={<Protected Cmp={ChangePass} />} />
             </Routes>
 
 

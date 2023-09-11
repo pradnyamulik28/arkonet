@@ -5,23 +5,13 @@ import Applogo from '../../../Images/taxko_logo.jpeg'
 import Cmpylogo from '../../../Images/Arkonet - Logo_page-0001.jpg'
 import { Link } from 'react-router-dom';
 
-const LeftSide = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-
-  useEffect(() => {
-
-    if (localStorage.length > 0) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+const LeftSide = ({ isLoggedIn, handleLogout }) => {
 
 
 
-  const handleLogout = () => {
-    localStorage.clear();
-    setIsLoggedIn(false);
-  };
+
+
+
 
 
 

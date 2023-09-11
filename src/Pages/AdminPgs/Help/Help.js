@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 const Help = () => {
   const Navigate = useNavigate();
   swal("Success", "Coming Soon....", "success");
-  Navigate('dashboard');
+  Navigate(-1);
   return (
     <div>
       <div class={style.logo1}>
