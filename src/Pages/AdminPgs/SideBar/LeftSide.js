@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 
 
 
-const LeftSide = () => {
+const LeftSide = (props) => {
 
-
-
+  const Localstate = props.state;
+  console.log(Localstate)
 
 
   const handleLogout = () => {

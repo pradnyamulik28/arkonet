@@ -125,7 +125,7 @@ const Uupdate = () => {
             <InputField placeholder='Enter your Name' onChange={handleChange} lblname='Name' name='name' value={values.name} />
             <InputField placeholder='Enter your DOB in YYYYY-MM-DD' onChange={handleChange} lblname='DOB/DOI' name='dob' value={values.dob} />
             <DropDown value_array={Uprofesion_obj} lblname='Profession' name='profession' onChange={handleChange} value={values.profession} />
-            <InputField placeholder='Enter your PAN' onChange={handleChange} lblname='PAN' name='pan' value={values.pan} />
+            <InputField placeholder='Enter your PAN' onChange={handleChange} lblname='PAN' name='pan' value={values.pan} disabled={true} />
             <InputField type='number' placeholder='Enter your Telephone' onChange={handleChange} lblname='Telephone' name='telephone' value={values.telephone} />
             <InputField type='number' placeholder='Enter your Mobile' onChange={handleChange} lblname='Mobile' name='mobile' value={values.mobile} />
             <InputField placeholder='Enter your Email' onChange={handleChange} lblname='Email' name='email' value={values.email} />
