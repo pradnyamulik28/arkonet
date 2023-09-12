@@ -1,19 +1,26 @@
+import React, { useEffect } from 'react';
 
-import React, { useEffect, useState } from 'react';
 import styles from './leftside.module.css';
 import Applogo from '../../../Images/taxko_logo.jpeg'
 import Cmpylogo from '../../../Images/Arkonet - Logo_page-0001.jpg'
 import { Link } from 'react-router-dom';
 
-const LeftSide = ({ isLoggedIn, handleLogout }) => {
+const LeftSide = ({ loggedIn, setLoggedIn }) => {
+
+  useEffect(() => {
+    // setIsLoggedIn(loggedIn);
+    if (localStorage.length > 0) {
+      // setIsLoggedIn(localStorage.getItem('LogedIn'));
+      // setIsLoggedIn(true);
+    }
+    // console.log('is logged in',isLoggedIn);
+  }, []);
 
 
-
-
-
-
-
-
+  const handleLogout = () => {
+    localStorage.clear();
+    setLoggedIn(false);
+  };
 
   return (
     <div className="container">
@@ -22,7 +29,7 @@ const LeftSide = ({ isLoggedIn, handleLogout }) => {
           <Link to={"dashboard"}>
             <img className={styles.taxo_logo} src={Applogo} alt="" />
           </Link>
-          {isLoggedIn ? (
+          {loggedIn ? (
             <>
               <Link to="dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
               <Link to="changepass" className={` ${styles.reset_text}`} ><h6>Change Password</h6></Link>

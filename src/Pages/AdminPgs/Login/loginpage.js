@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './loginpage.module.css';
 import axios from "axios";
 import { url_ } from '../../../Config';
@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 
 
 
-const Loginpage = () => {
+const Loginpage = ({ setLoggedIn }) => {
   const Navigate = useNavigate();
 
   const [formdata, setFormdata] = useState({
@@ -49,6 +49,7 @@ const Loginpage = () => {
 
         await swal("Success", "Logged in successfully.", "success");
         Navigate('dashboard');
+        setLoggedIn(true);
 
       } else {
         console.log("Login failed.!!");

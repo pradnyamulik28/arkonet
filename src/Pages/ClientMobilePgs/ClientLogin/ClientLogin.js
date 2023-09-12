@@ -17,8 +17,8 @@ function ClientLogin() {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
 
-  async function handleLogin(e) {
-    e.preventDefault();
+  const handleLogin = async () => {
+
 
     //------------------Check the password status------------
 
@@ -41,16 +41,16 @@ function ClientLogin() {
       .then(response => {
         if (response.status === 404) {
           swal.fire("Failed!", "Invalid login credential !!!", "error");
-          setCredentials({ UID: "", });
+          setCredentials({UID: "",});
           // Handle 404 Not Found error here
           // For example: throw new Error('Resource not found');
         } else if (response.status === 401) {
           swal("Failed!", "Unauthorised !!!", "error");
-          setCredentials({ UID: "", });
+          setCredentials({UID: "",});
           // Handle 401 Unauthorized error here
           // For example: throw new Error('Unauthorized');
         }
-
+        
         return response.json();
       })
       .then(result => {
@@ -74,7 +74,7 @@ function ClientLogin() {
       <div className={`${style.maincontainer}`}>
         {/* Header */}
         <div className={`${style.header}`}>
-          <p id={`${style.welcome}`}>
+          <p  id={`${style.welcome}`}>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
           </p>
           <h2>TAXKO</h2>

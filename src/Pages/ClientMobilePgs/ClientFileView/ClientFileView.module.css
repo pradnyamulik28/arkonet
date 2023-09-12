@@ -93,10 +93,6 @@ h1 {
   }
 }
 
-
-
-
-
 .button {
   background-color: rgb(243, 81, 81);
   width: 50px;
@@ -118,19 +114,16 @@ h1 {
 }
 
 .btns {
-  width: 7rem;
+  width: 5rem;
   height: 2.1rem;
   border-radius: 15px;
 }
 
-
-
-.btndiv {
-  gap: 2rem;
+.btndiv{
+  gap:2rem;
   align-items: center;
 }
-
-.btndiv h2 {
+.btndiv h2{
   display: flex;
 }
 
@@ -278,6 +271,7 @@ input:checked+.slider:before {
 
 .file_upload {
   background-color: #ffffff;
+  position: relative;
   width: 100%;
   margin: 0 auto;
   padding: 20px;
@@ -327,7 +321,8 @@ input:checked+.slider:before {
 
 .filename_text {
   text-align: center;
-  margin: 10px 0px;
+  font-size: 1rem;
+  margin: 10px auto;
   width: 100%;
   overflow-wrap: break-word;
 }
@@ -351,11 +346,11 @@ input:checked+.slider:before {
 
 .checkbox_custom {
   position: absolute;
-  top: 8px;
-  left: 34px;
-  width: 20px;
+  /* top: 8px;
+  left: 34px; */
+  width: 1rem;
   /* Adjust the size as needed */
-  height: 20px;
+  height: 1rem;
   /* Adjust the size as needed */
   background-color: rgb(241, 241, 241);
   border: 1px solid #c7c7c7;
@@ -387,5 +382,30 @@ input:checked+.slider:before {
   position: absolute;
   /* display: inline-block; */
   /* margin-right: 10px; */
-  top: 6px;
+  top: 8%;
+  left: 30%;
 }
+
+
+.nocontent{
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+@media (max-width: 215px) {
+.smallcol{
+  flex-basis: 100%;
+  max-width: 100%;
+}
+}
+@media (max-width: 345px) {
+  .filename_text{
+    font-size: 0.7rem;
+  }
+  .file_upload{
+    padding: 10px;
+  }
+  }

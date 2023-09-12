@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   // BrowserRouter as Switch,
   Routes,
@@ -22,20 +22,11 @@ import Help from './Help/Help';
 import Protected from '../../Protected';
 
 const Adminhome = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (localStorage.length > 0) {
-      setIsLoggedIn(true)
-    }
-  }, []);
 
 
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('LogedIn'));
+  //  console.log('admin', loggedIn);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    setIsLoggedIn(false);
-  };
 
   return (
     <div>
@@ -44,7 +35,7 @@ const Adminhome = () => {
       <div className="container-fluid">
         <div className="row">
           <div className={`col-sm-3 col-md-3 col-lg-3 col-xl-3`}>
-            <LeftSide isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+            <LeftSide loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           </div>
 
           <div className={`col-sm-9 col-md-9 col-lg-9 col-xl-9`}>
@@ -55,7 +46,7 @@ const Adminhome = () => {
             </nav>
 
             <Routes>
-              <Route exact path='' element={<Login />} />
+              <Route exact path='' element={<Login setLoggedIn={setLoggedIn} />} />
               <Route path="User_registration" element={<Registration />} />
               <Route path="forgetpass" element={<ResetPass />} />
               <Route path="help" element={<Help />} />
