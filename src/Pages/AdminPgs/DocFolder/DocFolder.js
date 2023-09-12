@@ -228,11 +228,19 @@ const DocFolder = () => {
     console.log(yearRange)
   };
 
+  function GoBack() {
+    window.history.back(); // This will navigate to the previous page in the browser's history
+  }
   return (
     <div className="container">
       <div className="row">
         <div className="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 mt-5" id={styles.maindiv}>
-          <h1><b>Income Tax</b></h1>
+          <h1 className='d-flex align-items-center'>
+            <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
+              &#8617;&nbsp;
+            </div>
+            <b>Income Tax</b>
+          </h1>
           <div className="row">
             {lastFiveYearsArray.map((year, index) => (
               <div key={index} className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">

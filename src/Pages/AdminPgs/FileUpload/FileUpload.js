@@ -407,7 +407,9 @@ const FileUpload = () => {
   };
 
 
-
+  function GoBack() {
+    window.history.back(); // This will navigate to the previous page in the browser's history
+  }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   return (
@@ -424,7 +426,12 @@ const FileUpload = () => {
             <div className="uphead">
               <div className="row">
                 <div className="col">
-                  <h1><b>Income Tax</b></h1>
+                  <h1 className='d-flex align-items-center'>
+                    <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
+                      &#8617;&nbsp;
+                    </div>
+                    <b>Income Tax</b>
+                  </h1>
                 </div>
                 <div className="col">
 

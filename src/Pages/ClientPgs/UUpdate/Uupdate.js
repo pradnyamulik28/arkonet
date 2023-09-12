@@ -8,7 +8,7 @@ import States_obj from '../../../ObjData/States.json';
 import swal from 'sweetalert';
 
 import { url_ } from '../../../Config';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 const Uupdate = () => {
   const user_id = window.localStorage.getItem('user_id');
@@ -110,13 +110,24 @@ const Uupdate = () => {
       console.warn("Error on function calling...")
     }
   }
+  function GoBack() {
+    window.history.back(); // This will navigate to the previous page in the browser's history
+  }
+
 
   return (
     <div>
       <form action="/" onSubmit={handleSubmit}>
         <div className={styles.right}>
-          <div className={styles.regtitle}>
-            <span>CLIENT UPDATE FORM</span>
+          <div className={`${styles.regtitle} `}>
+
+            <span className='d-flex align-items-center'>
+              <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
+                &#8617;&nbsp;
+              </div>
+
+              CLIENT UPDATE FORM
+            </span>
             <div className={styles.ubtn_submit}>
               <button type="submit" onClick={handleSubmit}>UPDATE</button>
             </div>
