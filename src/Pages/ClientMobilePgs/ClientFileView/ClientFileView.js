@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import style from "./ClientFileView.module.css";
 import { url_ } from "../../../Config";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 
 const ClientFileView = () => {
+  const navigate = useNavigate();
   //const  id  = useLocation().state.clientid;
   const client_id = window.localStorage.getItem("client_id");
   const user_id = window.localStorage.getItem("userid");
@@ -167,16 +168,21 @@ const ClientFileView = () => {
     <div className={`${style.outercontainer}`}>
       <div className={`container mt-3 ${style.maincontainer}`}>
         <div className="row">
-          <div
-            className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
-            id="maindiv"
-          >
+          <div  className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="maindiv">
             <div className="container">
               <div className="uphead">
                 <div className="row">
                   <div className="col">
                     <h1>
-                      <b>Income Tax</b>
+                      <b  onClick={(e) => {
+                            e.preventDefault();
+                            navigate(-1, {
+                              state: { clientid: client_id, year: year },
+                            });
+                          }}>                        
+                          &#8617;&nbsp;
+                        Income Tax
+                      </b>
                     </h1>
                   </div>
                 </div>
@@ -184,20 +190,24 @@ const ClientFileView = () => {
               </div>
 
               <div className={`${style.neckbar}`}>
-                {filesAvailable>0 && <div className={`d-flex justify-content-center flex-wrap ${style.btndiv}`}>
-                  <button
-                    type="button"
-                    className={`btn btn-danger ${style.btns}`}
-                    onClick={toggleCodeVisibility}
+                {filesAvailable > 0 && (
+                  <div
+                    className={`d-flex justify-content-center flex-wrap ${style.btndiv}`}
                   >
-                    Select
-                  </button>
-                  <h2>
-                    {codeVisible && (
-                      <i className="fa-solid fa-share-from-square"></i>
-                    )}
-                  </h2>
-                </div>}
+                    <button
+                      type="button"
+                      className={`btn btn-danger ${style.btns}`}
+                      onClick={toggleCodeVisibility}
+                    >
+                      Select
+                    </button>
+                    <h2>
+                      {codeVisible && (
+                        <i className="fa-solid fa-share-from-square"></i>
+                      )}
+                    </h2>
+                  </div>
+                )}
               </div>
               <div className="container">
                 <div className="row mt-3">
@@ -227,7 +237,7 @@ const ClientFileView = () => {
                             {item.filename.toLowerCase().includes("excel") ? (
                               <i
                                 className="bi bi-file-earmark-excel-fill text-success"
-                                onDoubleClick={() =>
+                                onClick={() =>
                                   openFileAndDownload(
                                     "xlsx",
                                     "spreadsheet.xlsx",
@@ -238,7 +248,7 @@ const ClientFileView = () => {
                             ) : (
                               <i
                                 className="bi bi-file-earmark-pdf-fill text-danger"
-                                onDoubleClick={() =>
+                                onClick={() =>
                                   openFileAndDownload(
                                     "pdf",
                                     "document.pdf",
@@ -256,15 +266,25 @@ const ClientFileView = () => {
                     </>
                   ))}
                 </div>
-                {filesAvailable===0 &&<div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Sorry..!!</h5>
-                    <p class="card-text">No File Available to display</p>
-                    <Link to="/client/clientpasscheck/clientdocfolder" state={{clientid:client_id,year:year}} class="btn btn-primary">
-                      Go Back
-                    </Link>
+                {filesAvailable === 0 && (
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Sorry..!!</h5>
+                      <p class="card-text">No File Available to display</p>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(-1, {
+                            state: { clientid: client_id,year:year},
+                          });
+                        }}
+                        class="btn btn-primary"
+                      >
+                        Go Back
+                      </button>
+                    </div>
                   </div>
-                </div>}
+                )}
               </div>
             </div>
           </div>
