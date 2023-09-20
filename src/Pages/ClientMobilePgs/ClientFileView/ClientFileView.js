@@ -10,7 +10,7 @@ const ClientFileView = () => {
   const user_id = window.localStorage.getItem("userid");
   const storedToken = window.localStorage.getItem("jwtToken");
   const year = useLocation().state.year;
-  // console.log(year,id)
+  //console.log(year,client_id)
 
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileResponse, setFileResponse] = useState(false);
@@ -63,7 +63,7 @@ const ClientFileView = () => {
     fetch(`${url_}/client/files`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         const extractedNames = data.map((file) => {
           const fileid = file.id;
           const filePath = file.filePath;
@@ -109,19 +109,86 @@ const ClientFileView = () => {
 
   const [selectedFiles, setSelectedFiles] = useState([]);
 
-  const handleCheckboxChange = (event, fileId) => {
-    if (event.target.checked) {
-      setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, fileId]);
-    } else {
-      setSelectedFiles((prevSelectedFiles) =>
-        prevSelectedFiles.filter((id) => id !== fileId)
+  const handleCheckboxChange = (event, filedetail) => {
+    
+    if (
+      selectedFiles.some(
+        (item) =>
+          item.fileId === filedetail.fileId &&
+          item.filename === filedetail.filename
+      )
+    ) {
+      setSelectedFiles(
+        selectedFiles.filter(
+          (item) =>
+            item.fileId !== filedetail.fileId &&
+            item.filename !== filedetail.filename
+        )
       );
+    } else {
+      setSelectedFiles([...selectedFiles, filedetail]);
     }
   };
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
+ 
+
+
+
+  //===========  Files Share Functionality =======================
+  const shareFile = async () => {
+    const pdfArray = [];
+    //Dowload all files in an array
+    selectedFiles.map((item, index, Array) => {
+
+      console.log(index,item,Array.length)
+      fetch(`${url_}/openfile/${item.fileId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      })
+        .then((response) => response.blob())
+        .then((pdfBlob) => {
+          pdfArray.push(
+            new File([pdfBlob], `${item.filename}.pdf`, {
+              type: "application/pdf",
+            })
+          );
+          if (index === Array.length - 1) {
+            console.log("last item : ",pdfArray)
+            //---Share Files-----
+            if (navigator.share) {
+              // Check if the Web Share API is available in the browser
+
+              // Create a shareable data object
+              const shareData = {
+                title: "Share PDF Document",
+                text: "Check out this PDF document!",
+                files: [...pdfArray], // Array of files to share
+              };
+
+              // Use the Web Share API to share the PDF
+              navigator
+                .share(shareData)
+                .then(() => {
+                  console.log("PDF shared successfully");
+                  pdfArray.length = 0;
+                })
+                .catch((error) => console.error("Error sharing PDF:", error));
+            } else {
+              // Web Share API is not supported in this browser
+              console.error("Web Share API is not available in this browser");
+            }
+          }
+        })
+        .catch((error) => console.error("Error fetching PDF:", error));
+    });
+  };
+
+
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
     try {
@@ -141,7 +208,7 @@ const ClientFileView = () => {
         type: `application/${contentType}`,
       });
       const blobUrl = URL.createObjectURL(fileBlob);
-
+      console.log(blobUrl)
       if (contentType === "pdf") {
         setPdfBlobUrl(blobUrl);
         const pdfWindow = window.open(blobUrl, "_blank");
@@ -168,23 +235,28 @@ const ClientFileView = () => {
     <div className={`${style.outercontainer}`}>
       <div className={`container mt-3 ${style.maincontainer}`}>
         <div className="row">
-          <div  className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="maindiv">
+          <div
+            className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+            id="maindiv"
+          >
             <div className="container">
               <div className="uphead">
                 <div className="row">
                   <div className="col">
                     <h1>
-                      <b  onClick={(e) => {
-                            e.preventDefault();
-                            navigate(-1, {
-                              state: { clientid: client_id, year: year },
-                            });
-                          }}>                        
-                          &#8617;&nbsp;
-                        Income Tax
+                      <b
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(-1, {
+                            state: { clientid: client_id, year: year },
+                          });
+                        }}
+                      >
+                        &#8617;&nbsp; Income Tax                        
                       </b>
                     </h1>
                   </div>
+                  
                 </div>
                 <h6 className={`${style.headpara}`}>A.Y {year}</h6>
               </div>
@@ -201,11 +273,13 @@ const ClientFileView = () => {
                     >
                       Select
                     </button>
+                    <div onClick={shareFile}>
                     <h2>
                       {codeVisible && (
-                        <i className="fa-solid fa-share-from-square"></i>
+                        <i className="fa-solid fa-share-from-square" ></i>
                       )}
                     </h2>
+                    </div>
                   </div>
                 )}
               </div>
@@ -225,7 +299,7 @@ const ClientFileView = () => {
                                   type="checkbox"
                                   className={style.checkbox}
                                   onChange={(event) =>
-                                    handleCheckboxChange(event, item.fileId)
+                                    handleCheckboxChange(event, {fileId:item.fileId,filename:item.filename})
                                   }
                                 />
                                 <span className={style.checkbox_custom}>
@@ -257,7 +331,13 @@ const ClientFileView = () => {
                                 }
                               ></i>
                             )}
-                            <h6 className={style.filename_text}>
+                            <h6 className={style.filename_text} onClick={() =>
+                                  openFileAndDownload(
+                                    "pdf",
+                                    "document.pdf",
+                                    item.fileId
+                                  )
+                                }>
                               {item.filename}
                             </h6>
                           </div>
@@ -267,18 +347,18 @@ const ClientFileView = () => {
                   ))}
                 </div>
                 {filesAvailable === 0 && (
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Sorry..!!</h5>
-                      <p class="card-text">No File Available to display</p>
+                  <div className="card">
+                    <div className="card-body">
+                      <h5 className="card-title">Sorry..!!</h5>
+                      <p className="card-text">No File Available to display</p>
                       <button
                         onClick={(e) => {
                           e.preventDefault();
                           navigate(-1, {
-                            state: { clientid: client_id,year:year},
+                            state: { clientid: client_id, year: year },
                           });
                         }}
-                        class="btn btn-primary"
+                        className={`btn btn-danger ${style.btns}`}
                       >
                         Go Back
                       </button>

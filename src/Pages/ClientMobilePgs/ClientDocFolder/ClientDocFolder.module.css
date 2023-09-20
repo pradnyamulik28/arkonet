@@ -93,6 +93,18 @@ img {
   left: 15px;
 }
 
+.logout{
+  color: #ffd301;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: inherit;
+  vertical-align: middle;
+  position: absolute;
+  bottom: 3rem;
+  display: flex;
+  align-items: center;
+}
+
 #copyrights {
   position: relative;
 }

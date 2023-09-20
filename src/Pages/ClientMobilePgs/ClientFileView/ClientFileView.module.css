@@ -22,7 +22,7 @@ body {
   width: 100vw;
   height: -webkit-fill-availabel;
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .maincontainer {
@@ -117,6 +117,10 @@ h1 {
   width: 5rem;
   height: 2.1rem;
   border-radius: 15px;
+}
+.btngoback{
+  /* color: white; */
+  background-color: #ffd301;
 }
 
 .btndiv{

@@ -78,12 +78,7 @@ const handleSetPassword = async () => {
 
 
   } else {
-    console.log(
-      "Password : ",
-      credentials.Upassword,
-      "Confirm : ",
-      credentials.confirmpassword
-    );
+    swal.fire("Failed!", "Password Mismatch !!!", "error");
   }
 
 
@@ -96,7 +91,7 @@ const handleSetPassword = async () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    console.log(clientpan,credentials.Upassword)
+    //console.log(clientpan,credentials.Upassword)
 
     var raw = JSON.stringify({
       clientusername: clientpan,
@@ -227,17 +222,17 @@ const handleSetPassword = async () => {
           Developed & Managed by
         </p>
         <a href="https://www.arkonetglobal.com/"><img src={arkonet} alt="" id={`${style.arkonet}`} /></a>
-        <a href="" id={`${style.social}`}>
+        <p href="" id={`${style.social}`}>
           Follow us on
-        </a>
+        </p>
         <div className={`${style.handles}`}>
-          <a href="previous link" id={`${style.instagram}`}>
+          <a href="https://www.instagram.com/arkonetglobal/?igshid=YmMyMTA2M2Y%3D" id={`${style.instagram}`}>
             <i className="fa-brands fa-instagram" style={{ color: "#05022c" }}></i>
           </a>
-          <a href="" id={`${style.twitter}`}>
+          <a href="https://twitter.com/arkonetglobal?s=11&t=_tXcbzY9oJ0xsskd5YCcMw" id={`${style.twitter}`}>
             <i className="fa-brands fa-twitter" style={{ color: "#05022c" }}></i>
           </a>
-          <a href="" id={`${style.facebook}`}>
+          <a href="https://www.facebook.com/arkonetglobal" id={`${style.facebook}`}>
             <i className="fa-brands fa-facebook-f" style={{ color: "#05022c" }}></i>
           </a>
         </div>

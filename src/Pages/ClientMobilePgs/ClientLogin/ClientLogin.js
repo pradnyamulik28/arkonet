@@ -1,8 +1,8 @@
 import arkonet from "../../../Images/Arkonet.jpg";
 import style from "./ClientLogin.module.css";
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { url_ } from '../../../Config';
+import { useNavigate } from "react-router-dom";
+import { url_ } from "../../../Config";
 import swal from "sweetalert2";
 
 function ClientLogin() {
@@ -12,60 +12,70 @@ function ClientLogin() {
     UID: "",
   });
 
-
   function handleChange(e) {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    //setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    const text = e.target.value;
+    if (e.target.name === "UID") {
+      //-----Code to change lower case to upper----
+      const convertedText = text.replace(/[a-z]/g, (match) =>
+        match.toUpperCase()
+      );
+     
+      e.target.value = convertedText;
+      setCredentials({ ...credentials, [e.target.name]: convertedText.replace( /[!@#$%^&*()_+{}\[\]:;<>,.?~\\|\/\-='"`]/g,"") });
+    }
   }
 
   const handleLogin = async () => {
+    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    if (!panPattern.test(credentials.UID)) {
+      swal.fire("Failed!", "Invalid PAN no. !!!", "error");
+      setCredentials({ UID: "" });
+    } else {
+      //------------------Check the password status------------
 
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
-    //------------------Check the password status------------
+      var raw = JSON.stringify({
+        pan: credentials.UID,
+      });
 
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+      await fetch(`${url_}/client/isPasswordNull`, requestOptions)
+        .then((response) => {
+          if (response.status === 404) {
+            swal.fire("Failed!", "Invalid login credential !!!", "error");
+            setCredentials({ UID: "" });
+            // Handle 404 Not Found error here
+            // For example: throw new Error('Resource not found');
+          } else if (response.status === 401) {
+            swal("Failed!", "Unauthorised !!!", "error");
+            setCredentials({ UID: "" });
+            // Handle 401 Unauthorized error here
+            // For example: throw new Error('Unauthorized');
+          }
 
-    var raw = JSON.stringify({
-      "pan": credentials.UID
-    });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    await fetch(`${url_}/client/isPasswordNull`, requestOptions)
-      .then(response => {
-        if (response.status === 404) {
-          swal.fire("Failed!", "Invalid login credential !!!", "error");
-          setCredentials({UID: "",});
-          // Handle 404 Not Found error here
-          // For example: throw new Error('Resource not found');
-        } else if (response.status === 401) {
-          swal("Failed!", "Unauthorised !!!", "error");
-          setCredentials({UID: "",});
-          // Handle 401 Unauthorized error here
-          // For example: throw new Error('Unauthorized');
-        }
-        
-        return response.json();
-      })
-      .then(result => {
-        console.log(result)
-        //Pass Password Status,clientpan) to next page
-        Navigate(`clientpasscheck`,
-          {
+          return response.json();
+        })
+        .then((result) => {
+          //console.log(result);
+          //Pass Password Status,clientpan) to next page
+          Navigate(`clientpasscheck`, {
             state: {
               isPasswordNull: result.isPasswordNull,
-              clientpan: credentials.UID
-            }
-          })
-      })
-      .catch(error => console.log('error', error));
-
+              clientpan: credentials.UID,
+            },
+          });
+        })
+        .catch((error) => console.log("error", error));
+    }
   };
 
   return (
@@ -74,7 +84,7 @@ function ClientLogin() {
       <div className={`${style.maincontainer}`}>
         {/* Header */}
         <div className={`${style.header}`}>
-          <p  id={`${style.welcome}`}>
+          <p id={`${style.welcome}`}>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
           </p>
           <h2>TAXKO</h2>
@@ -94,15 +104,18 @@ function ClientLogin() {
               value={credentials.UID}
               onChange={handleChange}
               autoComplete="off"
-              autoCapitalize='true'
+              maxLength="10"
             />
-
           </form>
         </div>
 
         {/* Button */}
         <div className={`${style.button}`}>
-          <button type="button" className={`${style.login}`} onClick={handleLogin}>
+          <button
+            type="button"
+            className={`${style.login}`}
+            onClick={handleLogin}
+          >
             Next
           </button>
           {/* <a href="previous link" id={`${style.forgot}`}>
@@ -112,22 +125,38 @@ function ClientLogin() {
 
         {/* Copyright */}
         <div className={`${style.copyright}`}>
-          <p id={`${style.devs}`}>
-            Developed & Managed by
-          </p>
-          <a href="https://www.arkonetglobal.com/"><img src={arkonet} alt="" id={`${style.arkonet}`} /></a>
-          <a href="" id={`${style.social}`}>
-            Follow us on
+          <p id={`${style.devs}`}>Developed & Managed by</p>
+          <a href="https://www.arkonetglobal.com/">
+            <img src={arkonet} alt="" id={`${style.arkonet}`} />
           </a>
+          <p id={`${style.social}`}>Follow us on</p>
           <div className={`${style.handles}`}>
-            <a href="" id={`${style.instagram}`}>
-              <i className="fa-brands fa-instagram" style={{ color: "#05022c" }}></i>
+            <a
+              href="https://www.instagram.com/arkonetglobal/?igshid=YmMyMTA2M2Y%3D"
+              id={`${style.instagram}`}
+            >
+              <i
+                className="fa-brands fa-instagram"
+                style={{ color: "#05022c" }}
+              ></i>
             </a>
-            <a href="" id={`${style.twitter}`}>
-              <i className="fa-brands fa-twitter" style={{ color: "#05022c" }}></i>
+            <a
+              href="https://twitter.com/arkonetglobal?s=11&t=_tXcbzY9oJ0xsskd5YCcMw"
+              id={`${style.twitter}`}
+            >
+              <i
+                className="fa-brands fa-twitter"
+                style={{ color: "#05022c" }}
+              ></i>
             </a>
-            <a href="" id={`${style.facebook}`}>
-              <i className="fa-brands fa-facebook-f" style={{ color: "#05022c" }}></i>
+            <a
+              href="https://www.facebook.com/arkonetglobal"
+              id={`${style.facebook}`}
+            >
+              <i
+                className="fa-brands fa-facebook-f"
+                style={{ color: "#05022c" }}
+              ></i>
             </a>
           </div>
         </div>
