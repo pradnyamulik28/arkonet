@@ -1,0 +1,139 @@
+/* *{
+     border: 2px solid red; 
+  } */
+  
+  .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100vw;
+  }
+  .mobileport{
+    width: 90vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .img{
+    width: 7rem;
+    height: auto;
+  }
+  .headerbar{
+    margin-top: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .leftear{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .Adport{
+    background-color: #4daca6;
+    height: 7rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1.2rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 3px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+  }
+  .Adport h5{
+  color: #e11d17;
+  }
+  .Adport h6{
+  color: white;
+  }
+  .details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .components{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .cards{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 8rem;
+    border-radius: 50px;
+    margin-bottom: 4rem;
+  }
+  .cards p{
+    position: relative;
+    top: 1.5rem;
+    text-align: center;
+    text-shadow: rgb(99, 98, 98) 0px 0  15px;
+  }
+  .nps{
+    position: absolute !important;
+    bottom: 0.7rem !important;
+  }
+  .label{
+    position: absolute !important;
+    top: 7rem !important;
+    color: #b3292e;
+  }
+  .cards img{
+  position: relative;
+  top: 1rem;
+  align-items: center;
+  justify-content: center;
+  }
+  .cards img{
+    width: 10rem;
+    height: auto;
+    box-shadow: 0 6px 3px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+    border-radius: 50px;
+  }
+  .fd{
+    color: #c09b66;
+  }
+  .mf{
+    color: #872d2e;
+  }
+  .li{
+  color: #485ca8;
+  }
+  .hi{
+  color: #505363;
+  }
+  
+  
+   @media only screen and (max-height: 768px) {
+    .headerbar{
+      margin-top: 0.5rem;
+    }
+    .Adport{
+      margin-top: 0.5rem;
+    }
+    .components{
+      margin-top: 1rem;
+    }
+    .cards{
+      margin-bottom: 2rem;
+    }
+    .cards img{
+      width: 8rem;
+      height: auto;
+    }
+    .nps{
+      position: absolute !important;
+      bottom: 1.9rem !important;
+    }
+    .label{
+      position: absolute !important;
+      top: 5.8rem !important;
+    }
+    }

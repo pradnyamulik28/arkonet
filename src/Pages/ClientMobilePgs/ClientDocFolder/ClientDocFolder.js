@@ -2,14 +2,17 @@
 import React from 'react';
 import styles from './ClientDocFolder.module.css';
 import { Link } from 'react-router-dom';
-import { url_ } from '../../../Config';
 import { useLocation,useNavigate } from 'react-router-dom'
+import { useSidebar } from '../ClientSideBar/SidebarContext';
+
 
 
 const ClientDocFolder = () => {
   const  id  = useLocation().state.clientid; //Get Client Id parameter from route
   const navigate = useNavigate();
 
+  const { toggleSidebar } = useSidebar();
+  
 
   function getLastFiveYears() {
     const currentYear = new Date().getFullYear();
@@ -38,10 +41,12 @@ const ClientDocFolder = () => {
 
 
   return (
+    
     <div className={`${styles.outercontainer}`}>
     <div className={`container mt-3 ${styles.maincontainer}`}>
       <div className="row" >
         <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 " id={styles.maindiv}>
+          <div className={`${styles.headerbar}`}>
           <h1><b /*onClick={(e) => {
                             e.preventDefault();
                             navigate(-1, {
@@ -50,6 +55,10 @@ const ClientDocFolder = () => {
                           }}*/  >                        
                          &nbsp;Income Tax
                          </b> </h1>
+                         <h4 onClick={toggleSidebar}>
+                <i className="fa-solid fa-ellipsis"></i>
+              </h4>
+              </div>
           <div className="row">
             {lastFiveYearsArray.map((year, index) => (
               <div key={index} className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
@@ -102,6 +111,7 @@ const ClientDocFolder = () => {
                       </div>
                       </div>
     </div>
+    
   );
 }
 

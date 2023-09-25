@@ -1,0 +1,77 @@
+.row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100vw;
+  }
+  .mobileport{
+    width: 90vw;
+    height: auto;
+    background-color: white;
+  }
+  .headerbar{
+    margin-top: 2rem;
+  }
+  .img{
+      width: 9rem;
+    }
+  
+  .headerbar{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+  }
+  .profileport{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      text-align: center;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+  }
+  .fa-bell-large {
+      font-size: 2rem;
+    }
+    .profileport h5{
+      margin-top: 0.3em;
+    }
+    .profileport p{
+      margin-top: 0.3em;
+      font-size: 1em;
+    }
+    .card{
+      width: 11em;
+      height: 14em;
+      margin: 0;
+    }
+  
+    .Buttonport{
+      display: flex;
+      justify-content: center;
+      margin: rem;
+    }
+    .Buttonport button{
+      background-color: rgba(255,211,2,255);
+      color: white;
+      width: 9rem;
+      height: 2rem;
+      border-radius: 0.5rem;
+      font-size: 1.2rem;
+      border: none;
+      margin: 1rem;
+      box-shadow: 0 3px 3px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+    }  
+    .Addressport, .Telephoneport, .Mobileport, .Emailport, .WhatsAppport, .Buttonport{
+      margin-bottom: 1rem;
+    }
+  
+   @media only screen and (max-height: 768px) {
+    .row *{
+      margin: 1px;
+    }
+      .data *{
+        margin: 5px;
+      }
+    }

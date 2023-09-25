@@ -247,9 +247,7 @@ const ClientFileView = () => {
                       <b
                         onClick={(e) => {
                           e.preventDefault();
-                          navigate(-1, {
-                            state: { clientid: client_id, year: year },
-                          });
+                          navigate(-1);
                         }}
                       >
                         &#8617;&nbsp; Income Tax                        
