@@ -3,40 +3,44 @@ import style from "./CAProfile.module.css";
 import profile from "../../../Images/profile.png";
 import { Link } from "react-router-dom";
 import { useSidebar } from "../ClientSideBar/SidebarContext";
+import { url_ } from "../../../Config";
+import NotificationBell from "../../../components/NotificationBell/NotificationBell";
+import QRCode from "qrcode.react";
 function CAProfile() {
   useEffect(() => {
-    console.log("calling..");
     getCaInfo();
   }, []);
 
-  const { toggleSidebar } = useSidebar();
-
+  const { toggleSidebar,no_of_notifications,handleNotification } = useSidebar();
   const [userData, setUserData] = useState(null);
-
+  const storedToken = window.localStorage.getItem("jwtToken");
+  const user_id=localStorage.getItem("userid");
+  const [qrCodeVisibility,setQrCodeVisibility]=useState(false)
+  
   async function getCaInfo() {
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      username: "PAVAN1999J",
-      password: "p12345",
-    });
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
     var requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: myHeaders,
-      body: raw,
       redirect: "follow",
     };
 
-    fetch("http://43.204.29.108:8085/authenticate", requestOptions)
+    await fetch(`${url_}/getuserByid/${user_id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log("user data", result);
+        //console.log(result);
         setUserData(result);
       })
       .catch((error) => console.log("error", error));
   }
+
+  async function handlePayment(){
+    setQrCodeVisibility(true)
+  }
+
+ 
 
   return (
     <>
@@ -51,16 +55,13 @@ function CAProfile() {
           <div className={`${style.headerbar}`}>
             <div className={`${style.leftear}`}>
               <Link
-                to="/client/clientpasscheck/clientdocfolder"
-                state={{ clientid: localStorage.getItem("clientId") }}
+                to="/client/clientpasscheck/clienthome"
+                
                 style={{ fontSize: "1rem", margin: "0.5rem", color: "black" }}
               >
-                &lt; &nbsp;&nbsp;My CA
+               <i className="fa-solid fa-angle-left"></i> &nbsp;&nbsp;My CA
               </Link>
-              <i
-                className={`fa-regular fa-bell fa-bell-large`}
-                style={{ fontSize: "1.5rem" }}
-              ></i>
+              <NotificationBell onClick={handleNotification} no_of_notifications={no_of_notifications}/>
             </div>
             <div className={`${style.rightear}`}>
               <h4 onClick={toggleSidebar}>
@@ -80,8 +81,8 @@ function CAProfile() {
             <div className={`${style.card}`}>
               <img src={profile} alt="profile_picture" />
               <div className={`${style.cardbody}`}>
-                <h5 class="card-title">{userData.user.name}</h5>
-                <p class="card-text">{userData.user.profession}</p>
+                <h5 className="card-title">{userData.name}</h5>
+                <p className="card-text">{userData.profession}</p>
               </div>
             </div>
           </div>
@@ -94,18 +95,18 @@ function CAProfile() {
             >
               <h5>Address</h5>
               <p>
-                {userData.user.office_Address}
+                {userData.office_Address}
               </p>
             </div>
             {/* Adress Ends......................................................................................................... */}
 
             {/* Telephone Starts */}
-            <div
+            {userData.telephone && <div
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Telephoneport}`}
             >
               <h5>Telephone</h5>
-              <p> {userData.user.telephone}</p>
-            </div>
+              <p> {userData.telephone}</p>
+            </div>}
             {/* Telephone Ends......................................................................................................... */}
 
             {/* Mobile Starts */}
@@ -113,7 +114,7 @@ function CAProfile() {
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Mobileport}`}
             >
               <h5>Mobile</h5>
-              <p> {userData.user.mobile}</p>
+              <p> {userData.mobile}</p>
             </div>
             {/* Mobile Ends......................................................................................................... */}
 
@@ -130,7 +131,7 @@ function CAProfile() {
                   fontWeight: "500",
                 }}
               >
-                {userData.user.email}
+                {userData.email}
               </a>
             </div>
             {/* Email Ends......................................................................................................... */}
@@ -140,15 +141,20 @@ function CAProfile() {
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.WhatsAppport}`}
             >
               <h5>WhatsApp Link</h5>
-              <a href="##"> {userData.user.whatsApp_Link}</a>
+              <a href="##"> {userData.whatsApp_Link}</a>
             </div>
             {/* WhatsApp Ends......................................................................................................... */}
 
             {/* Button Starts */}
             <div
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Buttonport}`}
+            >{qrCodeVisibility&&<QRCode value={userData.whatsApp_Link}  />}</div>
+            <div
+              className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Buttonport}`}
             >
-              <button type="button">PAY NOW</button>
+              
+              
+              <button type="button" onClick={handlePayment}>PAY NOW</button>
             </div>
             {/* Button Ends......................................................................................................... */}
           </div>

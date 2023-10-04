@@ -1,0 +1,126 @@
+
+  .row1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100vw;
+    margin-left: 0.1%;
+  }
+  .allport{
+    width: 90vw;
+    height: auto;
+    background-color: white;
+  }
+  .allport *{
+  font-weight: bold;
+  /* font-weight: bolder; */
+  }
+  
+  .headerbar{
+    margin-top: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+  }
+  .profileport{
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      height: 30vh;
+  }
+  .fa-bell-large {
+      font-size: 2rem;
+    }
+    .h51{
+      margin: 0;
+      margin-top: 0.3em;
+  }
+  .p1{
+    margin: 0;
+    font-weight: bold;
+  }
+  .p2{
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .abd{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .leftbear{
+    display: inline-block;
+    width: 50%;
+  }
+  .rightbear{
+    display: inline-block;
+    width: 50%;
+  }
+  .p3{
+    font-weight: bold;
+  }
+  .licon, .micon, .ricon{
+    display: inline-block;
+    width: 33.3%;
+    text-align: right;
+  }
+    .card{
+      width: 11em;
+      height: 14em;
+      margin: 0;
+      position: relative;
+    }
+  .uniclass {
+      border-radius: 20%;
+      width: 11rem;
+      height: 9rem;
+      margin: 5%;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      border: none;
+      position: relative;
+      right: 0.6rem;
+  }
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+    padding-top: 1rem;
+    align-items: center;
+  }
+  .card1{ background-color: #f1ffff;}
+  .card2{ background-color: #eff6fe;}
+  .card3{ background-color: #feedfd;}
+  .card4{ background-color: #fefbec;}
+  .textual{
+    margin-top: -0.5rem;
+  }
+  .uptext{
+    margin-left: 0.7rem;
+    margin-top: 1rem;
+  }
+  
+  .cont1, .cont2, .cont3, .cont4, .cont5{
+    display: inline-block;
+    position: relative;
+    left: 10px;
+  }
+   @media only screen and (max-height: 768px) {
+    .uptext{
+      margin-top: 0.5rem;
+    }
+    .card{
+      width: 8rem;
+      height: auto;
+    }
+  .uniclass {
+      width: 10.5rem;
+      height: 8rem;
+      margin: 2%;
+      margin-bottom: 2rem;
+  }
+   }

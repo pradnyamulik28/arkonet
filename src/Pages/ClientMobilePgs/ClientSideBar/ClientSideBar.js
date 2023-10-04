@@ -49,16 +49,19 @@ function ClientSideBar(props) {
             className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Addressport}`}
           >
             <h5>
-              <Link to='clientdashboard' onClick={toggleSidebar}>Dashboard</Link>
+              <Link to='clientdashboard'  onClick={toggleSidebar}>Dashboard</Link>
             </h5>
             <h5>
-              My Profile{/* <Link to=''>My Profile</Link>  */}
+            My Profile{/* <Link to='##' onClick={toggleSidebar}>My Profile</Link>   */}
             </h5>
             <h5>
               <Link to='caprofile' onClick={toggleSidebar}>My CA</Link>              
             </h5>
             <h5>
-              <Link to="investnow" onClick={toggleSidebar}>Service Request</Link>
+              <Link to="investnow" onClick={toggleSidebar}>Invest Now</Link>
+            </h5>
+            <h5>
+              <Link to="help" onClick={toggleSidebar}>Help</Link>
             </h5>
           </div>
           {/* Adress Ends......................................................................................................... */}

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { url_ } from "../../../Config";
 import swal from "sweetalert2";
-
+import "../../../Images/Twittericon.css"
 function ClientLogin() {
   const Navigate = useNavigate();
 
@@ -144,10 +144,11 @@ function ClientLogin() {
               href="https://twitter.com/arkonetglobal?s=11&t=_tXcbzY9oJ0xsskd5YCcMw"
               id={`${style.twitter}`}
             >
-              <i
-                className="fa-brands fa-twitter"
+               <i className="bi-twitter-x fs-1 inverted"></i>
+              {/* <i
+                class="bi-twitter-x fs-3"
                 style={{ color: "#05022c" }}
-              ></i>
+              ></i> */}
             </a>
             <a
               href="https://www.facebook.com/arkonetglobal"

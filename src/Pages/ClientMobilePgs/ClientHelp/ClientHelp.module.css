@@ -1,0 +1,150 @@
+
+      .mainrow {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-items: center;
+    }
+    .mainport {
+        height: 90%;
+        width: 90%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        margin-left: 2rem;
+    }
+    .backlink a {
+        color: black;
+        font-weight: bold;
+        margin: 1rem 0 1rem 0;
+    }
+    .backlink {
+        margin: 0.5rem 0 1rem 0;
+        position: relative;
+        right: 0.5em;
+    }
+    .h41 {
+        margin: 0 0 1rem 0;
+        font-weight: 700;
+        text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    }
+    .p1 {
+        font-weight: bold;
+        text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    }
+    .label1 {
+        font-weight: bold;
+        font-size: 0.9rem;
+        text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+        margin-bottom: -0.5rem;
+    }
+    .iboxes {
+        display: flex;
+        flex-direction: column;
+    }
+    .p {
+        display: inline-block;
+        color: red;
+        text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    }
+    .p2 .p {
+        display: inline-block;
+        color: red;
+        font-weight: 500;
+        text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    }
+    
+    .text2 {
+        margin-bottom: 1.5rem;
+        border-radius: 10px;
+        height: 20vh;
+        border: none;
+        font-family: 'Indie Flower', cursive;
+        font-family: 'Oswald', sans-serif;
+        box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+    }
+    .text2::placeholder {
+        opacity: 0.5;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 5px;
+      }
+    .text2:focus {
+        outline: none;
+    }
+    .text2::placeholder {
+        color: #acaaaa;
+    }
+    .ddmenu1 {
+        margin-bottom: 1.5rem;
+        border-radius: 10px;
+        height: 3rem;
+        border: none;
+        outline: none;
+        color: #c1c1c1;
+        font-family: 'Indie Flower', cursive;
+        font-family: 'Oswald', sans-serif;
+        box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+    }
+    .ddmenu1 {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        padding: 0.5rem;
+        background-image: url('');
+        background-color: white;
+    }
+    .ddmenu1 option {
+        border: none;
+    }
+    .ddmenu1:focus {
+        outline: none;
+        border: none;
+      }
+    .p2 {
+        margin-top: -1rem;
+        text-align: right;
+        text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+        font-weight: 100;
+        color: rgb(126, 125, 125);
+        font-size: smaller;
+    }
+    .btn {
+        display: flex;
+        justify-content: center;
+    }
+    .sbt {
+        border: none;
+        font-size: 1.2rem;
+        width: 40%;
+        height: auto;
+        border-radius: 0.5rem;
+        background-color: #fed403;
+        color: white;
+        box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+        text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24)
+    }
+    @media only screen and (min-height: 844px) {
+        .text2 {
+            margin-bottom: 2rem;
+            height: 30vh;
+        }
+        .ddmenu1 {
+            margin-bottom: 2rem;
+            height: 4rem;
+        }
+        
+    }
+    @media only screen and (max-height: 600px) {
+        .text2 {
+            margin-bottom: 0rem;
+            height: 20vh;
+        }
+        .ddmenu1 {
+            margin-bottom: 1.5rem;
+            height: 2.5rem;
+        }
+    }

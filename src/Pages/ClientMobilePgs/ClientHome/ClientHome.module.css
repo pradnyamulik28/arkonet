@@ -1,0 +1,139 @@
+.row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100vw;
+  }
+  .mobileport{
+    width: 90vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .forehead img{
+    width: 4rem;
+    height: auto;
+    position: absolute;
+  left: 50%;
+  transform: translate(0%, -50%);
+  }
+  
+  .headerbar{
+    margin-top: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .leftear{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .Adport{
+    background-color: #4daca6;
+    height: 10rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1.2rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 3px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+  }
+  .changeimage img{
+    width: 8rem;
+    height: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+  .Adport h5{
+  color: #e11d17;
+  font-weight: bold;
+  text-shadow: 1px 3px 10px rgba(61, 0, 0, 0.6);
+  }
+  .h6{
+  color: white;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  }
+  .taxdata,
+  .gstata{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .taxlist,
+  .gstist{
+    display: flex;
+    /* justify-content: space-around; */
+    margin-left: 1.5rem; 
+    font-size: 1rem;
+    font-weight: 700;   
+  }
+ 
+  .contact h6{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+  .taxhead{
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .taxhead h5{
+    color: green;
+  }
+
+  .filed{
+    color: #14c511;
+  }
+  .notfiled{
+    color:#dc3545;
+  }
+  .gsthead{
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .gsthead h5{
+  color: blue;
+  }
+  .gsthead p,
+  .taxhead p{
+    font-size: 2.5rem;
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+    color: gold;
+    margin-bottom: 0;
+  }
+  .details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .row h3{
+    font-size: 1em;
+    font-weight: 100;
+    position: absolute;
+    top: 95%;
+  
+  }
+  
+   @media only screen and (max-height: 768px) {
+    .headerbar{
+      margin-top: 0.5rem;
+    }
+    .Adport{
+      margin-top: 0.5rem;
+    }
+    .forehead img{
+      width: 3rem;
+  
+    }
+    }

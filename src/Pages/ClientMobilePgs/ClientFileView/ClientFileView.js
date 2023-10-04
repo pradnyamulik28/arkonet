@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "./ClientFileView.module.css";
 import { url_ } from "../../../Config";
 import { Link, useLocation,useNavigate } from "react-router-dom";
+import swal from "sweetalert2";
 
 const ClientFileView = () => {
   const navigate = useNavigate();
@@ -84,6 +85,7 @@ const ClientFileView = () => {
     });
 
     if (matchingFile) {
+      //console.log("filename",filename)
       return {
         filename,
         status: true,
@@ -96,7 +98,7 @@ const ClientFileView = () => {
   });
 
   const filesAvailable = filenameStatusArray.filter(
-    (files) => files.status
+    (files) => files.status && !files.filename.toLowerCase().includes("excel")
   ).length;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +145,7 @@ const ClientFileView = () => {
     //Dowload all files in an array
     selectedFiles.map((item, index, Array) => {
 
-      console.log(index,item,Array.length)
+      //console.log(index,item,Array.length)
       fetch(`${url_}/openfile/${item.fileId}`, {
         method: "GET",
         headers: {
@@ -180,7 +182,8 @@ const ClientFileView = () => {
                 .catch((error) => console.error("Error sharing PDF:", error));
             } else {
               // Web Share API is not supported in this browser
-              console.error("Web Share API is not available in this browser");
+              swal.fire("", "This funcationality is not supported on this device", "error");
+              //console.error("Web Share API is not available in this browser");
             }
           }
         })
@@ -285,7 +288,7 @@ const ClientFileView = () => {
                 <div className="row mt-3">
                   {filenameStatusArray.map((item) => (
                     <>
-                      {item.status && item.filename !== "Excel" && (
+                      {item.status && !item.filename.toLowerCase().includes("excel") && (
                         <div
                           className={`col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ${style.smallcol}`}
                           key={item.fileId}
@@ -306,26 +309,16 @@ const ClientFileView = () => {
                               </label>
                             )}
 
-                            {item.filename.toLowerCase().includes("excel") ? (
-                              <i
-                                className="bi bi-file-earmark-excel-fill text-success"
-                                onClick={() =>
-                                  openFileAndDownload(
-                                    "xlsx",
-                                    "spreadsheet.xlsx",
-                                    item.fileId
-                                  )
-                                }
-                              ></i>
-                            ) : (
+                            {!item.filename.toLowerCase().includes("excel")  && (
                               <i
                                 className="bi bi-file-earmark-pdf-fill text-danger"
-                                onClick={() =>
+                                onClick={(e) =>
+                                 { e.preventDefault()
                                   openFileAndDownload(
                                     "pdf",
                                     "document.pdf",
                                     item.fileId
-                                  )
+                                  )}
                                 }
                               ></i>
                             )}

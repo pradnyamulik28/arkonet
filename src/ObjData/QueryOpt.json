@@ -1,0 +1,21 @@
+[
+  
+    {
+      "val": " Income_Tax",
+      "option_name": "Income Tax"
+    },
+    {
+      "val":"GST",
+      "option_name":"GST"
+    },
+    {
+        "val":"TAXKO",
+        "option_name":"TAXKO"
+      },
+      {
+        "val":"Other",
+        "option_name":"Other"
+      }
+  
+  ]
+  

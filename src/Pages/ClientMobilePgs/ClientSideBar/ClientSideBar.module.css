@@ -17,7 +17,7 @@
   }
   .mobileport{
     width: 90vw;
-    height: auto;
+    height: 100%;
     background-color: rgba(242,243,247,255);
   }
   .headerbar{
@@ -79,7 +79,7 @@
   .logport p{
     font-size: 0.8rem;
   }
-  label{
+ .logport label{
     color: #ffb405;
     margin-left: 0.7rem;
   }

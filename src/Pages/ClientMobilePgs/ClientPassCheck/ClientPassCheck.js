@@ -5,6 +5,7 @@ import { useNavigate,Link } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import { useLocation } from 'react-router-dom';
 import swal from "sweetalert2";
+import "../../../Images/Twittericon.css"
 //import { CONFIRM_KEY } from "sweetalert/typings/modules/options/buttons";
 
 function ClientPassCheck() {
@@ -128,7 +129,7 @@ const handleSetPassword = async () => {
         localStorage.setItem("client_id", client_id);
         storeJwtData(data.client);
                 
-        Navigate(`clientdocfolder`, { state: { clientid: client_id } });
+        Navigate(`clienthome`, { state: { clientid: client_id } });
         
       })
       .catch((error) => console.log("error", error));
@@ -230,7 +231,7 @@ const handleSetPassword = async () => {
             <i className="fa-brands fa-instagram" style={{ color: "#05022c" }}></i>
           </a>
           <a href="https://twitter.com/arkonetglobal?s=11&t=_tXcbzY9oJ0xsskd5YCcMw" id={`${style.twitter}`}>
-            <i className="fa-brands fa-twitter" style={{ color: "#05022c" }}></i>
+          <i className="bi-twitter-x fs-1 inverted"></i>
           </a>
           <a href="https://www.facebook.com/arkonetglobal" id={`${style.facebook}`}>
             <i className="fa-brands fa-facebook-f" style={{ color: "#05022c" }}></i>

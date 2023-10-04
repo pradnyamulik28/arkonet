@@ -1,0 +1,9 @@
+.notificationbell{
+    display: inline-flex;
+  }
+  .notific_no{
+position: relative;
+font-size:xx-small;
+left: -10px;
+height: fit-content;
+  }

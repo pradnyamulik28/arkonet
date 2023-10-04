@@ -76,10 +76,10 @@
     text-align: center;
     text-shadow: rgb(99, 98, 98) 0px 0  15px;
   }
-  .nps{
+  /* .nps{
     position: absolute !important;
     bottom: 0.7rem !important;
-  }
+  } */
   .label{
     position: absolute !important;
     top: 7rem !important;
@@ -109,6 +109,14 @@
   .hi{
   color: #505363;
   }
+  .nps{
+    color: #b3292e;
+    text-align: center;
+  }
+  .nps>p{
+    width: max-content;
+   
+  }
   
   
    @media only screen and (max-height: 768px) {
@@ -128,12 +136,31 @@
       width: 8rem;
       height: auto;
     }
-    .nps{
+    
+
+    /* .nps{
       position: absolute !important;
       bottom: 1.9rem !important;
-    }
+    } */
     .label{
       position: absolute !important;
       top: 5.8rem !important;
     }
     }
+
+
+    @media only screen and (max-width: 400px) {
+      .cards p{
+      font-size: medium;
+    }}
+
+
+    @media only screen and (max-height: 700px){
+      .cards {
+          margin-bottom: 1.5rem;
+      }
+     
+      .Adport{
+        margin-top: 0.5rem;
+      }
+      }
