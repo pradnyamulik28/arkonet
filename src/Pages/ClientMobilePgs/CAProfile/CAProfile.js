@@ -1,23 +1,39 @@
 import React, { useState, useEffect } from "react";
 import style from "./CAProfile.module.css";
 import profile from "../../../Images/profile.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSidebar } from "../ClientSideBar/SidebarContext";
 import { url_ } from "../../../Config";
 import NotificationBell from "../../../components/NotificationBell/NotificationBell";
 import QRCode from "qrcode.react";
+import swal from "sweetalert2";
+
+
 function CAProfile() {
-  useEffect(() => {
-    getCaInfo();
-  }, []);
 
   const { toggleSidebar,no_of_notifications,handleNotification } = useSidebar();
   const [userData, setUserData] = useState(null);
   const storedToken = window.localStorage.getItem("jwtToken");
-  const user_id=localStorage.getItem("userid");
+  const client_pan=localStorage.getItem("pan");
   const [qrCodeVisibility,setQrCodeVisibility]=useState(false)
+  const navigate=useNavigate();
+
+   
+  const [activeTab, setActiveTab] = useState(0);
+
+  const [tabs,SetTabs] = useState([
+    { title: 'Income Tax', content: {},profileimg:null,isExist:false },
+    { title: 'GST', content: {},profileimg:null,isExist:false },
+  ]);
+
+  // console.log(tabs);
   
+
+
   async function getCaInfo() {
+    const updatedData = [ ...tabs];
+    //console.log(updatedData)
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
@@ -27,19 +43,75 @@ function CAProfile() {
       redirect: "follow",
     };
 
-    await fetch(`${url_}/getuserByid/${user_id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        //console.log(result);
-        setUserData(result);
-      })
-      .catch((error) => console.log("error", error));
+    //===========Retrive IT User Data==============
+
+    try{
+      const IT_res=await fetch(`${url_}/getuserBypan/${client_pan}/Income_Tax`, requestOptions);
+     const IT_User = await IT_res.json(); 
+     if (IT_res.status === 200) {
+      
+      updatedData[0].content = IT_User.userinfo;   
+      updatedData[0].profileimg = `data:image/png;base64,${IT_User.content}`;
+      updatedData[0].isExist=true;
+    } else {
+      setActiveTab(1);
+      //console.log(IT_User);    
+       
+      //swal.fire("Failed!", `${IT_User}`, "error");
+    }
+    }catch (error) {
+      swal.fire("Failed!", `${error}`, "error");
+    }
+
+    
+
+
+    //Retrive GST User Data
+
+    try{
+      const GST_res=await fetch(`${url_}/getuserBypan/${client_pan}/Demo`, requestOptions);
+     const GST_User = await GST_res.json(); 
+     if (GST_res.status === 200) {
+      
+      updatedData[1].content = GST_User.userinfo; 
+      updatedData[1].profileimg = `data:image/png;base64,${GST_User.content}`;
+      updatedData[1].isExist=true;
+    } else {
+     // console.log(GST_User);   
+     //swal.fire("Failed!", `${GST_User}`, "error");
+    }
+    }catch (error) {
+      //swal.fire("Failed!", `${error}`, "error");
+    }
+
+    //console.log(updatedData)
+    SetTabs(updatedData);
+    
   }
+  useEffect(() => {
+    getCaInfo();
+  }, []);
+
 
   async function handlePayment(){
+    //console.log(tabs[activeTab].content.user_id)
+
+
+  navigate("payment",{state:{user_id:tabs[activeTab].content.regId}});
+
+    //===================Get Payment Details==========
+
+    
     setQrCodeVisibility(true)
   }
 
+
+  function handleTabSelect(index) {
+   // e.preventDefault()
+    //console.log(e.target.name)
+    setActiveTab(index);
+  };
+ // console.log(activeKey);
  
 
   return (
@@ -55,8 +127,8 @@ function CAProfile() {
           <div className={`${style.headerbar}`}>
             <div className={`${style.leftear}`}>
               <Link
-                to="/client/clientpasscheck/clienthome"
-                
+                onClick={(e)=>{e.preventDefault();
+                  navigate("/client/clientpasscheck/clienthome")}}                
                 style={{ fontSize: "1rem", margin: "0.5rem", color: "black" }}
               >
                <i className="fa-solid fa-angle-left"></i> &nbsp;&nbsp;My CA
@@ -71,18 +143,41 @@ function CAProfile() {
           </div>
           {/* Headbar Ends ....................................................................................................... */}
 
+ {/* Tabs Starts*/}  
 
-{userData &&
-    <>    
+ 
+ 
+ <div id="userData" className={`${style.tabs}`} >
+
+ {tabs.map((tab, index) => (
+  
+          tab.isExist&&(<button
+            key={index}
+            onClick={(e) => {
+              e.preventDefault();
+              handleTabSelect(index)}}
+            className={index === activeTab ? `${style.active}` : ''}
+          >
+            {tab.title}
+          </button>         
+          
+          )
+        ))}
+ 
+    </div>
+    
+{tabs[activeTab].isExist &&
+    <>  
+     
           {/* Profile Starts*/}
           <div
             className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.profileport}`}
           >
             <div className={`${style.card}`}>
-              <img src={profile} alt="profile_picture" />
+              <img src={tabs[activeTab].profileimg?tabs[activeTab].profileimg:profile} alt="profile_picture" />
               <div className={`${style.cardbody}`}>
-                <h5 className="card-title">{userData.name}</h5>
-                <p className="card-text">{userData.profession}</p>
+                <h5 className="card-title">{tabs[activeTab].content.name}</h5>
+                <p className="card-text">{tabs[activeTab].content.profession}</p>
               </div>
             </div>
           </div>
@@ -95,17 +190,17 @@ function CAProfile() {
             >
               <h5>Address</h5>
               <p>
-                {userData.office_Address}
+                {tabs[activeTab].content.office_Address}
               </p>
             </div>
             {/* Adress Ends......................................................................................................... */}
 
             {/* Telephone Starts */}
-            {userData.telephone && <div
+            {tabs[activeTab].content.telephone && <div
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Telephoneport}`}
             >
               <h5>Telephone</h5>
-              <p> {userData.telephone}</p>
+              <p> {tabs[activeTab].content.telephone}</p>
             </div>}
             {/* Telephone Ends......................................................................................................... */}
 
@@ -114,7 +209,7 @@ function CAProfile() {
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Mobileport}`}
             >
               <h5>Mobile</h5>
-              <p> {userData.mobile}</p>
+              <p> {tabs[activeTab].content.mobile}</p>
             </div>
             {/* Mobile Ends......................................................................................................... */}
 
@@ -131,7 +226,7 @@ function CAProfile() {
                   fontWeight: "500",
                 }}
               >
-                {userData.email}
+                {tabs[activeTab].content.email}
               </a>
             </div>
             {/* Email Ends......................................................................................................... */}
@@ -141,18 +236,17 @@ function CAProfile() {
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.WhatsAppport}`}
             >
               <h5>WhatsApp Link</h5>
-              <a href="##"> {userData.whatsApp_Link}</a>
+              <a href="##"> {tabs[activeTab].content.whatsApp_Link}</a>
             </div>
             {/* WhatsApp Ends......................................................................................................... */}
 
             {/* Button Starts */}
             <div
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Buttonport}`}
-            >{qrCodeVisibility&&<QRCode value={userData.whatsApp_Link}  />}</div>
+            >{qrCodeVisibility&&<QRCode value={tabs[activeTab].content.whatsApp_Link}  style={{height:"5rem",width:"5rem"}}/>}</div>
             <div
               className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Buttonport}`}
-            >
-              
+            >             
               
               <button type="button" onClick={handlePayment}>PAY NOW</button>
             </div>

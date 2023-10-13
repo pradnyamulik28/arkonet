@@ -70,9 +70,7 @@ function GstDashboard() {
             <h3 className={`${style.headmarg}`}>GST</h3>
             <h3 className={`${style.headmarg}`}>
               <i className="fa-solid fa-ellipsis-vertical" 
-                  onClick={(e)=>{e.preventDefault();
-                    Navigate("gstfolder");
-              }}></i>
+                 ></i>
             </h3>
           </div>
           {/* Headmarg Ends */}

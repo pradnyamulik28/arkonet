@@ -7,6 +7,7 @@ import {
 
 import Adminhome from './Pages/AdminPgs/Adminhome';
 import ClientPages from './Pages/ClientMobilePgs/ClientPages';
+import ChatBot from "../src/components/ChatBot/ChatBot"
 
 function App() {
 
@@ -21,7 +22,8 @@ function App() {
           <Route path='/client/*' element={<ClientPages />} />
         </Routes>
       </Router>
-
+      
+    <ChatBot />
     </div>
 
   );

@@ -40,6 +40,7 @@
     margin: 0;
     margin-top: 0.3em;
 }
+
 .p1{
   margin: 0;
   font-weight: bold;
@@ -93,6 +94,28 @@
 .card2{ background-color: #eff6fe;}
 .card3{ background-color: #feeeee;}
 .card4{ background-color: #fefbec;}
+
+.card1 .icons i{color: #22b0b2}
+.card2 .icons i{color: #567cf2}
+.card3 .icons i{color: #f35554}
+.card4 .icons i{color: #f4b51c}
+
+.card1 .righticons i{color: #36dce2}
+
+
+.card1 .uptext h5{color: #54a280;
+  text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);}
+
+.card2 .uptext h5{color: #596fa4;
+  text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);}
+
+.card3 .uptext h5{color: #9e6273;
+  text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);}
+
+.card4 .uptext h5{color: #000000;
+  text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);}
+
+
 .textual{
   margin-top: -0.5rem;
 }

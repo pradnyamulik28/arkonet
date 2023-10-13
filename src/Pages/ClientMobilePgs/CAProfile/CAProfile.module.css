@@ -22,6 +22,19 @@
       flex-direction: row;
       justify-content: space-between;
   }
+  .tabs{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;    
+  }
+  .tabs button{
+    background-color: white;
+    border: none;
+  }
+  .active{
+    font-weight: bold;
+  }
+ 
   .profileport{
       display: flex;
       justify-content: center;

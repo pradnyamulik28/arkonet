@@ -3,7 +3,9 @@ import style from "./GstMonthly.module.css";
 import fd from "../../../Images/fourdots.svg";
 import { Link, useLocation,useNavigate } from "react-router-dom";
 function GstMonthly() {
-  const client_id=localStorage.getItem("client_id")
+  const client_id=localStorage.getItem("client_id");
+
+  const gstrFolders=["GSTR-1","GSTR-3B","GSTR-2","GSTR-9","GSTR-9A"]
   const year=useLocation().state.year;
   const Navigate=useNavigate()
   return (
@@ -56,97 +58,29 @@ function GstMonthly() {
 
 {/* Cards Starts*/}
 <div className={`row ${style.row2}`}>
-
-<div className='col-6'>
-<div className={`${style.uniclass} ${style.card2}`}>
-<div className={`${style.icons} `}>
-<div className={`${style.lefticons} `}>
-  <h1><i className="fa-solid fa-folder" id="iconleft" style={{ color: "#567cf2" }}></i></h1>
-</div>
-<div className={`${style.righticons} `}>
-  <h4><i className="fa-solid fa-ellipsis-vertical"id="iconrigth" style={{ color: "#567cf2" }} ></i></h4>
-</div>
-</div>
-<div className={`${style.textual} `}>
-<div className={`${style.uptext} `}>
-<h5 style={{ color: "#596fa4" }}>GSTR-1</h5>
-</div>
-</div>
-</div>
-</div>
-
-<div className='col-6'>
-<div className={`${style.uniclass} ${style.card4}`}>
-<div className={`${style.icons} `}>
-<div className={`${style.lefticons} `}>
-  <h1><i className="fa-solid fa-folder" id="iconleft" style={{ color: "#f4b51c" }}></i></h1>
-</div>
-<div className={`${style.righticons} `}>
-  <h4><i className="fa-solid fa-ellipsis-vertical"id="iconrigth" style={{ color: "#f4b51c" }} ></i></h4>
-</div>
-</div>
-<div className={`${style.textual} `}>
-<div className={`${style.uptext} `}>
-<h5 style={{ color: "#f0bd3c" }}>GSTR-3B</h5>
-</div>
-</div>
-</div>
-</div>
-
-<div className='col-6'>
-<div className={`${style.uniclass} ${style.card3}`}>
-<div className={`${style.icons} `}>
-<div className={`${style.lefticons} `}>
-  <h1><i className="fa-solid fa-folder" id="iconleft" style={{ color: "#f11cd0" }}></i></h1>
-</div>
-<div className={`${style.righticons} `}>
-  <h4><i className="fa-solid fa-ellipsis-vertical"id="iconrigth" style={{ color: "#f11cd0" }} ></i></h4>
-</div>
-</div>
-<div className={`${style.textual} `}>
-<div className={`${style.uptext} `}>
-<h5 style={{ color: "#f11cd0" }}>GSTR-2</h5>
-</div>
-</div>
-</div>
-</div>
-
-<div className='col-6'>
-<div className={`${style.uniclass} ${style.card1}`}>
-<div className={`${style.icons} `}>
-<div className={`${style.lefticons} `}>
-  <h1><i className="fa-solid fa-folder" id="iconleft" style={{ color: "#22b0b2" }}></i></h1>
-</div>
-<div className={`${style.righticons} `}>
-  <h4><i className="fa-solid fa-ellipsis-vertical"id="iconrigth" style={{ color: "#36dce2" }} ></i></h4>
-</div>
-</div>
-<div className={`${style.textual} `}>
-<div className={`${style.uptext} `}>
-<h5 style={{ color: "#54a280" }}>GSTR-9</h5>
-</div>
-</div>
-</div>
-</div>
-
-<div className='col-6'>
-<div className={`${style.uniclass} ${style.card2}`}>
-<div className={`${style.icons} `}>
-<div className={`${style.lefticons} `}>
-  <h1><i className="fa-solid fa-folder" id="iconleft" style={{ color: "#567cf2" }}></i></h1>
-</div>
-<div className={`${style.righticons} `}>
-  <h4><i className="fa-solid fa-ellipsis-vertical"id="iconrigth" style={{ color: "#567cf2" }} ></i></h4>
-</div>
-</div>
-<div className={`${style.textual} `}>
-<div className={`${style.uptext} `}>
-<h5 style={{ color: "#596fa4" }}>GSTR-9A</h5>
-</div>
-</div>
-</div>
-</div>
-
+{
+  gstrFolders.map((item,index)=>{
+    return(
+      <div className='col-6' onClick={(e)=>{e.preventDefault();Navigate("gstfile",{state:{year:year,gstCategory:item}})}}>
+      <div className={`${style.uniclass} ${style[`card${index + 1}`]}`}>
+      <div className={`${style.icons} `}>
+      <div className={`${style.lefticons} `}>
+        <h1><i className="fa-solid fa-folder" id="iconleft" ></i></h1>
+      </div>
+      <div className={`${style.righticons} `}>
+      <h4><i className="fa-solid fa-ellipsis-vertical"id="iconrigth"  ></i></h4>
+      </div>
+      </div>
+      <div className={`${style.textual} `}>
+      <div className={`${style.uptext} `}>
+      <h5>{item}</h5>
+      </div>
+      </div>
+      </div>
+      </div>
+    );
+  })
+  }
 </div>
 {/* Cards Ends ....................................................................................................... */}
 

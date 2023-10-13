@@ -1,0 +1,77 @@
+.row1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100vw;
+    margin-left: 0.1%;
+  }
+  
+  .allport {
+    width: 90vw;
+    height: auto;
+    background-color: white;
+  }
+  
+  .allport * {
+    font-weight: bolder;
+  }
+  
+  .abd {
+    margin-left: 2rem;
+  }
+  
+  .h31 {
+    font-weight: 999;
+  }
+  
+  .headerbar {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .workport {
+    margin-top: 10%;
+    margin-bottom: 20%;
+  }
+  
+  .input {
+    margin-bottom: 10%;
+    margin-left: 3rem;
+    width: 70%;
+  }
+  
+  .ltxt {
+    font-size: 95%;
+    font-weight: 500;
+  }
+  
+  .ipc {
+    width: 100%;
+    height: 3rem;
+    border-radius: 8px;
+    border: 1px solid gainsboro;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+    transition: all 200ms ease-out;
+  }
+  
+  .button {
+    position: relative;
+  }
+  .btnsbt {
+    border: none;
+    color: white;
+    width: 8rem;
+    font-weight: bold;
+    height: 2.5rem;
+    font-size: 1.5rem;
+    border-radius: 15px;
+    background-color: #ffd901;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+  }
+  
+  @media only screen and (max-height: 768px) {}

@@ -6,35 +6,38 @@ import swal from "sweetalert2";
 
 const ClientFileView = () => {
   const navigate = useNavigate();
-  //const  id  = useLocation().state.clientid;
   const client_id = window.localStorage.getItem("client_id");
   const user_id = window.localStorage.getItem("userid");
   const storedToken = window.localStorage.getItem("jwtToken");
   const year = useLocation().state.year;
-  //console.log(year,client_id)
 
   const [codeVisible, setCodeVisible] = useState(false);
-  const [fileResponse, setFileResponse] = useState(false);
-  const [dbfilename, setDbfilename] = useState([]);
-  const originalfilename = [
-    "Acknowledgement",
-    "Statement_of_Total_Income",
-    "Balance_Sheet",
-    "Profit_and_Loss",
-    "26AS",
-    "Tax_Challan",
-    "Excel",
-    "Others",
-  ];
+  const [fileBlob, setFileBlob] = useState(null);
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  // Function to handle the button click and set isChecked to true
+ 
+  // const [dbfilename, setDbfilename] = useState([]);
+  // const originalfilename = [
+  //   "Acknowledgement",
+  //   "Statement_of_Total_Income",
+  //   "Balance_Sheet",
+  //   "Profit_and_Loss",
+  //   "26AS",
+  //   "Tax_Challan",
+  //   "Excel",
+  //   "Others",
+  // ];
 
   useEffect(() => {
     fetchData();
+    
   }, []);
 
   const fetchData = async () => {
     try {
-      await getFile();
-      // await GetFileResponse();
+      await getFile();    
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -64,42 +67,47 @@ const ClientFileView = () => {
     fetch(`${url_}/client/files`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        //console.log(data);
-        const extractedNames = data.map((file) => {
+        
+        const filterPdfFiles = data.filter((file) => {
+          if(!file.filePath.includes(".xlsx"||"excel"||"Excel"||".xls")) return true
+          else return false
+        });
+        const extractedNames = filterPdfFiles.map((file) => {
           const fileid = file.id;
           const filePath = file.filePath;
           const parts = file.fileName.split(`${user_id}_${client_id}_${year}_`);
-          const extractedName = parts[1].split(".pdf")[0];
-          return { fileid, extractedName, filePath };
+          const extractedName = !filePath.includes(".xlsx"||"excel"||"Excel"||".xls")  &&  parts[1].split(".pdf")[0];
+          const isSelected=false;
+          return { fileid, extractedName, filePath, isSelected };          
         });
-        setDbfilename(extractedNames);
+        
+
+
+        const pdfArray=[]
+        extractedNames.map((file)=>{
+      
+       fetch(`${url_}/openfile/${file.fileid}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      })
+        .then((response) => response.blob())
+        .then((pdfBlob) => {
+          pdfArray.push(
+            new File([pdfBlob], `${file.extractedName}.pdf`, {
+              type: "application/pdf",
+            })
+          );
+        })
+        .catch((error) => console.error("Error fetching PDF:", error));
+    })
+    if(extractedNames.length>0){
+      setFileBlob({extractedNames,pdfArray});
+    }   
       })
       .catch((error) => console.log("error", error));
   };
-
-  const filenameStatusArray = originalfilename.map((filename) => {
-    const matchingFile = dbfilename.find((file) => {
-      return (
-        file.extractedName === filename || file.fileid.toString() === filename
-      );
-    });
-
-    if (matchingFile) {
-      //console.log("filename",filename)
-      return {
-        filename,
-        status: true,
-        fileId: matchingFile.fileid,
-        filePath: matchingFile.filePath,
-      };
-    } else {
-      return { filename, status: false };
-    }
-  });
-
-  const filesAvailable = filenameStatusArray.filter(
-    (files) => files.status && !files.filename.toLowerCase().includes("excel")
-  ).length;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,25 +119,53 @@ const ClientFileView = () => {
 
   const [selectedFiles, setSelectedFiles] = useState([]);
 
+  const selecAllFiles=()=>{   
+  const newData = { ...fileBlob };
+  newData.extractedNames.map((item,index)=>{newData.extractedNames[index].isSelected = true;}) 
+  // console.log(newData);
+  setFileBlob(newData);
+  }
+ 
   const handleCheckboxChange = (event, filedetail) => {
+    //==========Old Code ===================
     
-    if (
-      selectedFiles.some(
-        (item) =>
-          item.fileId === filedetail.fileId &&
-          item.filename === filedetail.filename
-      )
-    ) {
-      setSelectedFiles(
-        selectedFiles.filter(
-          (item) =>
-            item.fileId !== filedetail.fileId &&
-            item.filename !== filedetail.filename
-        )
-      );
-    } else {
-      setSelectedFiles([...selectedFiles, filedetail]);
-    }
+    // if (
+    //   selectedFiles.some(
+    //     (item) =>
+    //       item.fileid === filedetail.fileid &&
+    //       item.extractedName === filedetail.extractedName
+    //   )
+    // ) {
+    //   setSelectedFiles(
+    //     selectedFiles.filter(
+    //       (item) =>
+    //         item.fileid !== filedetail.fileid &&
+    //         item.extractedName !== filedetail.extractedName
+    //     )
+    //   );
+    // } else {
+    //   setSelectedFiles([...selectedFiles, filedetail]);
+    // }
+   
+    //===========Old Code END
+
+
+
+//================CODE To Update Selected File Status in fileBlob Array=================
+
+
+
+  // Create a copy of the original data object
+  const newData = { ...fileBlob };
+
+  // Find the index of the item to update within the items array
+  const itemIndex = newData.extractedNames.findIndex(item => item.extractedName === filedetail.extractedName);
+
+  if (itemIndex !== -1) {
+    // Update the status of the item in the copied array
+    newData.extractedNames[itemIndex].isSelected = !newData.extractedNames[itemIndex].isSelected;
+  } 
+  setFileBlob(newData);
   };
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,54 +177,44 @@ const ClientFileView = () => {
 
   //===========  Files Share Functionality =======================
   const shareFile = async () => {
-    const pdfArray = [];
-    //Dowload all files in an array
-    selectedFiles.map((item, index, Array) => {
-
-      //console.log(index,item,Array.length)
-      fetch(`${url_}/openfile/${item.fileId}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-        },
-      })
-        .then((response) => response.blob())
-        .then((pdfBlob) => {
-          pdfArray.push(
-            new File([pdfBlob], `${item.filename}.pdf`, {
-              type: "application/pdf",
-            })
-          );
-          if (index === Array.length - 1) {
-            console.log("last item : ",pdfArray)
-            //---Share Files-----
-            if (navigator.share) {
+    //console.log(fileBlob.extractedNames);
+    const sharableFiles = [];
+    fileBlob.pdfArray.map((item,index)=>{ 
+      // console.log(fileBlob.extractedNames[index].isSelected)   
+      if(fileBlob.extractedNames[index].isSelected)
+      sharableFiles.push(item)
+    })    
+    
+    if(sharableFiles.length>0){
+            //console.log(sharableFiles);
+            if (navigator.share){
               // Check if the Web Share API is available in the browser
 
               // Create a shareable data object
               const shareData = {
                 title: "Share PDF Document",
                 text: "Check out this PDF document!",
-                files: [...pdfArray], // Array of files to share
+                files: [...sharableFiles], // Array of files to share
               };
 
               // Use the Web Share API to share the PDF
               navigator
                 .share(shareData)
                 .then(() => {
-                  console.log("PDF shared successfully");
-                  pdfArray.length = 0;
+                  //console.log("PDF shared successfully");
+                  sharableFiles.length = 0;
                 })
                 .catch((error) => console.error("Error sharing PDF:", error));
-            } else {
+            }
+            else{
               // Web Share API is not supported in this browser
               swal.fire("", "This funcationality is not supported on this device", "error");
-              //console.error("Web Share API is not available in this browser");
+              
             }
-          }
-        })
-        .catch((error) => console.error("Error fetching PDF:", error));
-    });
+    }
+    else{
+      
+    }
   };
 
 
@@ -263,7 +289,7 @@ const ClientFileView = () => {
               </div>
 
               <div className={`${style.neckbar}`}>
-                {filesAvailable > 0 && (
+                {fileBlob && (
                   <div
                     className={`d-flex justify-content-center flex-wrap ${style.btndiv}`}
                   >
@@ -274,7 +300,10 @@ const ClientFileView = () => {
                     >
                       Select
                     </button>
+                    {codeVisible && <b onClick={selecAllFiles}>All</b>}
+                    
                     <div onClick={shareFile}>
+                      
                     <h2>
                       {codeVisible && (
                         <i className="fa-solid fa-share-from-square" ></i>
@@ -285,59 +314,65 @@ const ClientFileView = () => {
                 )}
               </div>
               <div className="container">
+                {fileBlob&&
                 <div className="row mt-3">
-                  {filenameStatusArray.map((item) => (
-                    <>
-                      {item.status && !item.filename.toLowerCase().includes("excel") && (
+                  {fileBlob.extractedNames.map((item) => (                   
+                      
                         <div
                           className={`col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ${style.smallcol}`}
-                          key={item.fileId}
+                          key={item.fileid}
                         >
                           <div className={style.file_upload}>
-                            {codeVisible && (
-                              <label className={style.checkbox_label}>
-                                <input
-                                  type="checkbox"
-                                  className={style.checkbox}
-                                  onChange={(event) =>
-                                    handleCheckboxChange(event, {fileId:item.fileId,filename:item.filename})
-                                  }
-                                />
-                                <span className={style.checkbox_custom}>
-                                  <span className={style.checkbox_tick}></span>
-                                </span>
-                              </label>
-                            )}
+                           
 
-                            {!item.filename.toLowerCase().includes("excel")  && (
+                          {codeVisible && (
+                            <label className={style.checkbox_label}>
+                              <input
+                                type="checkbox"
+                                className={style.checkbox}
+                                checked={item.isSelected}
+                                onChange={event => handleCheckboxChange(event, item)}
+                              />
+                              <span className={style.checkbox_custom}>
+                                <span className={style.checkbox_tick}></span>
+                              </span>
+                            </label>
+                          )}
                               <i
                                 className="bi bi-file-earmark-pdf-fill text-danger"
                                 onClick={(e) =>
-                                 { e.preventDefault()
+                                 { e.preventDefault();
+                                  codeVisible?
+                                  handleCheckboxChange(e, item):
                                   openFileAndDownload(
                                     "pdf",
                                     "document.pdf",
-                                    item.fileId
+                                    item.fileid
                                   )}
                                 }
                               ></i>
-                            )}
-                            <h6 className={style.filename_text} onClick={() =>
-                                  openFileAndDownload(
+                            
+                            <h6 className={style.filename_text} onClick={(e) =>
+
+                                  {e.preventDefault();
+                                    codeVisible ?
+                                    handleCheckboxChange(e, item):
+                                    openFileAndDownload(
                                     "pdf",
                                     "document.pdf",
-                                    item.fileId
-                                  )
+                                    item.fileid
+                                  )}
                                 }>
-                              {item.filename}
+                              {item.extractedName}
                             </h6>
                           </div>
                         </div>
-                      )}
-                    </>
+                      
+                    
                   ))}
                 </div>
-                {filesAvailable === 0 && (
+}
+                {!fileBlob && (
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">Sorry..!!</h5>

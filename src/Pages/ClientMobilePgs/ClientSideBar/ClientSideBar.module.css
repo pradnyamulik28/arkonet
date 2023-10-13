@@ -26,8 +26,14 @@
   .img{
     width: 5rem;
     position: relative;
-    top: -1rem;
+    top: -0.5rem;
     height: 5rem;
+    }
+    .profileImg{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   
   .headerbar{
@@ -39,7 +45,7 @@
       display: flex;
       justify-content: space-between;
       background-color: white;
-      height: 6rem;
+      height: 7rem;
       width: 13rem;
       margin: 2rem;
       position: relative;
@@ -58,6 +64,8 @@
     flex-direction: column;
     position: relative;
     right: 3rem;
+    /* left: -1rem;
+    width: fit-content; */
     align-items: flex-start;
     justify-content: center;
   }
@@ -71,10 +79,10 @@
     text-decoration: none;
     color: black;
     font-weight: 400;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
   .logport *{
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   .logport p{
     font-size: 0.8rem;
@@ -87,7 +95,7 @@
    @media only screen and (max-height: 768px) {
     .Addressport{
       margin-top: -2rem;
-      margin-bottom: 12rem;
+      margin-bottom: 9rem;
     }
     }
    @media only screen and (max-height: 660px) {

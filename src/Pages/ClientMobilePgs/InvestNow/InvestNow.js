@@ -8,10 +8,13 @@ import NPS from "../../../Images/sackinhand.png";
 import FD from "../../../Images/ticksack.png";
 import { Link, useNavigate } from "react-router-dom";
 import NotificationBell from "../../../components/NotificationBell/NotificationBell";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import AdDisplay from "../../../components/AdDisplay/AdDisplay"
 import { useSidebar } from "../ClientSideBar/SidebarContext";
 import DisplayModal from "../../../components/DisplayModal/DisplayModal";
+import swal from "sweetalert2";
+import { url_ } from "../../../Config";
+
 
 function InvestNow() {
   const Invest_Now=[{
@@ -47,21 +50,107 @@ function InvestNow() {
 ]
   const navigate = useNavigate();
   const {no_of_notifications,handleNotification}= useSidebar();
-  const [displayModal,setDisplayModal]=useState({isVisible:false,msg:""})
+  const [investmentMail,setInvestmentMail]=useState({subject:"",msg:"",userid:"",username:""});
+  const storedToken = window.localStorage.getItem("jwtToken");
+  
+ 
+
+  async function getITCAInfo(){
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    //===========Retrive IT User Data==============
+
+    try{
+      const IT_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/Income_Tax`, requestOptions);
+     const IT_User = await IT_res.json(); 
+     if (IT_res.status === 200) {
+      
+     setInvestmentMail({...investmentMail,userid:IT_User.userinfo.regId,username:IT_User.userinfo.name})
+    } else if(IT_res.status === 404){
+      console.log("Not registered under IT");    
+       
+      //swal.fire("Failed!", `${IT_User}`, "error");
+    }
+    }catch (error) {
+      swal.fire("Failed!", `${error}`, "error");
+    }
+  }
+
+  useEffect(() => {
+    getITCAInfo();
+  }, []);
+
   function handleCardClick(e)
   {
     console.log(e.currentTarget.id)
-    const message=`Thank you for showing interest.
-                    Your interest in a ${e.currentTarget.id} has been duly noted by our administration team 
-                    and would like to assure you that your inquiry has been logged into our system. `
-    setDisplayModal({...displayModal,isVisible:!displayModal.isVisible,msg:message})
-    
+    const subject=`Client Interest in ${e.currentTarget.id}`;
+
+
+    const message=`Dear ${investmentMail.username},
+  Greeting from TAXKO!
+
+  I hope this message finds you well. 
+  
+  Our client ${localStorage.getItem("name")}, is eager to explore ${e.currentTarget.id} investment. 
+  We trust your expertise and kindly request your assistance in guiding them through this process.
+                    
+  Best regards,
+
+  ${localStorage.getItem("name")},
+  Contact no : ${localStorage.getItem("mobile")}`;
+
+  setInvestmentMail({...investmentMail,subject:subject,msg:message});
+    //console.log(subject);
+    //console.log(message,investmentMail.userid);
+    sendEmail("1",investmentMail.userid,subject,message);
+  }
+
+  async function sendEmail(clientid,userid,subject,body)
+  {
+    //console.log(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}&body=${body}`)
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "text/plain");
+myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+// var raw = body;
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: body,
+  redirect: 'follow'
+};
+
+try{const response=await fetch(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}`, requestOptions)
+const result = await response.text(); 
+if (response.status === 200) {
+  
+  swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Email sent.!',
+    showConfirmButton: false,
+    timer: 1500
+  })
+} else {  
+  swal.fire("Failed!", `${result}`, "error");
+}}catch(error){
+  swal.fire("Failed!", `${error}`, "error");
+}
+
   }
   
   return (
     <div className={`${style.row}`}>
       {/* Background */}
-      <DisplayModal property={displayModal} onClick={handleCardClick}/>
+     
    
       {/* Mobile Viewport */}
       <div
@@ -84,16 +173,6 @@ function InvestNow() {
         {/* Headbar Ends ....................................................................................................... */}
 
         {/* Ad Starts */}
-        {/* <div
-          className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Adport}`}
-        >
-          <img className={`${style.img}`} src={profile} alt="changeimage" />
-          <div className={`${style.details}`}>
-            <h5>SAVE TAX</h5>
-            <h6>Ask HOW?</h6>
-            <h6>Call On 9090990909</h6>
-          </div>
-        </div> */}
         <AdDisplay />
         {/* Ad Ends......................................................................................................... */}
 

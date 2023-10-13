@@ -5,13 +5,14 @@ const SidebarContext = createContext();
 
 // Create a provider component
 export function SidebarProvider({ children }) {
-  console.log("sidebarProvider created")
+ //console.log("sidebarProvider created")
   const [no_of_notifications,setNo_of_notifications]=useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
   function handleNotification(){
     //console.log("clicked");
-    setNo_of_notifications(0);
+    //diplay unread notification list,if read notification : update unread notification
+    setNo_of_notifications(5);
   }
   const toggleSidebar = () => {
     setIsOpen(!isOpen);

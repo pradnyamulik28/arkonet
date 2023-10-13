@@ -1,0 +1,92 @@
+
+  .row1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100vw;
+    margin-left: 0.1%;
+  }
+  .allport{
+    width: 90vw;
+    height: auto;
+    background-color: white;
+  }
+  .allport *{
+  /* font-weight: bold; */
+  font-weight: bolder;
+  }
+  
+  .headerbar{
+    margin-top: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+  }
+  .pdf{
+    width: 5rem;
+    position: relative;
+    left: 75%;
+  }
+  .row2{
+    margin-top: 3rem;
+    /* display: flex; */
+  }
+  .doc1, .doc2{
+    margin-bottom: 3rem;
+  }
+  
+  
+  .rightbear{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+  }
+  .leftbear{
+    display: inline-block;
+    width: 30%;
+  }
+  .rightbear{
+    display: inline-block;
+    width: 70%;
+  }
+  .licon{
+    display: inline-block;
+    width: 70%;
+    text-align: right;
+    /* margin-right: 1rem; */
+  }
+  .ricon{
+    display: inline-block;
+    width: 30%;
+    text-align: right;
+  position: relative;
+  }
+  .btn{
+    border-radius: 3rem;
+    width: 90%;
+    border: none;
+    height: 2rem;
+    background-color: #b00d01;
+    color: #c3beb3;
+    font-size: 1.5rem;
+  }
+  
+   @media only screen and (max-height: 768px) {
+    .uptext{
+      margin-top: 0.5rem;
+    }
+    .card{
+      width: 8rem;
+      height: auto;
+    }
+  .uniclass {
+      width: 10.5rem;
+      height: 8rem;
+      margin: 2%;
+      margin-bottom: 2rem;
+  }
+   }

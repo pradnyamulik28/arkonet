@@ -18,6 +18,7 @@ function ClientHome() {
   const [lastFewYearsArray, setLastFewYearsArray] = useState([]);
   const [gstMonthsArray, setGstMonthsArray] = useState([]);
  
+  const Navigate=useNavigate();
 
   async function getITandGstData() {
     await getITFilestatus();  
@@ -91,10 +92,11 @@ function ClientHome() {
     navigate("/client/", { replace: true });
   }
 
+  
 
   useEffect(() => {
     getITandGstData();
-  }, []);
+  }, [toggleSidebar]);
 
   return (
     <div className={`${style.row}`}>
@@ -144,7 +146,7 @@ function ClientHome() {
           <div className={`${style.taxdata}`}>
             <div className={`${style.taxhead}`}>
               <p>&bull;</p>
-              <h5> Income Tax</h5>
+              <h5 className={`${style.h51}`}> Income Tax</h5>
             </div>
             {lastFewYearsArray.map((item, index) => (
               <div className={`${style.taxlist}`} key={index}>                
@@ -168,7 +170,9 @@ function ClientHome() {
           <div className={`${style.gstdata}`}>
             <div className={`${style.gsthead}`}>
               <p>&bull;</p>
-              <h5> GST</h5>
+              <h5 className={`${style.h51}`}  onClick={(e)=>{e.preventDefault();
+                    Navigate("gstdashboard");
+              }}> GST</h5>
             </div>
             {/* <div className={`${style.gstist}`}> */}
             {gstMonthsArray.map((item, index) => (

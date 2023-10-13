@@ -7,17 +7,92 @@ import { url_ } from "../../../Config";
 import NotificationBell from "../../../components/NotificationBell/NotificationBell"
 function ClientDashboard() {
   const { toggleSidebar,no_of_notifications,handleNotification } = useSidebar();
-  const [clientInfo,setClientInfo]=useState({});
-  //const [no_of_notifications,setNo_of_notifications]=useState(0);
-  useEffect(()=>{
-    setClientInfo({
-      name:localStorage.getItem("name"),
+  const [clientInfo,setClientInfo]=useState({
+    storedToken:window.localStorage.getItem("jwtToken"),
+      clientid:localStorage.getItem("client_id"),
+      name:localStorage.getItem("name").split(" ")[0],
       PAN:localStorage.getItem("pan"),
       profession:localStorage.getItem("profession"),
-    })
-    
+  });
+  const [lastUpdateDate,setLastUpdateDate]=useState({
+    ITLastUpdate:"November 22.2020",
+    GstLastUpdate:"December 22.2020",
+    KYCLastUpdate:"September 22.2020",
+    DocsLastUpdate:"November 22.2020"
+  })
+
+
+  const [dashboardFolders,setDashboardFolders]=useState([
+    {
+      name:"income_tax",
+      id:"income_tax",
+      title:"Income Tax",
+      lastUpdateDate:"",
+      linkTo:"clientincometax",
+    },
+    {
+      name:"gst",
+      id:"gst",
+      title:"GST",
+      lastUpdateDate:"",
+      linkTo:"gstfolder",
+    },
+    {
+      name:"kyc",
+      id:"kyc",
+      title:"KYC",
+      lastUpdateDate:"",
+      linkTo:"",
+    },
+    {
+      name:"gst",
+      id:"gst",
+      title:"GST",
+      lastUpdateDate:"",
+      linkTo:"",
+    }
+  ])
+  //const [no_of_notifications,setNo_of_notifications]=useState(0);
+  useEffect(()=>{    
+    fetchLastUpdateIT();    
   },[]);
 
+
+
+
+  function numberToMonth(number) {
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+  
+    if (number >= 1 && number <= 12) {
+      return months[number - 1];
+    } else {
+      return "Invalid month number";
+    }
+  }
+
+
+  async function fetchLastUpdateIT(){
+
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`${url_}/maxLastUpdateDate1/${clientInfo.clientid}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    const retrivedDate=result.lastUpdateDate.split("-");
+    setLastUpdateDate({...lastUpdateDate,ITLastUpdate:`${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`})
+  })
+  .catch(error => console.log('error', error));
+  }
 
 
 
@@ -92,7 +167,7 @@ function ClientDashboard() {
     <h5 style={{ color: "#54a280", textShadow: "1px 4px 4px rgba(0, 0, 0, 0.24)" }}>Income Tax</h5>
     </div>
     <div className={`${style.lowtext} `}>
-      <p style={{ color: "#36dce2", fontSize: "0.9em" }}>November 10.2020</p>
+      <p style={{ color: "#36dce2", fontSize: "0.9em" }}>{lastUpdateDate.ITLastUpdate}</p>
     </div>
     </div>
     </div>
@@ -101,7 +176,7 @@ function ClientDashboard() {
     
     
     <div className='col-6'>
-    <Link to="gstdashboard">
+    <Link to="gstfolder">
     <div className={`${style.uniclass} ${style.card2}`}>
     <div className={`${style.icons} `}>
     <div className={`${style.lefticons} `}>
@@ -116,7 +191,7 @@ function ClientDashboard() {
     <h5 style={{ color: "#596fa4", textShadow: "1px 4px 4px rgba(0, 0, 0, 0.24)" }}>GST</h5>
     </div>
     <div className={`${style.lowtext} `}>
-      <p style={{ color: "#8c9ab4", fontSize: "0.9em" }}>December 20.2020</p>
+      <p style={{ color: "#8c9ab4", fontSize: "0.9em" }}>{lastUpdateDate.GstLastUpdate}</p>
     </div>
     </div>
     </div>
@@ -138,7 +213,7 @@ function ClientDashboard() {
     <h5 style={{ color: "#9e6273", textShadow: "1px 4px 4px rgba(0, 0, 0, 0.24)" }}>KYC</h5>
     </div>
     <div className={`${style.lowtext} `}>
-      <p style={{ color: "#f35554", fontSize: "0.9em" }}>November 22.2020</p>
+      <p style={{ color: "#f35554", fontSize: "0.9em" }}>{lastUpdateDate.KYCLastUpdate}</p>
     </div>
     </div>
     </div>
@@ -159,7 +234,7 @@ function ClientDashboard() {
     <h5 style={{ color: "#", textShadow: "1px 4px 4px rgba(0, 0, 0, 0.24)" }}>Docs</h5>
     </div>
     <div className={`${style.lowtext} `}>
-      <p style={{ color: "#f4b51c", fontSize: "0.9em" }}>December 14.2020</p>
+      <p style={{ color: "#f4b51c", fontSize: "0.9em" }}>{lastUpdateDate.DocsLastUpdate}</p>
     </div>
     </div>
     </div>

@@ -55,6 +55,9 @@
         font-weight: 500;
         text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
     }
+    .wordcount{
+        margin-bottom: 0rem;
+    }
     
     .text2 {
         margin-bottom: 1.5rem;

@@ -1,0 +1,47 @@
+/* body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+} */
+
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.qrcode {
+    width: 7rem;
+    height: 7rem;
+    margin: 0rem auto 1rem auto;
+}
+
+.bank_details {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.bank_details span {
+    font-weight: bold;
+}
+
+
+.button{
+    background-color: rgba(255,211,2,255);
+    color: white;
+    width: 9rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    border: none;
+    margin: 1rem;
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
+}

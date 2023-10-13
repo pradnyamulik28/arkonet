@@ -92,10 +92,18 @@
     padding-top: 1rem;
     align-items: center;
   }
-  .card1{ background-color: #f1ffff;}
-  .card2{ background-color: #eff6fe;}
-  .card3{ background-color: #feedfd;}
-  .card4{ background-color: #fefbec;}
+  .card1{ background-color: #EEF7FE;}
+  .card2{ background-color: #FFFBEC;}
+  .card3{ background-color: #FEEEFC;}
+  .card4{ background-color: #F0FFFF;}
+  .card5{ background-color: #EEF7FE;}
+
+  .card1 i, .card1 h5{  color: #567cf2;}
+  .card2 i, .card2 h5{  color: #f4b51c}
+  .card3 i, .card3 h5{  color: #F11BCF;}
+  .card4 i, .card4 h5{  color: #22b0b2}
+  .card5 i, .card5 h5{  color: #567cf2;}
+
   .textual{
     margin-top: -0.5rem;
   }
