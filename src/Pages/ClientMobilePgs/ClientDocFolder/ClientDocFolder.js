@@ -8,7 +8,7 @@ import { useSidebar } from '../ClientSideBar/SidebarContext';
 
 
 const ClientDocFolder = () => {
-  const  id  = localStorage.getItem("client_id");//useLocation().state.clientid; //Get Client Id parameter from route
+  const  id  = localStorage.getItem("client_id_it");//useLocation().state.clientid; //Get Client Id parameter from route
   const navigate = useNavigate();
 
   const { toggleSidebar } = useSidebar();
@@ -59,7 +59,7 @@ const ClientDocFolder = () => {
               <div key={index} className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
                 <Link to={`clientfileview`}  
                 className={`${styles.linktab}`} 
-                state={{clientid:id,year:`${year - 1}-${year.toString().slice(-2)}`}}> {/* Pass the year to SendData */}
+                state={{clientid:id,year:`${year - 1}-${year.toString().slice(-2)}`,AY:`${year}-${(year+1).toString().slice(-2)}`}}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
                     <div className={styles.icon}>
                       <p className={styles.icons}>
@@ -68,7 +68,7 @@ const ClientDocFolder = () => {
                       </p>
                     </div>
                     <div className={`${getFolderColor(index)} ${styles.cont} h6`}>
-                      <h5>A.Y {year - 1}-{year.toString().slice(-2)}</h5>
+                      <h5>A.Y {year}-{(year+1).toString().slice(-2)}</h5>
                       <p>Financial Year {year - 1}-{year.toString().slice(-2)}</p>
                     </div>
                   </div>
@@ -79,8 +79,7 @@ const ClientDocFolder = () => {
         </div>
       </div>
      </div>
-    </div>
-    
+    </div>    
   );
 }
 

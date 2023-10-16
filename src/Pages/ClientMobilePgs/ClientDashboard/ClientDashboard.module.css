@@ -115,6 +115,11 @@
 .card4 .uptext h5{color: #000000;
   text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);}
 
+  .disabled_link {
+    pointer-events: none;
+     /* Change the color to indicate it's disabled */
+    /* Add any other styling to indicate it's disabled */
+  }
 
 .textual{
   margin-top: -0.5rem;

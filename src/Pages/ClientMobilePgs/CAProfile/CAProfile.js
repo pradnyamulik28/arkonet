@@ -15,6 +15,11 @@ function CAProfile() {
   const [userData, setUserData] = useState(null);
   const storedToken = window.localStorage.getItem("jwtToken");
   const client_pan=localStorage.getItem("pan");
+
+ const client_id_it=localStorage.getItem("client_id_it");
+ const client_id_gst=localStorage.getItem("client_id_gst");
+
+
   const [qrCodeVisibility,setQrCodeVisibility]=useState(false)
   const navigate=useNavigate();
 
@@ -31,6 +36,7 @@ function CAProfile() {
 
 
   async function getCaInfo() {
+    // console.log(storedToken,client_pan)
     const updatedData = [ ...tabs];
     //console.log(updatedData)
 
@@ -43,15 +49,43 @@ function CAProfile() {
       redirect: "follow",
     };
 
-    //===========Retrive IT User Data==============
 
+//===========Retrive Both Data==============
+
+    let isBoth=false;
+
+    try{
+      const GST_res=await fetch(`${url_}/getuserBypan/${client_pan}/Both`, requestOptions);
+     const GST_User = await GST_res.json(); 
+     if (GST_res.status === 200) {
+      updatedData[0].title=""
+      updatedData[0].content = GST_User.userinfo; 
+      if(GST_User.content)
+      updatedData[0].profileimg = `data:image/png;base64,${GST_User.content}`;
+      updatedData[0].isExist=true;
+
+      isBoth=true;
+    } else {
+     // console.log(GST_User);   
+     //swal.fire("Failed!", `${GST_User}`, "error");
+    }
+    }catch (error) {
+      //swal.fire("Failed!", `${error}`, "error");
+    }
+    //===========Retrive IT User Data==============
+if(!isBoth){
+
+  if(client_id_it){
+    console.log("IT")
     try{
       const IT_res=await fetch(`${url_}/getuserBypan/${client_pan}/Income_Tax`, requestOptions);
      const IT_User = await IT_res.json(); 
      if (IT_res.status === 200) {
       
-      updatedData[0].content = IT_User.userinfo;   
+      updatedData[0].content = IT_User.userinfo;  
+      if(IT_User.content!==null) {
       updatedData[0].profileimg = `data:image/png;base64,${IT_User.content}`;
+      }
       updatedData[0].isExist=true;
     } else {
       setActiveTab(1);
@@ -62,19 +96,25 @@ function CAProfile() {
     }catch (error) {
       swal.fire("Failed!", `${error}`, "error");
     }
+  }
+  
 
-    
+
+  
 
 
-    //Retrive GST User Data
+  //Retrive GST User Data
 
+  if(client_id_gst){
     try{
-      const GST_res=await fetch(`${url_}/getuserBypan/${client_pan}/Demo`, requestOptions);
+      const GST_res=await fetch(`${url_}/getuserBypan/${client_pan}/GST`, requestOptions);
      const GST_User = await GST_res.json(); 
      if (GST_res.status === 200) {
       
       updatedData[1].content = GST_User.userinfo; 
+      if(GST_User.content!==null){
       updatedData[1].profileimg = `data:image/png;base64,${GST_User.content}`;
+      }
       updatedData[1].isExist=true;
     } else {
      // console.log(GST_User);   
@@ -83,8 +123,15 @@ function CAProfile() {
     }catch (error) {
       //swal.fire("Failed!", `${error}`, "error");
     }
+  }
+  
+}
+    
+    
+    
+  
 
-    //console.log(updatedData)
+    console.log(updatedData)
     SetTabs(updatedData);
     
   }
@@ -174,7 +221,7 @@ function CAProfile() {
             className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.profileport}`}
           >
             <div className={`${style.card}`}>
-              <img src={tabs[activeTab].profileimg?tabs[activeTab].profileimg:profile} alt="profile_picture" />
+              <img src={tabs[activeTab].profileimg?tabs[activeTab].profileimg : profile } alt="profile_picture" />
               <div className={`${style.cardbody}`}>
                 <h5 className="card-title">{tabs[activeTab].content.name}</h5>
                 <p className="card-text">{tabs[activeTab].content.profession}</p>

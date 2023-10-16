@@ -33,12 +33,62 @@ body{
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 4rem;/*old value 4rem*/
+}
+.header_otp{
+    margin-bottom: 0rem;
 }
 
 .header a {
     margin-left: 0.5rem;
 }
+
+
+.port{
+    display: flex;
+    flex-direction: column;
+  }
+  .reset{
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: 15vw;
+    margin-bottom: 2vh;
+    text-decoration: underline;
+  }
+  .otpcluster{
+    display: flex;
+    flex-direction: row;
+  }
+  .otpcluster .o{
+    font-size: 95%;
+    font-weight: 500;
+  }
+  .optinp {
+    width: 80%;
+    height: 2.5rem;
+    border-radius: 8px;
+    border: 1px solid gainsboro;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+    transition: all 200ms ease-out;
+  }
+  .btnvr {
+    border: none;
+    color: white;
+    width: 5rem;
+    font-weight: bold;
+    height: 2.5rem;
+    font-size: 1.3rem;
+    border-radius: 15px;
+    background-color: #ffd901;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+  }
+  .otpcluster {
+    margin-bottom: 10%;
+    margin-left: 2rem;
+    width: 75%;
+  }
 
 .inputs {
     display: flex;
@@ -46,14 +96,19 @@ body{
     align-items: center;
     width: 70%;
     width: 100vw;
+    
 }
+
 
 .form {
     display: flex;
     width: 70%;
     flex-direction: column;
     align-items: flex-start;
-    margin: 3rem;
+    margin: 3rem;/*old value only 3rem*/
+}
+.form_opt{
+    margin: 1rem 3rem;
 }
 
 .form input {
@@ -107,7 +162,11 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 3rem;/*old value 3rem*/
+}
+
+.button_opt{
+    margin-bottom: 0.5rem;
 }
 /* button{
 

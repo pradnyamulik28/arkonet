@@ -6,33 +6,20 @@ import swal from "sweetalert2";
 
 const ClientFileView = () => {
   const navigate = useNavigate();
-  const client_id = window.localStorage.getItem("client_id");
-  const user_id = window.localStorage.getItem("userid");
+  const client_id = window.localStorage.getItem("client_id_it");
+  const user_id = window.localStorage.getItem("user_id_it");
   const storedToken = window.localStorage.getItem("jwtToken");
   const year = useLocation().state.year;
+  const AY=useLocation().state.AY;
+  console.log(year)
 
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileBlob, setFileBlob] = useState(null);
 
-  const [isChecked, setIsChecked] = useState(false);
 
-  // Function to handle the button click and set isChecked to true
- 
-  // const [dbfilename, setDbfilename] = useState([]);
-  // const originalfilename = [
-  //   "Acknowledgement",
-  //   "Statement_of_Total_Income",
-  //   "Balance_Sheet",
-  //   "Profit_and_Loss",
-  //   "26AS",
-  //   "Tax_Challan",
-  //   "Excel",
-  //   "Others",
-  // ];
 
   useEffect(() => {
-    fetchData();
-    
+    fetchData();    
   }, []);
 
   const fetchData = async () => {
@@ -48,6 +35,7 @@ const ClientFileView = () => {
   //  Fetch file Code
 
   const getFile = async () => {
+    console.log(client_id)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -63,6 +51,7 @@ const ClientFileView = () => {
       body: raw,
       redirect: "follow",
     };
+    console.log(`${url_}/client/files`)
 
     fetch(`${url_}/client/files`, requestOptions)
       .then((response) => response.json())
@@ -127,29 +116,7 @@ const ClientFileView = () => {
   }
  
   const handleCheckboxChange = (event, filedetail) => {
-    //==========Old Code ===================
-    
-    // if (
-    //   selectedFiles.some(
-    //     (item) =>
-    //       item.fileid === filedetail.fileid &&
-    //       item.extractedName === filedetail.extractedName
-    //   )
-    // ) {
-    //   setSelectedFiles(
-    //     selectedFiles.filter(
-    //       (item) =>
-    //         item.fileid !== filedetail.fileid &&
-    //         item.extractedName !== filedetail.extractedName
-    //     )
-    //   );
-    // } else {
-    //   setSelectedFiles([...selectedFiles, filedetail]);
-    // }
    
-    //===========Old Code END
-
-
 
 //================CODE To Update Selected File Status in fileBlob Array=================
 
@@ -220,23 +187,18 @@ const ClientFileView = () => {
 
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
-    try {
-      const response = await fetch(`${url_}/openfile/${file_ID}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-        },
-      });
+    console.log(fileBlob)
+    console.log(fileName,file_ID)
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
 
-      const arrayBuffer = await response.arrayBuffer();
-      const fileBlob = new Blob([arrayBuffer], {
-        type: `application/${contentType}`,
-      });
-      const blobUrl = URL.createObjectURL(fileBlob);
+    const newData = { ...fileBlob };
+
+    // Find the index of the item to update within the items array
+    const itemIndex = newData.extractedNames.findIndex(item => item.fileid === file_ID);
+  
+    if (itemIndex !== -1) {
+      console.log(fileBlob.pdfArray[itemIndex]);
+      const blobUrl = URL.createObjectURL(fileBlob.pdfArray[itemIndex]);
       console.log(blobUrl)
       if (contentType === "pdf") {
         setPdfBlobUrl(blobUrl);
@@ -244,19 +206,48 @@ const ClientFileView = () => {
         pdfWindow.addEventListener("beforeunload", () => {
           URL.revokeObjectURL(blobUrl);
         });
-      } else if (contentType === "xlsx") {
-        const link = document.createElement("a");
-        link.href = blobUrl;
-        link.download = fileName;
-        link.click();
-        URL.revokeObjectURL(blobUrl);
-      }
-    } catch (error) {
-      console.error(
-        `Error fetching or downloading ${contentType.toUpperCase()} file:`,
-        error
-      );
-    }
+      }      
+    } 
+
+
+
+    // try {
+    //   const response = await fetch(`${url_}/openfile/${file_ID}`, {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${storedToken}`,
+    //     },
+    //   });
+
+    //   if (!response.ok) {
+    //     throw new Error("Network response was not ok");
+    //   }
+
+    //   const arrayBuffer = await response.arrayBuffer();
+    //   const fileBlob = new Blob([arrayBuffer], {
+    //     type: `application/${contentType}`,
+    //   });
+    //   const blobUrl = URL.createObjectURL(fileBlob);
+    //   console.log(blobUrl)
+    //   if (contentType === "pdf") {
+    //     setPdfBlobUrl(blobUrl);
+    //     const pdfWindow = window.open(blobUrl, "_blank");
+    //     pdfWindow.addEventListener("beforeunload", () => {
+    //       URL.revokeObjectURL(blobUrl);
+    //     });
+    //   } else if (contentType === "xlsx") {
+    //     const link = document.createElement("a");
+    //     link.href = blobUrl;
+    //     link.download = fileName;
+    //     link.click();
+    //     URL.revokeObjectURL(blobUrl);
+    //   }
+    // } catch (error) {
+    //   console.error(
+    //     `Error fetching or downloading ${contentType.toUpperCase()} file:`,
+    //     error
+    //   );
+    // }
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,7 +276,7 @@ const ClientFileView = () => {
                   </div>
                   
                 </div>
-                <h6 className={`${style.headpara}`}>A.Y {year}</h6>
+                <h6 className={`${style.headpara}`}>A.Y {AY}</h6>
               </div>
 
               <div className={`${style.neckbar}`}>

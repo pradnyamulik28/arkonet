@@ -8,15 +8,23 @@ function ClientHelp() {
 
   const storedToken = window.localStorage.getItem("jwtToken");
 
+  
+
   const [formdata, setFormdata] = useState({
     query_nature:"",
     financialyear:"",
     details:""
   });
+
+
   const wordLimit = 100;
 
 
-  const [helpMail,setHelpMail]=useState({subject:"",msg:"",ituserid:"",itusername:"",gstuserid:"",gstusername:""});
+  const [helpMail,setHelpMail]=useState({subject:"",msg:"",
+  ituserid:localStorage.getItem("user_id_it"),
+  itusername:"",
+  gstuserid:localStorage.getItem("user_id_gst"),
+  gstusername:""});
   async function getCAInfo(){
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -27,16 +35,15 @@ function ClientHelp() {
       redirect: "follow",
     };
 
-    //===========Retrive IT User Data==============
-
+let isBoth=false;
     try{
-      const IT_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/Income_Tax`, requestOptions);
+      const IT_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/Both`, requestOptions);
      const IT_User = await IT_res.json(); 
      if (IT_res.status === 200) {
-      
-     setHelpMail({...helpMail,ituserid:IT_User.userinfo.regId,itusername:IT_User.userinfo.name})
+      isBoth=true;      
+     setHelpMail({...helpMail,itusername:IT_User.userinfo.name,gstusername:IT_User.userinfo.name})
     } else if(IT_res.status === 404){
-      console.log("Not registered under IT");    
+      console.log("Not registered under Both");    
        
       //swal.fire("Failed!", `${IT_User}`, "error");
     }
@@ -45,22 +52,51 @@ function ClientHelp() {
     }
 
 
+    if(!isBoth){
+      // console.log("not both")
+       //===========Retrive IT User Data==============
 
+    if(helpMail.ituserid)
+    {
+      try{
+        const IT_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/Income_Tax`, requestOptions);
+       const IT_User = await IT_res.json(); 
+       if (IT_res.status === 200) {
+        
+       setHelpMail({...helpMail,itusername:IT_User.userinfo.name})
+      } else if(IT_res.status === 404){
+        console.log("Not registered under IT");    
+         
+        //swal.fire("Failed!", `${IT_User}`, "error");
+      }
+      }catch (error) {
+        swal.fire("Failed!", `${error}`, "error");
+      }
+    }
+   
+
+
+if(helpMail.gstuserid)
+{
+  try{
+    const GST_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/GST`, requestOptions);
+   const GST_User = await GST_res.json(); 
+   if (GST_res.status === 200) {      
+   setHelpMail({...helpMail,gstusername:GST_User.userinfo.name})
+  } else if(GST_res.status === 404){
+    console.log("Not registered under GST");    
+     
+    //swal.fire("Failed!", `${IT_User}`, "error");
+  }
+  }catch (error) {
+    swal.fire("Failed!", `${error}`, "error");
+  }
+}
      //===========Retrive GST User Data==============
+    }
+   
 
-     try{
-      const GST_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/GST`, requestOptions);
-     const GST_User = await GST_res.json(); 
-     if (GST_res.status === 200) {      
-     setHelpMail({...helpMail,gstuserid:GST_User.userinfo.regId,gstusername:GST_User.userinfo.name})
-    } else if(GST_res.status === 404){
-      console.log("Not registered under GST");    
-       
-      //swal.fire("Failed!", `${IT_User}`, "error");
-    }
-    }catch (error) {
-      swal.fire("Failed!", `${error}`, "error");
-    }
+     
   }
 
   useEffect(() => {
@@ -147,7 +183,9 @@ switch(formdata.query_nature)
 {
   case "GST":
     if(helpMail.gstusername!==""&&helpMail.gstuserid!==""){
-      console.log("1",helpMail.gstuserid)
+      // console.log(helpMail.gstuserid)
+      //console.log(subject);
+      // console.log(message);
       sendEmail("1",helpMail.gstuserid,subject,message);
     }
     else{
@@ -155,8 +193,15 @@ switch(formdata.query_nature)
     }
     break;
   default:
-    console.log("1",helpMail.ituserid)
-    sendEmail("1",helpMail.ituserid,subject,message);
+    if(helpMail.itusername!==""&&helpMail.ituserid!==""){
+      // console.log(helpMail.ituserid)
+      // console.log(subject);
+      // console.log(message);
+      sendEmail("1",helpMail.ituserid,subject,message);
+    }
+    else{
+      swal.fire("Sorry!", "You are not registered under IT", "error");
+    }
 
 }
 
@@ -193,8 +238,9 @@ if (response.status === 200) {
     position: 'center',
     icon: 'success',
     title: 'Email sent.!',
+    text:"Your Financial Advisor will contact you soon",
     showConfirmButton: false,
-    timer: 1500
+    timer: 5000
   })
 } else {  
   swal.fire("Failed!", `${result}`, "error");

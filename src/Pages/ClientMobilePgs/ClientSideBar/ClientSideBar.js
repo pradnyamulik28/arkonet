@@ -2,11 +2,15 @@ import style from "./ClientSideBar.module.css";
 import profile from "../../../Images/profile.png";
 import { Link ,useNavigate} from "react-router-dom";
 import { useSidebar } from './SidebarContext';
-import { useState , useRef} from "react";
+import { useState , useRef,useEffect} from "react";
 import swal from "sweetalert2";
+import { url_ } from "../../../Config";
 
 function ClientSideBar(props) {
   const { isOpen, toggleSidebar } = useSidebar();
+  const storedToken = window.localStorage.getItem("jwtToken");
+  const clientPan=window.localStorage.getItem("pan");
+  //console.log(clientPan)
   const [profileImg,setProfileImg]=useState({
     src:null,
     imgUploadButton:"Upload",
@@ -16,6 +20,29 @@ maxSize:100
   // const [imgUploadButton,setImgUploadButton]=useState("Upload");
   const fileInputRef = useRef(null);
 
+async function getClientImage(){
+
+  const pan=localStorage.getItem("pan");
+  var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`${url_}/getclientimage/${pan}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {//console.log(result)
+    setProfileImg({...profileImg,src:`data:image/png;base64,${result.content}`})
+  })
+  .catch(error => console.log('error', error));
+}
+
+useEffect(() => {
+  getClientImage();
+}, []);
 
   
   //const clientName=localStorage.getItem("name");
@@ -43,13 +70,40 @@ maxSize:100
       //==========API To update database================
       if (profileImg.selectedFile) {
         // You can perform file upload logic here, e.g., using FormData or an API call
-        swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Photo uploaded sucessfully',
-          showConfirmButton: false,
-          timer: 1500
-        })
+
+
+        //==================================================
+        var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+var formdata = new FormData();
+formdata.append("pan", `${clientPan}`);
+formdata.append("image", profileImg.selectedFile, profileImg.selectedFile);
+
+var requestOptions = {
+  method: 'PUT',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch(`${url_}/client/uploadimage`, requestOptions)
+  .then(response => response.text())
+  .then(result => {console.log(result)
+    swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Photo uploaded sucessfully',
+      showConfirmButton: false,
+      timer: 2000
+    })
+  })
+  .catch(error => console.log('error', error));
+        //=========================================
+
+
+
+        
         console.log('Selected File:', profileImg.selectedFile);
       } else {
         alert('Please select a file before submitting.');
@@ -68,7 +122,7 @@ maxSize:100
       const fileSizeInBytes = file.size;
     const fileSizeInKb = fileSizeInBytes / 1024;
     const fileSizeInMb = fileSizeInKb / 1024;
-      console.log(fileSizeInBytes,":",fileSizeInKb+":",fileSizeInMb);
+      //console.log(fileSizeInBytes,":",fileSizeInKb+":",fileSizeInMb);
       if (fileSizeInKb <= profileImg.maxSize && (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png')) {
         const reader = new FileReader();
 
@@ -80,7 +134,22 @@ maxSize:100
       reader.readAsDataURL(file);
        }
        else{
-        swal.fire(`Please select a valid image file (JPEG or PNG) with a size less than ${profileImg.maxSize} KB.`);
+        swal.fire({
+          title: `Select (JPEG or PNG) with a size less than ${profileImg.maxSize} KB.`,
+          text: 'Click OK to open a image reducer website in a new tab',
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonText: 'OK',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Replace 'https://example.com' with the URL you want to open
+            window.open("https://www.reduceimages.com/", '_blank');
+            fileInputRef.current.value = '';
+          }
+          else{
+            fileInputRef.current.value = '';
+          }
+        });
        }
 
       

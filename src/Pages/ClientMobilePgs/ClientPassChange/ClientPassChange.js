@@ -4,7 +4,7 @@ import { url_ } from '../../../Config';
 import swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 function ClientPassChange(){
-    const Clientid=localStorage.getItem("client_id");
+    const Clientid=localStorage.getItem("pan");
     const navigate=useNavigate();
     const storedToken = window.localStorage.getItem("jwtToken");
 

@@ -13,7 +13,10 @@ function ClientHome() {
   const { toggleSidebar,no_of_notifications,handleNotification } = useSidebar();
   
   const storedToken = window.localStorage.getItem("jwtToken");
-  const client_id=localStorage.getItem("clientId");
+  // const client_id=localStorage.getItem("clientId");
+
+  const client_id_it=localStorage.getItem("client_id_it");//Client ID For IT 
+  const client_id_gst=localStorage.getItem("client_id_gst");////Client ID For GST
 
   const [lastFewYearsArray, setLastFewYearsArray] = useState([]);
   const [gstMonthsArray, setGstMonthsArray] = useState([]);
@@ -21,8 +24,8 @@ function ClientHome() {
   const Navigate=useNavigate();
 
   async function getITandGstData() {
-    await getITFilestatus();  
-    await getGstFilestatus();  
+    client_id_it &&   await getITFilestatus();   
+   client_id_gst && await getGstFilestatus();  
     handleNotification()
   }
 
@@ -53,7 +56,6 @@ function ClientHome() {
 
   async function getITFilestatus() {
     const currentYear = new Date().getFullYear();
-
     const lastFewYears = [];
     for (let i = 0; i < 3; i++) { 
       // Change no. accordingly to get the last five years
@@ -68,7 +70,7 @@ function ClientHome() {
       
       try {
         
-        await fetch(`${url_}/getclientfilednotfiled/${client_id}/${currentYear - i-1}-${(currentYear - i).toString().slice(-2)}`, requestOptions)
+        await fetch(`${url_}/getclientfilednotfiled/${client_id_it}/${currentYear - i-1}-${(currentYear - i).toString().slice(-2)}`, requestOptions)
           .then((response) => response.json())
           .then((data) => {
             const isfiled=data.filednotfiled==="yes"?true:false;            
@@ -110,15 +112,10 @@ function ClientHome() {
         <div className={`${style.headerbar}`}>
           {/* leftear Starts*/}
           <div className={`${style.leftear}`}>
-            <Link
-              onClick={handelLogout}
+           
               
-              style={{ fontSize: "1rem", margin: "0.5rem", color: "black" }}
-            >
-              <i className="fa-solid fa-angle-left"></i>
-              &nbsp;&nbsp;Home
-            </Link>
-            
+              &nbsp;&nbsp;<b>Home    </b>        
+              &nbsp;&nbsp;
             <NotificationBell onClick={handleNotification} no_of_notifications={no_of_notifications}/>
           </div>
           {/* leftear Ends*/}

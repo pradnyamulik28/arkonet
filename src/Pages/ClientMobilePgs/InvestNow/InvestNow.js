@@ -50,8 +50,16 @@ function InvestNow() {
 ]
   const navigate = useNavigate();
   const {no_of_notifications,handleNotification}= useSidebar();
-  const [investmentMail,setInvestmentMail]=useState({subject:"",msg:"",userid:"",username:""});
+
+  const user_id_it=localStorage.getItem("user_id_it");//Client ID For IT 
+
+  const [investmentMail,setInvestmentMail]=useState({
+    subject:"",
+    msg:"",
+    userid:localStorage.getItem("user_id_it"),
+    username:""});
   const storedToken = window.localStorage.getItem("jwtToken");
+  
   
  
 
@@ -72,7 +80,7 @@ function InvestNow() {
      const IT_User = await IT_res.json(); 
      if (IT_res.status === 200) {
       
-     setInvestmentMail({...investmentMail,userid:IT_User.userinfo.regId,username:IT_User.userinfo.name})
+     setInvestmentMail({...investmentMail,username:IT_User.userinfo.name})
     } else if(IT_res.status === 404){
       console.log("Not registered under IT");    
        
@@ -89,7 +97,13 @@ function InvestNow() {
 
   function handleCardClick(e)
   {
-    console.log(e.currentTarget.id)
+    if(!user_id_it){
+      swal.fire("Sorry!", `You are not registereg under Income Tax`, "error");
+    }
+    else{
+
+    
+    //console.log(e.currentTarget.id)
     const subject=`Client Interest in ${e.currentTarget.id}`;
 
 
@@ -110,6 +124,7 @@ function InvestNow() {
     //console.log(subject);
     //console.log(message,investmentMail.userid);
     sendEmail("1",investmentMail.userid,subject,message);
+    }
   }
 
   async function sendEmail(clientid,userid,subject,body)
@@ -136,8 +151,9 @@ if (response.status === 200) {
     position: 'center',
     icon: 'success',
     title: 'Email sent.!',
+    text:"Your Financial Advisor will contact you soon",
     showConfirmButton: false,
-    timer: 1500
+    timer: 5000
   })
 } else {  
   swal.fire("Failed!", `${result}`, "error");

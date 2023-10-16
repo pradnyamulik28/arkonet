@@ -40,7 +40,7 @@ var requestOptions = {
     
     setBankDetails({
     qrCode:`data:image/png;base64,${data.paymentDetails.qrCode}`,
-    upiNumber:data.paymentDetails.upiId,//data.PaymentDetails.upiNumber,
+    upiNumber:data.paymentDetails.upiNumber,
     upiId: data.paymentDetails.upiId,
     bank_name: data.paymentDetails.bank_name,
     accountName: data.paymentDetails.accountName,

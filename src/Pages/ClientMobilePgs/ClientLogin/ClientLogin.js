@@ -6,6 +6,11 @@ import { url_ } from "../../../Config";
 import swal from "sweetalert2";
 import "../../../Images/Twittericon.css"
 function ClientLogin() {
+
+
+  localStorage.clear();
+  sessionStorage.clear();
+
   const Navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
@@ -51,7 +56,7 @@ function ClientLogin() {
       await fetch(`${url_}/client/isPasswordNull`, requestOptions)
         .then((response) => {
           if (response.status === 404) {
-            swal.fire("Failed!", "Invalid login credential !!!", "error");
+            swal.fire("Failed!", "PAN Not Found !!!", "error");
             setCredentials({ UID: "" });
             // Handle 404 Not Found error here
             // For example: throw new Error('Resource not found');
@@ -116,7 +121,7 @@ function ClientLogin() {
             className={`${style.login}`}
             onClick={handleLogin}
           >
-            Next
+            NEXT
           </button>
           {/* <a href="previous link" id={`${style.forgot}`}>
             <u>Forgot Password?</u>

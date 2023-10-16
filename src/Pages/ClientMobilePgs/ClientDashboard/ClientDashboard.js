@@ -7,12 +7,17 @@ import { url_ } from "../../../Config";
 import NotificationBell from "../../../components/NotificationBell/NotificationBell"
 function ClientDashboard() {
   const { toggleSidebar,no_of_notifications,handleNotification } = useSidebar();
+
+  
   const [clientInfo,setClientInfo]=useState({
     storedToken:window.localStorage.getItem("jwtToken"),
-      clientid:localStorage.getItem("client_id"),
+      //clientid:localStorage.getItem("client_id"),
+      client_id_it:localStorage.getItem("client_id_it"),
+      client_id_gst:localStorage.getItem("client_id_gst"),
       name:localStorage.getItem("name").split(" ")[0],
       PAN:localStorage.getItem("pan"),
       profession:localStorage.getItem("profession"),
+      imgsrc:profile,
   });
   const [lastUpdateDate,setLastUpdateDate]=useState({
     ITLastUpdate:"November 22.2020",
@@ -42,7 +47,7 @@ function ClientDashboard() {
       id:"kyc",
       title:"KYC",
       lastUpdateDate:"",
-      linkTo:"",
+      linkTo:"kyc",
     },
     {
       name:"gst",
@@ -53,10 +58,29 @@ function ClientDashboard() {
     }
   ])
   //const [no_of_notifications,setNo_of_notifications]=useState(0);
-  useEffect(()=>{    
-    fetchLastUpdateIT();    
+  useEffect(()=>{   
+    getClientImage(); 
+   clientInfo.client_id_it && fetchLastUpdateIT();    
   },[]);
 
+  async function getClientImage(){
+
+    var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
+  
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`${url_}/getclientimage/${clientInfo.PAN}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {//console.log(result)
+      setClientInfo({...clientInfo,imgsrc:`data:image/png;base64,${result.content}`})
+    })
+    .catch(error => console.log('error', error));
+  }
 
 
 
@@ -85,7 +109,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch(`${url_}/maxLastUpdateDate1/${clientInfo.clientid}`, requestOptions)
+fetch(`${url_}/maxLastUpdateDate1/${clientInfo.client_id_it}`, requestOptions)
   .then(response => response.json())
   .then(result => {
     const retrivedDate=result.lastUpdateDate.split("-");
@@ -120,7 +144,7 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.clientid}`, requestOptions)
     {/* Profile Starts*/}
     <div className={`${style.profileport}`}>
     <div className={`${style.card}`}>
-    <img src={profile} alt="profile_picture" className={`${style.img1}`}/>
+    <img src={clientInfo.imgsrc} alt="profile_picture" className={`${style.img1}`}/>
     <div className={`${style.cardbody}`}>   
     <h5 className={`${style.h51}`}>{clientInfo.name}</h5>
         <p className={`${style.p1}`}>{clientInfo.PAN}</p>
@@ -152,7 +176,7 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.clientid}`, requestOptions)
     <div className={`row ${style.row2}`}>
     
     <div className='col-6'>
-    <Link to="clientincometax">
+    <Link to="clientincometax" className={!clientInfo.client_id_it && style.disabled_link}>
     <div className={`${style.uniclass} ${style.card1}`}>
     <div className={`${style.icons} `}>
     <div className={`${style.lefticons} `}>
@@ -176,7 +200,7 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.clientid}`, requestOptions)
     
     
     <div className='col-6'>
-    <Link to="gstfolder">
+    <Link to="gstfolder" className={!clientInfo.client_id_gst && style.disabled_link}>
     <div className={`${style.uniclass} ${style.card2}`}>
     <div className={`${style.icons} `}>
     <div className={`${style.lefticons} `}>
@@ -199,6 +223,7 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.clientid}`, requestOptions)
     </div>
     
     <div className='col-6'>
+      {/* <Link to="kyc"> */}
     <div className={`${style.uniclass} ${style.card3}`}>
     <div className={`${style.icons} `}>
     <div className={`${style.lefticons} `}>
@@ -217,6 +242,7 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.clientid}`, requestOptions)
     </div>
     </div>
     </div>
+    {/* </Link> */}
     </div>
     
     <div className='col-6'>
