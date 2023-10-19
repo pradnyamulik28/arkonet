@@ -23,7 +23,10 @@
     height: 7rem;
     margin: 0rem auto 1rem auto;
 }
-
+.ancher{
+ text-align: left;
+ color: black;
+}
 .bank_details {
     text-align: left;
     margin-top: 20px;

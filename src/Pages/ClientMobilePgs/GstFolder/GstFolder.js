@@ -13,7 +13,7 @@ function GstFolder() {
     const lastFiveYears = [];
 
     for (let i = 0; i < 5; i++) { // Change 6 to 5 to get the last five years
-      lastFiveYears.push(`${currentYear-i - 1}-${(currentYear-i).toString().slice(-2)}`);
+      lastFiveYears.push(`${currentYear-i }-${(currentYear-i+1).toString().slice(-2)}`);
     }
 
     return lastFiveYears;

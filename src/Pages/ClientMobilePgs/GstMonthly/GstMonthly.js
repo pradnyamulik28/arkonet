@@ -5,7 +5,7 @@ import { Link, useLocation,useNavigate } from "react-router-dom";
 function GstMonthly() {
   const client_id=localStorage.getItem("client_id");
 
-  const gstrFolders=["GSTR-1","GSTR-3B","GSTR-2","GSTR-9","GSTR-9A"]
+  const gstrFolders=["GSTR-1","GSTR3B","GSTR-2","GSTR-9","GSTR-9A"]
   const year=useLocation().state.year;
   const Navigate=useNavigate()
   return (

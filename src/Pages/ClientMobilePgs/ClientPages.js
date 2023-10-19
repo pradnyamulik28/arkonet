@@ -20,6 +20,7 @@ import ClientHelp from "./ClientHelp/ClientHelp";
 import ClientPassChange from "./ClientPassChange/ClientPassChange";
 import PaymentDetails from "./PaymentDetails/PaymentDetails";
 import KYC from "./KYC/KYC";
+import DOCs from "./DOCs/DOCs";
 
 
 
@@ -43,6 +44,7 @@ function ClientPages() {
       <Route path="clientdashboard/gstfolder/gstmonthly/gstfile" element={<GstFileView />} />
 
       <Route path="clientdashboard/kyc" element={<KYC />} />
+      <Route path="clientdashboard/docs" element={<DOCs />} />
       
       <Route path="caprofile" element={<CAProfile />} />
       <Route path="caprofile/payment" element={<PaymentDetails />} />

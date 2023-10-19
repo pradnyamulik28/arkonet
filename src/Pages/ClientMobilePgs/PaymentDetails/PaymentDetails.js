@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate,Link } from "react-router-dom";
 import style from "./PaymentDetails.module.css";
 import { url_ } from "../../../Config";
 import notavailable from "../../../Images/notavailable.jpg";
 
 function PaymentDetails() {
 
+  const Navigate=useNavigate();
   const user_id=useLocation().state.user_id;
   const [bankDetails, setBankDetails] = useState({
     qrCode:notavailable,
@@ -52,12 +53,13 @@ var requestOptions = {
   }
 
 
-
-  async function handlePayment(){
-
-  }
   return (
     <div className={`${style.container}`}>
+      <Link className={`${style.ancher}`}  
+  onClick={(e) => {    e.preventDefault();
+                          Navigate(-1);
+                        }}><h3>
+  <i class="fa-solid fa-angle-left"></i></h3></Link>
       <h2>Payment Details</h2>
       <h5>QR Code</h5>
       <img
@@ -88,7 +90,7 @@ var requestOptions = {
           <span>IFSC Number:</span> {bankDetails.ifsc}
         </p>
       </div>
-      <button type="button" className={`${style.button}`} onClick={handlePayment}>Proceed..</button>
+      
     </div>
   );
 }

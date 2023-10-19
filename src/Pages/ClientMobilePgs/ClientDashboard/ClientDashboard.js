@@ -20,10 +20,18 @@ function ClientDashboard() {
       imgsrc:profile,
   });
   const [lastUpdateDate,setLastUpdateDate]=useState({
-    ITLastUpdate:"November 22.2020",
-    GstLastUpdate:"December 22.2020",
-    KYCLastUpdate:"September 22.2020",
-    DocsLastUpdate:"November 22.2020"
+    ITLastUpdate:"January 01.2023",
+    GstLastUpdate:"January 01.2023",
+    KYCLastUpdate:"January 01.2023",
+    DocsLastUpdate:"January 01.2023"
+  });
+  const [lastUploadedPdf,setLastUploadedPdf]=useState({
+    file:null,
+    fileType:"",
+    fileName:"Intimation u/s 139(9)",
+    Date:"November 22.2020",
+    size:"0",    
+
   })
 
 
@@ -57,10 +65,13 @@ function ClientDashboard() {
       linkTo:"",
     }
   ])
+
+
   //const [no_of_notifications,setNo_of_notifications]=useState(0);
   useEffect(()=>{   
-    getClientImage(); 
-   clientInfo.client_id_it && fetchLastUpdateIT();    
+    // getAllData()
+    getClientImage();
+    fetchLastUpdateDates();
   },[]);
 
   async function getClientImage(){
@@ -82,7 +93,45 @@ function ClientDashboard() {
     .catch(error => console.log('error', error));
   }
 
+async function viewLastUploadedFile(){
+  let fetchurl=``;
+  if(clientInfo.client_id_it && clientInfo.client_id_gst)
+  {
+    fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_gst}`;
+  }
+  else if(clientInfo.client_id_it){
+    fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_it}`;
+  }
+  else if(clientInfo.client_id_gst){
+    fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
+  }
+  var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
 
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+await fetch(`${url_}/getlastUpdateallonefile/${fetchurl}/${clientInfo.PAN}`, requestOptions)
+.then((response)=>response.arrayBuffer())
+.then((result)=>{ 
+  const fileBlob = new Blob([result], {
+    type: `application/pdf`,
+  });
+      
+  const blobUrl = URL.createObjectURL(fileBlob);
+console.log(blobUrl)
+
+  // setPdfBlobUrl(blobUrl);
+  const pdfWindow = window.open(blobUrl, "_blank");
+  pdfWindow.addEventListener("beforeunload", () => {
+    URL.revokeObjectURL(blobUrl);
+  });                 
+    
+  }).catch((error)=>console.log(error));
+}
 
   function numberToMonth(number) {
     const months = [
@@ -97,9 +146,7 @@ function ClientDashboard() {
     }
   }
 
-
-  async function fetchLastUpdateIT(){
-
+  async function fetchLastUpdateDates(){
     var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
 
@@ -109,15 +156,100 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch(`${url_}/maxLastUpdateDate1/${clientInfo.client_id_it}`, requestOptions)
-  .then(response => response.json())
-  .then(result => {
-    const retrivedDate=result.lastUpdateDate.split("-");
-    setLastUpdateDate({...lastUpdateDate,ITLastUpdate:`${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`})
-  })
-  .catch(error => console.log('error', error));
+
+const lastUpdateCopy={...lastUpdateDate};
+
+
+if(clientInfo.client_id_it){
+await fetch(`${url_}/maxLastUpdateDatefileandfilednotfiled/${clientInfo.client_id_it}`, requestOptions)
+.then((response)=>response.json())
+.then((result)=>{
+  console.log("IT ",result);
+  const retrivedDate=result.lastUpdateDate.split("-");
+  lastUpdateCopy["ITLastUpdate"] = `${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`;  
+})
+.catch((error)=>{
+  console.log(error);
+})}
+
+if(clientInfo.client_id_gst){
+await fetch(`${url_}/maxLastUpdateDateGSTfileandGSTfilednotfiled/${clientInfo.client_id_gst}`, requestOptions)
+.then((response)=>response.json())
+.then((result)=>{
+  console.log("GST",result);
+  const retrivedDate=result.lastUpdateDate.split("-");
+  lastUpdateCopy["GstLastUpdate"] = `${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`;  
+})
+.catch((error)=>{
+  console.log(error);
+})
+}
+
+await fetch(`${url_}/maxLastUpdateDateforkycdoc/${clientInfo.PAN}`, requestOptions)
+.then((response)=>response.json())
+.then((result)=>{
+  console.log("KYC  ",result);
+  const retrivedDate=result.split("-");
+  lastUpdateCopy["KYCLastUpdate"] = `${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`;  
+})
+.catch((error)=>{
+  console.log(error);
+})
+
+
+await fetch(`${url_}/maxLastUpdateDateforDocument/${clientInfo.PAN}`, requestOptions)
+.then((response)=>response.json())
+.then((result)=>{
+  console.log("doc",result);
+  const retrivedDate=result.lastUpdateDate1.split("-");
+  lastUpdateCopy["DocsLastUpdate"] = `${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`;  
+})
+.catch((error)=>{
+  console.log(error);
+})
+
+
+console.log(lastUpdateCopy)
+
+setLastUpdateDate(lastUpdateCopy)
+getLastFileInf();
   }
 
+
+  async function getLastFileInf(){
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+let fetchurl=``;
+if(clientInfo.client_id_it && clientInfo.client_id_gst)
+{
+  fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_gst}`;
+}
+else if(clientInfo.client_id_it){
+  fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_it}`;
+}
+else if(clientInfo.client_id_gst){
+  fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
+}
+
+fetch(`${url_}/getlastUpdateallinformation/${fetchurl}/${clientInfo.PAN}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    setLastUploadedPdf({...lastUploadedPdf,
+      file:null,
+      fileType:result.data.filePath.split(".")[1],
+      fileName:result.data.fileName,
+      Date:result.data.lastUpdateDate,
+      size:"0",  
+    })})
+  .catch(error => console.log('error', error));
+  }
 
 
   return (
@@ -175,7 +307,7 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.client_id_it}`, requestOptions)
     {/* Cards Starts*/}
     <div className={`row ${style.row2}`}>
     
-    <div className='col-6'>
+    {clientInfo.client_id_it&&<div className='col-6'>
     <Link to="clientincometax" className={!clientInfo.client_id_it && style.disabled_link}>
     <div className={`${style.uniclass} ${style.card1}`}>
     <div className={`${style.icons} `}>
@@ -196,10 +328,10 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.client_id_it}`, requestOptions)
     </div>
     </div>
     </Link>
-    </div>
+    </div>}
     
     
-    <div className='col-6'>
+    {clientInfo.client_id_gst&&<div className='col-6'>
     <Link to="gstfolder" className={!clientInfo.client_id_gst && style.disabled_link}>
     <div className={`${style.uniclass} ${style.card2}`}>
     <div className={`${style.icons} `}>
@@ -220,10 +352,10 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.client_id_it}`, requestOptions)
     </div>
     </div>
     </Link>
-    </div>
+    </div>}
     
     <div className='col-6'>
-      {/* <Link to="kyc"> */}
+      <Link to="kyc">
     <div className={`${style.uniclass} ${style.card3}`}>
     <div className={`${style.icons} `}>
     <div className={`${style.lefticons} `}>
@@ -242,10 +374,11 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.client_id_it}`, requestOptions)
     </div>
     </div>
     </div>
-    {/* </Link> */}
+    </Link>
     </div>
     
     <div className='col-6'>
+      <Link to="docs" >
     <div className={`${style.uniclass} ${style.card4}`}>
     <div className={`${style.icons} `}>
     <div className={`${style.lefticons} `}>
@@ -264,6 +397,7 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.client_id_it}`, requestOptions)
     </div>
     </div>
     </div>
+    </Link>
     </div>
     
     </div>
@@ -287,19 +421,19 @@ fetch(`${url_}/maxLastUpdateDate1/${clientInfo.client_id_it}`, requestOptions)
     <div className={`${style.uploadation}`}>
     <div className={`${style.leftdear}`}>
     <div className={`${style.licon}`}>
-    <h1><i className="fa-solid fa-file-pdf" style={{color: "#ff0000"}}></i></h1>
+    <h1><i className="fa-solid fa-file-pdf" style={{color: "#ff0000"}} onClick={viewLastUploadedFile}></i></h1>
     </div>
     <div className={`${style.ricon}`}>
     <div className={`${style.uptext} `}>
-    <p style={{ color: "#", textShadow: "1px 4px 4px rgba(0, 0, 0, 0.24)", fontWeight: "bold", marginBottom: "0.4rem" }}>Intimation u/s 139(9)</p>
+    <p style={{ color: "#", textShadow: "1px 4px 4px rgba(0, 0, 0, 0.24)", fontWeight: "bold", marginBottom: "0.4rem" }}>{lastUploadedPdf.fileName}</p>
     </div>
     <div className={`${style.lowtext} `}>
-      <p style={{ color: "grey", fontSize: "0.9em" }}>November 22.2020</p>
+      <p style={{ color: "grey", fontSize: "0.9em" }}>{lastUploadedPdf.Date}</p>
     </div>
     </div>
     </div>
     <div className={`${style.rightdear}`}>
-    <p className={`${style.p4}`} style={{ color: "grey" }}>300Kb</p>
+    <p className={`${style.p4}`} style={{ color: "grey" }}>{lastUploadedPdf.size}</p>
     </div>
     </div>
     {/* Uploadation Ends ....................................................................................................... */}

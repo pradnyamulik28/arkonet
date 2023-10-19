@@ -11,7 +11,7 @@ const ClientFileView = () => {
   const storedToken = window.localStorage.getItem("jwtToken");
   const year = useLocation().state.year;
   const AY=useLocation().state.AY;
-  console.log(year)
+  
 
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileBlob, setFileBlob] = useState(null);
@@ -35,14 +35,14 @@ const ClientFileView = () => {
   //  Fetch file Code
 
   const getFile = async () => {
-    console.log(client_id)
+    // console.log(client_id,AY)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
     var raw = JSON.stringify({
       clientid: client_id,
-      accountyear: year,
+      accountyear: AY,
     });
 
     var requestOptions = {
@@ -51,12 +51,12 @@ const ClientFileView = () => {
       body: raw,
       redirect: "follow",
     };
-    console.log(`${url_}/client/files`)
+    
 
     fetch(`${url_}/client/files`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        
+        // console.log(data)
         const filterPdfFiles = data.filter((file) => {
           if(!file.filePath.includes(".xlsx"||"excel"||"Excel"||".xls")) return true
           else return false
@@ -64,7 +64,7 @@ const ClientFileView = () => {
         const extractedNames = filterPdfFiles.map((file) => {
           const fileid = file.id;
           const filePath = file.filePath;
-          const parts = file.fileName.split(`${user_id}_${client_id}_${year}_`);
+          const parts = file.fileName.split(`${user_id}_${client_id}_${AY}_`);
           const extractedName = !filePath.includes(".xlsx"||"excel"||"Excel"||".xls")  &&  parts[1].split(".pdf")[0];
           const isSelected=false;
           return { fileid, extractedName, filePath, isSelected };          

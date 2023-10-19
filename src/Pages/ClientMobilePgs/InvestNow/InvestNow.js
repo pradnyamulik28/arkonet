@@ -51,7 +51,8 @@ function InvestNow() {
   const navigate = useNavigate();
   const {no_of_notifications,handleNotification}= useSidebar();
 
-  const user_id_it=localStorage.getItem("user_id_it");//Client ID For IT 
+  const user_id_it=localStorage.getItem("user_id_it");//user ID For IT 
+  const client_id_it=localStorage.getItem("client_id_it");
 
   const [investmentMail,setInvestmentMail]=useState({
     subject:"",
@@ -102,7 +103,7 @@ function InvestNow() {
     }
     else{
 
-    
+    const category=`${e.currentTarget.id}`;
     //console.log(e.currentTarget.id)
     const subject=`Client Interest in ${e.currentTarget.id}`;
 
@@ -123,18 +124,17 @@ function InvestNow() {
   setInvestmentMail({...investmentMail,subject:subject,msg:message});
     //console.log(subject);
     //console.log(message,investmentMail.userid);
-    sendEmail("1",investmentMail.userid,subject,message);
+    sendEmail(client_id_it,user_id_it,subject,message,category);
     }
   }
 
-  async function sendEmail(clientid,userid,subject,body)
+  async function sendEmail(clientid,userid,subject,body,category)
   {
-    //console.log(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}&body=${body}`)
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "text/plain");
-myHeaders.append("Authorization", `Bearer ${storedToken}`);
+    
 
-// var raw = body;
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "text/plain");
+myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
 var requestOptions = {
   method: 'POST',
@@ -143,7 +143,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-try{const response=await fetch(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}`, requestOptions)
+try{const response=await fetch(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}&category=${category}`, requestOptions)
 const result = await response.text(); 
 if (response.status === 200) {
   

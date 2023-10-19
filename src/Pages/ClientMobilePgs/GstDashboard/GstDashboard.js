@@ -1,41 +1,128 @@
 import { useEffect, useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link,useNavigate,useLocation } from "react-router-dom";
 import style from "./GstDashboard.module.css";
 import NotificationBell from "../../../components/NotificationBell/NotificationBell";
 import { useSidebar } from "../ClientSideBar/SidebarContext";
+import { url_ } from "../../../Config";
 
 function GstDashboard() {
   
   const {no_of_notifications,handleNotification } = useSidebar();
   const Navigate=useNavigate();
-  function getLast5Months() {
-    const today = new Date();
-    const months = [];
+  const storedToken = window.localStorage.getItem("jwtToken");
+
+  const client_id_gst=localStorage.getItem("client_id_gst");////Client ID For GST
+  const user_id_gst=localStorage.getItem("user_id_gst");
+
+  const [gstMonthsArray, setGstMonthsArray] = useState([]);
+  const [lastUpdateDate,setLastUpdateDate]=useState();
   
-    for (let i = 0; i < 5; i++) {
+  async function getGstFilestatus() {
+
+    const year=new Date().getFullYear();
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+let GSTR1_months = [];
+
+await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year}/GSTR-1`, requestOptions)
+.then(response => response.text())
+.then(result => {//console.log(result)
+  GSTR1_months = JSON.parse(result);  
+}
+)
+.catch(error => console.log('error', error));
+
+let GSTR3B_months=[];
+await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year}/GSTR3B`, requestOptions)
+.then(response => response.text())
+.then(result => {//console.log(result)
+  GSTR3B_months = JSON.parse(result);  
+}
+)
+.catch(error => console.log('error', error));
+  
+
+
+
+///////////   Last  5  Months   /////////////////////
+
+
+    const today = new Date();
+  const MonthStatus=[];
+    for (let i = 0; i < 6; i++) { //====Last 3 months
       let month = today.getMonth() - i;
       let year = today.getFullYear();
   
       if (month < 0) {
         month += 12;
         year -= 1;
-      }
-  
+      }      
       const monthName = new Date(year, month, 1).toLocaleDateString('en-US', { month: 'long' });
+      //console.log(monthName);
       const fullMonthName = `${monthName} ${year}`;
-      const isGstr1=i>2?true:false;//=====update after API implementation
-      const isGstr3B=i>3?true:false;//=====update after API implementation
-      months.push({month:fullMonthName,isGstr1:isGstr1,isGstr3B:isGstr3B});
-    }
-  
-    return months;
+
+      
+    const index = GSTR1_months.findIndex((item) => item.month.includes(monthName)&&item.month.includes(year));
+    
+    if (index !== -1) {
+      const isGstr1=GSTR1_months[index].filednotfiled==="yes"?true:false;//=====update after API implementation
+      const isGstr3B=GSTR3B_months[index].filednotfiled==="yes"?true:false;//=====update after API implementation
+      MonthStatus.push({month:fullMonthName,isGstr1:isGstr1,isGstr3B:isGstr3B});
+    }}
+
+    setGstMonthsArray(MonthStatus)
+    fetchLastUpdateGST();
+    return MonthStatus;
   }
 
-  // useEffect(()=>{
+
+
+  async function fetchLastUpdateGST(){
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
     
-  // },[])
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    await fetch(`${url_}/maxLastUpdateDateGSTfileandGSTfilednotfiled/${client_id_gst}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {       
+        const retrivedDate=result.lastUpdateDate.split("-");
+        setLastUpdateDate(`${retrivedDate[2]} ${numberToMonth(retrivedDate[1])} ${retrivedDate[0]}`)
+      })
+      .catch(error => console.log('error', error));
+  }
+
+
+
+function numberToMonth(number) {
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  if (number >= 1 && number <= 12) {
+    return months[number - 1];
+  } else {
+    return "Invalid month number";
+  }
+}
+
+  useEffect(()=>{
+     getGstFilestatus();
+  },[])
   
-  const last5Months = getLast5Months();
+  // const last5Months = getLast5Months();
   
   return (
     <div className={`row ${style.row1}`}>
@@ -85,7 +172,7 @@ function GstDashboard() {
           
           </div>
           {/* Title Ends */}
-          {last5Months.map((item,index) => 
+          {gstMonthsArray.map((item,index) => 
           <div className={` ${style.row2}`} key={index}>
             {/* <div  className={`col-4 ${style.monthn}`} >               */}
                 <p className={`col-4 ${style.monthname}`} key={index}>{item.month}</p>              
@@ -99,7 +186,7 @@ function GstDashboard() {
           </div>
           )}
 
-          <p className={`${style.lupdate}`}>Last Updated on 10 May 2023</p>
+          <p className={`${style.lupdate}`}>Last Updated on {lastUpdateDate}</p>
         </div>
         {/* GST port  Ends......................................................................................................... */}
       </div>

@@ -56,7 +56,7 @@ function ClientLogin() {
       await fetch(`${url_}/client/isPasswordNull`, requestOptions)
         .then((response) => {
           if (response.status === 404) {
-            swal.fire("Failed!", "PAN Not Found !!!", "error");
+            swal.fire("Failed!", "User Not Found !!!", "error");
             setCredentials({ UID: "" });
             // Handle 404 Not Found error here
             // For example: throw new Error('Resource not found');

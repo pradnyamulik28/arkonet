@@ -8,7 +8,7 @@ import swal from "sweetalert2";
 
 function GstFileView() {
 
-  const year=`${parseInt((useLocation().state.year).split("-")[0])+1}-${parseInt((useLocation().state.year).split("-")[1])+1}`;
+  const year=useLocation().state.year;//`${parseInt((useLocation().state.year).split("-")[0])+1}-${parseInt((useLocation().state.year).split("-")[1])+1}`;
   
   // console.log("year",year)
   const gstCategory=useLocation().state.gstCategory;
@@ -16,6 +16,8 @@ function GstFileView() {
   const client_id = window.localStorage.getItem("client_id_gst");
   const user_id = window.localStorage.getItem("user_id_gst");
   const storedToken = window.localStorage.getItem("jwtToken");
+
+  console.log("year",year,"client Id :",client_id,"user :",user_id)
 
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileBlob, setFileBlob] = useState(null);
@@ -103,27 +105,27 @@ function GstFileView() {
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 //Sort By Month
 // Sample array of month names (replace with your own data)
-// var monthArray = [
-//   "January",
-//   "October",
-//   "March",
-//   "April",
-//   "February",
-//   "June",
-// ];
-// function monthSort(a,b){
-//   const monthOrder = {
-//       "January": 2, "February": 1, "March": 0, "April": 11,
-//       "May": 10, "June": 9, "July": 8, "August": 7,
-//       "September": 6, "October": 5, "November": 4, "December": 3
-//   };
+var monthArray = [
+  "January",
+  "October",
+  "March",
+  "April",
+  "February",
+  "June",
+];
+function monthSort(a,b){
+  const monthOrder = {
+      "January": 2, "February": 1, "March": 0, "April": 11,
+      "May": 10, "June": 9, "July": 8, "August": 7,
+      "September": 6, "October": 5, "November": 4, "December": 3
+  };
 
-//   return monthOrder[a] - monthOrder[b];
-// }
-// // Custom sorting function
-// monthArray.sort(monthSort);
+  return monthOrder[a] - monthOrder[b];
+}
+// Custom sorting function
+monthArray.sort(monthSort);
 
-// console.log(monthArray);
+
 
 
 
@@ -216,7 +218,7 @@ function GstFileView() {
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
     try {
-      const response = await fetch(`${url_}/openfile/${file_ID}`, {
+      const response = await fetch(`${url_}/openGstfile/${file_ID}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${storedToken}`,
@@ -268,7 +270,7 @@ function GstFileView() {
                           navigate(-1,{state:{year:year}});
                         }} style={{ fontSize: "2rem" , margin: "0.5rem", color: "black"}}> 
 <i class="fa-solid fa-angle-left" style={{ fontSize: "1.5rem" , color: "grey"}} ></i> &nbsp;GST</Link>
-<h6 style={{ color: "#596fa4", marginLeft: "2.5rem"}}>{gstCategory}</h6>
+<h6 style={{ color: "#596fa4", marginLeft: "2.5rem"}}>{gstCategory} (F.Y {year})</h6>
 
 </div>
 <div className={`${style.rightear}`}>

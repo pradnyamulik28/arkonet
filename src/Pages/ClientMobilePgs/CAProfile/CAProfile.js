@@ -76,7 +76,7 @@ function CAProfile() {
 if(!isBoth){
 
   if(client_id_it){
-    console.log("IT")
+    console.log("IT",client_id_it)
     try{
       const IT_res=await fetch(`${url_}/getuserBypan/${client_pan}/Income_Tax`, requestOptions);
      const IT_User = await IT_res.json(); 
@@ -89,13 +89,13 @@ if(!isBoth){
       updatedData[0].isExist=true;
     } else {
       setActiveTab(1);
-      //console.log(IT_User);    
-       
-      //swal.fire("Failed!", `${IT_User}`, "error");
     }
     }catch (error) {
       swal.fire("Failed!", `${error}`, "error");
     }
+  }else
+  {
+    setActiveTab(1);
   }
   
 
@@ -106,11 +106,12 @@ if(!isBoth){
   //Retrive GST User Data
 
   if(client_id_gst){
+    console.log("gst ",client_id_gst)
     try{
       const GST_res=await fetch(`${url_}/getuserBypan/${client_pan}/GST`, requestOptions);
      const GST_User = await GST_res.json(); 
      if (GST_res.status === 200) {
-      
+      console.log(GST_User)
       updatedData[1].content = GST_User.userinfo; 
       if(GST_User.content!==null){
       updatedData[1].profileimg = `data:image/png;base64,${GST_User.content}`;

@@ -186,7 +186,7 @@ switch(formdata.query_nature)
       // console.log(helpMail.gstuserid)
       //console.log(subject);
       // console.log(message);
-      sendEmail("1",helpMail.gstuserid,subject,message);
+      sendEmail("1",helpMail.gstuserid,subject,message,formdata.query_nature);
     }
     else{
       swal.fire("Sorry!", "You are not registered under GST", "error");
@@ -197,7 +197,7 @@ switch(formdata.query_nature)
       // console.log(helpMail.ituserid)
       // console.log(subject);
       // console.log(message);
-      sendEmail("1",helpMail.ituserid,subject,message);
+      sendEmail("1",helpMail.ituserid,subject,message,formdata.query_nature);
     }
     else{
       swal.fire("Sorry!", "You are not registered under IT", "error");
@@ -214,7 +214,7 @@ switch(formdata.query_nature)
   }
 
 
-  async function sendEmail(clientid,userid,subject,body)
+  async function sendEmail(clientid,userid,subject,body,category)
   {
     //console.log(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}&body=${body}`)
     var myHeaders = new Headers();
@@ -230,7 +230,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-try{const response=await fetch(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}`, requestOptions)
+try{const response=await fetch(`${url_}/sendemailclient/help?clientid=${clientid}&userid=${userid}&subject=${subject}&category=${category}`, requestOptions)
 const result = await response.text(); 
 if (response.status === 200) {
   

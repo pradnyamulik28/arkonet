@@ -88,17 +88,20 @@ var requestOptions = {
 };
 
 fetch(`${url_}/client/uploadimage`, requestOptions)
-  .then(response => response.text())
-  .then(result => {console.log(result)
+.then(response => {
+  if(response.status===200)
+  {
     swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Photo uploaded sucessfully',
+      title: `Photo updated sucessfully`,
       showConfirmButton: false,
       timer: 2000
     })
-  })
-  .catch(error => console.log('error', error));
+  }
+ return response.text()})
+.then(result => console.log(result))
+.catch(error => console.log('error', error));
         //=========================================
 
 

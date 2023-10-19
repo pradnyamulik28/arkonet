@@ -183,7 +183,7 @@ await fetch(`${url_}/pan?pan=${clientpan}`, requestOptions)
             localStorage.setItem("client_id_it", item.clientId);
             localStorage.setItem("client_id_gst", item.clientId);
 
-            localStorage.setItem("user_id_it", item.clientId);
+            localStorage.setItem("user_id_it", item.userid);
             localStorage.setItem("user_id_gst", item.userid);
             break;
           default:

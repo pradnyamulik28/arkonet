@@ -17,6 +17,7 @@ function ClientHome() {
 
   const client_id_it=localStorage.getItem("client_id_it");//Client ID For IT 
   const client_id_gst=localStorage.getItem("client_id_gst");////Client ID For GST
+  const user_id_gst=localStorage.getItem("user_id_gst");
 
   const [lastFewYearsArray, setLastFewYearsArray] = useState([]);
   const [gstMonthsArray, setGstMonthsArray] = useState([]);
@@ -26,15 +27,53 @@ function ClientHome() {
   async function getITandGstData() {
     client_id_it &&   await getITFilestatus();   
    client_id_gst && await getGstFilestatus();  
-    handleNotification()
+    handleNotification();
   }
 
 
 
   async function getGstFilestatus() {
-    const today = new Date();
-    const months = [];
+
+    const year=new Date().getFullYear();
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+let GSTR1_months = [];
+
+await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year}/GSTR-1`, requestOptions)
+.then(response => response.text())
+.then(result => {//console.log(result)
+  GSTR1_months = JSON.parse(result);
+  console.log(GSTR1_months)  
+}
+).catch(error => console.log('error', error));
+
+
+
+
+let GSTR3B_months=[];
+await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year}/GSTR3B`, requestOptions)
+.then(response => response.text())
+.then(result => {//console.log(result)
+  GSTR3B_months = JSON.parse(result);  
+  console.log(GSTR1_months)
+}
+).catch(error => console.log('error', error));
   
+
+
+
+///////////   Last  3  Months   /////////////////////
+
+
+    const today = new Date();
+  const MonthStatus=[];
     for (let i = 0; i < 3; i++) { //====Last 3 months
       let month = today.getMonth() - i;
       let year = today.getFullYear();
@@ -42,22 +81,29 @@ function ClientHome() {
       if (month < 0) {
         month += 12;
         year -= 1;
-      }
-  
+      }      
       const monthName = new Date(year, month, 1).toLocaleDateString('en-US', { month: 'long' });
+      // console.log(monthName);
       const fullMonthName = `${monthName} ${year}`;
-      const isGstr1=i>2?true:false;//=====update after API implementation
-      const isGstr3B=i>3?true:false;//=====update after API implementation
-      months.push({month:fullMonthName,isGstr1:isGstr1,isGstr3B:isGstr3B});
-    }
-    setGstMonthsArray(months)
-    //return months;
+
+      
+    const index = GSTR1_months.findIndex((item) => item.month.includes(monthName)&&item.month.includes(year));
+    
+    if (index !== -1) {
+      const isGstr1=GSTR1_months[index].filednotfiled==="yes" && GSTR3B_months[index].filednotfiled==="yes"
+      ?true:false;//=====update after API implementation
+      const isGstr3B=GSTR3B_months[index].filednotfiled==="no"?true:false;//=====update after API implementation
+      MonthStatus.push({month:fullMonthName,isGstr1:isGstr1,isGstr3B:isGstr3B});
+    }}
+    setGstMonthsArray(MonthStatus)
+    return MonthStatus;
   }
 
   async function getITFilestatus() {
     const currentYear = new Date().getFullYear();
     const lastFewYears = [];
     for (let i = 0; i < 3; i++) { 
+      
       // Change no. accordingly to get the last five years
       var myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -70,7 +116,7 @@ function ClientHome() {
       
       try {
         
-        await fetch(`${url_}/getclientfilednotfiled/${client_id_it}/${currentYear - i-1}-${(currentYear - i).toString().slice(-2)}`, requestOptions)
+        await fetch(`${url_}/getclientfilednotfiled/${client_id_it}/${currentYear - i}-${(currentYear - i+1).toString().slice(-2)}`, requestOptions)
           .then((response) => response.json())
           .then((data) => {
             const isfiled=data.filednotfiled==="yes"?true:false;            
@@ -85,6 +131,9 @@ function ClientHome() {
     setLastFewYearsArray(lastFewYears);
   }
 
+
+  // console.log(gstMonthsArray)
+
   const navigate =useNavigate();
   function handelLogout(e) {
     e.preventDefault();
@@ -95,10 +144,29 @@ function ClientHome() {
   }
 
   
-
+function deletFilePop(){// Get the current date
+  const currentDate = new Date();
+  
+  // Set the target date to March 16th
+  const targetDate = new Date(currentDate.getFullYear(), 2, 16);
+  
+  // Calculate the time difference in milliseconds
+  const timeDifference = targetDate - currentDate;
+  
+  // Check if it's 15 days or more before March 31st
+  if (timeDifference >= 0) {
+      console.log("It is 15 days or more before March 31st.");
+  } else {
+      console.log("It is less than 15 days before March 31st.");
+  }
+  }
   useEffect(() => {
     getITandGstData();
   }, [toggleSidebar]);
+
+  useEffect(()=>{
+    // deletFilePop();
+  },[])
 
   return (
     <div className={`${style.row}`}>
@@ -139,8 +207,9 @@ function ClientHome() {
 
         {/* Data Starts */}
         <div className={`${style.data}`}>
+
           {/* Income tax starts */}
-          <div className={`${style.taxdata}`}>
+          {client_id_it &&<div className={`${style.taxdata}`}>
             <div className={`${style.taxhead}`}>
               <p>&bull;</p>
               <h5 className={`${style.h51}`}> Income Tax</h5>
@@ -148,7 +217,8 @@ function ClientHome() {
             {lastFewYearsArray.map((item, index) => (
               <div className={`${style.taxlist}`} key={index}>                
                 <p className={`col-7 ${style.title}`}>
-                  AY {item.year - 1}-{item.year.toString().slice(-2)}{" "}
+                  
+                  AY {item.year}-{(item.year+1).toString().slice(-2)}{" "}
                 </p>              
                 <p
                   className={
@@ -161,10 +231,14 @@ function ClientHome() {
                 </p>              
               </div>
             ))}
-          </div>
+          </div>}
           {/* Income tax ends */}
+
+
+
+
           {/* GST starts */}
-          <div className={`${style.gstdata}`}>
+          {client_id_gst &&<div className={`${style.gstdata}`}>
             <div className={`${style.gsthead}`}>
               <p>&bull;</p>
               <h5 className={`${style.h51}`}  onClick={(e)=>{e.preventDefault();
@@ -189,8 +263,7 @@ function ClientHome() {
                 </p>
               </div>
             ))}
-
-          </div>
+          </div>}
           {/* GST ends */}
         </div>
         {/* Data Ends */}
