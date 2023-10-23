@@ -70,7 +70,7 @@ if(month<3){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client
 
 
 let GSTR3B_months=[];
-await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year}/GSTR3B`, requestOptions)
+await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year}/GSTR-3B`, requestOptions)
 .then(response => response.text())
 .then(result => {//console.log(result)
   GSTR3B_months = JSON.parse(result);  
@@ -80,7 +80,7 @@ await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${y
 
 
 
-if(month<3){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year-1}/GSTR3B`, requestOptions)
+if(month<3){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year-1}/GSTR-3B`, requestOptions)
 .then(response => response.text())
 .then(result => {//console.log(result)
   GSTR3B_months = [...GSTR3B_months,...JSON.parse(result)];  

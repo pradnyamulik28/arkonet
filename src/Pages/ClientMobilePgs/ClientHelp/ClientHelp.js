@@ -224,6 +224,15 @@ switch(formdata.query_nature)
 
   async function sendEmail(clientid,userid,subject,body,category)
   {
+
+    swal.fire({
+      title: 'Sending Email',
+      text: 'Please wait...',
+      showConfirmButton: false,
+      onBeforeOpen: () => {
+        swal.showLoading();
+      },
+    });
     //console.log(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}&body=${body}`)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "text/plain");
@@ -241,7 +250,7 @@ var requestOptions = {
 try{const response=await fetch(`${url_}/sendemailclient/help?clientid=${clientid}&userid=${userid}&subject=${subject}&category=${category}`, requestOptions)
 const result = await response.text(); 
 if (response.status === 200) {
-  
+  swal.close();
   swal.fire({
     position: 'center',
     icon: 'success',
@@ -251,8 +260,10 @@ if (response.status === 200) {
     timer: 5000
   })
 } else {  
+  swal.close();
   swal.fire("Failed!", `${result}`, "error");
 }}catch(error){
+  swal.close();
   swal.fire("Failed!", `${error}`, "error");
 }
 
