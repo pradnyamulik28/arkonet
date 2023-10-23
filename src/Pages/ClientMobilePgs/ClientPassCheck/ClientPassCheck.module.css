@@ -203,6 +203,12 @@ img {
     flex-wrap: nowrap;
 }
 
+.disabled_fields {
+    pointer-events: none;
+     /* Change the color to indicate it's disabled */
+    /* Add any other styling to indicate it's disabled */
+  }
+
 #forgot {
     color: #ffd401;
     position: relative;

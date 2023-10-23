@@ -35,6 +35,7 @@ function ClientHome() {
   async function getGstFilestatus() {
 
     const year=new Date().getFullYear();
+    const month=new Date().getMonth();
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -55,6 +56,16 @@ await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${y
 ).catch(error => console.log('error', error));
 
 
+if(month<3){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year-1}/GSTR-1`, requestOptions)
+.then(response => response.text())
+.then(result => {//console.log(result)
+  GSTR1_months = [...GSTR1_months,...JSON.parse(result)];  
+  console.log(GSTR1_months)
+}
+)
+.catch(error => console.log('error', error));}
+
+
 
 
 let GSTR3B_months=[];
@@ -65,6 +76,17 @@ await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${y
   console.log(GSTR1_months)
 }
 ).catch(error => console.log('error', error));
+
+
+
+if(month<3){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year-1}/GSTR3B`, requestOptions)
+.then(response => response.text())
+.then(result => {//console.log(result)
+  GSTR3B_months = [...GSTR3B_months,...JSON.parse(result)];  
+}
+)
+.catch(error => console.log('error', error));}
+
   
 
 

@@ -12,7 +12,7 @@ export function SidebarProvider({ children }) {
   function handleNotification(){
     //console.log("clicked");
     //diplay unread notification list,if read notification : update unread notification
-    setNo_of_notifications(5);
+    setNo_of_notifications(0);
   }
   const toggleSidebar = () => {
     setIsOpen(!isOpen);

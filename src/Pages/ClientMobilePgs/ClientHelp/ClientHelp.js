@@ -55,15 +55,15 @@ let isBoth=false;
     if(!isBoth){
       // console.log("not both")
        //===========Retrive IT User Data==============
-
+      let  itusername,gstusername='';
     if(helpMail.ituserid)
     {
       try{
         const IT_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/Income_Tax`, requestOptions);
        const IT_User = await IT_res.json(); 
        if (IT_res.status === 200) {
-        
-       setHelpMail({...helpMail,itusername:IT_User.userinfo.name})
+        itusername=IT_User.userinfo.name
+       //setHelpMail({...helpMail,itusername:IT_User.userinfo.name})
       } else if(IT_res.status === 404){
         console.log("Not registered under IT");    
          
@@ -73,6 +73,8 @@ let isBoth=false;
         swal.fire("Failed!", `${error}`, "error");
       }
     }
+
+    
    
 
 
@@ -81,8 +83,9 @@ if(helpMail.gstuserid)
   try{
     const GST_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/GST`, requestOptions);
    const GST_User = await GST_res.json(); 
-   if (GST_res.status === 200) {      
-   setHelpMail({...helpMail,gstusername:GST_User.userinfo.name})
+   if (GST_res.status === 200) {   
+    gstusername=   GST_User.userinfo.name;
+   //setHelpMail({...helpMail,gstusername:GST_User.userinfo.name})
   } else if(GST_res.status === 404){
     console.log("Not registered under GST");    
      
@@ -92,6 +95,9 @@ if(helpMail.gstuserid)
     swal.fire("Failed!", `${error}`, "error");
   }
 }
+
+
+setHelpMail({...helpMail,itusername:itusername,gstusername:gstusername})
      //===========Retrive GST User Data==============
     }
    
@@ -103,7 +109,7 @@ if(helpMail.gstuserid)
     getCAInfo();
   }, []);
 
-
+  // console.log(helpMail.itusername)
 
   function getLastFiveYears() {
     const currentYear = new Date().getFullYear();
@@ -178,9 +184,10 @@ Best regards,
 ${localStorage.getItem("name")},
 Contact no : ${localStorage.getItem("mobile")}`);
 
-
+console.log(helpMail.ituserid,helpMail.itusername,helpMail.gstuserid,helpMail.gstusername)
 switch(formdata.query_nature)
 {
+  
   case "GST":
     if(helpMail.gstusername!==""&&helpMail.gstuserid!==""){
       // console.log(helpMail.gstuserid)
@@ -193,6 +200,7 @@ switch(formdata.query_nature)
     }
     break;
   default:
+    // console.log(helpMail.itusername)
     if(helpMail.itusername!==""&&helpMail.ituserid!==""){
       // console.log(helpMail.ituserid)
       // console.log(subject);

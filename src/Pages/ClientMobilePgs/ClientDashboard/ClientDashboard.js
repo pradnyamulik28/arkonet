@@ -105,6 +105,52 @@ async function viewLastUploadedFile(){
   else if(clientInfo.client_id_gst){
     fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
   }
+  console.log(fetchurl)
+  var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+console.log(fetchurl)
+
+await fetch(`${url_}/getlastUpdateallonefile/${fetchurl}/${clientInfo.PAN}`, requestOptions)
+.then((response)=>response.arrayBuffer())
+.then((result)=>{ 
+  const fileBlob = new Blob([result], {
+    type: `application/pdf`,
+  });
+      
+  const blobUrl = URL.createObjectURL(fileBlob);
+console.log(blobUrl)
+
+  // setPdfBlobUrl(blobUrl);
+  const pdfWindow = window.open(blobUrl, "_blank");
+  pdfWindow.addEventListener("beforeunload", () => {
+    URL.revokeObjectURL(blobUrl);
+  });                 
+    
+  }).catch((error)=>console.log(error));
+}
+
+
+
+
+async function viewLastUploadedImage(){
+  let fetchurl=``;
+  if(clientInfo.client_id_it && clientInfo.client_id_gst)
+  {
+    fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_gst}`;
+  }
+  else if(clientInfo.client_id_it){
+    fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_it}`;
+  }
+  else if(clientInfo.client_id_gst){
+    fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
+  }
   var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
 
@@ -118,7 +164,7 @@ await fetch(`${url_}/getlastUpdateallonefile/${fetchurl}/${clientInfo.PAN}`, req
 .then((response)=>response.arrayBuffer())
 .then((result)=>{ 
   const fileBlob = new Blob([result], {
-    type: `application/pdf`,
+    type: `image/jpeg`,
   });
       
   const blobUrl = URL.createObjectURL(fileBlob);
@@ -237,15 +283,16 @@ else if(clientInfo.client_id_it){
 else if(clientInfo.client_id_gst){
   fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
 }
+console.log(fetchurl)
 
 fetch(`${url_}/getlastUpdateallinformation/${fetchurl}/${clientInfo.PAN}`, requestOptions)
   .then(response => response.json())
-  .then(result => {
+  .then(result => {console.log(result)
     setLastUploadedPdf({...lastUploadedPdf,
       file:null,
-      fileType:result.data.filePath.split(".")[1],
-      fileName:result.data.fileName,
-      Date:result.data.lastUpdateDate,
+      fileType:result.imagePath.split(".")[1],
+      fileName:result.imageName,
+      Date:result.lastUpdateDate1,
       size:"0",  
     })})
   .catch(error => console.log('error', error));
@@ -421,7 +468,10 @@ fetch(`${url_}/getlastUpdateallinformation/${fetchurl}/${clientInfo.PAN}`, reque
     <div className={`${style.uploadation}`}>
     <div className={`${style.leftdear}`}>
     <div className={`${style.licon}`}>
-    <h1><i className="fa-solid fa-file-pdf" style={{color: "#ff0000"}} onClick={viewLastUploadedFile}></i></h1>
+    <h1>{lastUploadedPdf.fileType==="pdf"?<i className="fa-solid fa-file-pdf" style={{color: "#ff0000"}} onClick={viewLastUploadedFile}></i>
+    :<i class="fa-solid fa-image" style={{color:'#ff1100'}} onClick={viewLastUploadedImage}></i>}
+    
+    </h1>
     </div>
     <div className={`${style.ricon}`}>
     <div className={`${style.uptext} `}>

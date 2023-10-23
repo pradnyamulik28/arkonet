@@ -46,6 +46,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1rem;
+}
+.logo{
+  margin: 0;
+  padding: 0;
+  
 }
 
 .pusdouploadport {
@@ -71,12 +77,17 @@
   align-items: center;
   width: 85vw;
   height: 80%;
-  box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5vw;
-  margin-bottom: 1vh;
+  margin-bottom: 1rem;
 }
 
 .uploadport * {
+  /* margin-top: 1vh; */
+  margin-bottom: 1vh;
+}
+
+.img{
   margin-top: 2vh;
 }
 

@@ -330,7 +330,7 @@ if (/^[0-9\b\177]+$/.test(newValue)) {
 
 
       {/* Main Content */}
-      <div className={`${style.inputs}`}>
+      <div className={oTPVerification?`${style.inputs} ${style.disabled_fields}`:`${style.inputs}`}>
         <form className={oTPVerification?`${style.form} ${style.form_opt}` : `${style.form}`}>         
           <label htmlFor="password" className={`${style.labels}`}>
            {isPasswordNull ? "Set your Password" : "Enter Your Password"}
@@ -364,7 +364,7 @@ if (/^[0-9\b\177]+$/.test(newValue)) {
 
       {/* Button */}
       <div className={oTPVerification ? `${style.button} ${style.button_opt}` : `${style.button}`}>
-        <button type="button" className={`${style.login}`} onClick={handleButtonClick}>
+        <button type="button" className={oTPVerification?`${style.login} ${style.disabled_fields}`:`${style.login}`} onClick={handleButtonClick}>
         {isPasswordNull ? "Send OTP" : "Login"}
         </button>
         {/* <a href="previous link" id={`${style.forgot}`} onClick={handleForgotPass}>

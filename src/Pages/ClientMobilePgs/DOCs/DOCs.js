@@ -261,14 +261,22 @@ if(file){
       if (fileSizeInMb > maxSize){
         swal.fire({
           title: `Select file with a size less than ${maxSize} MB.`,
-          text: 'Click OK to open a image reducer website in a new tab',
+          text: 'Click OK to open a file reducer website in a new tab',
           icon: 'info',
           showCancelButton: true,
           confirmButtonText: 'OK',
         }).then((result) => {
           if (result.isConfirmed) {
-            // Replace 'https://example.com' with the URL you want to open
-            window.open("https://www.ilovepdf.com/compress_pdf", '_blank');
+            if(file.type === "image/jpeg" ||
+            file.type === "image/jpg" ||
+            file.type === "image/png" )
+            {
+              window.open("https://www.reduceimages.com/", '_blank');
+            }
+           
+            else{
+              window.open("https://www.ilovepdf.com/compress_pdf", '_blank');
+            }
             DOCFile[index].fileRef.current.value = '';
           }
           else{
@@ -368,7 +376,7 @@ onChange={(e)=>handleFileChange(e,item.id)}  ref={item.fileRef}  style={{"displa
 <label htmlFor="fileinput">
 <div className={`${style.pusdouploadport}`} >
 <div className={`${style.logo}`} >
-<h1 className={`${style.h1}`} ><i class="fa-solid fa-download"></i></h1>
+<h1 className={`${style.h1}`} ><i class="fa-solid fa-upload"></i></h1>
 </div>
 <div className={`${style.text}`} ><p>Select a file or Drag here</p></div>
 <div className={`${style.btn}`} ><div className={`${style.psudobutton}`} > {item.isExist?"Update File":"Select a file"}</div></div>

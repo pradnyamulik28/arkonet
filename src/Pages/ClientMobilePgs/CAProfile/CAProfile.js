@@ -222,7 +222,7 @@ if(!isBoth){
             className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.profileport}`}
           >
             <div className={`${style.card}`}>
-              <img src={tabs[activeTab].profileimg?tabs[activeTab].profileimg : profile } alt="profile_picture" />
+              <img className={`${style.img}`} src={tabs[activeTab].profileimg?tabs[activeTab].profileimg : profile } alt="profile_picture" />
               <div className={`${style.cardbody}`}>
                 <h5 className="card-title">{tabs[activeTab].content.name}</h5>
                 <p className="card-text">{tabs[activeTab].content.profession}</p>

@@ -20,7 +20,8 @@ function GstDashboard() {
   async function getGstFilestatus() {
 
     const year=new Date().getFullYear();
-
+    const month=new Date().getMonth();
+    console.log(month)
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
@@ -39,6 +40,16 @@ await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${y
 )
 .catch(error => console.log('error', error));
 
+
+if(month<5){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year-1}/GSTR-1`, requestOptions)
+.then(response => response.text())
+.then(result => {//console.log(result)
+  GSTR1_months = [...GSTR1_months,...JSON.parse(result)];  
+  console.log(GSTR1_months)
+}
+)
+.catch(error => console.log('error', error));}
+
 let GSTR3B_months=[];
 await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year}/GSTR3B`, requestOptions)
 .then(response => response.text())
@@ -47,6 +58,15 @@ await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${y
 }
 )
 .catch(error => console.log('error', error));
+  
+
+if(month<5){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${year-1}/GSTR3B`, requestOptions)
+.then(response => response.text())
+.then(result => {//console.log(result)
+  GSTR3B_months = [...GSTR3B_months,...JSON.parse(result)];  
+}
+)
+.catch(error => console.log('error', error));}
   
 
 
@@ -94,7 +114,7 @@ await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client_id_gst}/${y
       redirect: 'follow'
     };
     
-    await fetch(`${url_}/maxLastUpdateDateGSTfileandGSTfilednotfiled/${client_id_gst}`, requestOptions)
+    await fetch(`${url_}/maxLastUpdateDateGSTfilednotfiled/${client_id_gst}`, requestOptions)
       .then(response => response.json())
       .then(result => {       
         const retrivedDate=result.lastUpdateDate.split("-");

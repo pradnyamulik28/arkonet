@@ -321,10 +321,10 @@ monthArray.sort(monthSort);
 
 
 {/* Cards Starts*/}
-<div className={`row ${style.row2}`}>
-{fileBlob&&<div className={`col-12 ${style.doc1}`}>{fileBlob.extractedNames.map((item) => {
+<div className={`${style.row2}`}>
+{fileBlob&&<div className={`${style.doc1}`}>{fileBlob.extractedNames.map((item) => {
   return(
-<div className={style.pdffile}>
+<div className={`col-4 ${style.pdffile}`}>
                            
 
                            {codeVisible && (

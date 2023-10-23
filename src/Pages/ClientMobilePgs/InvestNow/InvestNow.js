@@ -74,22 +74,42 @@ function InvestNow() {
       redirect: "follow",
     };
 
-    //===========Retrive IT User Data==============
 
+    let isBoth=false;
     try{
-      const IT_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/Income_Tax`, requestOptions);
+      const IT_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/Both`, requestOptions);
      const IT_User = await IT_res.json(); 
      if (IT_res.status === 200) {
-      
-     setInvestmentMail({...investmentMail,username:IT_User.userinfo.name})
+      isBoth=true;      
+      setInvestmentMail({...investmentMail,username:IT_User.userinfo.name})
     } else if(IT_res.status === 404){
-      console.log("Not registered under IT");    
+      console.log("Not registered under Both");    
        
       //swal.fire("Failed!", `${IT_User}`, "error");
     }
     }catch (error) {
       swal.fire("Failed!", `${error}`, "error");
     }
+
+    //===========Retrive IT User Data==============
+
+    if(!isBoth){
+      try{
+        const IT_res=await fetch(`${url_}/getuserBypan/${window.localStorage.getItem("pan")}/Income_Tax`, requestOptions);
+       const IT_User = await IT_res.json(); 
+       if (IT_res.status === 200) {
+        console.log(IT_User.userinfo.name)
+       setInvestmentMail({...investmentMail,username:IT_User.userinfo.name})
+      } else if(IT_res.status === 404){
+        console.log("Not registered under IT");    
+         
+        //swal.fire("Failed!", `${IT_User}`, "error");
+      }
+      }catch (error) {
+        swal.fire("Failed!", `${error}`, "error");
+      }
+    }
+    
   }
 
   useEffect(() => {
@@ -121,7 +141,7 @@ function InvestNow() {
   ${localStorage.getItem("name")},
   Contact no : ${localStorage.getItem("mobile")}`;
 
-  setInvestmentMail({...investmentMail,subject:subject,msg:message});
+  //setInvestmentMail({...investmentMail,subject:subject,msg:message});
     //console.log(subject);
     //console.log(message,investmentMail.userid);
     sendEmail(client_id_it,user_id_it,subject,message,category);

@@ -11,6 +11,8 @@ function KYC() {
   const storedToken = window.localStorage.getItem("jwtToken");
   const client_pan=localStorage.getItem("pan");
 
+  const maxSize=10;
+
   const fileInputRef = useRef(null);
   const [KYCFiles, setKYCFiles] = useState([{
     name:"Aadhar Card",
@@ -273,7 +275,37 @@ let fetchUrl="";
     //console.log(file)
     
 if(file){
-  const renamedFile = new File([file], `${e.target.id}.${file.type.split("/")[1]}`, {
+  const fileSizeInBytes = file.size;
+    const fileSizeInKb = fileSizeInBytes / 1024;
+    const fileSizeInMb = fileSizeInKb / 1024;
+      //console.log(fileSizeInBytes,":",fileSizeInKb+":",fileSizeInMb);
+      if (fileSizeInMb > maxSize){
+        swal.fire({
+          title: `Select file with a size less than ${maxSize} MB.`,
+          text: 'Click OK to open a file reducer website in a new tab',
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonText: 'OK',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            if(file.type === "image/jpeg" ||
+            file.type === "image/jpg" ||
+            file.type === "image/png" )
+            {
+              window.open("https://www.reduceimages.com/", '_blank');
+            }
+           
+            else{
+              window.open("https://www.ilovepdf.com/compress_pdf", '_blank');
+            }
+            KYCFiles[index].fileRef.current.value = '';
+          }
+          else{
+            KYCFiles[index].fileRef.current.value = '';
+          }
+        });
+      }else
+  {const renamedFile = new File([file], `${e.target.id}.${file.type.split("/")[1]}`, {
     type: file.type,
   });
     if (
@@ -322,7 +354,7 @@ if(file){
             KYCFiles[index].fileRef.current.value = "";
           }
         });
-    }
+    }}
   }
     
   };
@@ -436,7 +468,7 @@ onChange={(e)=>handleFileChange(e,item.id)}  ref={item.fileRef}  style={{"displa
 <label htmlFor="fileinput">
 <div className={`${style.pusdouploadport}`} >
 <div className={`${style.logo}`} >
-<h1 className={`${style.h1}`} ><i class="fa-solid fa-download"></i></h1>
+<h1 className={`${style.h1}`} ><i class="fa-solid fa-upload"></i></h1>
 </div>
 <div className={`${style.text}`} ><p>Select a file or Drag here</p></div>
 <div className={`${style.btn}`} ><div className={`${style.psudobutton}`} > {item.isExist?"Update File":"Select a file"}</div></div>

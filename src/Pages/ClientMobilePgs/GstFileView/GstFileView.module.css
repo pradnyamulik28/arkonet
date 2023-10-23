@@ -48,13 +48,16 @@
 
   .pdffile{
 font-size: 4rem;
+text-align: center;
   }
   .row2{
-    margin-top: 3rem;
+    margin-top: 1rem;
     /* display: flex; */
   }
   .doc1, .doc2{
     margin-bottom: 3rem;
+    display: flex;
+    flex-wrap: wrap;
   }
   
   
