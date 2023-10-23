@@ -8,10 +8,11 @@ import { url_ } from "../../../Config";
 import NotificationBell from "../../../components/NotificationBell/NotificationBell";
 import AdDisplay from "../../../components/AdDisplay/AdDisplay";
 import {AdDetails} from "../../../ObjData/AdDetails";
+import swal from "sweetalert2";
 
 function ClientHome() {
   const { toggleSidebar,no_of_notifications,handleNotification } = useSidebar();
-  
+  const [deletePopup,setDeletePopup]=useState(true);
   const storedToken = window.localStorage.getItem("jwtToken");
   // const client_id=localStorage.getItem("clientId");
 
@@ -167,23 +168,31 @@ if(month<3){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client
 
   
 function deletFilePop(){// Get the current date
-  const currentDate = new Date();
-  
-  // Set the target date to March 16th
-  const targetDate = new Date(currentDate.getFullYear(), 2, 16);
-  
-  // Calculate the time difference in milliseconds
-  const timeDifference = targetDate - currentDate;
+
+  const todayDate = new Date();
+  const currentDate = new Date(todayDate.getFullYear(),todayDate.getMonth(),todayDate.getDate()); 
+  const targetDate = new Date(todayDate.getFullYear(), 2, 31);//Set Date to March 31
+
+  const dayDifference =(targetDate.getTime() - currentDate.getTime())/ (1000 * 3600 * 24);
   
   // Check if it's 15 days or more before March 31st
-  if (timeDifference >= 0) {
-      console.log("It is 15 days or more before March 31st.");
-  } else {
-      console.log("It is less than 15 days before March 31st.");
+  if (dayDifference < 15 && dayDifference >0) {
+    console.log(dayDifference)
+      if(deletePopup){         
+      swal.fire( {icon: "warning",
+      title: "Warning.!!",
+        text:`Your all data for F.Y ${todayDate.getFullYear()-5}-${((todayDate.getFullYear()-4)).toString().slice(2)} 
+        will be deleted ${dayDifference===0?"Today":dayDifference===1?"Tommorow":"on 31st March"}. Take backup if required.`});
+      setDeletePopup(false);
+      }
+    }  
   }
-  }
+
+
+
   useEffect(() => {
     getITandGstData();
+    deletFilePop();
   }, [toggleSidebar]);
 
   useEffect(()=>{
