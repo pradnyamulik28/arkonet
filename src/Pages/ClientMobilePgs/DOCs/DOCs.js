@@ -24,37 +24,57 @@ function DOCs() {
   }]);
 
   async function deleteFile(e){
+    
     const updatedItems = [...DOCFile];
     const index = updatedItems.findIndex((item) => item.id === e.target.id);
     
-    if (index !== -1) {
-    var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-var requestOptions = {
-  method: 'PUT',
-  headers: myHeaders,
-  redirect: 'follow'
-};
 
-fetch(`${url_}/client/deletedocumnet?pan=${client_pan}`, requestOptions)
-  .then(response => {if(response.status===200){
+
     swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: `${DOCFile[index].name} Deleted sucessfully`,
-      showConfirmButton: false,
-      timer: 2000
-    })
-  }
-    response.text()})
-  .then(result => {console.log(result)
-  const updatedItems = [...DOCFile];    
-        updatedItems[index].isExist=false;
-        setDOCFile(updatedItems)  }
-  )
-  .catch(error => console.log('error', error));}
+      title: 'Are you sure?',
+      text: `${DOCFile[index].name} will be Deleted .!!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        if (index !== -1) {
+          var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
+      
+      var requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+      
+      fetch(`${url_}/client/deletedocumnet?pan=${client_pan}`, requestOptions)
+        .then(response => {if(response.status===200){
+          swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `${DOCFile[index].name} Deleted sucessfully`,
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+          response.text()})
+        .then(result => {console.log(result)
+        const updatedItems = [...DOCFile];    
+              updatedItems[index].isExist=false;
+              setDOCFile(updatedItems)  }
+        )
+        .catch(error => console.log('error', error));}
+      
 
+      }
+    })
+
+    
   }
   
   async function uploadFile(e){ 

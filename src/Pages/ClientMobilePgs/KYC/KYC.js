@@ -233,7 +233,18 @@ let fetchUrl="";
     const selection=e.target.id;
     const updatedItems = [...KYCFiles];
     const index = updatedItems.findIndex((item) => item.id === e.target.id);
-    
+
+    swal.fire({
+      title: 'Are you sure?',
+      text: `${KYCFiles[index].name} will be Deleted .!!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+                  
     if (index !== -1) {
     var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -280,6 +291,9 @@ let fetchUrl="";
         setKYCFiles(updatedItems)  }
   )
   .catch(error => console.log('error', error));}
+
+}
+})
 
   }
   
