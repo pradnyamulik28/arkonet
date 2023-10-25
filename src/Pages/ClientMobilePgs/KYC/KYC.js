@@ -169,45 +169,63 @@ let fetchUrl="";
 
 
 
-  async function getImageData(fetchURL,index){
-
+  async function getImageData(updatedItems){
     
-    try {
-      var myHeaders = new Headers();
+    var myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${storedToken}`);
-      
+
       var requestOptions = {
-        method: 'GET',
+        method: "GET",
         headers: myHeaders,
-        redirect: 'follow'
+        redirect: "follow",
       };
 
-      
-      fetch(`${url_}/${fetchURL}/${client_pan}`, requestOptions)
-      .then((response)=>response.arrayBuffer())
-      .then((result)=>{ 
-        const fileBlob = new Blob([result], {
-          type: `image/*`,
-        });
-        const blobToDataURL = (blob) => {
-          const reader = new FileReader();
-          reader.onload = () => {           
-            const updatedItems = [...KYCFiles];      
-        updatedItems[index].imgsrc=reader.result;
-        updatedItems[index].isExist=true
-        setKYCFiles(updatedItems); 
-          };
-          reader.readAsDataURL(blob);
-        };        
-        blobToDataURL(fileBlob);
-          
-        }).catch((error)=>console.log(error));        
-    } catch (error) {
-      console.error(
-        `Error fetching or downloading ${"pdf".toUpperCase()} file:`,
-        error
-      );
-    }
+
+      await fetch(`${url_}/getclientkycadhar/${client_pan}`, requestOptions)
+      .then(response=> response.blob())
+      .then(result=>
+        {const reader = new FileReader();
+        reader.onload = () => {
+          const dataURL = reader.result;
+          updatedItems[0].imgsrc=dataURL;
+        };
+        reader.readAsDataURL(result);
+          })
+      .catch((error)=>console.log(error));
+
+
+
+      await fetch(`${url_}/getclientkycapan/${client_pan}`, requestOptions)
+      .then(response=> response.blob())
+      .then(result=>
+        {const reader = new FileReader();
+        reader.onload = () => {
+          const dataURL = reader.result;
+          updatedItems[1].imgsrc=dataURL;
+        };
+        reader.readAsDataURL(result);
+          })
+      .catch((error)=>console.log(error));
+
+
+
+      await fetch(`${url_}/getclientkyccheck/${client_pan}`, requestOptions)
+      .then(response=> response.blob())
+      .then(result=>
+        {const reader = new FileReader();
+        reader.onload = () => {
+          const dataURL = reader.result;
+          updatedItems[2].imgsrc=dataURL;
+        };
+        reader.readAsDataURL(result);
+          })
+      .catch((error)=>console.log(error));
+
+
+    console.log("getImageData", updatedItems);
+    setKYCFiles(updatedItems);
+    
+   
   }
 
   async function deleteFile(e){
@@ -383,20 +401,19 @@ var requestOptions = {
 
 const updatedItems = [...KYCFiles]; 
 
- fetch(`${url_}/getclientKycinformation/${client_pan}`, requestOptions)
+ await fetch(`${url_}/getclientKycinformation/${client_pan}`, requestOptions)
   .then(response => response.json())
-  .then(result => {//console.log(result)   
+  .then(result => {console.log(result)   
 
     if(result.imageName){
       const index = updatedItems.findIndex((item) => item.id === result.imageName.split(".")[0]);
-      if (index !== -1){       
+      if (index !== -1){   
+        updatedItems[index].isExist=true;    
         if(result.imageName.includes("pdf")){
-          updatedItems[index].fileType="pdf";
-          updatedItems[index].isExist=true;    
+          updatedItems[index].fileType="pdf";   
         }
         else{           
-          updatedItems[index].fileType="image"; 
-          getImageData("getclientkycadhar",index);            
+          updatedItems[index].fileType="image";            
       }
     }}
 
@@ -405,13 +422,12 @@ const updatedItems = [...KYCFiles];
     if(result.imageName2){
       const index = updatedItems.findIndex((item) => item.id === result.imageName2.split(".")[0]);
       if (index !== -1){
+        updatedItems[index].isExist=true;
         if(result.imageName2.includes("pdf")){
-          updatedItems[index].fileType="pdf";  
-          updatedItems[index].isExist=true;  
+          updatedItems[index].fileType="pdf";    
         }
         else{           
-          updatedItems[index].fileType="image";  
-          getImageData("getclientkycapan",index);  
+          updatedItems[index].fileType="image"; 
       }
     }}
 
@@ -419,20 +435,20 @@ const updatedItems = [...KYCFiles];
     if(result.imageName3){
       const index = updatedItems.findIndex((item) => item.id === result.imageName3.split(".")[0]);
       if (index !== -1){
+        updatedItems[index].isExist=true;  
         if(result.imageName3.includes("pdf")){
-          updatedItems[index].fileType="pdf";
-          updatedItems[index].isExist=true;    
+          updatedItems[index].fileType="pdf";            
         }
         else{           
-          updatedItems[index].fileType="image";  
-           getImageData("getclientkyccheck",index);    
+          updatedItems[index].fileType="image";   
       }
-    }    
-    console.log(updatedItems)}
+    }   
+   
+  }
    
   }).catch(error => console.log('error', error));
 
-  setKYCFiles(updatedItems); 
+  getImageData(updatedItems);
   }
 
 
