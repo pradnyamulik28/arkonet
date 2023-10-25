@@ -5,6 +5,7 @@ import { Link, useLocation,useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { url_ } from "../../../Config";
 import swal from "sweetalert2";
+import Spinner from "../../../components/Spinner/Spinner";
 
 function GstFileView() {
 
@@ -22,6 +23,7 @@ function GstFileView() {
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileBlob, setFileBlob] = useState(null);
 
+  const [isLoading,setIsLoading]=useState(false);
 
 
   useEffect(() => {
@@ -63,6 +65,7 @@ function GstFileView() {
 
         //console.log("filtered",filterPdfFiles)
         const extractedNames = filterPdfFiles.map((file) => {
+          
           const fileid = file.id;
           const filePath = file.filePath;
           const parts = file.fileName.split(`${user_id}_${client_id}_${gstCategory}_`);
@@ -77,7 +80,7 @@ function GstFileView() {
 
         const pdfArray=[]
         extractedNames.map((file)=>{
-      
+          setIsLoading(true);
        fetch(`${url_}/openGstfile/${file.fileid}`, {
         method: "GET",
         headers: {
@@ -92,6 +95,7 @@ function GstFileView() {
               type: "application/pdf",
             })
           );
+          setIsLoading(false);
         })
         .catch((error) => console.error("Error fetching PDF:", error));
     })
@@ -105,25 +109,25 @@ function GstFileView() {
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 //Sort By Month
 // Sample array of month names (replace with your own data)
-var monthArray = [
-  "January",
-  "October",
-  "March",
-  "April",
-  "February",
-  "June",
-];
-function monthSort(a,b){
-  const monthOrder = {
-      "January": 2, "February": 1, "March": 0, "April": 11,
-      "May": 10, "June": 9, "July": 8, "August": 7,
-      "September": 6, "October": 5, "November": 4, "December": 3
-  };
+// var monthArray = [
+//   "January",
+//   "October",
+//   "March",
+//   "April",
+//   "February",
+//   "June",
+// ];
+// function monthSort(a,b){
+//   const monthOrder = {
+//       "January": 2, "February": 1, "March": 0, "April": 11,
+//       "May": 10, "June": 9, "July": 8, "August": 7,
+//       "September": 6, "October": 5, "November": 4, "December": 3
+//   };
 
-  return monthOrder[a] - monthOrder[b];
-}
-// Custom sorting function
-monthArray.sort(monthSort);
+//   return monthOrder[a] - monthOrder[b];
+// }
+// // Custom sorting function
+// monthArray.sort(monthSort);
 
 
 
@@ -217,6 +221,7 @@ monthArray.sort(monthSort);
 
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
+    setIsLoading(true)
     try {
       const response = await fetch(`${url_}/openGstfile/${file_ID}`, {
         method: "GET",
@@ -227,26 +232,21 @@ monthArray.sort(monthSort);
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
-      }
-
-      const arrayBuffer = await response.arrayBuffer();
-      const fileBlob = new Blob([arrayBuffer], {
-        type: `application/${contentType}`,
-      });
-      const blobUrl = URL.createObjectURL(fileBlob);
-      console.log(blobUrl)
-      if (contentType === "pdf") {
-        setPdfBlobUrl(blobUrl);
-        const pdfWindow = window.open(blobUrl, "_blank");
-        pdfWindow.addEventListener("beforeunload", () => {
-          URL.revokeObjectURL(blobUrl);
+      } else if (response.ok) {
+        const arrayBuffer = await response.arrayBuffer();
+        const fileBlob = new Blob([arrayBuffer], {
+          type: `application/${contentType}`,
         });
-      } else if (contentType === "xlsx") {
-        const link = document.createElement("a");
-        link.href = blobUrl;
-        link.download = fileName;
-        link.click();
-        URL.revokeObjectURL(blobUrl);
+        const blobUrl = URL.createObjectURL(fileBlob);
+        setIsLoading(false)
+        console.log(blobUrl);
+        if (contentType === "pdf") {
+          setPdfBlobUrl(blobUrl);
+          const pdfWindow = window.open(blobUrl, "_blank");
+          pdfWindow.addEventListener("beforeunload", () => {
+            URL.revokeObjectURL(blobUrl);
+          });
+        }
       }
     } catch (error) {
       console.error(
@@ -260,6 +260,7 @@ monthArray.sort(monthSort);
 
   return (
 <div className={`row ${style.row1}`}>
+  {isLoading&&<Spinner />}
 <div className={`${style.allport}`}>
 
 {/* Headbar Starts*/}

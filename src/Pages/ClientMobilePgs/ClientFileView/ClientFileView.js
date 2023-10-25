@@ -3,6 +3,7 @@ import style from "./ClientFileView.module.css";
 import { url_ } from "../../../Config";
 import { Link, useLocation,useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
+import Spinner from '../../../components/Spinner/Spinner'
 
 const ClientFileView = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const ClientFileView = () => {
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileBlob, setFileBlob] = useState(null);
 
-
+  const [isLoading,setIsLoading]=useState(false);
 
   useEffect(() => {
     fetchData();    
@@ -52,6 +53,7 @@ const ClientFileView = () => {
       redirect: "follow",
     };
     
+   
 
     fetch(`${url_}/client/files`, requestOptions)
       .then((response) => response.json())
@@ -74,23 +76,28 @@ const ClientFileView = () => {
 
         const pdfArray=[]
         extractedNames.map((file)=>{
-      
+      setIsLoading(true);
        fetch(`${url_}/openfile/${file.fileid}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${storedToken}`,
         },
       })
-        .then((response) => response.blob())
+        .then((response) => {
+          return response.blob()})
         .then((pdfBlob) => {
           pdfArray.push(
             new File([pdfBlob], `${file.extractedName}.pdf`, {
               type: "application/pdf",
             })
           );
+          setIsLoading(false);
         })
         .catch((error) => console.error("Error fetching PDF:", error));
+        
     })
+
+    
     if(extractedNames.length>0){
       setFileBlob({extractedNames,pdfArray});
     }   
@@ -187,47 +194,18 @@ const ClientFileView = () => {
 
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
-    console.log(fileBlob)
-    console.log(fileName,file_ID)
+    // console.log(fileBlob)
+    // console.log(fileName,file_ID)
 
 
-    const newData = { ...fileBlob };
+    // const newData = { ...fileBlob };
 
-    // Find the index of the item to update within the items array
-    const itemIndex = newData.extractedNames.findIndex(item => item.fileid === file_ID);
+    // // Find the index of the item to update within the items array
+    // const itemIndex = newData.extractedNames.findIndex(item => item.fileid === file_ID);
   
-    if (itemIndex !== -1) {
-      console.log(fileBlob.pdfArray[itemIndex]);
-      const blobUrl = URL.createObjectURL(fileBlob.pdfArray[itemIndex]);
-      console.log(blobUrl)
-      if (contentType === "pdf") {
-        setPdfBlobUrl(blobUrl);
-        const pdfWindow = window.open(blobUrl, "_blank");
-        pdfWindow.addEventListener("beforeunload", () => {
-          URL.revokeObjectURL(blobUrl);
-        });
-      }      
-    } 
-
-
-
-    // try {
-    //   const response = await fetch(`${url_}/openfile/${file_ID}`, {
-    //     method: "GET",
-    //     headers: {
-    //       Authorization: `Bearer ${storedToken}`,
-    //     },
-    //   });
-
-    //   if (!response.ok) {
-    //     throw new Error("Network response was not ok");
-    //   }
-
-    //   const arrayBuffer = await response.arrayBuffer();
-    //   const fileBlob = new Blob([arrayBuffer], {
-    //     type: `application/${contentType}`,
-    //   });
-    //   const blobUrl = URL.createObjectURL(fileBlob);
+    // if (itemIndex !== -1) {
+    //   console.log(fileBlob.pdfArray[itemIndex]);
+    //   const blobUrl = URL.createObjectURL(fileBlob.pdfArray[itemIndex]);
     //   console.log(blobUrl)
     //   if (contentType === "pdf") {
     //     setPdfBlobUrl(blobUrl);
@@ -235,24 +213,49 @@ const ClientFileView = () => {
     //     pdfWindow.addEventListener("beforeunload", () => {
     //       URL.revokeObjectURL(blobUrl);
     //     });
-    //   } else if (contentType === "xlsx") {
-    //     const link = document.createElement("a");
-    //     link.href = blobUrl;
-    //     link.download = fileName;
-    //     link.click();
-    //     URL.revokeObjectURL(blobUrl);
-    //   }
-    // } catch (error) {
-    //   console.error(
-    //     `Error fetching or downloading ${contentType.toUpperCase()} file:`,
-    //     error
-    //   );
-    // }
+    //   }      
+    // } 
+setIsLoading(true)
+
+
+    try {
+      const response = await fetch(`${url_}/openfile/${file_ID}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      } else if (response.ok) {
+        const arrayBuffer = await response.arrayBuffer();
+        const fileBlob = new Blob([arrayBuffer], {
+          type: `application/${contentType}`,
+        });
+        const blobUrl = URL.createObjectURL(fileBlob);
+        setIsLoading(false)
+        console.log(blobUrl);
+        if (contentType === "pdf") {
+          setPdfBlobUrl(blobUrl);
+          const pdfWindow = window.open(blobUrl, "_blank");
+          pdfWindow.addEventListener("beforeunload", () => {
+            URL.revokeObjectURL(blobUrl);
+          });
+        }
+      }
+    } catch (error) {
+      console.error(
+        `Error fetching or downloading ${contentType.toUpperCase()} file:`,
+        error
+      );
+    }
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className={`${style.outercontainer}`}>
+      {isLoading&&<Spinner />}
       <div className={`container mt-3 ${style.maincontainer}`}>
         <div className="row">
           <div
