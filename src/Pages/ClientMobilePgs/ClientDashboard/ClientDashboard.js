@@ -287,15 +287,53 @@ console.log(fetchurl)
 
 fetch(`${url_}/getlastUpdateallinformation/${fetchurl}/${clientInfo.PAN}`, requestOptions)
   .then(response => response.json())
-  .then(result => {console.log(result)
+  .then(result => {
+
+    const updateDate=new Date(result.lastUpdateDate1);
     setLastUploadedPdf({...lastUploadedPdf,
       file:null,
       fileType:result.imagePath.split(".")[1],
       fileName:result.imageName,
-      Date:result.lastUpdateDate1,
-      size:"0",  
-    })})
+      Date:`${numberToMonth(updateDate.getMonth())} ${updateDate.getDate()}.${updateDate.getFullYear()}`, 
+    })
+    fileSize();
+
+  })
   .catch(error => console.log('error', error));
+  }
+
+
+  async function fileSize()
+  {
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+let fetchurl=``;
+if(clientInfo.client_id_it && clientInfo.client_id_gst)
+{
+  fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_gst}`;
+}
+else if(clientInfo.client_id_it){
+  fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_it}`;
+}
+else if(clientInfo.client_id_gst){
+  fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
+}
+
+    await fetch(`${url_}/getlastUpdateallonefile/${fetchurl}/${clientInfo.PAN}`, requestOptions)
+    .then(response=>response.blob())
+    .then(result=>{
+      const sizeInBytes = result.size;
+    const fileSize =Math.floor(sizeInBytes / 1024);
+    setLastUploadedPdf({...lastUploadedPdf,size:fileSize>=1024?`${Math.floor(fileSize/1024)}MB`:`${fileSize}KB`})
+    //console.log(fileSize)    
+    }).catch(error=>console.log(error));
   }
 
 
