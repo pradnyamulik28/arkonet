@@ -17,6 +17,9 @@ import { url_ } from "../../../Config";
 
 
 function InvestNow() {
+
+  const repeatRequestDuration=15;
+
   const Invest_Now=[{
     img_src:FD,
     img_alt:"fixed_deposit_img",
@@ -114,26 +117,162 @@ function InvestNow() {
 
   useEffect(() => {
     getITCAInfo();
+    getRecentMail();
   }, []);
+
+
+const [recentMail,setRecentMail]=useState({
+  canRequestFD:true,
+  canRequestNPS:true,
+  canRequestMF:true,
+  canRequestLI:true,
+  canRequestHI:true,
+})
+
+
+function getRecentMail(){
+  const updateItems={...recentMail};
+  const todayDate = new Date();
+  const currentDate = new Date(todayDate.getFullYear(),todayDate.getMonth(),todayDate.getDate()); 
+  
+  
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+  
+  Invest_Now.map((item,index)=>{
+    fetch(
+      `${url_}/investnow/findDate?clientId=${client_id_it}&category=${item.text}`,
+      requestOptions
+    )
+    .then((response) => {
+      if (response.status === 200) return response.text();
+      else if(response.status===404) return "Not Found";
+    })
+    .then((result) => {
+      console.log(item.text,result)
+      if(result==="Not Found"){
+
+      }
+      else{
+        
+      const targetDate = new Date(result.split("T")[0]); //Set Date to March 31
+      const futureDate = new Date(targetDate);
+      futureDate.setDate(targetDate.getDate() + repeatRequestDuration);
+      console.log(targetDate,futureDate)
+      const dayDifference =
+      Math.floor(currentDate.getTime()-targetDate.getTime() ) / (1000 * 3600 * 24);
+        
+      if (dayDifference <= repeatRequestDuration && dayDifference >= 0) {
+        
+       switch(item.text)
+       {
+        case "Fixed Deposit":
+          updateItems.canRequestFD=false;
+          updateItems.futureDateFD=futureDate;
+        break;
+        case "National Pension Scheme":
+          updateItems.canRequestNPS=false;
+          updateItems.futureDateNPS=futureDate;
+        break;
+        case "Mutual Fund":
+          updateItems.canRequestMF=false;
+          updateItems.futureDateMF=futureDate;
+        break;
+        case "Life Insurance":
+          updateItems.canRequestLI=false;
+          updateItems.futureDateLI=futureDate;
+        break;
+        case "Health Insurance":
+          updateItems.canRequestHI=false;
+          updateItems.futureDateHI=futureDate;
+        break;
+        default:break;
+       }        
+      }}
+    })
+    .catch((error) => console.log("error", error));
+  })
+
+
+  console.log(updateItems);
+  setRecentMail(updateItems);
+  
+}
+  
+
+function numberToMonth(number) {
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  if (number >= 1 && number <= 12) {
+    return months[number - 1];
+  } else {
+    return "Invalid month number";
+  }
+}
 
   function handleCardClick(e)
   {
-    if(!user_id_it){
+    console.log(recentMail.canRequestFD);
+    const category = `${e.currentTarget.id}`;
+    let canSendRequest=true;
+    let futureDate="";
+    if (!user_id_it) {
       swal.fire("Sorry!", `You are not registereg under Income Tax`, "error");
-    }
-    else{
+    } else {
 
-    const category=`${e.currentTarget.id}`;
-    //console.log(e.currentTarget.id)
-    const subject=`Client Interest in ${e.currentTarget.id}`;
+      switch(category)
+      {
+       case "Fixed Deposit":
+        if(!recentMail.canRequestFD) {
+          futureDate=recentMail.futureDateFD;
+          canSendRequest=false;}
+       break;
+       case "National Pension Scheme":
+        if(!recentMail.canRequestNPS){
+          futureDate=recentMail.futureDateNPS;
+          canSendRequest=false;}
+       break;
+       case "Mutual Fund":
+         if(!recentMail.canRequestMF){
+          futureDate=recentMail.futureDateMF;
+          canSendRequest=false;}
+       break;
+       case "Life Insurance":
+         if(!recentMail.canRequestLI){
+          futureDate=recentMail.futureDateLI;
+          canSendRequest=false;}
+       break;
+       case "Health Insurance":
+         if(!recentMail.canRequestHI){
+          futureDate=recentMail.futureDateHI;
+          canSendRequest=false;}
+       break;
+       default:break;
+      }   
 
 
-    const message=`Dear ${investmentMail.username},
+      if (canSendRequest) {
+        
+        //console.log(e.currentTarget.id)
+        const subject = `Client Interest in ${e.currentTarget.id}`;
+
+        const message = `Dear ${investmentMail.username},
   Greeting from TAXKO!
 
   I hope this message finds you well. 
   
-  Our client ${localStorage.getItem("name")}, is eager to explore ${e.currentTarget.id} investment. 
+  Our client ${localStorage.getItem("name")}, is eager to explore ${
+          e.currentTarget.id
+        } investment. 
   We trust your expertise and kindly request your assistance in guiding them through this process.
                     
   Best regards,
@@ -141,10 +280,19 @@ function InvestNow() {
   ${localStorage.getItem("name")},
   Contact no : ${localStorage.getItem("mobile")}`;
 
-  //setInvestmentMail({...investmentMail,subject:subject,msg:message});
-    //console.log(subject);
-    //console.log(message,investmentMail.userid);
-    sendEmail(client_id_it,user_id_it,subject,message,category);
+        //setInvestmentMail({...investmentMail,subject:subject,msg:message});
+        //console.log(subject);
+        //console.log(message,investmentMail.userid);
+        sendEmail(client_id_it,user_id_it,subject,message,category);
+      } else {
+        swal.fire({
+          icon: "info",
+         
+          text: `You have already registered a request under ${e.currentTarget.id} in last ${repeatRequestDuration} days.
+                  Kindly wait till your Tax Consultant contacts you or try again after ${futureDate.getDate()} ${numberToMonth(futureDate.getMonth()+1)}`,
+        });
+        
+      }
     }
   }
 
