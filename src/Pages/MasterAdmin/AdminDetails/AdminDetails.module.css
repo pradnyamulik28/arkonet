@@ -1,0 +1,238 @@
+.workport {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    /* width: 70%; */
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+  }
+
+  /* Left col starts */
+.leftcol{
+width: 40%;
+margin-left: 5%;
+margin-right: 5%;
+height: 100%;
+}
+.ltop{
+    margin-top: 5%;
+    height: 25%;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.ltopcontaint{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.ltop h5{
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    margin-bottom: 15%;
+}
+.ltop h3{
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    margin-bottom: 15%;
+}
+.ltop h6{
+    margin-bottom: 10%;
+    font-size: 90%;
+}
+.ltop p{
+    font-weight: 300;
+}
+
+.lbottom{
+    height: 60%;
+    margin-bottom: 5%;
+}
+.lbotcontaint{
+    margin-top: 5%;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+.rt{
+    position: relative;
+    padding-top: 7%;
+    height: 12vh;
+}
+.tabular *{
+    margin-bottom: 2.5%;
+}
+.sinrow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.sinrow p{
+font-weight: 500;
+}
+
+/* Left Col ends */
+
+
+
+  /* Right col starts */
+.rightcol{
+width: 40%;
+margin-left: 5%;
+margin-right: 5%;
+margin-right: 5%;
+margin-right: 5%;
+}
+.Rtop{
+    margin-top: 5%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.Rtop .rtt, .rtb{
+    display: flex;
+    flex-direction: column;
+ align-items: center;
+}
+.rtt h5{
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+.rmt h5{
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+.rbt h5{
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+.rmt{
+    display: flex;
+    flex-direction: column;
+ align-items: center;
+ text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+.rbt{
+    display: flex;
+    color: red;
+    flex-direction: column;
+ align-items: center;
+ text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+.renewal{
+margin-top: 2%;
+}
+.rtcol1, .rtcol2, .rtcol3{
+    margin-top: 5%;
+}
+.rmcol1, .rmcol2, .rmcol3{
+    margin-top: 5%;
+}
+/* .rbcol1, .rbcol2, .rbcol3{
+    margin-top: 5%;
+} */
+.Rmiddle{
+    margin-top: 5%;
+    height: 30%;
+}
+.Rbottom{
+    margin-top: 5%;
+    height: 30%;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+}
+.rtabular p{
+    text-align: center;
+}
+.pv{
+    font-weight: bold;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+.pb{
+    font-weight: 500;
+}
+.pg{
+    font-weight: 500;
+    color: rgb(4, 160, 4);
+}
+.pbl{
+    font-weight: 500;
+    color: blue;
+}
+.rtb{
+    font-weight: 300;
+    font-size: 80%;
+    margin-top: 2%;
+}
+.rtm{
+    display: flex;
+    flex-direction: column;
+}
+.rtabular{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.rmm{
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.rmb{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3%;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+.rbm{
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.rbb{
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.pvr{
+     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+     font-weight: bold;
+     color: rgb(143, 4, 4);
+}
+.pvdr{
+     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+     font-weight: bold;
+     color: red;
+}
+.pvy{
+     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+     font-weight: bold;
+     color: #ffbb00;
+}
+  /* Right col Ends */
+
+  /* *{
+    border: 1px solid black;
+} */
+
+.ltop, .lbottom, .Rtop, .Rmiddle, .Rbottom{
+    background-color: #fefbec;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1.5rem;
+}
+

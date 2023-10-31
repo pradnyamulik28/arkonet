@@ -1,0 +1,98 @@
+/* Default styles for all screen sizes */
+.outercontainer * {
+  /* margin: 0; */
+  padding: 0.2rem;
+  box-sizing: border-box;
+  /* font-family: sans-serif; */
+  transition: all 0.5s ease;
+}
+
+.outercontainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: #0c0c0c;
+  padding: 0.5rem;
+  width: 65%;
+  height: fit-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.presentation_area {
+  width: 95%;
+  height: fit-content;
+  background: rgb(226, 223, 226);
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+}
+
+.heading {
+  height: 60px;
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.pptslide {
+  display: none;
+  width: 100%;
+  height: 80%;
+}
+
+.show {
+  display: block;
+  transform: scale(1);
+}
+
+.buttoncontainer {
+  background-color: white;
+  height: 65px;
+}
+
+.buttoncontainer button {
+  cursor: pointer;
+}
+
+.zoom_in {
+  transform: scale(0.8); /* Zoom in (compress) by 80% */
+  transition: transform 0.3s ease-in-out;
+}
+
+.zoom_out {
+  transform: scale(1.2); /* Zoom out (expand) by 120% */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Add these classes to the elements you want to apply the zoom effect */
+
+
+/* Responsive styles for smaller screens (adjust as needed) */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+
+  .heading {
+    font-size: 2em;
+  }
+}
+
+/* Responsive styles for even smaller screens (adjust as needed) */
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+  }
+
+  .heading {
+    font-size: 1.5em;
+  }
+}

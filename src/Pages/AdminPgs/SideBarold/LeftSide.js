@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import styles from './leftside.module.css';
 import Applogo from '../../../Images/taxko_logo.jpeg'
@@ -22,6 +22,11 @@ const LeftSide = ({ loggedIn, setLoggedIn }) => {
     setLoggedIn(false);
   };
 
+  const [activeLink, setActiveLink] = useState(null);
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
   return (
     <div className="container">
       <div className={`${styles.sidebar}`}>
@@ -31,14 +36,48 @@ const LeftSide = ({ loggedIn, setLoggedIn }) => {
           </Link>
           {loggedIn ? (
             <>
-              <Link to="dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
-              <Link to="changepass" className={` ${styles.reset_text}`} ><h6>Change Password</h6></Link>
+              <Link to="dashboard" onClick={() => handleLinkClick('dashboard')}>
+                <h6 className={activeLink === 'dashboard' ? 'font-weight-bold' : ''}>Dashboard</h6>
+              </Link>
+
+
+
+              <div style={{ marginTop: "1rem" }} className={styles.myprofilelink}>
+                <input id="check01" type="checkbox" name="menu" />
+                <label for="check01" onClick={() => handleLinkClick('My Profile')}><h6 className={activeLink === 'My Profile' ? 'font-weight-bold' : ''}>My Profile</h6></label>
+                <ul class={styles.submenu}>
+                  <Link to="userUpdate" onClick={() => handleLinkClick('userUpdate')}>
+                    <h6 className={activeLink === 'userUpdate' ? 'font-weight-bold' : ''}>Update Profile</h6>
+                  </Link>
+                  <Link to="UserSubscriptionPage" onClick={() => handleLinkClick('UserSubscriptionPage')}>
+                    <h6 className={activeLink === 'UserSubscriptionPage' ? 'font-weight-bold' : ''}>Subcription</h6>
+                  </Link>
+                </ul>
+              </div>
+
+              <Link to="investNow" onClick={() => handleLinkClick('investNow')}>
+                <h6 className={activeLink === 'investNow' ? 'font-weight-bold' : ''}>Invest Now</h6>
+              </Link>
+
+              <Link to="dashboard/tc" onClick={() => handleLinkClick('myclients')}>
+                <h6 className={activeLink === 'myclients' ? 'font-weight-bold' : ''}>My Clients</h6>
+              </Link>
+
+              <Link to="changepass" onClick={() => handleLinkClick('changepass')}>
+                <h6 className={activeLink === 'changepass' ? 'font-weight-bold' : ''}>Change Password</h6>
+              </Link>
+
               <Link to="" className={styles.logout_text} onClick={handleLogout}><h6>Logout</h6></Link>
+              <Link to="help" onClick={() => handleLinkClick('help')}>
+                <h6 className={activeLink === 'help' ? 'font-weight-bold' : ''}>Help</h6>
+              </Link>
             </>
           ) : (
             <>
 
-              <Link to="help" className={styles.help_text}><h6>Help</h6></Link>
+              <Link to="help" onClick={() => handleLinkClick('help')}>
+                <h6 className={activeLink === 'help' ? 'font-weight-bold' : ''}>Help</h6>
+              </Link>
             </>
           )}
         </div>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Registration.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useParams } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import swal from 'sweetalert2';
 import formfields from './formfields';
@@ -8,6 +8,17 @@ import InputType from "./InputType"
 
 const Registration = () => {
   const Navigate = useNavigate();
+
+
+  const { referralParam } = useParams();//get User Info from url
+
+    // if(referralParam)
+    // {
+    //   const [timestamp, refereduserId] = referralParam.split('_');
+    //   console.log("Timestamp:",timestamp,"    Reffered by :",refereduserId);
+    // }
+
+    
 
   //Tocheck Password strength
   const [strenghtScore, setStrenghtScore] = useState("null");
@@ -37,19 +48,27 @@ const Registration = () => {
     state: "",
     whatsApp_Link: "",
     investNow_Email: "",
+    refrenceId: referralParam?referralParam.split('_')[1]:"",
     password: "",
     confirmpassword: ""
   });
 
-
+  
+useEffect(()=>{
+  if(referralParam){      
+    const inputElement = document.getElementsByName('refrenceId', 'text');
+    console.log("input field : ",inputElement.length)
+    if (inputElement.length) {
+        inputElement[0].disabled  = true;
+    }
+}
+},[])
 
 
 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-
 
     //=============================================================================
     switch (name) {
@@ -227,6 +246,7 @@ const Registration = () => {
             state: "",
             whatsApp_Link: "",
             investNow_Email: "",
+            refrenceId: "",
             password: "",
             confirmpassword: "",
           });
@@ -268,7 +288,7 @@ const Registration = () => {
                   name={formfield.name}
                   type={formfield.type}
                   placeholder={formfield.placeholder}
-                  value={formdata.value}
+                  value={formdata[formfield.name]}
                   mandatory={formfield.mandatory}
                   onChange={handleChange}
                   validationmsg={formfield.validationmsg}

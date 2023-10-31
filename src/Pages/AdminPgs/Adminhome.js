@@ -18,8 +18,22 @@ import DocFolder from './DocFolder/DocFolder';
 import FileUpload from './FileUpload/FileUpload'
 import ResetPass from './ResetPass/ResetPass';
 import ChangePass from './ChangePass/ChangePass';
-import Help from './Help/Help';
+import UserUpdate from './UserUpdate/UserUpdate';
+import HelpView from './Help/Help';
 import Protected from '../../Protected';
+import MyFolder from './MyFolderPage/MyFolder';
+import Gst from './GST/Gst';
+import GstrFolder from './GstrFolder/GstrFolder';
+import GstrFileUpload from './GstrFileUpload/GstrFileUpload';
+import Test from './TestPages/Test';
+import GstClients from './GSTClients/GstClients';
+import CreateNewTicket from './CreateNewTicket/CreateNewTicket';
+import InvestNowPage from './InvestNowPage/InvestNowPage';
+import InvestNowView from './InvestNowView/InvestNowView';
+import Subscription from './Subscription/Subscription';
+import SubscriptionPlan from './SubscriptionPlan/SubscriptionPlan';
+import UserSubscriptionPage from './UserSubscriptionPage/UserSubscriptionPage';
+import HelpClientMailView from './HelpClientMailView/HelpClientMailView';
 
 const Adminhome = () => {
 
@@ -46,27 +60,69 @@ const Adminhome = () => {
             </nav>
 
             <Routes>
+
+
+
+              <Route exact path='myfolder' element={<MyFolder />} />
+              <Route exact path='gst' element={<Gst />} />
+              <Route exact path='gstr' element={<GstrFolder />} />
+              <Route exact path='gstrfileupload' element={<GstrFileUpload />} />
+              <Route exact path='test' element={<Test />} />
+              {/* <Route exact path='notification' element={<Notification />} /> */}
+
+
+
+
               <Route exact path='' element={<Login setLoggedIn={setLoggedIn} />} />
               <Route path="User_registration" element={<Registration />} />
               <Route path="forgetpass" element={<ResetPass />} />
-              <Route path="help" element={<Help />} />
+              <Route path="help" element={<HelpView />} />
+              <Route path="help/helpclientmailview" element={<HelpClientMailView />} />
+              <Route path="help/createnewticket" element={<CreateNewTicket />} />
 
+              <Route path="investNow" element={<Protected Cmp={InvestNowPage} />} />
+              <Route path="investNow/investNowview/:category/:title" element={<Protected Cmp={InvestNowView} />} />
               <Route path="dashboard" element={<Protected Cmp={Dashboard} />} />
               <Route path="dashboard/clientreg" element={<Protected Cmp={URegistration} />} />
 
               <Route path="dashboard/tc" element={<Protected Cmp={TotalClient} />} />
               <Route path="dashboard/tc/clientreg" element={<Protected Cmp={URegistration} />} />
               <Route path="dashboard/tc/Cupdate/:id" element={<Protected Cmp={Uupdate} />} />
-              <Route path="dashboard/tc/file/:id" element={<Protected Cmp={DocFolder} />} />
-              <Route path="dashboard/tc/file/:id/fileupload/:id/:year" element={<Protected Cmp={FileUpload} />} />
+              <Route path="dashboard/tc/myfolder" element={<Protected Cmp={MyFolder} />} />
+              <Route path="dashboard/tc/myfolder/incomefolder" element={<Protected Cmp={DocFolder} />} />
+              <Route path="dashboard/tc/myfolder/incomefolder/fileupload" element={<Protected Cmp={FileUpload} />} />
+              <Route path="dashboard/tc/myfolder/gstfolder" element={<Protected Cmp={Gst} />} />
+              <Route path="dashboard/tc/myfolder/gstfolder/gstrfolder" element={<Protected Cmp={GstrFolder} />} />
+              <Route path="dashboard/tc/myfolder/gstfolder/gstrfolder/gstrfileupload" element={<Protected Cmp={GstrFileUpload} />} />
+              {/* <Route path="dashboard/tc/file/:id/fileupload/:id/:year" element={<Protected Cmp={FileUpload} />} /> */}
 
-              <Route path="dashboard/tic" element={<IncomeClient />} />
+              <Route path="dashboard/tic" element={<Protected Cmp={IncomeClient} />} />
               <Route path="dashboard/tic/clientreg" element={<Protected Cmp={URegistration} />} />
               <Route path="dashboard/tic/Cupdate/:id" element={<Protected Cmp={Uupdate} />} />
-              <Route path="dashboard/tic/file/:id" element={<Protected Cmp={DocFolder} />} />
-              <Route path="dashboard/tic/file/:id/fileupload/:id/:year" element={<Protected Cmp={FileUpload} />} />
+              <Route path="dashboard/tic/myfolder" element={<Protected Cmp={MyFolder} />} />
+              <Route path="dashboard/tic/myfolder/incomefolder" element={<Protected Cmp={DocFolder} />} />
+              <Route path="dashboard/tic/myfolder/incomefolder/fileupload" element={<Protected Cmp={FileUpload} />} />
+              {/* <Route path="dashboard/tic/myfolder/gstfolder" element={<Protected Cmp={Gst} />} />
+              <Route path="dashboard/tic/myfolder/gstfolder/gstrfolder" element={<Protected Cmp={GstrFolder} />} />
+              <Route path="dashboard/tic/myfolder/gstfolder/gstrfolder/gstrfileupload" element={<Protected Cmp={GstrFileUpload} />} /> */}
+
+
+              <Route path="dashboard/gstclients" element={<Protected Cmp={GstClients} />} />
+              <Route path="dashboard/gstclients/clientreg" element={<Protected Cmp={URegistration} />} />
+              <Route path="dashboard/gstclients/Cupdate/:id" element={<Protected Cmp={Uupdate} />} />
+              <Route path="dashboard/gstclients/myfolder" element={<Protected Cmp={MyFolder} />} />
+              <Route path="dashboard/gstclients/myfolder/gstfolder" element={<Protected Cmp={Gst} />} />
+              <Route path="dashboard/gstclients/myfolder/gstfolder/gstrfolder" element={<Protected Cmp={GstrFolder} />} />
+              <Route path="dashboard/gstclients/myfolder/gstfolder/gstrfolder/gstrfileupload" element={<Protected Cmp={GstrFileUpload} />} />
 
               <Route exact path="changepass" element={<Protected Cmp={ChangePass} />} />
+
+              <Route exact path="userUpdate" element={<Protected Cmp={UserUpdate} />} />
+              <Route exact path="UserSubscriptionPage" element={<Protected Cmp={UserSubscriptionPage} />} />
+              <Route exact path="UserSubscriptionPage/subscriptionplan" element={<Protected Cmp={SubscriptionPlan} />} />
+              <Route exact path="UserSubscriptionPage/subscriptionplan/subcription" element={<Protected Cmp={Subscription} />} />
+
+              <Route path="/refferal/user/:referralParam" element={<Registration />} />
             </Routes>
 
 

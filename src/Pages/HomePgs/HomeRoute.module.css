@@ -1,0 +1,389 @@
+.mainrow {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    max-width: 100%;
+    text-align: center;
+}
+
+.mainrow p {
+    font-weight: 100;
+}
+
+.header {
+    width: 100vw;
+    height: 15%;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.leftyear {
+    /* margin-left: 5vw; */
+    width: 20%;
+}
+
+.leftyear img {
+    width: 7rem;
+    height: auto;
+}
+.modalimg {
+    width: 3rem;
+    height: auto;
+    margin-top: 3vh;
+}
+
+.rightear {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: 8vh;
+}
+
+.righteartop {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* margin-right: 6vw; */
+}
+
+.rightearbottom {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 6vw;
+    margin-top: 1vh;
+}
+
+.rightearbottom,
+.righteartop {
+    margin-left: 10vw;
+}
+
+.righteartop .grey {
+    border: none;
+    width: 100%;
+    height: auto;
+    background-color: #a0a7af;
+    border-radius: 7px;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.rightearbottom .grey {
+    border: none;
+    width: 100%;
+    height: auto;
+    background-color: #a0a7af;
+    border-radius: 7px;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.righteartop .yellow {
+    border: none;
+    width: 100%;
+    height: auto;
+    background-color: #fed300;
+    border-radius: 7px;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.rightearbottom .yellow {
+    border: none;
+    width: 100%;
+    height: auto;
+    background-color: #fed300;
+    border-radius: 7px;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+
+.righteartop .grey a {
+    color: #fdffff;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+
+.rightearbottom .grey a {
+    color: #fdffff;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    width: 100%;
+}
+
+.righteartop .yellow a {
+    color: #fdffff;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+
+.rightearbottom .yellow a {
+    color: #fdffff;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+
+.righteartop a {
+    text-decoration: none;
+    vertical-align: middle;
+    font-size: 1.2vw;
+    text-wrap: nowrap;
+}
+
+.rightearbottom a {
+    text-decoration: none;
+    vertical-align: middle;
+    font-size: 1vw;
+    text-wrap: nowrap;
+}
+
+.h4 {
+    color: #fed710;
+    font-weight: bold;
+    position: relative;
+    font-size: 2vw;
+    margin-bottom: auto;
+    text-wrap: nowrap;
+    text-align: end;
+}
+
+.h6 {
+    color: #fed710;
+    font-weight: bold;
+    position: relative;
+    font-size: 1.5vw;
+    text-wrap: nowrap;
+    margin-bottom: auto;
+    text-align: end;
+}
+
+/* //////////////////////////////////////////////////////////////////////////////////////// */
+.neckbar * {
+    color: white;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+
+.neckbar {
+    width: 90%;
+    height: 5vh;
+    background-color: #fed300;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    text-align: center;
+    vertical-align: middle;
+    align-content: center;
+}
+
+.neckbar .neckancher {
+    font-size: 130%;
+}
+.neckancher a:hover,
+.dropdown a:hover,
+.dropdown1 a:hover,
+.dropdowncontent1 a:hover{
+color: #fdffff;
+}
+
+.neckancher a:active,
+.dropdown a:active,
+.dropdown1 a:active,
+.dropdowncontent1 a:active{
+    background-color: #fed300;
+}
+
+.slider {
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+}
+
+.para {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.p {
+    font-size: 1.35vw;
+}
+
+.copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.copyright img {
+    width: 10vw;
+    margin-top: 0;
+    margin-bottom: 1vh;
+}
+
+.copyright p {
+    font-size: 70%;
+}
+
+.copyright .dev {
+    margin-bottom: -1rem;
+}
+
+.btn{
+    width: 70%;
+    color: white;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    border-radius: 10px;
+    height: 4vh;
+}
+/* //////////////////////////////////////////////////// */
+.dropbtn {
+    background-color: transparent;
+    border: none;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdowncontent {
+    display: none;
+    position: absolute;
+    background-color: #fed300;
+    width: auto;
+    height: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 1rem;
+    top: 100%; 
+    left: 0;
+  border-radius: 2rem;
+  }
+  
+  .dropdowncontent a {
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+    color: white;
+    display: block;
+    text-wrap: nowrap;
+    text-align: start;
+    margin-left: 1vw;
+    margin-top: 2vh;
+    font-size: 130%;
+  }
+  
+  .dropdown:hover .dropdowncontent {
+    display: block;
+  }
+  
+  .dropdowncontent1, .dropdowncontent2 {
+    display: none;
+    position: absolute;
+    background-color: #fed300;
+    width: auto;
+    height: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 4vh;
+    left: 100%;
+    padding: 1rem;
+  border-radius: 2rem;
+  margin-left: 0.1vw;
+}
+  
+  .dropdowncontent a:hover + .dropdowncontent1, .dropdowncontent a:hover + .dropdowncontent2 {
+    display: block;
+  }
+
+.dropdown:hover .dropdowncontent,
+.dropdown1:hover .dropdowncontent1,
+.dropdown2:hover .dropdowncontent2,
+.dropdowncontent1:hover, 
+.dropdowncontent2:hover
+{
+  display: block;
+}
+
+/* //////////////////////////////////////////////////// */
+@media only screen and (min-width: 300px) and (max-width: 600px) {
+
+    .neckbar .neckancher {
+        font-size: 60%;
+    }
+
+    .neckbar * {
+        margin-bottom: 2px;
+    }
+
+    .header {
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+    }
+
+    .leftyear img {
+        width: 5rem;
+        height: auto;
+    }
+
+    .neckbar {
+        height: 5%;
+    }
+
+    .slider {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .p {
+        font-size: 2.7vw;
+    }
+
+    .h4 {
+        color: #fed710;
+        font-size: 3vw;
+    }
+    .h6 {
+        color: #fed710;
+        font-size: 2vw;
+    }
+    .righteartop a {
+        text-decoration: none;
+        vertical-align: middle;
+        font-size: 1.4vw;
+        text-align: center;
+        align-self: center;
+    }
+    
+    .rightearbottom a {
+        text-decoration: none;
+        vertical-align: middle;
+        font-size: 1vw;
+        text-align: center;
+        align-self: center;
+
+    }
+    .dropdowncontent a {
+        font-size: 60%;
+      }
+      
+
+}
+
+@media only screen and (min-width: 600px) and (max-width: 800px) {
+    .neckbar .neckancher {
+        font-size: 90%;
+    }
+    .dropdowncontent a {
+        font-size: 100%;
+      }
+}

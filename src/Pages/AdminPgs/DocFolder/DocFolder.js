@@ -159,13 +159,14 @@
 
 import React from 'react';
 import styles from './DocFolder.module.css';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
+import { useLocation } from 'react-router-dom';
 
 
 const DocFolder = () => {
-  const { id } = useParams();
+  const Navigate = useNavigate();
+  const clientid = useLocation().state.clientId;
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
 
@@ -173,7 +174,7 @@ const DocFolder = () => {
     const currentYear = new Date().getFullYear();
     const lastFiveYears = [];
 
-    for (let i = 0; i < 6; i++) { // Change 6 to 5 to get the last five years
+    for (let i = 0; i < 5; i++) { // Change 6 to 5 to get the last five years
       lastFiveYears.push(currentYear - i);
     }
 
@@ -204,7 +205,7 @@ const DocFolder = () => {
 
     const raw = JSON.stringify({
       "userid": user_id,
-      "clientid": id,
+      "clientid": clientid,
       "accountyear": yearRange,
       "filednotfiled": "No"
     });
@@ -220,12 +221,20 @@ const DocFolder = () => {
       const response = await fetch(`${url_}/saveData`, requestOptions);
       const result = await response.text();
       console.log(result);
+      console.log(clientid);
+      console.log(yearRange);
+      Navigate('fileupload', {
+        state: {
+          ClientID: clientid,
+          Year: yearRange
+        },
+      });
+
 
     } catch (error) {
       console.error('An error occurred while sending count data:', error);
     }
 
-    console.log(yearRange)
   };
 
   function GoBack() {
@@ -244,7 +253,7 @@ const DocFolder = () => {
           <div className="row">
             {lastFiveYearsArray.map((year, index) => (
               <div key={index} className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <Link to={`fileupload/${id}/${year - 1}-${year.toString().slice(-2)}`} onClick={() => sendCountData(year)} className={styles.folderlink}> {/* Pass the year to SendData */}
+                <div onClick={() => sendCountData(year)} className={styles.folderlink}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
                     <div className={styles.icon}>
                       <p className={styles.icons}>
@@ -253,11 +262,11 @@ const DocFolder = () => {
                       </p>
                     </div>
                     <div className={`${getFolderColor(index)} ${styles.cont}`}>
-                      <h5>A.Y {year - 1}-{year.toString().slice(-2)}</h5>
+                      <h5>A.Y {year}-{(year + 1).toString().slice(-2)}</h5>
                       <p >Financial Year {year - 1}-{year.toString().slice(-2)}</p>
                     </div>
                   </div>
-                </Link>
+                </div>
               </div>
             ))}
           </div>

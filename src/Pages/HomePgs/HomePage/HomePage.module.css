@@ -1,0 +1,25 @@
+.mainrow p {
+  font-weight: 100;
+}
+
+.slider {
+  margin-top: 4vh;
+  margin-bottom: 4vh;
+}
+.para {
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+.p {
+  font-size: 1.35vw;
+}
+
+@media only screen and (min-width: 300px) and (max-width: 600px) {
+  .slider {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+  .p {
+    font-size: 2.7vw;
+  }
+}

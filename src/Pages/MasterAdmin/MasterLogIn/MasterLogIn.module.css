@@ -1,0 +1,118 @@
+.workport {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 70%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+}
+
+/* Top Port Starts */
+.top {
+    height: 70%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.masterlogo {
+    height: 40%;
+    display: flex;
+    align-items: center;
+}
+
+.masterlogo img {
+    height: 40%;
+}
+
+.inputboxes {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonport {
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button1 {
+    color: white;
+    background-color: #fdd212;
+    border: none;
+    width: 45%;
+    height: 5vh;
+    font-size: 1.5vw;
+    border-radius: 10px;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+
+.label1 {
+    font-size: 1.3vw;
+    margin-bottom: -0.5rem;
+}
+
+.p {
+    display: inline-block;
+    color: red;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+}
+
+.ddmenu1 {
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    height: 3rem;
+    border: none;
+    outline: none;
+    color: #c1c1c1;
+    font-family: 'Indie Flower', cursive;
+    font-family: 'Oswald', sans-serif;
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0.5rem;
+    /* background-image: url(''); */
+    background-color: white;
+    width: 100%;
+}
+
+.ddmenu1:focus {
+    outline: none;
+    border: none;
+}
+
+/* Top Port Ends */
+
+/* bottom Port Starts */
+.bottom {
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 5vh;
+}
+
+.copyright {
+    width: 25%;
+}
+
+.textual {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-weight: 200;
+}
+
+.handles {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* bottom Port Ends */

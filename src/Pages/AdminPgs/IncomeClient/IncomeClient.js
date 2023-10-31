@@ -1,10 +1,10 @@
 import styles from './IncomeClient.module.css';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 
 const IncomeClient = () => {
-
+  const Navigate = useNavigate();
   const [cdata, setCdata] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -26,6 +26,7 @@ const IncomeClient = () => {
         .then(response => response.json())
         .then(data => {
           setCdata(data)
+          console.log(data)
         })
         .catch(error => console.log(error));
     } catch (error) {
@@ -41,7 +42,17 @@ const IncomeClient = () => {
   }, [totalIncomeClient]);
 
 
-
+  const Gotoincome = (cid, cname, cpan, ccategory, cprofession) => {
+    Navigate('myfolder', {
+      state: {
+        clientId: cid,
+        clientname: cname,
+        clientpan: cpan,
+        clientCategory: ccategory,
+        clientProfession: cprofession
+      },
+    });
+  }
 
   return (
     <div>
@@ -52,7 +63,7 @@ const IncomeClient = () => {
               <input
                 type="text"
                 className={`form-control ${styles.round}`}
-                placeholder="Search Client by Name"
+                placeholder="Search Client by Name/PAN"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -86,15 +97,14 @@ const IncomeClient = () => {
           <tbody>
             {cdata
               .filter((item) =>
-                item.name.toLowerCase().includes(searchTerm.toLowerCase())
+                item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.pan.toLowerCase().includes(searchTerm.toLowerCase())
               )
               .map((items, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <Link to={`file/${items.clientId}`} className='h6'>
-                    <td>{items.pan}</td>
-                  </Link>
+                  <td onClick={() => Gotoincome(items.clientId, items.name, items.pan, items.category, items.profession)}>{items.pan}</td>
                   <td>{items.mobile}</td>
                   <td>
                     <Link to="update">

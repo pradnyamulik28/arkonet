@@ -61,6 +61,9 @@
   left: 12%;
 }
 
+
+
+
 @media only screen and (max-width: 800px) {
   .help_text {
     position: fixed;
@@ -89,4 +92,22 @@
   .sidebar {
     display: none;
   }
+}
+
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+.myprofilelink input,
+ul.submenu {
+  display: none;
+}
+
+.myprofilelink label {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.myprofilelink input:checked~ul.submenu {
+  display: block;
 }

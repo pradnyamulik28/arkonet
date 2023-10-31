@@ -7,7 +7,9 @@ import {
 
 import Adminhome from './Pages/AdminPgs/Adminhome';
 import ClientPages from './Pages/ClientMobilePgs/ClientPages';
-import ChatBot from "../src/components/ChatBot/ChatBot"
+import MasterAdmin from './Pages/MasterAdmin/MasterAdmin';
+import HomeRoute from './Pages/HomePgs/HomeRoute';
+import ChatBot from "./components/ChatBot/ChatBot"
 
 function App() {
 
@@ -17,13 +19,13 @@ function App() {
     <div>
       <Router>
         <Routes>
-
+          <Route path='/*' element={<HomeRoute />} />
+          <Route path='/masteradmin/*' element={<MasterAdmin />} />
           <Route path='/admin/*' element={<Adminhome />} />
-          <Route path='/client/*' element={<ClientPages />} />
+          <Route path='/client/*' element={<ClientPages />} />          
         </Routes>
       </Router>
-      
-    <ChatBot />
+      <ChatBot />
     </div>
 
   );

@@ -1,9 +1,10 @@
 import styles from './TotalClient.module.css';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 
 const TotalClient = () => {
+  const Navigate = useNavigate();
   const [tcdata, setTcdata] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -35,6 +36,19 @@ const TotalClient = () => {
     totalClient();
   }, [totalClient]);
 
+
+  const Goto = (cid, cname, cpan, ccategory, cprofession) => {
+    Navigate('myfolder', {
+      state: {
+        clientId: cid,
+        clientname: cname,
+        clientpan: cpan,
+        clientCategory: ccategory,
+        clientProfession: cprofession,
+      },
+    });
+
+  }
   return (
     <div>
       <div>
@@ -78,13 +92,17 @@ const TotalClient = () => {
           <tbody>
             {tcdata
               .filter(item =>
-                item.name.toLowerCase().includes(searchQuery.toLowerCase())
+                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.pan.toLowerCase().includes(searchQuery.toLowerCase())
               )
+
               .map((items, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <Link to={`file/${items.clientId}`} className='h6'><td>{items.pan}</td></Link>
+                  {/* <Link to={`myfolder/${items.clientId}`} className='h6'> */}
+                  <td onClick={() => Goto(items.clientId, items.name, items.pan, items.category, items.profession)}>{items.pan}</td>
+                  {/* </Link> */}
                   <td>{items.mobile}</td>
                   <td><Link to="" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope-at" viewBox="0 0 16 16">

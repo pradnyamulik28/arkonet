@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import style from "./FileUpload.module.css";
 import upload from './upload.png';
 import Swal from 'sweetalert2';
-import { useParams } from 'react-router-dom';
 import { url_ } from '../../../Config';
+import { useLocation } from 'react-router-dom';
 
 
 const FileUpload = () => {
 
 
 
-  const { id } = useParams();
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
-  const { year } = useParams();
-
+  const clientid = useLocation().state.ClientID;
+  const year = useLocation().state.Year;
 
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileResponse, setFileResponse] = useState(false);
@@ -65,18 +64,20 @@ const FileUpload = () => {
     };
 
     try {
-      const response = await fetch(`${url_}/getfile/${user_id}/${id}/${year}`, requestOptions);
+      const response = await fetch(`${url_}/getfile/${user_id}/${clientid}/${year}`, requestOptions);
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       setDbfilelength(data.length)
       const extractedNames = data.map(file => {
         const fileid = file.id;
         const filePath = file.filePath;
-        const parts = file.fileName.split(`${user_id}_${id}_${year}_`);
+        const parts = file.fileName.split(`${user_id}_${clientid}_${year}_`);
         const extractedName = parts[1].split('.pdf')[0];
         return { fileid, extractedName, filePath };
       });
       setDbfilename(extractedNames);
+      // console.log(extractedNames)
+
     } catch (error) {
       console.error('An error occurred while fetching files:', error);
     }
@@ -98,7 +99,7 @@ const FileUpload = () => {
 
 
 
-
+  // console.log(filenameStatusArray)
 
 
 
@@ -120,9 +121,9 @@ const FileUpload = () => {
     };
 
     try {
-      const response = await fetch(`${url_}/getfilednotfiled/${user_id}/${id}/${year}`, requestOptions);
+      const response = await fetch(`${url_}/getfilednotfiled/${user_id}/${clientid}/${year}`, requestOptions);
       const data = await response.json();
-      if (data[0].filednotfiled === "No") {
+      if (data[0].filednotfiled === "no") {
         setFileResponse(false)
         console.log(data[0].filednotfiled)
       } else {
@@ -159,7 +160,7 @@ const FileUpload = () => {
             redirect: 'follow'
           };
 
-          fetch(`${url_}/updateFiledNotFiled/${user_id}/${id}/${year}`, requestOptions)
+          fetch(`${url_}/updateFiledNotFiled/${user_id}/${clientid}/${year}`, requestOptions)
             .then(response => console.log(response.status))
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
@@ -234,7 +235,7 @@ const FileUpload = () => {
       const formdata = new FormData();
       formdata.append("file", file);
       formdata.append("userid", user_id);
-      formdata.append("clientid", id);
+      formdata.append("clientid", clientid);
       formdata.append("accountyear", year);
       formdata.append("filename", filename);
 
@@ -296,6 +297,8 @@ const FileUpload = () => {
     }
   };
 
+
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Delete file Code
@@ -320,7 +323,9 @@ const FileUpload = () => {
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-        var raw = JSON.stringify(selectedFiles);
+        var raw = JSON.stringify({
+          "fileIds": selectedFiles
+        });
 
         var requestOptions = {
           method: 'DELETE',
@@ -405,6 +410,8 @@ const FileUpload = () => {
       console.error(`Error fetching or downloading ${contentType.toUpperCase()} file:`, error);
     }
   };
+  // console.log(clientid)
+  // console.log(year)
 
 
   function GoBack() {
@@ -468,6 +475,7 @@ const FileUpload = () => {
                     )}
                   </h2>
                 </div>
+
               </div>
             </div>
             <div className='container'>

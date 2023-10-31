@@ -32,6 +32,7 @@ const LeftSide = (props) => {
               <Link to="dashboard" className={styles.dash_text}><h6>Dashboard</h6></Link>
               <Link to="" className={styles.logout_text} onClick={handleLogout}><h6>{isLoggedIn ? ("Logout") : ("Login")}</h6></Link>
               <Link to="changepass" className={` ${styles.reset_text}`} ><h6>Change Password</h6></Link>
+              <Link to="userUpdate" className={` ${styles.reset_text}`} ><h6>UserUpdate</h6></Link>
             </div>
           ) : (
             <div className={`col-12 ${styles.helpbar}`}>

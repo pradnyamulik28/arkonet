@@ -1,0 +1,30 @@
+.Subplan_title {
+  color: #ffd401;
+}
+
+.seperator {
+	border-bottom:1px solid #a2a2a2;
+	width: 45px;
+	display: inline-block;
+	margin: 20px;
+}
+
+.sub_paybtn button {
+  height: 2rem;
+  width: 10rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffd401;
+  color: white;
+
+  font-weight: bolder;
+  font-size: 18px;
+  text-shadow: 2px 3px 5px #000000;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.Subplan_para {
+  font-family: 'Times New Roman', Times, serif;
+  color: gray;
+}

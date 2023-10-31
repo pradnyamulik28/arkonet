@@ -1,27 +1,96 @@
-import React from 'react';
-import style from './Help.module.css';
-import arkonet from '../../../Images/Arkonet.jpg'
-import { Link, useNavigate } from 'react-router-dom';
-import swal from 'sweetalert';
 
+import React, { useState } from 'react';
+import style from './Help.module.css'
+import { useNavigate } from 'react-router-dom';
+import { url_ } from '../../../Config';
+import { useEffect } from 'react';
 const Help = () => {
   const Navigate = useNavigate();
-  swal("Success", "Coming Soon....", "success");
-  Navigate(-1);
+
+
+  const user_id = window.localStorage.getItem('user_id');
+  const storedToken = window.localStorage.getItem('jwtToken');
+  const [HelpClientdata, setHelpClientdata] = useState([]);
+
+  useEffect(() => {
+    GetTotalClientEmail();
+
+  }, []);
+
+  const GetTotalClientEmail = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch(`${url_}/help/allrecords?userId=${user_id}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        setHelpClientdata(result)
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  const Goto = () => {
+    Navigate('createnewticket'
+      // , {
+      //   state: {
+      //     ClientID: clientid,
+      //     Year: yearRange
+      //   },
+      // }
+    )
+  }
+  const GOTO = (name, quarry, details, mdate) => {
+    Navigate('helpclientmailview'
+      , {
+        state: {
+          ClientName: name,
+          ClientQuarry: quarry,
+          ClientDetails: details,
+          MailDate: mdate
+        },
+      }
+    )
+  }
   return (
     <div>
-      <div class={style.logo1}>
-        <img src={arkonet} alt="Logo" />
+      <div className='d-flex justify-content-between mt-5 mb-4'>
+        <h2>Help</h2>
+        <h6 className={`mr-5 ${style.help_btn}`}><button onClick={Goto}> CREAT NEW TICKET</button></h6>
       </div>
-      <div class="info">
-        <h3>
-          <p>Welcome to the world of the Internet! The Internet is a global network that connects millions of computers, enabling communication, information sharing, and access to a vast array of resources. It has revolutionized the way we live, work, and interact.</p>
-          <p>From browsing websites to sending emails, streaming videos, and connecting through social media, the Internet has become an integral part of modern society.</p>
-        </h3>
-        <Link to={'/admin/'} style={{ color: 'blue', fontSize: '20px' }}>Click here to login.</Link>
+      <div>
+        <table className={`table table-striped ${style.helpTable}`}>
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Quarry</th>
+              <th scope="col">Details</th>
+
+              <th scope="col"></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {HelpClientdata.map(item => (
+              <tr>
+                <td>{item.name}</td>
+                <td>{item.query}</td>
+                <td>{item.detail}</td>
+                <td onClick={() => GOTO(item.name, item.query, item.detail, item.date)} style={{ color: "blue", cursor: "pointer" }}>View</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
 
 export default Help;
+

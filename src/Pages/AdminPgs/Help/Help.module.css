@@ -1,20 +1,14 @@
-.logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
+.help_btn button {
+  height: 3rem;
+  width: 25rem;
+  border-radius: 25px;
+  border: none;
+  background-color: #ffd401;
+  color: white;
 
-.logo1 img {
-  width: 70%;
-  height: auto;
-}
-
-.info {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 18px;
-  color: #333333;
+  font-weight: bolder;
+  font-size: 23px;
+  text-shadow: 2px 3px 5px #000000;
+  margin-bottom: 10px;
+  cursor: pointer;
 }

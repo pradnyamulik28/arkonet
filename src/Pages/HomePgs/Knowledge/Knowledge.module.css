@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+.maincontainer * {
+	font-family: "Lexend Deca", sans-serif;
+}
+
+.h1{
+    color: #fed300;
+}
+
+.card{
+    background-color: beige;
+}
+
+.information{
+    color: black;
+    font-weight:bolder;
+    font-size: larger;
+}
+relative Link{
+   text-align: right;
+}
+.heading{
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: large;
+    color: #fed300;
+}
+.seperator {
+	border-bottom:1px solid #a2a2a2;
+	width: 45px;
+	display: inline-block;
+	margin: 20px;
+}
+
+.image1,.image3{
+   
+    object-fit: cover;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+}
+
+.image2{
+   
+    object-fit: cover;
+    clip-path: polygon(0 0, 100% 25%, 100% 100%, 0 100%);
+}
+
+
+.image5{
+    height: 230px;
+    object-fit: cover;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 75%);
+}
+
+.image4,.image6{
+    
+    object-fit: cover;
+    clip-path: polygon(0 25%, 100% 0, 100% 100%, 0 100%);
+}
+/* Using tailwind for this */
