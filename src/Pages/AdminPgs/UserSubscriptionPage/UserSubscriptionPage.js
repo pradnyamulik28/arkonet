@@ -10,7 +10,9 @@ const UserSubscriptionPage = () => {
   const Navigate = useNavigate();
   const [isRefferFriend,setIsRefferFriend]=useState(true);
   const [isSuggession,setIsSuggession]=useState(false);
+  const [isValidMobile, setIsValidMobile] = useState(true);
 
+  const storedToken=localStorage.getItem("jwtToken");
 
   const [refferFriend,setRefferFriend]=useState({
     name:"",
@@ -26,7 +28,20 @@ const UserSubscriptionPage = () => {
   function handleChange(e){
     const { name, value } = e.target;
     if(isRefferFriend){
-      setRefferFriend({...refferFriend,[name]:value})
+     switch(name){
+      case "contactNo":
+        setRefferFriend({ ...refferFriend, [name]: value.replace(/\D/g, "") });
+        e.target.value = value.replace(/\D/g, "");
+        const mobilePattern = /^[789]\d{9}$/;
+        setIsValidMobile(mobilePattern.test(e.target.value));
+        break;
+      default:
+        setRefferFriend({...refferFriend,[name]:value})
+        break;
+     }
+      
+     
+      
     }
     if(isSuggession){
       setSuggession({...suggession,[name]:value})
@@ -47,12 +62,13 @@ const UserSubscriptionPage = () => {
   }
 
   const [userInfo,setUserInfo]=useState({
+    userid:localStorage.getItem("user_id"),
     userPAN:localStorage.getItem("pan"),
     days_left:"0",
     referredBy:"",//"Sonali Shyamkumar Goel",
     refferedPan:"",
     registration_date:"14 April 2024",
-    end_date:"27 April 2023"
+    end_date:"20 November 2023"
   });
 
 
@@ -74,25 +90,128 @@ const UserSubscriptionPage = () => {
   }
 
 
+
   function fetchData(){
-const daysDiff = (Math.floor((new Date('27 April 2024')-new Date())/ (1000 * 60 * 60 * 24)));
+const daysDiff = (Math.floor((new Date(userInfo.end_date)-new Date())/ (1000 * 60 * 60 * 24)))+1;
 setUserInfo({...userInfo,days_left:`${daysDiff}`});
   }
 
   function handleSubmit(){
     if(isRefferFriend){
-      console.log(refferFriend)
+      
+      if(!isValidMobile||refferFriend.contactNo==="" ||
+        refferFriend.name===""
+        ||refferFriend.profession==="")
+      {
+        console.log(isValidMobile)
+        swal.fire({
+          icon:"warning",
+          text:(!isValidMobile||refferFriend.contactNo==="")?`Invalid Mobile no`:
+          refferFriend.name===""?`Please enter a name.`:
+          refferFriend.profession===""&&`Please enter profession`
+        })
+      }
+      else{
+        console.log(isValidMobile,refferFriend.name,refferFriend.contactNo,refferFriend.profession)
+        saveRefferFriend();
       setRefferFriend({
         name:"",
         contactNo:"",
         profession:""
-      })
+      })        
+      }     
+      
     }
     if(isSuggession){
-      console.log(suggession)
+      if(suggession.suggession==="")
+      {
+        swal.fire({
+          icon:"warning",
+          text:"Please fill in some suggession."
+        })
+      }
+      else{
+        saveSuggession();
       setSuggession({
         suggession:""
       })
+      }
+      
+    }
+  }
+
+  async function saveRefferFriend() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var raw = JSON.stringify({
+      userid: userInfo.userid,
+      pan: userInfo.userPAN,
+      name: refferFriend.name,
+      contactno: refferFriend.contactNo,
+      profession: refferFriend.profession,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${url_}/save/Refear_a_friend`,
+        requestOptions
+      );
+      const result = await response.text();
+
+      if (response.status === 200) {
+        swal.fire({
+          icon: "success",
+          text: "Thank you for refference.",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  async function saveSuggession() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var raw = JSON.stringify({
+      userid: userInfo.userid,
+      pan: userInfo.userPAN,
+      seggesion: suggession.suggession,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${url_}/save/User_seggesion`,
+        requestOptions
+      );
+      const result = await response.text();
+
+      if (response.status === 200) {
+        swal.fire({
+          icon: "success",
+          text: "Thank you for your suggession..",
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -111,8 +230,13 @@ fetchData();
         <div className={`${style.mainhead}`}>
           <div className={`${style.circular}`}>
             <div className={`${style.card1}`}>
-              <h3 className={`${style.h31}`}>{userInfo.days_left}</h3>
-              <p className={`${style.p1}`}>Days Left</p>
+              
+              <h3 className={userInfo.days_left>=15 ? `${style.h31}` : 
+                              userInfo.days_left<=0 ? `${style.h31} ${style.subs_end}` : 
+                                `${style.h31} ${style.subs_about_end}`}>
+                {Math.abs(userInfo.days_left)}</h3>
+               
+              <p className={`${style.p1}`}>{userInfo.days_left<0?`Days ago`:`Days Left`}</p>
             </div>
           </div>
           <div className={`${style.mainheadtextual}`}>
@@ -160,7 +284,7 @@ fetchData();
             <div className={`${style.singleinput}`}>
               <div className={`${style.formtitle}`}><p className={`${style.formtitlep}`}>Contact Number</p></div>
               <div className={`${style.formvalue}`}><input name="contactNo" className={`${style.formvalueinput}`} type="text" 
-                onChange={handleChange} value={refferFriend.contactNo} /></div>
+                onChange={handleChange} value={refferFriend.contactNo} maxLength={10}/></div>
             </div>
             <div className={`${style.singleinput}`}>
               <div className={`${style.formtitle}`}><p className={`${style.formtitlep}`}>Profession</p></div>
@@ -184,11 +308,6 @@ fetchData();
             </div>
 
           </div>
-
-
-
-          
-          
 
         </div>
 

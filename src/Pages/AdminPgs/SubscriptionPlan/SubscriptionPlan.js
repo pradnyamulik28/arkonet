@@ -6,8 +6,11 @@ import { url_ } from '../../../Config';
 
 const SubscriptionPlan = () => {
   const location=useLocation();
+  const userPAN=localStorage.getItem("pan");
+
   console.log(location.pathname)
   const [isVisiting,setIsVisiting]=useState(false);
+  const [clientCount,setClientCount]=useState(0);
 
   const storedToken=localStorage.getItem("jwtToken")
   useEffect(()=>{
@@ -16,106 +19,80 @@ const SubscriptionPlan = () => {
     ){
       setIsVisiting(true)
     }
-
-
-
     getSubscriptionPlan();
+    checkNoOfClients();
   },[location.pathname])
   const Navigate = useNavigate()
   const [plans,setPlans] = useState([
-    // {
-    //   total_clients: "1-250",
-    //   subscription: "4,000",
-    //   subsplan: "regular",
-    //   value:"1-250"
-    // },
-    // {
-    //   total_clients: "251-500",
-    //   subscription: "6,000",
-    //   subsplan: "regular",
-    //   value:"251-500"
-    // },
-    // {
-    //   total_clients: "501-1000",
-    //   subscription: "9,000",
-    //   subsplan: "regular",
-    //   value:"501-1000"
-    // },
-    // {
-    //   total_clients: "1001-1500",
-    //   subscription: "12,000",
-    //   subsplan: "regular",
-    //   value:"1001-1500"
-    // },
-    // {
-    //   total_clients: "1501-2000",
-    //   subscription: "15,000",
-    //   subsplan: "regular",
-    //   value:"1501-2000"
-    // },
-    // {
-    //   total_clients: "2001-3000",
-    //   subscription: "20,000",
-    //   subsplan: "regular",
-    //   value:"2001-3000"
-    // },
-    // {
-    //   total_clients: "3001-4000",
-    //   subscription: "25,000",
-    //   subsplan: "regular",
-    //   value:"3001-4000"
-    // },
-    // {
-    //   total_clients: "4001-5000",
-    //   subscription: "30,000",
-    //   subsplan: "regular",
-    //   value:"4001-5000"
-    // },
-    // {
-    //   total_clients: "Extra 50",
-    //   subscription: "800",
-    //   subsplan: "additional",
-    //   value:"50"
-    // },
-    // {
-    //   total_clients: "Extra 100",
-    //   subscription: "1600",
-    //   subsplan: "additional",
-    //   value:"100"
-    // },
-
+    
 
   ])
 
 
 
 
-  async function getSubscriptionPlan(){
+  async function getSubscriptionPlan() {
     var requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
+      method: "GET",
+      redirect: "follow",
     };
 
-fetch(`${url_}/subscriptionPacks`, requestOptions)
-  .then(response => response.json())
-  .then(result => {//console.log(result)
-    setPlans(result);
-  })
-  .catch(error => console.log('error', error));
-
+    try {
+      const response = await fetch(`${url_}/subscriptionPacks`, requestOptions);
+      const result = await response.json();
+      if (response.status === 200) {
+        // console.log(result);
+        setPlans(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
+  async function checkNoOfClients(){
+    var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${storedToken}`);
+  
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  try{const response=await fetch(`${url_}/checkstatus/sufficient/${userPAN}`, requestOptions);
+  const result=await response.text();
+  
+  if(response.status===200){
+    console.log(result);
+    setClientCount(parseInt(result));
+  }}catch(error){
+    console.log(error)
+  }
+  
+  }
 
 
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
 
   const handleCheckboxChange = (event, index) => {
-    if (selectedCheckbox === index) {
+    
+
+    const planHigherClient=plans[index].subtype.split("-")[1];
+    // console.log(clientCount,planHigherClient)
+    if(clientCount>planHigherClient){
+      swal.fire(
+        {
+          icon:"info",
+          text:`Your existing client count ${clientCount} is which is higher than selected plan. Please select higher plan.`
+        }
+      )
+    }
+    else{if (selectedCheckbox === index) {
       setSelectedCheckbox(null);
     } else {
       setSelectedCheckbox(index);
-    }
+    }}
   };
 
   const GOTO = (title) => {
@@ -155,7 +132,7 @@ fetch(`${url_}/subscriptionPacks`, requestOptions)
         <table class="table table-striped ">
           <thead>
             <tr>
-              <th scope="col" class="text-center"></th>
+              {!isVisiting&&<th scope="col" class="text-center"></th>}
               <th scope="col" class="text-center">TOTAL CLIENTS</th>
               <th scope="col" class="text-center">SUBSCRIPTIONS</th>
 
@@ -164,9 +141,9 @@ fetch(`${url_}/subscriptionPacks`, requestOptions)
           <tbody>
             {plans.map((item, index) => (
               <tr key={index}>
-                <td scope="row" class="text-center">
+                {!isVisiting&&<td scope="row" class="text-center">
                   <input type="checkbox" name={item.subsplan} id="" checked={selectedCheckbox === index}
-                  onChange={(e) => handleCheckboxChange(e, index)}  value={item.value} /></td>
+                  onChange={(e) => handleCheckboxChange(e, index)}  value={item.value} /></td>}
                 <td className='text-center'>{item.subtype}</td>
                 <td className='text-center'>&#8377;{item.subscriptionprice}/-</td>
               </tr>
