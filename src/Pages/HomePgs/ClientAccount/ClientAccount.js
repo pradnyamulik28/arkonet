@@ -1,16 +1,97 @@
+import { useState } from "react";
 import taxko from "../../../Images/Taxko.jpg"
 import style from "./ClientAccount.module.css"
+import {url_} from "../../../Config"
+import swal from "sweetalert2";
 function ClientAccount(){
-  function handleSubmit(e){
-    e.preventDefault()
+
+
+const [formData,setFormData]=useState({
+  clientname:"",
+  clientmobileno:"",
+  taxprofname:"",
+  taxprofmobile:""
+})
+
+const [isOpen,setIsOpen]=useState(false);
+
+function handleChange(e)
+{
+  const { name, value } = e.target;
+  setFormData({...formData,[name]:value})
+
+}
+
+function handleModal(){
+setIsOpen(!isOpen)
+
+}
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (
+      formData.clientname === "" ||
+      formData.clientmobileno === "" ||
+      formData.taxprofname === "" ||
+      formData.taxprofmobile === ""
+    ) {
+      swal.fire({
+        text:
+          formData.clientname === ""
+            ? `Please enter your name.`
+            : formData.clientmobileno === ""
+            ? `Please enter your mobile no.`
+            : formData.taxprofname === ""
+            ? `Please enter Tax Professional name.`
+            : formData.taxprofmobile === "" &&
+              `Please enter Tax professional mobile no.`,
+      });
+    } else {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        yourname: formData.clientname,
+        yourmobileno: formData.clientmobileno,
+        taxprofessionalname: formData.taxprofname,
+        taxprofessionalmobile: formData.taxprofmobile,
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      try {
+        const response = await fetch(
+          `${url_}/save/Client_TaxProfessional_data`,
+          requestOptions
+        );
+        const result = await response.text();
+        if (response.status === 200) {
+          swal.fire({
+            icon: "success",
+            text: "Thank you for registering with us. We will contact you soon.",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      setFormData({
+        clientname: "",
+        clientmobileno: "",
+        taxprofname: "",
+        taxprofmobile: "",
+      });
+    }
   }
     return(
-        <div
-                className={`${style.yellow}`}
-                data-target=".bd-example-modal-lg"
-                data-toggle="modal"
-              >
-                <div className="modal fade bd-example-modal-lg" id="modal_name">
+        <div>
+                <div className={`modal  bd-example-modal-lg`} id="modal_name">
                   <div className="modal-dialog modal-lg modal-dialog-centered">
                     <div className="modal-content">
                       <div
@@ -20,10 +101,10 @@ function ClientAccount(){
                           alignItems: "center",
                         }}
                       >
-                        <div >
-                          <h5>WHO IS YOUR TAX PROFESSIONAL?</h5>
+                        <div className={style.title}>
+                          <h5>WHO IS YOUR TAX PROFESSIONAL? <span aria-hidden="true" style={{"font-size":"2rem", "alignSelf":"end"}}>&times;</span></h5>
                          
-  <span aria-hidden="true" style={{"font-size":"2rem", "alignSelf":"end"}}>&times;</span>
+  
 
                         </div>
                         <div>
@@ -46,9 +127,12 @@ function ClientAccount(){
                             <label htmlFor="">YOUR NAME</label>
                             <input
                               type="text"
+                              onChange={handleChange}
                               className={`form-control ${style.inputText}`}
-                              name="full_name"
-                              id="full_name"
+                              name="clientname"
+                              id="clientname"
+                              value={formData.clientname}
+                              autocomplete="off"
                               placeholder="FULL NAME"
                             />
                           </div>
@@ -56,18 +140,24 @@ function ClientAccount(){
                             <label htmlFor="">YOUR MONILE NUMBER</label>
                             <input
                               type="text"
+                              onChange={handleChange}
                               className={`form-control ${style.inputText}`}
-                              name="mobile_no"
-                              id="mobile_no"
+                              value={formData.clientmobileno}
+                              name="clientmobileno"
+                              id="clientmobileno"
+                              autocomplete="off"
                             />
                           </div>
                           <div className="form-group">
                             <label htmlFor="">YOUR TAX PROFESSIONAL NAME</label>
                             <input
                               type="text"
+                              onChange={handleChange}
                               className={`form-control ${style.inputText}`}
-                              name="tax_prof_name"
-                              id="tax_prof_name"
+                              name="taxprofname"
+                              value={formData.taxprofname}
+                              id="taxprofname"
+                              autocomplete="off"
                             />
                           </div>
                           <div className="form-group">
@@ -76,9 +166,13 @@ function ClientAccount(){
                             </label>
                             <input
                               type="text"
+                              onChange={handleChange}
                               className={`form-control ${style.inputText}`}
-                              name="tax_prof_no"
-                              id="tax_prof_no"
+                              name="taxprofmobile"
+                              value={formData.taxprofmobile}
+                              id="taxprofmobile"
+                              autocomplete="off"
+                              maxLength={10}
                             />
                           </div>
                         </form>
@@ -109,7 +203,7 @@ function ClientAccount(){
                     </div>
                   </div>
                 </div>
-                <a href="##">CREATE NEW ACCOUNT</a>
+                
               </div>
     )
 }

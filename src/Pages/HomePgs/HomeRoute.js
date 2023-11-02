@@ -30,6 +30,7 @@ function HomeRoute() {
 
   const [isPanelActive, setIsPanelActive] = useState(false);
 
+  const [isClientRegForm,setIsClientRegForm]=useState(false);
   const [slideInformation, setSlideInformation] = useState(null);
 
   const handleClick = (id, slideInfo) => {
@@ -69,9 +70,15 @@ function HomeRoute() {
   function handlePanel() {
     setIsPanelActive(!isPanelActive);
   }
+
+  function handleClientRegForm(){
+    console.log("cli")
+    setIsClientRegForm(!isClientRegForm);
+  }
   return (
     <>
       <div className={` ${style.mainrow}`}>
+        {/* <div className={style.headerwrap}> */}
         <div className={`${style.header}`}>
           <div className={`${style.leftyear}`}>
             <img src={taxko} alt="" />
@@ -135,7 +142,15 @@ function HomeRoute() {
                 </button>
               </div>
               <div className="col-4">
-                <ClientAccount />
+              <div
+                className={`${style.yellow}`}   
+                    onClick={handleClientRegForm}
+              >
+                <Link>CREATE NEW ACCOUNT</Link>       
+                    
+                
+                </div>
+                {isClientRegForm&&<ClientAccount />}    
               </div>
             </div>
           </div>
@@ -190,7 +205,7 @@ function HomeRoute() {
                 TAXKO
               </Link>
               <a
-                href="##"
+                href=""
                 className={`${style.dropbtn1} ${style.neckancher} ${style.acherline}`}
               >
                 TAXKO ENTERPRISE
@@ -224,10 +239,14 @@ function HomeRoute() {
             </Link>
           </div>
         </div>
+        {/* </div> */}
+        
 
         {!isPanelActive && (
           <>
+            <div ref={homeRef} >
             <HomePage />
+            </div>
             <br />
             <div ref={featureRef}>
               <Konwledge handleScroll={handleClick} />

@@ -5,12 +5,16 @@ import swal from 'sweetalert2';
 import { url_ } from '../../../Config';
 
 const SubscriptionPlan = () => {
+
+  const Navigate = useNavigate();
   const location=useLocation();
   const userPAN=localStorage.getItem("pan");
 
-  console.log(location.pathname)
+  //console.log(location.pathname)
   const [isVisiting,setIsVisiting]=useState(false);
   const [clientCount,setClientCount]=useState(0);
+  const [isPaid,setIsPaid]=useState(false);
+  const [plans, setPlans] = useState([]);
 
   const storedToken=localStorage.getItem("jwtToken")
   useEffect(()=>{
@@ -18,17 +22,15 @@ const SubscriptionPlan = () => {
       location.pathname==="/subscriptionplan" || location.pathname==="/"
     ){
       setIsVisiting(true)
+      // getSubscriptionPlan(true);
     }
+    else{
+      checkNoOfClients();
+    // getSubscriptionPlan(false);
+    }    
     getSubscriptionPlan();
-    checkNoOfClients();
-  },[location.pathname])
-  const Navigate = useNavigate()
-  const [plans,setPlans] = useState([
     
-
-  ])
-
-
+  },[isVisiting,isPaid,clientCount])
 
 
   async function getSubscriptionPlan() {
@@ -41,8 +43,18 @@ const SubscriptionPlan = () => {
       const response = await fetch(`${url_}/subscriptionPacks`, requestOptions);
       const result = await response.json();
       if (response.status === 200) {
-        // console.log(result);
-        setPlans(result);
+        
+       if(isPaid||isVisiting)
+        {
+          setPlans(result)
+        }
+        else if(!isVisiting && !isPaid){
+          const finalPlanArray=result.filter((item)=>{
+            return !item.subtype.includes("Extra")
+          })
+          //console.log(finalPlanArray)
+          setPlans(finalPlanArray);
+        }        
       }
     } catch (error) {
       console.log(error);
@@ -50,26 +62,33 @@ const SubscriptionPlan = () => {
   }
 
 
-  async function checkNoOfClients(){
+  async function checkNoOfClients() {
     var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${storedToken}`);
-  
-  var requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-    redirect: 'follow'
-  };
-  
-  try{const response=await fetch(`${url_}/checkstatus/sufficient/${userPAN}`, requestOptions);
-  const result=await response.text();
-  
-  if(response.status===200){
-    console.log(result);
-    setClientCount(parseInt(result));
-  }}catch(error){
-    console.log(error)
-  }
-  
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${url_}/checkstatus/sufficient/${userPAN}`,
+        requestOptions
+      );
+      const result = await response.json();
+      if (response.status === 200) {
+        
+        setClientCount(parseInt(result.count));
+        // setClientCount(800);
+        setIsPaid(result.isPaid);
+        // setIsPaid(true);
+      }
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
@@ -103,7 +122,11 @@ const SubscriptionPlan = () => {
     }
     else{
       console.log(plans[selectedCheckbox])
-      Navigate('subcription')
+      Navigate('subcription',
+      {state:{subs_pack:plans[selectedCheckbox].subtype,
+        subs_amount:plans[selectedCheckbox].subscriptionprice,
+        no_of_client:plans[selectedCheckbox].accesscliet
+      }})
     }
     
     //   , {

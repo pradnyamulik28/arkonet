@@ -4,12 +4,24 @@ import ImageModal from '../../../components/ImageModal/ImageModal'; // Import th
 import taxko from "../../../Images/Taxko.jpg";
 import arkonet from "../../../Images/Arkonet.jpg";
 import swal from 'sweetalert2';
+import { useLocation,useNavigate } from 'react-router-dom';
+import { url_ } from '../../../Config';
 
 const Subscription = () => {
+const Navigate=useNavigate()
+  const {subs_pack,subs_amount,no_of_client}=useLocation().state;
+  console.log(subs_pack,subs_amount,no_of_client);
+
+  const userInfo={
+    userid:localStorage.getItem("user_id"),
+    userPAN:localStorage.getItem("pan"),
+    jwtToken:localStorage.getItem("jwtToken")
+  }
+
 
   const [modalVisible, setModalVisible] = useState(false);
   const fileInputRef = useRef(null);
-  const [selectFile,setSelectedFile]=useState();
+  const [selectedFile,setSelectedFile]=useState(null);
   const maxSize=10;
 
   const handleClick = () => {
@@ -67,7 +79,7 @@ const Subscription = () => {
     
           reader.onload = (e) => {            
             const binaryData = e.target.result;           
-            setSelectedFile(renamedFile.name);
+            setSelectedFile(renamedFile);
             
           };
           reader.readAsDataURL(file);
@@ -90,6 +102,85 @@ const Subscription = () => {
       }
     }
   }
+
+
+  async function submitAcknowledgement(e) {
+    e.preventDefault()
+
+
+    const message = `Dear TAXKO,
+  Greeting from TAXKO!
+
+  I hope this message finds you well. 
+  
+  Our client ${localStorage.getItem("user_name")}, has made payment for ${subs_pack} subcription pack worth Rs${subs_amount}. 
+  Following is the attachment of payment acknowledgement.Kindly activate the subscription as soon as possible.
+                    
+  Best regards,
+
+  ${localStorage.getItem("user_name")},
+  Contact no : ${localStorage.getItem("mobile")}`;
+
+console.log(message)
+
+    swal.fire({
+      title: 'Sending Acknowledgement',
+      text: 'Please wait...',
+      showConfirmButton: false,
+      onBeforeOpen: () => {
+        swal.showLoading();
+      },
+    });
+
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${userInfo.jwtToken}`);
+
+    var formdata = new FormData();
+    formdata.append("aceesclient", no_of_client);
+    formdata.append("userid", userInfo.userid);
+    formdata.append("attachmentContent", selectedFile);
+    formdata.append("subscriptionprice", subs_amount);
+    formdata.append("subscriptiontype", subs_pack);
+    formdata.append("subject", "Payment Acknowledgement");
+    formdata.append("text", message);
+
+    var requestOptions = {
+      method: "PUT",
+      headers: myHeaders,
+      body: formdata,
+      redirect: "follow",
+    };
+
+    try{
+      const response= await fetch(`${url_}/Subscription/${userInfo.userPAN}`, requestOptions);
+      const result=await response.text();
+
+
+      if (response.status === 200) {
+        swal.close();
+        swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Acknowledgement Submitted.!',
+          text:"Thank you for payment.Your subscription will be activated soon.",
+          showConfirmButton: false,
+          timer: 7000
+        }); 
+        Navigate('/admin/dashboard');
+        
+      } else {  
+        swal.close();
+        swal.fire("Failed!", `${result}`, "error");
+      }}catch(error){
+        swal.close();
+        swal.fire("Failed!", `${error}`, "error");
+      }
+  }
+
+
+
+
 
   return (
     <div className={`${style.workport}`}>
@@ -180,6 +271,11 @@ const Subscription = () => {
             <p className={`${style.para2}`}>Make payment using ARKONET QR code or using UPI ID or NEFT/RTGS/IMPS payment to Bank Account, upload payment acknowledgement receipt upon successful transaction. once you submit payment  acknowledgement receipt , it may take 48 hours to reflect payment details in TAXKO system.</p>
           </div>
 
+          <div className={`${style.message}`} >
+            <h6 className={`${style.h62}`}>Selected Pack</h6>
+            <p className={`${style.para2}`}>{`${subs_pack} Clients`}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{`Amount :`}&nbsp;&#8377;{`${subs_amount}`}/-</p>
+          </div>
+
           <div className={`${style.attatchment} mb-4`}>
             <di className={`${style.leftitle}`}>
               <h6 className={`${style.h62}`}>ATTATCHMENT</h6>
@@ -189,14 +285,14 @@ const Subscription = () => {
                 <label htmlFor="file">
                   <input className={`${style.input1}`} ref={fileInputRef} type="file" id='file' onChange={handleFileChange}/>
                   <div className={`${style.card1}`}><p className={`${style.cardtext}`}>Upload here</p></div>
-                  <h6 className={`${style.h}`}>{selectFile?selectFile:"jpeg, pdf fromat accepted"}</h6></label>
+                  <h6 className={`${style.h}`}>{selectedFile?selectedFile.name:"jpeg, pdf fromat accepted"}</h6></label>
               </div>
 
             </div>
           </div>
 
           <div className={`${style.btn} `}>
-            <button className={`${style.button1} `} type="submit">SUMBIT</button>
+            <button className={`${style.button1} `} type="submit" onClick={submitAcknowledgement}>SUMBIT</button>
           </div>
         </div>
 

@@ -278,18 +278,21 @@ fetchData();
 
           {isRefferFriend&&<><div className={`${style.singleinput}`}>
               <div className={`${style.formtitle}`}><p className={`${style.formtitlep}`}>Name</p></div>
-              <div className={`${style.formvalue}`}><input name="name" className={`${style.formvalueinput}`} type="text" 
-                onChange={handleChange} value={refferFriend.name} /></div>
+              <div className={`${style.formvalue}`}>
+                <input name="name" className={`${style.formvalueinput}`} type="text" 
+                onChange={handleChange} value={refferFriend.name}  autocomplete="off"/></div>
             </div>
             <div className={`${style.singleinput}`}>
               <div className={`${style.formtitle}`}><p className={`${style.formtitlep}`}>Contact Number</p></div>
-              <div className={`${style.formvalue}`}><input name="contactNo" className={`${style.formvalueinput}`} type="text" 
-                onChange={handleChange} value={refferFriend.contactNo} maxLength={10}/></div>
+              <div className={`${style.formvalue}`}>
+                <input name="contactNo" className={`${style.formvalueinput}`} type="text" 
+                onChange={handleChange} value={refferFriend.contactNo} maxLength={10} autocomplete="off"/></div>
             </div>
             <div className={`${style.singleinput}`}>
               <div className={`${style.formtitle}`}><p className={`${style.formtitlep}`}>Profession</p></div>
-              <div className={`${style.formvalue}`}><input name="profession" className={`${style.formvalueinput}`} type="text" 
-                onChange={handleChange} value={refferFriend.profession} /></div>
+              <div className={`${style.formvalue}`}>
+                <input name="profession" className={`${style.formvalueinput}`} type="text" 
+                onChange={handleChange} value={refferFriend.profession}  autocomplete="off"/></div>
             </div></>}
 
 

@@ -7,7 +7,7 @@ import introduction from "../../../Images/introduction.jpg";
 function HomePage() {
     
   return (
-    <>
+    <div className={` ${style.mainrow}`}>
  
      <div id="carouselExampleControls" className={`carousel slide ${style.slider}`} data-ride="carousel">
    <div class="carousel-inner">
@@ -42,7 +42,7 @@ function HomePage() {
      
      
      
-     </>
+     </div>
   );
 }
 export default HomePage;
