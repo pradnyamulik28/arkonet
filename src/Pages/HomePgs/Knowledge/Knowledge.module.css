@@ -35,26 +35,26 @@ relative Link{
 
 .image1,.image3{
    
-    object-fit: cover;
+    object-fit: cover !important;
     clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
 }
 
 .image2{
    
-    object-fit: cover;
+    object-fit: cover !important;
     clip-path: polygon(0 0, 100% 25%, 100% 100%, 0 100%);
 }
 
 
 .image5{
     height: 230px;
-    object-fit: cover;
+    object-fit: cover !important;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 75%);
 }
 
 .image4,.image6{
     
-    object-fit: cover;
+    object-fit: cover !important;
     clip-path: polygon(0 25%, 100% 0, 100% 100%, 0 100%);
 }
 /* Using tailwind for this */

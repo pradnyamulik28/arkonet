@@ -14,13 +14,35 @@
 .mainrow p {
     font-weight: 100;
 }
-/* .headerwrap{
+.book_now {
+    background: #fed300;
+    cursor: pointer;
+    /* border-radius: 45%; */
+    border-top-left-radius: 15px 15px;
+    border-top-right-radius: 15px 15px;
+    color: #fff;
+    display:inline-block;
+    font-size: 0.6rem;
+    font-weight: 900;
+    width: 6rem;
+    height: 2.5rem;
+    line-height: 50px;
     position: fixed;
-    top: 0;
-}
-.contentwrap{
-   top:20rem
-} */
+    
+    right: 0;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    -moz-transform:rotate(-90deg);
+    -ms-transform:rotate(-90deg);
+    -o-transform:rotate(-90deg);
+    -webkit-transform:rotate(-90deg);
+    transform-origin: bottom right;
+    
+    z-index: 1000;
+    /* Hover styles, 
+    media queries */
+  }
 
 .header {
     width: 100vw;
@@ -40,6 +62,7 @@
 .leftyear img {
     width: 7rem;
     height: auto;
+    margin-left: 5rem;
 }
 .modalimg {
     width: 3rem;
@@ -320,12 +343,14 @@ color: #fdffff;
 {
   display: block;
 }
-
+.ourteam{
+    width: 70%;
+}
 /* //////////////////////////////////////////////////// */
 @media only screen and (min-width: 300px) and (max-width: 600px) {
 
     .neckbar .neckancher {
-        font-size: 60%;
+        font-size: 55%;
     }
 
     .neckbar * {
@@ -340,6 +365,7 @@ color: #fdffff;
     .leftyear img {
         width: 5rem;
         height: auto;
+        margin-left: 2rem;
     }
 
     .neckbar {
@@ -385,7 +411,6 @@ color: #fdffff;
       
 
 }
-
 @media only screen and (min-width: 600px) and (max-width: 800px) {
     .neckbar .neckancher {
         font-size: 90%;
@@ -393,4 +418,50 @@ color: #fdffff;
     .dropdowncontent a {
         font-size: 100%;
       }
+
+      .leftyear img {
+        
+        margin-left: 3rem;
+    }
+    
+}
+@media only screen and (min-width: 800px){
+    .book_now{
+        bottom: 12rem;
+    }
+    
+}
+
+
+
+@media only screen and (max-width: 800px) {
+.book_now {
+    background: #fed300;
+    cursor: pointer;
+    border-radius: 50%;
+    /* border-top-left-radius: 15px 15px;
+    border-top-right-radius: 15px 15px; */
+    color: #fff;
+    display:inline-block;
+    font-size: 0.6rem;
+    font-weight: 900;
+    width: 3.5rem;
+    height: 3.5rem;
+    line-height: 50px;
+    position: fixed;
+    bottom: 5.5rem;;
+    right: 1.8rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    -moz-transform:rotate(0deg);
+    -ms-transform:rotate(0deg);
+    -o-transform:rotate(0deg);
+    -webkit-transform:rotate(0deg);
+    transform-origin: bottom right;
+    
+    z-index: 1000;
+    /* Hover styles, 
+    media queries */
+  }
 }

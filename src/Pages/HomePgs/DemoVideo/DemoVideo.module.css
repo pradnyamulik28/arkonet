@@ -15,6 +15,9 @@
 
 .outer {
   border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .video_container {
@@ -29,7 +32,7 @@
 }
 
 .video_wrapper {
-  width: 100%;
+  width: 80%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -43,6 +46,7 @@ video {
 }
 
 .play_button_wrapper {
+  cursor: pointer;
   position: absolute;
   top: 0;
   left: 0;
@@ -56,11 +60,17 @@ video {
   pointer-events: none;
 }
 
+.play_btn {
+  cursor: pointer;
+  transition: opacity 0.3s;
+  
+}
+
 /* #circle_play_b {
   cursor: pointer;
   pointer-events: auto;
   opacity: 1;
-}
+} */
 
 #circle_play_b svg {
   width: 100px;
@@ -71,7 +81,7 @@ video {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   opacity: 0.9;
-} */
+}
 
 /* Responsive styles for smaller screens (adjust as needed) */
 @media (max-width: 768px) {
@@ -86,4 +96,7 @@ video {
   .heading {
     font-size: medium;
   }
+
+ 
 }
+

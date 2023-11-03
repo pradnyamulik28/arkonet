@@ -5,31 +5,31 @@
     top: 0  ;
 
 }
-/* .yellow {
+.yellow {
     border: none;
     width: 100%;
     height: auto;
     background-color: #fed300;
+    color: white;
     border-radius: 7px;
     box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
-} */
-.title span{
-float: right;
-cursor: pointer;
+}
 
+.modal_footer{  
+        flex-direction:column;
+        align-items:center;     
 }
-.title{
-    width: 100%;
-}
+
 
 
 .btn{
-    width: 70%;
+    width: 60%;
     color: white;
     box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
     border-radius: 10px;
-    height: 4vh;
+    height: 5vh;
+    align-items: center;
 }
 
 

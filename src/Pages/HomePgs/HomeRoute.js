@@ -3,7 +3,9 @@ import { useRef, useState } from "react";
 
 import HomePage from "./HomePage/HomePage"
 import SubscriptionPlan from "../AdminPgs/SubscriptionPlan/SubscriptionPlan";
+import AboutUs from "./AboutUs/AboutUs";
 import ContactUs from "./ContactUs/ContactUs";
+import OurTeam from "./OurTeam/OurTeam";
 import Konwledge from "./Knowledge/Knowledge";
 
 import style from "./HomeRoute.module.css";
@@ -27,10 +29,11 @@ function HomeRoute() {
   const sliderRef = useRef(null);
   const videoRef = useRef(null);
   const presentationRef = useRef(null);
+  const aboutusRef = useRef(null);
+  const ourTeamRef = useRef(null);
 
   const [isPanelActive, setIsPanelActive] = useState(false);
 
-  const [isClientRegForm,setIsClientRegForm]=useState(false);
   const [slideInformation, setSlideInformation] = useState(null);
 
   const handleClick = (id, slideInfo) => {
@@ -54,6 +57,12 @@ function HomeRoute() {
       case "abouttaxco":
         presentationRef.current?.scrollIntoView({ behavior: "smooth" });
         break;
+      case "aboutus":
+        aboutusRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "ourteam":
+        ourTeamRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
       case "slider":
         console.log(slideInfo);
         sliderRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -66,18 +75,18 @@ function HomeRoute() {
 
     // ref.current?.scrollIntoView({behavior: 'smooth'});
   };
-
+function openBookDemoForm(){
+  window.open("https://share.hsforms.com/1Q_HmHyIsQWeBF1G1KQ3kNQqcgs4", '_blank');
+}
   function handlePanel() {
     setIsPanelActive(!isPanelActive);
   }
 
-  function handleClientRegForm(){
-    console.log("cli")
-    setIsClientRegForm(!isClientRegForm);
-  }
+  
   return (
     <>
       <div className={` ${style.mainrow}`}>
+        <div><p className={style.book_now} onClick={openBookDemoForm}>Book Demo</p></div>
         {/* <div className={style.headerwrap}> */}
         <div className={`${style.header}`}>
           <div className={`${style.leftyear}`}>
@@ -142,15 +151,8 @@ function HomeRoute() {
                 </button>
               </div>
               <div className="col-4">
-              <div
-                className={`${style.yellow}`}   
-                    onClick={handleClientRegForm}
-              >
-                <Link>CREATE NEW ACCOUNT</Link>       
-                    
-                
-                </div>
-                {isClientRegForm&&<ClientAccount />}    
+             
+                <ClientAccount />
               </div>
             </div>
           </div>
@@ -191,25 +193,25 @@ function HomeRoute() {
           </div>
           <div>|</div>
           <div className={`${style.dropdown}`}>
-            <a href="##" className={`${style.dropbtn} ${style.neckancher}`}>
+            <Link className={`${style.dropbtn} ${style.neckancher}`}>
               PRODUCTS
-            </a>
+            </Link>
             <div className={`${style.dropdowncontent} ${style.dropdown1}`}>
               <Link onClick={(e) => {
-                    handleClick("abouttaxco");
+                    handleClick("demovideo");
                   }}
-                  id="abouttaxco"
-                
+                  id="demovideo"                
                 className={`${style.dropbtn1} ${style.neckancher} ${style.acherline}`}
               >
                 TAXKO
               </Link>
-              <a
-                href=""
+              <Link
+                
+                id="taxkoenterprise"
                 className={`${style.dropbtn1} ${style.neckancher} ${style.acherline}`}
               >
                 TAXKO ENTERPRISE
-              </a>
+              </Link>
               <Link className={`${style.ddancher}`}>REVIEWS</Link>
               
               
@@ -220,11 +222,11 @@ function HomeRoute() {
           <div className={`${style.neckancher}`}>
             <Link
               onClick={(e) => {
-                handleClick("demovideo");
+                handleClick("aboutus");
               }}
-              id="demovideo"
+              id="aboutus"
             >
-              DEMO
+              ABOUT US
             </Link>
           </div>
           <div>|</div>
@@ -264,10 +266,17 @@ function HomeRoute() {
               <Presentation />
             </div>
             <br />
+            <div ref={aboutusRef}>
+              <AboutUs handleScroll={handleClick}/>
+            </div>
+            <br />
             <div ref={contactRef}>
               <ContactUs />
             </div>
             <br />
+            {/* <div ref={ourTeamRef} className={style.ourteam}>
+            <OurTeam />
+            </div> */}
           </>
         )}
         {isPanelActive && slideInformation && (

@@ -108,7 +108,7 @@ const Navigate=useNavigate()
     e.preventDefault()
 
 
-    const message = `Dear TAXKO,
+    const message = `Dear Accounts Team,
   Greeting from TAXKO!
 
   I hope this message finds you well. 

@@ -65,10 +65,10 @@ const UserSubscriptionPage = () => {
     userid:localStorage.getItem("user_id"),
     userPAN:localStorage.getItem("pan"),
     days_left:"0",
-    referredBy:"",//"Sonali Shyamkumar Goel",
+    referredBy:"Sonali Shyamkumar Goel",
     refferedPan:"",
     registration_date:"14 April 2024",
-    end_date:"20 November 2023"
+    end_date:""
   });
 
 
@@ -91,9 +91,53 @@ const UserSubscriptionPage = () => {
 
 
 
-  function fetchData(){
-const daysDiff = (Math.floor((new Date(userInfo.end_date)-new Date())/ (1000 * 60 * 60 * 24)))+1;
-setUserInfo({...userInfo,days_left:`${daysDiff}`});
+  async function fetchData(){
+
+console.log(userInfo.userPAN)
+const updateItem={...userInfo};
+
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+try{
+  const response=await fetch(`${url_}/subscriptionpackuserdata/${userInfo.userPAN}`, requestOptions);
+const result= await response.text();
+
+if(response.status===200)
+{
+  const data=JSON.parse(result)
+ 
+  
+  updateItem.referredBy=data.Refered_by_name  &&  data.Refered_by_name;
+  
+  updateItem.registration_date=data.subscriptionData.registrationdate;
+  
+  updateItem.end_date=data.subscriptionData.subendtdate &&  data.subscriptionData.subendtdate;
+  
+  updateItem.refferedPan=data.subscriptionData.refrenceId &&  data.subscriptionData.refrenceId;
+
+}
+
+}catch(error){
+  console.log(error)
+}
+
+
+console.log(updateItem)
+const daysDiff = (Math.floor((new Date(updateItem.end_date)-new Date())/ (1000 * 60 * 60 * 24)))+1;
+setUserInfo({...userInfo,
+  days_left:`${daysDiff}`,
+  referredBy:updateItem.referredBy,
+    refferedPan:updateItem.refferedPan,
+    registration_date:updateItem.registration_date,
+    end_date:updateItem.end_date
+});
   }
 
   function handleSubmit(){
@@ -233,18 +277,20 @@ fetchData();
               
               <h3 className={userInfo.days_left>=15 ? `${style.h31}` : 
                               userInfo.days_left<=0 ? `${style.h31} ${style.subs_end}` : 
-                                `${style.h31} ${style.subs_about_end}`}>
-                {Math.abs(userInfo.days_left)}</h3>
+                                `${style.h31} ${style.subs_about_end}`}
+                                >
+                {userInfo.end_date===null?``:Math.abs(userInfo.days_left)}</h3>
                
-              <p className={`${style.p1}`}>{userInfo.days_left<0?`Days ago`:`Days Left`}</p>
+              <p className={`${style.p1}`}>{
+              userInfo.end_date===null?`Not Subscribed`:userInfo.days_left<0?`Days ago`:`Days Left`}</p>
             </div>
           </div>
           <div className={`${style.mainheadtextual}`}>
-            <p className={`${style.p1}`}>Subscription Ends on</p>
+            {userInfo.end_date===null?``:<p className={`${style.p1}`}>Subscription Ends on</p>}
             <p className={`${style.p2}`}>{userInfo.end_date}</p>
           </div>
           <div className={`${style.card2}`}>
-            <p className={`${style.cardp}`} onClick={GOTO}> RENEW</p>
+            <p className={`${style.cardp}`} onClick={GOTO}> {userInfo.end_date===null?`Subscribe`:`RENEW`}</p>
           </div>
         </div>
 

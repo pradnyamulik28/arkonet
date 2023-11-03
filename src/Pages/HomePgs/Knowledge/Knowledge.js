@@ -7,6 +7,7 @@ import image3 from "../../../Images/tax_image.jpg";
 import image4 from "../../../Images/handsinservice-1.jpg";
 import image5 from "../../../Images/shared_image.jpeg";
 
+
 const Card = ({ data, onCardClick, index }) => {
   return (
     <div

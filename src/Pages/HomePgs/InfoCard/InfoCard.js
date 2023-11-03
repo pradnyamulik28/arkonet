@@ -1,51 +1,15 @@
 import { useState } from "react";
 import style from "./InfoCard.module.css";
 import taxco from "../../../Images/Taxko.jpg";
+import flow_chart from "../../../Images/flow_chart.jpg";
 function InfoCard(props) {
-
-  function handleClick(area){
-    console.log(area);
-    switch(area){
-      case "Area 1":
-      window.open('https://www.saraltaxoffice.com/', '_blank');  
-      break;
-      case "Area 2":
-      window.open('https://cleartax.in/', '_blank');  
-      break;
-      case "Area 3":
-      window.open('https://eztax.in/', '_blank');  
-      break;
-      case "Area 4":
-      window.open('https://taxcloudindia.com/', '_blank');  
-      break;
-      case "Area 5":
-      window.open('https://www.taxmann.com/', '_blank');  
-      break;
-      case "Area 6":
-      window.open('https://www.taxpoint.in/', '_blank');  
-      break;
-      case "Area 7":
-      window.open('https://www.electrocom.in/easyoffice.htm', '_blank');  
-      break;
-      case "Area 8":
-      window.open('https://www.winmansoftware.com/', '_blank');  
-      break;
-      case "Area 9":
-      window.open('', '_blank');  
-      break;
-      case "Area 10":
-      window.open('https://tax2win.in/', '_blank');  
-      break;
-      default:break;
-    }
-  }
   return (
     <div className={`${style.outercontainer}`}>
       <section className={`${style.about_section} ${style.section}`}>
         <div className={`${style.container}`}>
           <div className="row">
             <div
-              className={`${style.content_column} col-lg-6 col-md-12 col-sm-12 order-2`}
+              className={`${style.content_column} col-lg-6 col-md-6 col-sm-6 order-2`}
             >
               <div className={`${style.inner_column}`}>
                 <div className={`${style.sec_title}`}>
@@ -77,9 +41,7 @@ function InfoCard(props) {
               </div>
             </div>
 
-            <div
-              className={`${style.image_column} col-lg-6 col-md-12 col-sm-12`}
-            >
+            <div className={`${style.image_column} col-lg-6 col-md-6 col-sm-6`}>
               <div className={`${style.inner_column} wow fadeInLeft`}>
                 {/* <div className={`${style.author_desc}`}>
                 <h2>TAXCO for Tax Professionals</h2>
@@ -91,12 +53,7 @@ function InfoCard(props) {
                   className={`${style.lightbox_image}`}
                   data-fancybox="images"
                 > */}
-                  <img
-                    className={style.img}
-                    title="Rahul Kumar Yadav"
-                    src={taxco}
-                    alt=""
-                  />
+                  <img className={style.img} title="" src={taxco} alt="" />
                   {/* </a> */}
                 </figure>
               </div>
@@ -107,12 +64,10 @@ function InfoCard(props) {
             <h2>We are Post-Tax-Filing Platform</h2>
           </div>
           <div className={`${style.text}`}>
-        
+          <img title="" src={flow_chart} alt="" />
           </div>
-          {/* <div className={`${style.text}`}>
-          We take a small toolkit here and ride it well so that it is fit for
-          your use. One who performs well and looks even better.
-        </div> */}
+          {/* <img title="" src={flow_chart} alt="" /> */}
+          
         </div>
       </section>
     </div>

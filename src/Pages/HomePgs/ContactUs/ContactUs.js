@@ -1,8 +1,13 @@
 import { useEffect,useState } from "react";
 import style from "./ContactUs.module.css";
+import swal from "sweetalert2";
+import { url_ } from "../../../Config";
 
 function ContactUs() {
 
+  
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isValidMobile, setIsValidMobile] = useState(true);
 
 
     const [formdata, setFormdata] = useState({
@@ -14,59 +19,136 @@ function ContactUs() {
       });
 
 
-    // useEffect(() => {
-    //     const initMap = () => {
-    //       const myOptions = {
-    //         zoom: 14,
-    //         center: new window.google.maps.LatLng(19.075314480255834, 72.88153973865361),
-    //         mapTypeId: window.google.maps.MapTypeId.ROADMAP,
-    //       };
-    //       const map = new window.google.maps.Map(document.getElementById("gmap_canvas"), myOptions);
-    //       const marker = new window.google.maps.Marker({
-    //         map: map,
-    //         position: new window.google.maps.LatLng(19.075314480255834, 72.88153973865361),
-    //       });
-    //       const infowindow = new window.google.maps.InfoWindow({
-    //         content: "<strong>My Location</strong><br>Mumbai<br>",
-    //       });
-    //       window.google.maps.event.addListener(marker, "click", function () {
-    //         infowindow.open(map, marker);
-    //       });
-    //       infowindow.open(map, marker);
-    //     };
-    
-    //     // Load the Google Maps script
-    //     const script = document.createElement("script");
-    //     script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap`;
-    //     script.async = true;
-    //     script.defer = true;
-    //     document.head.appendChild(script);
-    
-    //     script.onload = initMap;
-    
-    //     // Cleanup when the component unmounts
-    //     return () => {
-    //       document.head.removeChild(script);
-    //     };
-    //   }, []);
 
 
-      function handleChange(e){
+      function handleChange(e) {
         const { name, value } = e.target;
-        setFormdata({ ...formdata, [name]: value });
-          }
+        switch (name) {
+          case "contactNo":
+            setFormdata({
+              ...formdata,
+              [e.target.name]: value.replace(/\D/g, ""),
+            });
+            e.target.value = value.replace(/\D/g, "");
+            // Basic mobile validation
+            const mobilePattern = /^[789]\d{9}$/;
+            setIsValidMobile(mobilePattern.test(e.target.value));
+            break;
+          case "email":
+            setFormdata({ ...formdata, [e.target.name]: e.target.value });
+            //---Basic Email Validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            setIsValidEmail(emailPattern.test(e.target.value));
+            break;
+          default:
+            setFormdata({ ...formdata, [name]: value });
+            break;
+        }
+      }
 
+
+
+
+      async function submitContactUsForm(name,email,mobile) {
+       
+        const subject=`Contact us enquiry`
+        const message = `Dear Support Team,
+  Greeting from TAXKO!
+    
+  I hope this message finds you well. 
+      
+  New customer interest in TAXKO , Following are customer details.
+  Name:${name}
+  Email :${email}
+  Mobile No :${mobile}
+  
+  We trust your expertise and kindly request your assistance in guiding them through this process.
+                        
+  Best regards,
+  From ${name}
+      `;
+    
+    console.log(subject,message)
+    
+        swal.fire({
+          title: 'Registering your response',
+          text: 'Kindly wait...',
+          showConfirmButton: false,
+          onBeforeOpen: () => {
+            swal.showLoading();
+          },
+        });
+    
+    
+        var requestOptions = {
+          method: 'POST',
+          body: message,
+          redirect: 'follow'
+        };
+    
+        try{
+          const response= await fetch(`${url_}/send-email/forcontact?subject=${subject}`, requestOptions);
+          const result=await response.text();
+    
+    
+          if (response.status === 200) {
+            swal.close();
+            swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Response Submitted.!',
+              text:"Thank you for showing interest. Our support team will contact you soon.",
+              showConfirmButton: false,
+              timer: 7000
+            }); 
+           
+            
+          } else {  
+            swal.close();
+            swal.fire("Failed!", `${result}`, "error");
+          }}catch(error){
+            swal.close();
+            swal.fire("Failed!", `${error}`, "error");
+          }
+      }
+    
 
       function handleContactUsQuery(e){
         e.preventDefault();
-        console.log(formdata);
+
+
+
+        if (
+          formdata.firstName === "" ||
+          formdata.contactNo === "" ||
+          formdata.emailemail === "" ||
+          formdata.Message === ""||
+          !isValidMobile||   //Check mobile validity
+          !isValidEmail //Check mobile validity
+        ) {
+          swal.fire({
+            text:
+              formdata.firstName === ""
+                ? `Please enter your name.`
+                : formdata.email === "" || !isValidEmail
+                ? `Please enter valid email id.`
+                : formdata.contactNo === "" || !isValidMobile
+                ? `Please enter valid mobile no.`
+                : formdata.Message === "" && `Please enter some message.`,
+          });
+        } else {
+          // console.log(formdata);
+          const fullname=formdata.firstName+" "+formdata.LastName;
+        submitContactUsForm(fullname,formdata.email,formdata.contactNo)
         setFormdata({
-            firstName: "",
+        firstName: "",
         LastName: "",
         email:"",
         contactNo:"",
         Message: ""
         })
+        }
+        
       }
 
   return (
@@ -144,6 +226,7 @@ Kolhapur 416001
                     name="firstName"
                     onChange={handleChange}
                     value={formdata.firstName}
+                    autoComplete="off"
                   />
                   <input
                     className={`${style.col2} ${style.last}`}
@@ -152,6 +235,7 @@ Kolhapur 416001
                     name="LastName"
                     onChange={handleChange}
                     value={formdata.LastName}
+                    autoComplete="off"
                   />
                 </div>
                 <div className={`${style.clearfix}`}>
@@ -162,6 +246,7 @@ Kolhapur 416001
                     name="email"
                     onChange={handleChange}
                     value={formdata.email}
+                    autoComplete="off"
                   />
                   <input
                     className={`${style.col2} ${style.last}`}
@@ -170,6 +255,8 @@ Kolhapur 416001
                     name="contactNo"
                     onChange={handleChange}
                     value={formdata.contactNo}
+                    autoComplete="off"
+                    maxLength={10}
                   />
                 </div>
                 <div className={`${style.clearfix}`}>
