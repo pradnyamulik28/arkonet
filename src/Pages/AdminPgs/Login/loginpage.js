@@ -57,7 +57,12 @@ const Loginpage = ({ setLoggedIn }) => {
         return 'off';
       }
       else if(result.subscriptionData.paid && daysDiff<0){
-       
+        localStorage.setItem("end_date",result.subscriptionData.subendtdate);
+        const targetDate = new Date(result.subscriptionData.subendtdate.split("T")[0]); //Set Date to March 31
+      const futureDate = new Date(targetDate);
+      futureDate.setDate(targetDate.getDate() + 30);
+
+        localStorage.setItem("grace_perido_end",futureDate)
         return 'grace_period'
       }
       else if(result.subscriptionData.paid && daysDiff>=0){
@@ -66,11 +71,29 @@ const Loginpage = ({ setLoggedIn }) => {
     }
     else{
     return
-    }
-    
+    }    
     
     
       }
+
+
+
+
+      function numberToMonth(number) {
+        const months = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+      
+        if (number >= 1 && number <= 12) {
+          return months[number - 1];
+        } else {
+          return "Invalid month number";
+        }
+      }
+
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -139,9 +162,12 @@ const Loginpage = ({ setLoggedIn }) => {
                     break;
         
                   case "grace_period":
+                    const end_date=new Date(localStorage.getItem("end_date"));
+                    const next_date=new Date(localStorage.getItem("grace_perido_end"))
                     Swal.fire({
                       icon: "info",
-                      text: `Your subscription has expired on {date}, Your grace period to renew subscription is till {date}. After that all of your services will be stopped.`,
+                      text: `Your subscription has expired on ${end_date.getDate()} ${numberToMonth(end_date.getMonth()+1)},
+                       Your grace period to renew subscription is till ${next_date.getDate()} ${numberToMonth(next_date.getMonth()+1)}. After that all of your services will be stopped.`,
                     });
                     Navigate("dashboard");
                     setLoggedIn(true);

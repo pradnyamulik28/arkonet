@@ -8,6 +8,8 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 
 const Subscription = () => {
+  const subscription_status=localStorage.getItem('subscription_status');
+
 const Navigate=useNavigate()
   const {subs_pack,subs_amount,no_of_client}=useLocation().state;
   console.log(subs_pack,subs_amount,no_of_client);
@@ -167,7 +169,14 @@ console.log(message)
           showConfirmButton: false,
           timer: 7000
         }); 
-        Navigate('/admin/dashboard');
+        if(subscription_status==="not_subscribed" || subscription_status==="off")
+        {
+
+        }
+        else{
+          Navigate('/admin/dashboard');
+        }
+       
         
       } else {  
         swal.close();
