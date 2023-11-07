@@ -238,11 +238,14 @@ function Presentation() {
   }
 
   function screenMode(e) {
+    console.log(e.target.id)
     switch(e.target.id){
-      case "zoom_out":
+      case "full_screen":
+        console.log("full_screen")
         setIsFullscreen(true);
       break;
-      case "zoom_in":
+      case "small_screen":
+        console.log("small_screen")
         setIsFullscreen(false);
       break;
       default : break;
@@ -253,43 +256,77 @@ function Presentation() {
   
 
   return (
-    <div className={isFullScreen?`${style.outercontainer} ${style.zoom_out}` : `${style.outercontainer}`}>
-      <div className={`${style.container}`}>
-        <div className={`${style.presentation_area}`}>
-          <h3 className={style.heading}>TAXKO</h3>
-          {slides.map((item, index) => (
-            <img
-              src={item.content}
-              alt=""
-              className={
-                currentSlideNo === index + 1
-                  ? `${style.pptslide} ${style.show}`
-                  : `${style.pptslide}`
-              }
-            />
-          ))}
-
-          <div className={style.buttoncontainer}>
-            <p>{`${currentSlideNo} of ${totalSides}`}</p>
-            <button onClick={screenMode} id="zoom_in">
-            <i class="fas fa-compress" id="zoom_in"></i>
-            </button>
-            <button onClick={screenMode} id="zoom_out">
-              <i class="fas fa-expand" id="zoom_out"></i>
-            </button>
-            {currentSlideNo > 1 && (
-              <button onClick={moveSlide} id="left_btn">
-                <i className="fa-solid fa-angle-left" id="left_btn"></i>
-              </button>
-            )}
-            {currentSlideNo < totalSides && (
-              <button onClick={moveSlide} id="right_btn">
-                <i className="fa-solid fa-angle-right" id="right_btn"></i>
-              </button>
-            )}
-          </div>
+    <div className={style.outercontainer}>
+      <div class={style.heading}>TAXKO</div>
+      <div className={style.container}>
+        <div
+          id={
+            isFullScreen
+              ? `${style.presentation_area} ${style.full_screen}`
+              : `${style.presentation_area}`
+          }
+        >
+          
+          <section class={style.presentation}>
+            {slides.map((item, index) => (
+              <div
+                class={
+                  currentSlideNo === index + 1
+                    ? `${style.slide} ${style.show}`
+                    : `${style.slide}`
+                }
+              >
+                <img src={item.content} alt="" />
+              </div>
+            ))}
+          </section>
+          
         </div>
       </div>
+      <section className={style.navigation}>
+          <p>{`${currentSlideNo} of ${totalSides}`}</p>
+            {/* <button
+              id="full_screen"
+              className={
+                isFullScreen
+                  ? `${style.btn_screen}`
+                  : `${style.btn_screen} ${style.show}`
+              }
+              onClick={screenMode}
+            >
+              <i className="fas fa-expand" id="full_screen"></i>
+            </button>
+
+            <button
+              id="small_screen"
+              className={
+                isFullScreen
+                  ? `${style.btn_screen} ${style.show}`
+                  : `${style.btn_screen}`
+              }
+              onClick={screenMode}
+            >
+              <i className="fas fa-compress" id="small_screen"></i>
+            </button> */}
+
+            <button
+              id="left_btn"
+              className={currentSlideNo > 1 ? `${style.btn} ${style.show}`:`${style.btn}`}
+              onClick={moveSlide}
+            >
+              <i className="fas fa-solid fa-caret-left" id="left_btn"></i>
+            </button>
+            
+            <button
+              id="right_btn"
+              className={
+                currentSlideNo < totalSides ? `${style.btn} ${style.show}` : `${style.btn}`
+              }
+              onClick={moveSlide}
+            >
+              <i className="fa-solid fa-caret-right" id="right_btn"></i>
+            </button>
+          </section>
     </div>
   );
 }

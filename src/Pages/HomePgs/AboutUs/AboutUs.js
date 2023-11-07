@@ -5,8 +5,8 @@ function  AboutUs(props) {
     return(
         <div className={style.outercontainer}>
         <section className={`${style.section_all}`} id="about">
-             <h2 className={`${style.heading}`}>ABOUT US</h2>
-      <span className={`${style.seperator}`}></span>
+             {/* <h2 className={`${style.heading}`}>ABOUT US</h2>
+      <span className={`${style.seperator}`}></span> */}
             <div className={style.container}>
                 <div className={style.row}>
                     <div className="col-lg-12">
@@ -24,9 +24,6 @@ function  AboutUs(props) {
                 <div className={`row vertical_content_manage mt-5`}>
                     <div className="col-lg-6 col-sm-12 col-s-12">
                         <div className={`${style.about_header_main} mt-3`}>
-                            {/* <div className="about_icon_box">
-                                <p className="text_custom font-weight-bold">TAXKO is simply dummy text</p>
-                            </div> */}
                             <h4 className={`${style.about_heading} text-capitalize font-weight-bold mt-4`}>TAXKO is India's leading Filed Tax Data Management Platform</h4>
                             <p className="text-muted mt-3"><b>Our mission</b> is to simplify finances, save money and time for millions of Indian tax professionals alongwith associated businesses and people. TAXKO is a flagship product designed and developed by ARKONET. ARKONET is a technology company that builds trusted, useful and insightful platforms for clients in India and international regions. ARKONET is a leading and most trusted IT service provider company in India.</p>
 

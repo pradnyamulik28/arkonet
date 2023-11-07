@@ -139,13 +139,14 @@ const SubscriptionPlan = () => {
 
   }
   return (
-    <div style={{ margin: "0 70px" }}>
+    <div style={{ margin: "10px 70px" }} className={(location.pathname==="/subscriptionplan" || location.pathname==="/")&&style.box_shadow}>
       <div className={`${style.Subplan_title} text-center mt-4 mb-2`}>
-        <h2><b>SUBSCRIPTION PLAN</b></h2>
+        <h5><b>SUBSCRIPTION PLAN</b></h5>
         {(
       location.pathname==="/subscriptionplan" || location.pathname==="/"
     )&&<span className={`${style.seperator}`}></span>}
       </div>
+
       <div className={`${style.Subplan_para} text-center display-6 mt-1`}>
         <p>
           In this digital world, subscribe TAXKO at less than your printing paper cost. Serve your clients with more efficient manner. Access anytime & anywhere.

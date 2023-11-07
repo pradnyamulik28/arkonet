@@ -5,6 +5,7 @@ import { url_ } from '../../../Config';
 import { Link, useNavigate } from 'react-router-dom';
 import InputField from '../../../components/InputField/InputField';
 import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 
 
@@ -22,6 +23,57 @@ const Loginpage = ({ setLoggedIn }) => {
   };
 
 
+  const checkSubscriptionStatus=async ()=>{
+const subscription_status={};
+console.log("subcheck");
+var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${localStorage.getItem("jwtToken")}`);
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
+
+const response = await fetch(
+  `${url_}/subscriptionpackuserdata/${formdata.username}`,
+  requestOptions
+);
+const result = await response.json();
+//console.log(result.subscriptionData);
+
+if (response.status === 200) {
+ 
+  const daysDiff = (Math.floor((new Date(result.subscriptionData.subendtdate)-new Date())/ (1000 * 60 * 60 * 24)))+1;
+  console.log(daysDiff)
+
+  if(result.subscriptionData.forcestop)
+  {
+    return 'forceful_stop';
+  }
+  else if(!result.subscriptionData.paid && result.subscriptionData.subendtdate===null){
+    return 'not_subscribed';
+  }
+  else if(!result.subscriptionData.paid && daysDiff<-30){
+    return 'off';
+  }
+  else if(result.subscriptionData.paid && daysDiff<0){
+   
+    return 'grace_period'
+  }
+  else if(result.subscriptionData.paid && daysDiff>=0){
+    return 'on'
+  }  
+}
+else{
+return
+}
+
+
+
+  }
+  
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -36,7 +88,7 @@ const Loginpage = ({ setLoggedIn }) => {
         },
         data: JSON.stringify(formdata),
       });
-      console.log(formdata)
+      //console.log(formdata)
       if (result.status === 200) {
 
         const jwtToken = result.data.token;
@@ -51,10 +103,64 @@ const Loginpage = ({ setLoggedIn }) => {
         localStorage.setItem('LogedIn', 'true');
         localStorage.setItem('mobile', user_mobile);
         localStorage.setItem('pan', user_pan);
+        
+
+const sub_status=await checkSubscriptionStatus();//console.log(sub_status)
+localStorage.setItem(`subscription_status`,sub_status);
+        // await checkSubscriptionStatus();
+        const subscription_status=localStorage.getItem(`subscription_status`)
+        switch (subscription_status) {
+          case "forceful_stop":
+            Swal.fire({
+              icon: "warning",
+              text: `Your services has been stoped due to some reasons. Kindly contact admin team to resume your services.`,
+            });
+            setFormdata({
+              username: "",
+              password: "",
+            });
+            break;
 
 
-        Navigate('dashboard');
-        setLoggedIn(true);
+            case "not_subscribed":              
+              Swal.fire({
+                icon: "info",
+                text: `Subsribe to avail services.`,
+              });
+              Navigate("UserSubscriptionPage");
+              setLoggedIn(true);
+              break;
+
+          case "off":
+            console.log("off")
+            Swal.fire({
+              icon: "info",
+              text: `Your subscription and grace period has expired please renew your pack to resume your services.`,
+            });
+            Navigate("UserSubscriptionPage");
+            setLoggedIn(true);
+            break;
+
+          case "grace_period":
+            Swal.fire({
+              icon: "info",
+              text: `Your subscription has expired on {date}, Your grace period to renew subscription is till {date}. After that all of your services will be stopped.`,
+            });
+            Navigate("dashboard");
+            setLoggedIn(true);
+
+            break;
+          case "on":
+            Navigate("dashboard");
+            setLoggedIn(true);
+
+            break;
+          default:
+            break;
+        }
+
+
+        
 
       } else {
         console.log("Login failed.!!");

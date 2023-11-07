@@ -3,14 +3,30 @@
 .maincontainer * {
 	font-family: "Lexend Deca", sans-serif;
 }
-
+.container{
+    max-width: 80%;
+    margin: 2rem 0rem 2rem 0rem;
+border-radius: 6px;
+  padding: 20px 60px 30px 40px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
 .h1{
     color: #fed300;
 }
 
 .card{
-    background-color: beige;
+    background-color: rgb(246, 246, 209);
+    transition: transform .2s;
 }
+
+.card:hover {
+    -ms-transform: scale(1.06); /* IE 9 */
+    -webkit-transform: scale(1.06); /* Safari 3-8 */
+    transform: scale(1.06); 
+    cursor: pointer;
+    background-color: rgb(244, 244, 188);
+
+  }
 
 .information{
     color: black;

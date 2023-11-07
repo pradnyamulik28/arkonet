@@ -1,33 +1,5 @@
-a,
-a:hover,
-a:focus,
-a:active {
-  text-decoration: none;
-  outline: none;
-}
 
-a,
-a:active,
-a:focus {
-  color: #6f6f6f;
-  text-decoration: none;
-  transition-timing-function: ease-in-out;
-  -ms-transition-timing-function: ease-in-out;
-  -moz-transition-timing-function: ease-in-out;
-  -webkit-transition-timing-function: ease-in-out;
-  -o-transition-timing-function: ease-in-out;
-  transition-duration: 0.2s;
-  -ms-transition-duration: 0.2s;
-  -moz-transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-}
 
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
 .text img {
   width: 80%;
   height: 80%;
@@ -47,8 +19,11 @@ ul {
   display: flex;
   justify-content: center;
 }
+.row{
+  display: flex;
+}
 .section {
-  padding: 60px 0;
+  padding: 50px 0;
   width: 80%;
   /* min-height: 100vh;*/
 }
@@ -72,7 +47,7 @@ ul {
 .sec_title h2 {
   position: relative;
   display: block;
-  font-size: 40px;
+  font-size: 30px;
   line-height: 1.28em;
   color: #222222;
   font-weight: 600;

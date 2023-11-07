@@ -1,103 +1,208 @@
-/* Default styles for all screen sizes */
+
+
+
+
+
+/* On full screen mode */
+
 .outercontainer * {
-  /* margin: 0; */
-  padding: 0.2rem;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  /* font-family: sans-serif; */
   transition: all 0.5s ease;
 }
-
 .outercontainer {
   width: 100%;
-  height: fit-content;/* Previous value 100vh*/
+  height: 95vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* background-color: #b6b6b6; */
 }
-
 .container {
-  background: #0c0c0c;
-  padding: 0.5rem;
-  width: 65%;
-  height: fit-content;
+  /* background: #212121; */
+  width: 100%;
+  height: 100%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+#presentation_area {
+  width: 100%;
+  height: 100%;
+ display: flex;
+ flex-direction: column;
+ 
+}
 
-.presentation_area {
-  width: 95%;
-  height: fit-content;
-  background: rgb(226, 223, 226);
+/* Styling all three sections */
+#presentation_area .presentation {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  position: relative;
+}
+#presentation_area .counter {
+  /* position: absolute;
+  bottom: -30px; */
+  left: 0;
+  color: #b6b6b6;
+}
+.outercontainer .navigation {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-content: center;
+  justify-content: center;
+  padding: 0.7rem;
+  background: rgb(183 175 183);
+  color: #ffffff;
+}
+
+
+
+.presentation .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  opacity: 0;
+  transform: scale(0);
+  visibility: none;
+}
+
+.presentation .content {
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.heading {
-  height: 60px;
-  font-size: 3em;
-  font-weight: bold;
-}
-
-.pptslide {
-  display: none;
+.presentation .slide img{
   width: 100%;
-  height: 80%;
+  height: 100%;
 }
-
-.show {
-  display: block;
+.slide.show {
+  opacity: 1;
   transform: scale(1);
+  visibility: visible;
+}
+.outercontainer .heading
+{
+  width: 100%;
+  padding: 0.7rem;
+  background: rgb(183 175 183);
+  font-size: 2em;
+  font-weight: bold;
+  color: #ffffff;
 }
 
-.buttoncontainer {
-  background-color: white;
-  height: 65px;
+#presentation_area.full_screen {
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; */
 }
-
-.buttoncontainer button {
+/* #presentation_area.full_screen .counter {
+  bottom: 15px;
+  left: 15px;
+}
+#presentation_area.full_screen .navigation {
+  bottom: 15px;
+  right: 15px;
+}
+#presentation_area.full_screen .navigation .btn:hover {
+  background: #201e1e;
+  color: #ffffff;
+}
+#presentation_area.full_screen .navigation .btn_screen:hover {
+  background: #201e1e;
+} */
+/* End full screen mode */
+/* Buttons */
+.navigation button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  outline: none;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 30px;
+  text-align: center;
   cursor: pointer;
 }
+.navigation .btn {
+  background: #464646;
+  color: #ffffff;
+  border-radius: 0.25rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  /* transform: scale(0); */
+  
+}
+.navigation .btn.show {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+  pointer-events: all;
+}
+.navigation .btn_screen {
+  background: transparent;
+  color: #f4efef;
+  visibility: hidden;
+}
+.btn_screen.show {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+.btn_screen.hover {
+  color: #ffffff;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+}
+/* End Buttons */
 
-.zoom_in {
-  transform: scale(0.8); /* Zoom in (compress) by 80% */
-  transition: transform 0.3s ease-in-out;
+
+.slide .heading {
+  padding: 1rem;
+  background: rgb(220, 215, 220);
+  font-size: 2em;
+  font-weight: bold;
+  color: #ffffff;
 }
 
-.zoom_out {
-  /* transform: scale(1.2); /* Zoom out (expand) by 120% */
- /* transition: transform 0.3s ease-in-out; */
-  height: 100vh!important;
-  width: 100vw!important;
-  z-index:9999;
- top:0!important;
-  left:0!important;
+/* Media Query for Mobile Devices */ 
+@media (max-width: 480px) { 
+  .outercontainer { 
+    height: 30vh;
+} 
+.outercontainer .heading,
+.outercontainer .navigation{
+  padding: 0.3rem;
+  font-size: 0.5em;
 }
 
-/* Add these classes to the elements you want to apply the zoom effect */
+.navigation button{
+  line-height: 17px;
+  font-size: 1rem;
+  height: 17px;
+  width: 17px;
 
-
-/* Responsive styles for smaller screens (adjust as needed) */
-@media (max-width: 768px) {
-  .container {
-    width: 90%;
-  }
-
-  .heading {
-    font-size: 2em;
-  }
 }
+} 
 
-/* Responsive styles for even smaller screens (adjust as needed) */
-@media (max-width: 480px) {
-  .container {
-    width: 100%;
-  }
+ /* Media Query for low resolution  Tablets, Ipads */ 
+ @media (min-width: 481px) and (max-width: 767px) { 
+  .outercontainer { 
+      height: 80vh;
+  } 
+} 
 
-  .heading {
-    font-size: 1.5em;
-  }
-}
+/* Media Query for Tablets Ipads portrait mode */ 
+@media (min-width: 768px) and (max-width: 1024px){ 
+  .outercontainer { 
+      height: 60vh;
+  } 
+} 

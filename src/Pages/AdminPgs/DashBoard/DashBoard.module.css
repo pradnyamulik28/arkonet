@@ -52,6 +52,10 @@
   margin-top: 5%;
   cursor: pointer;
 }
+.btndisable{
+  pointer-events: none;
+  cursor: not-allowed; 
+}
 
 .table th {
   vertical-align: middle;

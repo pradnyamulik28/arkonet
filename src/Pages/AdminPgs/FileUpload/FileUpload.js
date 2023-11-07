@@ -4,10 +4,12 @@ import upload from './upload.png';
 import Swal from 'sweetalert2';
 import { url_ } from '../../../Config';
 import { useLocation } from 'react-router-dom';
+import swal from 'sweetalert';
 
 
 const FileUpload = () => {
 
+  const subscription_status=localStorage.getItem('subscription_status');
 
 
   const user_id = window.localStorage.getItem('user_id');
@@ -31,6 +33,7 @@ const FileUpload = () => {
   ];
 
   useEffect(() => {
+    
     fetchData();
   }, []);
 
@@ -136,6 +139,15 @@ const FileUpload = () => {
   };
 
   const handleToggle = async () => {
+
+    if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+    }
+
+else{
     if (fileResponse === true) {
       console.log("It's TRUE");
     } else {
@@ -178,13 +190,36 @@ const FileUpload = () => {
         }
       }
     }
+
+  }
   };
   /////////////////////////////////////////////////////////////////////////////////////////////
 
   // File Upload Code
+const checkSubsriptionStatus=(e)=>{
+  if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        e.preventDefault();
+    }
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        e.preventDefault();
+    }
 
+}
 
   const handleFileUpload = async (event, filename) => {
+    
+    
+
+
+
     const file = event.target.files[0];
 
     if (file) {
@@ -418,6 +453,7 @@ const FileUpload = () => {
     window.history.back(); // This will navigate to the previous page in the browser's history
   }
 
+
   /////////////////////////////////////////////////////////////////////////////////////////////////
   return (
 
@@ -518,7 +554,7 @@ const FileUpload = () => {
                     ) : (
                       <div className={style.file_upload}>
                         <div className={style.image_upload_wrap}>
-                          <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.filename)} />
+                          <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.filename)} onClick={checkSubsriptionStatus}/>
                           <div className={style.drag_text}>
                             <img src={upload} alt="" />
                             <h4>Upload File</h4>

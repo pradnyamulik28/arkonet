@@ -2,6 +2,7 @@ import { useEffect,useState } from "react";
 import style from "./ContactUs.module.css";
 import swal from "sweetalert2";
 import { url_ } from "../../../Config";
+import SocialMedia from "../SocialMedia/SocialMedia";
 
 function ContactUs() {
 
@@ -12,7 +13,7 @@ function ContactUs() {
 
     const [formdata, setFormdata] = useState({
         firstName: "",
-        LastName: "",
+       
         email:"",
         contactNo:"",
         Message: ""
@@ -138,11 +139,11 @@ function ContactUs() {
           });
         } else {
           // console.log(formdata);
-          const fullname=formdata.firstName+" "+formdata.LastName;
+          const fullname=formdata.firstName;
         submitContactUsForm(fullname,formdata.email,formdata.contactNo)
         setFormdata({
         firstName: "",
-        LastName: "",
+       
         email:"",
         contactNo:"",
         Message: ""
@@ -152,95 +153,52 @@ function ContactUs() {
       }
 
   return (
-    <div className={`${style.container}`}>
-      <div className={`${style.innerwrap}`}>
-        <section className={`${style.section1} ${style.clearfix}}`}>
-          <div className={`${style.textcenter}`}>
-            <span className={`${style.shtext} ${style.heading}`}>Contact Us</span>
-            <span className={`${style.seperator}`}></span>
-            {/* <h1>Drop Us a Mail</h1> */}
-          </div>
-        </section>
-
-        <section className={`${style.section2} ${style.clearfix}}`}>
-          <div className={`${style.col2} ${style.column1} ${style.first}}`}>
-            {/* <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script> */}
-            <div
-              className={`${style.sec2map}`}
-              style={{ overflow: "hidden", height: "550px", width: "100%" }}
-            >
-                
-              <div
-                id="gmap_canvas"
-                style={{ height: "100%", width: "100%" }}
-              >
-
-<iframe title="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4544.579964450332!2d74.23297943894102!3d16.70083637274872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1019213886153%3A0xab33886478d32ae1!2sRETINUE%20ASSOCIATES!5e0!3m2!1sen!2sin!4v1698471233844!5m2!1sen!2sin" 
-width="100%" height="100%" frameborder="0" style={{"border":"0"}} allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-              </div>
-              <div>
-                {/* <small>
-                  <a href="http://embedgooglemaps.com"> embed google maps </a>
-                </small>
-              </div>
-              <div>
-                <small>
-                  <a href="http://freedirectorysubmissionsites.com/">
-                    free web directories
-                  </a>
-                </small> */}
+    <div className={style.outercontainer}>
+      <div className={style.container}>
+        <div className={style.content}>
+          <div className={style.left_side}>
+            <div className={`${style.address} ${style.details}`}>
+              <i className="fas fa-map-marker-alt"></i>
+              <div className={style.topic}>Address</div>
+              <div className={style.text_one}>3rd floor, Triveni Tower</div>
+              <div className={style.text_two}>
+                Shahupuri 5th lane, Kolhapur 416001
               </div>
             </div>
-            <script type="text/javascript"></script>
-          </div>
-          <div className={`${style.col2} ${style.column2} ${style.last}}`}>
-            <div className={`${style.sec2innercont}`}>
-              <div className={`${style.sec2addr}`}>
-                <p>
-                3rd floor, Triveni Tower
-Shahupuri 5th lane,
-Kolhapur 416001
-                </p>
-                <p>
-                  <span className={`${style.collig}`}>Phone :</span> +91 9820105056
-                </p>
-                <p>
-                  <span className={`${style.collig}`}>Email :</span>{" "}
-                  inquiry@taxko.in
-                </p>
-                {/* <p>
-                  <span className={`${style.collig}`}>Fax :</span> +91 9768850839
-                </p> */}
-              </div>
+            <div className={`${style.phone} ${style.details}`}>
+              <i className="fas fa-phone-alt"></i>
+              <div className={style.topic}>Phone</div>
+              <div className={style.text_one}>+91 9820105056</div>
+              {/* <div className={style.text_two}>+0096 3434 5678</div> */}
             </div>
-            <div className={`${style.sec2contactform}`}>
-              <h3 className={`${style.sec2frmtitle}`}>
-                Want to Know More?? Drop Us a Mail
-              </h3>
-              <form action="">
-                <div className={`${style.clearfix}`}>
+            <div className={`${style.email} ${style.details}`}>
+              <i className="fas fa-envelope"></i>
+              <div className={style.topic}>Email</div>
+              <div className={style.text_one}>inquiry@taxko.in</div>
+              {/* <div className={style.text_two}>info.codinglab@gmail.com</div> */}
+            </div>
+          </div>
+          <div className={style.right_side}>
+            <div className={style.topic_text}>Contact Us</div>
+            <p>
+              Feel free to get in touch with us. We're here to assist you with
+              any questions or concerns you may have.
+            </p>
+            <form action="">
+              <div className={style.contact_form}>
+                <div className={style.input_box}>
                   <input
-                    className={`${style.col2} ${style.first}`}
                     type="text"
-                    placeholder="FirstName"
+                    placeholder="Full Name"
                     name="firstName"
                     onChange={handleChange}
                     value={formdata.firstName}
                     autoComplete="off"
                   />
-                  <input
-                    className={`${style.col2} ${style.last}`}
-                    type="text"
-                    placeholder="LastName"
-                    name="LastName"
-                    onChange={handleChange}
-                    value={formdata.LastName}
-                    autoComplete="off"
-                  />
                 </div>
-                <div className={`${style.clearfix}`}>
+
+                <div className={style.input_box}>
                   <input
-                    className={`${style.col2} ${style.first}`}
                     type="Email"
                     placeholder="Email"
                     name="email"
@@ -248,8 +206,9 @@ Kolhapur 416001
                     value={formdata.email}
                     autoComplete="off"
                   />
+                </div>
+                <div className={style.input_box}>
                   <input
-                    className={`${style.col2} ${style.last}`}
                     type="text"
                     placeholder="Contact Number"
                     name="contactNo"
@@ -259,19 +218,60 @@ Kolhapur 416001
                     maxLength={10}
                   />
                 </div>
-                <div className={`${style.clearfix}`}>
-                  <textarea name="Message" id="" cols="30" rows="7" onChange={handleChange} value={formdata.Message}
-                  placeholder="Your message here..." />
-                    
-                  
+
+                <div className={`${style.input_box} ${style.message_box}`}>
+                  <textarea
+                    name="Message"
+                    id=""
+                    cols="30"
+                    rows="7"
+                    onChange={handleChange}
+                    value={formdata.Message}
+                    placeholder="Your message here..."
+                  />
                 </div>
-                <div className={`${style.clearfix}`}>
-                  <input type="submit" value="Send" onClick={handleContactUsQuery}/>
+
+                <div className={style.button}>
+                  <input
+                    type="button"
+                    value="Send Now"
+                    onClick={handleContactUsQuery}
+                  />
                 </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
-        </section>
+        </div>
+        <div>
+        
+        </div>
+        {/* <div className={style.content}>
+        <i className="fa fa-commenting-o font-20" aria-hidden="true"></i>
+        <h5>For Feedback</h5><a href="mailto:feedback@taxko.in">feedback@taxko.in</a>
+         </div> */}
+        {/* <div className={style.content}> */}
+        
+          <div className={style.map}>
+         
+            <iframe
+              title="map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4544.579964450332!2d74.23297943894102!3d16.70083637274872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1019213886153%3A0xab33886478d32ae1!2sRETINUE%20ASSOCIATES!5e0!3m2!1sen!2sin!4v1698471233844!5m2!1sen!2sin"
+              width="100%"
+              height="50%"
+              frameborder="0"
+              style={{ border: "0", "height":"100%" }}
+              allowfullscreen=""
+              aria-hidden="false"
+              tabindex="0"
+            ></iframe>
+          </div>
+        {/* </div> */}
+
+        <div></div>
+
+        <div >
+          <SocialMedia />
+        </div>
       </div>
     </div>
   );

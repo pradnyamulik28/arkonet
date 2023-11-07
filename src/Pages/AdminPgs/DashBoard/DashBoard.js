@@ -2,8 +2,13 @@ import styles from './DashBoard.module.css'
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { url_ } from '../../../Config';
+import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 const DashBoard = () => {
+
+  const subscription_status=localStorage.getItem(`subscription_status`)
+  // Type : on,off,grace_period,forceful_stop
 
 
   const [Totalclient, setTotalclient] = useState();
@@ -225,83 +230,137 @@ const DashBoard = () => {
 
 
   // }
+
+
+  function handleLinkClick(){
+    if(subscription_status==="grace_period" )
+    Swal.fire({
+  icon:"info",
+  text:"Sorry this service is currently unavailable due to end of subscription"})
+  }
   return (
-
-
-
     <div>
       <div className="container">
-
         <div className="row">
           <div className="col-6">
-            <div className={`card m-4 ${styles.cardd} text-center`} >
+            <div className={`card m-4 ${styles.cardd} text-center`}>
               <div className={`m-3 w-100 `}>
-                <h5 className={`card-title font-weight-bold ${styles.green}`}>F.Y. {currentYear}-{(currentYear + 1).toString().slice(-2)}</h5>
-                <div className={`${styles.count} d-flex justify-content-around`}>
-                  <Link to="tc" className={` h6 card-link ${styles.black}`}>Total Clients
-                    <h6 className={`${styles.black} font-weight-bold`}>{Totalclient}</h6>
-
+                <h5 className={`card-title font-weight-bold ${styles.green}`}>
+                  F.Y. {currentYear}-{(currentYear + 1).toString().slice(-2)}
+                </h5>
+                <div
+                  className={`${styles.count} d-flex justify-content-around`}
+                >
+                  <Link to="tc" className={` h6 card-link ${styles.black}`}>
+                    Total Clients
+                    <h6 className={`${styles.black} font-weight-bold`}>
+                      {Totalclient}
+                    </h6>
                   </Link>
-                  <Link to="tic" className={`h6 card-link ${styles.green}  `}>Income Tax
-                    <h6 className={`${styles.black} font-weight-bold`}>{TotalIncomeclient}</h6>
+                  <Link to="tic" className={`h6 card-link ${styles.green}  `}>
+                    Income Tax
+                    <h6 className={`${styles.black} font-weight-bold`}>
+                      {TotalIncomeclient}
+                    </h6>
                   </Link>
-                  <Link to="gstclients" className={`h6 card-link text-primary  `}>GST
-                    <h6 className={`${styles.black} font-weight-bold`}>{TotalGSTClients}</h6>
+                  <Link
+                    to="gstclients"
+                    className={`h6 card-link text-primary  `}
+                  >
+                    GST
+                    <h6 className={`${styles.black} font-weight-bold`}>
+                      {TotalGSTClients}
+                    </h6>
                   </Link>
                 </div>
-                <Link to='clientreg' ><input type="submit" value="ADD CLIENT" className={` h6 ${styles.abtn}`} /></Link>
+                <Link
+                  to="clientreg"
+                  className={
+                    subscription_status === "on" ? `` : `${styles.btndisable}`
+                  }
+                  onClick={handleLinkClick}
+                >
+                  <input
+                    type="submit"
+                    value="ADD CLIENT"
+                    className={` h6 ${styles.abtn}`}
+                  />
+                </Link>
               </div>
-
             </div>
           </div>
           <div className="col-6">
-            <div className={`card m-4 ${styles.cardd} text-center`} >
-              <h2 className='ml-4'>&lt;</h2>
+            <div className={`card m-4 ${styles.cardd} text-center`}>
+              <h2 className="ml-4">&lt;</h2>
               <div className={`m-3 w-100`}>
-                <h5 className={`card-title font-weight-bold text-primary`}>FY {currentYear}-{(currentYear + 1).toString().slice(-2)}</h5>
+                <h5 className={`card-title font-weight-bold text-primary`}>
+                  FY {currentYear}-{(currentYear + 1).toString().slice(-2)}
+                </h5>
                 <div className={styles.count}>
-                  <Link to="#" className={`h6 card-link ${styles.black}`}>Total Bill<h6 className={`${styles.black} font-weight-bold`}>{TotalclientPayment}</h6></Link>
-                  <Link to="#" className={`h6 card-link ${styles.black}`}>Received<h6 className={`${styles.green} font-weight-bold`}>{TotalClientsreceivedPayment}
-                  </h6></Link>
-                  <Link to="#" className={`h6 card-link ${styles.black}`}>Pending<h6 className={`text-danger font-weight-bold`}>{TotalclientpendingPayment}
-                  </h6></Link>
+                  <Link to="#" className={`h6 card-link ${styles.black}`}>
+                    Total Bill
+                    <h6 className={`${styles.black} font-weight-bold`}>
+                      {TotalclientPayment}
+                    </h6>
+                  </Link>
+                  <Link to="#" className={`h6 card-link ${styles.black}`}>
+                    Received
+                    <h6 className={`${styles.green} font-weight-bold`}>
+                      {TotalClientsreceivedPayment}
+                    </h6>
+                  </Link>
+                  <Link to="#" className={`h6 card-link ${styles.black}`}>
+                    Pending
+                    <h6 className={`text-danger font-weight-bold`}>
+                      {TotalclientpendingPayment}
+                    </h6>
+                  </Link>
                 </div>
                 <h6 className={`${styles.green} text-primary`}>As on date</h6>
               </div>
             </div>
           </div>
-
         </div>
 
-
-
-
         <div className="row ">
-
           <div className="col-6">
-            <div className={`card m-4 ${styles.cardd} `} >
-
+            <div className={`card m-4 ${styles.cardd} `}>
               <div className={`m-4 w-100`}>
                 <div className="top d-flex justify-content-between">
-                  <h3 className={`card-title font-weight-bold ${styles.green} `}>Income Tax</h3>
-                  <h3><i className={`fa-solid fa-ellipsis-vertical ${styles.green} `}  ></i></h3>
+                  <h3
+                    className={`card-title font-weight-bold ${styles.green} `}
+                  >
+                    Income Tax
+                  </h3>
+                  <h3>
+                    <i
+                      className={`fa-solid fa-ellipsis-vertical ${styles.green} `}
+                    ></i>
+                  </h3>
                 </div>
-                <div >
-
-                  <table className={`${styles.table} table text-center font-weight-bold`}>
+                <div>
+                  <table
+                    className={`${styles.table} table text-center font-weight-bold`}
+                  >
                     <thead>
                       <tr>
-                        <th scope="col" >Assessment Year</th>
-                        <th scope="col" className={`${styles.green} `}>Filed</th>
-                        <th scope="col" className={`text-danger `}>Not Filed</th>
+                        <th scope="col">Assessment Year</th>
+                        <th scope="col" className={`${styles.green} `}>
+                          Filed
+                        </th>
+                        <th scope="col" className={`text-danger `}>
+                          Not Filed
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       {filedata.map((items, index) => {
                         return (
-                          <tr key={index} >
+                          <tr key={index}>
                             <td>{items.accountyear}</td>
-                            <td className={`${styles.green} `}>{items.filed}</td>
+                            <td className={`${styles.green} `}>
+                              {items.filed}
+                            </td>
                             <td className={`text-danger `}>{items.notfiled}</td>
                           </tr>
                         );
@@ -309,52 +368,62 @@ const DashBoard = () => {
                     </tbody>
                   </table>
 
-                  <small >Last updated on {latestupdatedata}</small>
-
-
+                  <small>Last updated on {latestupdatedata}</small>
                 </div>
               </div>
             </div>
           </div>
 
-
           {/* /////////////////////////////////////////////////////////////// */}
 
           <div className="col-6">
-            <div className={`card mt-4 ${styles.gst_cardd} `} >
-
+            <div className={`card mt-4 ${styles.gst_cardd} `}>
               <div className={`m-4 w-100`}>
                 <div className="top d-flex justify-content-between">
-                  <h3 className={`card-title font-weight-bold text-primary `}>GST</h3>
-                  <h3><i className={`fa-solid fa-ellipsis-vertical  text-primary`}  ></i></h3>
+                  <h3 className={`card-title font-weight-bold text-primary `}>
+                    GST
+                  </h3>
+                  <h3>
+                    <i
+                      className={`fa-solid fa-ellipsis-vertical  text-primary`}
+                    ></i>
+                  </h3>
                 </div>
-                <div >
-                  <table className={`${styles.table} table text-center font-weight-bold`}>
+                <div>
+                  <table
+                    className={`${styles.table} table text-center font-weight-bold`}
+                  >
                     <thead>
                       <tr>
-
                         <th></th>
-                        <th colSpan="2" ><h4 className='font-weight-bold text-primary'>GSTR-1</h4></th>
-                        <th colSpan="2" ><h4 className='font-weight-bold text-primary'>GSTR-3B</h4></th>
+                        <th colSpan="2">
+                          <h4 className="font-weight-bold text-primary">
+                            GSTR-1
+                          </h4>
+                        </th>
+                        <th colSpan="2">
+                          <h4 className="font-weight-bold text-primary">
+                            GSTR-3B
+                          </h4>
+                        </th>
                       </tr>
                       <tr>
-                        <th className='font-weight-bold '>MONTH</th>
+                        <th className="font-weight-bold ">MONTH</th>
                         <th className={`text-success`}>Filed</th>
                         <th className={`text-danger`}>Not Filed</th>
                         <th className={`text-success`}>Filed</th>
                         <th className={`text-danger`}>Not Filed</th>
-
                       </tr>
                     </thead>
                     <tbody>
                       {displayData.map((items, index) => {
                         return (
                           <tr key={index}>
-                            <td className='text-black'>{items.month}</td>
-                            <td className=' text-success'>{items.GSTR1FD}</td>
-                            <td className=' text-danger'>{items.GSTR1NFD}</td>
-                            <td className=' text-success'>{items.GSTR3BFD}</td>
-                            <td className=' text-danger'>{items.GSTR3BNFD}</td>
+                            <td className="text-black">{items.month}</td>
+                            <td className=" text-success">{items.GSTR1FD}</td>
+                            <td className=" text-danger">{items.GSTR1NFD}</td>
+                            <td className=" text-success">{items.GSTR3BFD}</td>
+                            <td className=" text-danger">{items.GSTR3BNFD}</td>
                           </tr>
                         );
                       })}
@@ -362,13 +431,13 @@ const DashBoard = () => {
                   </table>
 
                   <div className="top d-flex justify-content-between">
-                    <small >Last updated on {latestupdatedata}</small>
+                    <small>Last updated on {latestupdatedata}</small>
                     {showAll ? (
                       <h6>
                         <span
                           className={`font-weight-bold text-primary`}
                           onClick={() => setShowAll(false)}
-                          style={{ cursor: 'pointer' }}
+                          style={{ cursor: "pointer" }}
                         >
                           Less...
                         </span>
@@ -378,22 +447,20 @@ const DashBoard = () => {
                         <span
                           className={`font-weight-bold text-primary`}
                           onClick={() => setShowAll(true)}
-                          style={{ cursor: 'pointer' }}
+                          style={{ cursor: "pointer" }}
                         >
                           More...
                         </span>
                       </h6>
                     )}
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
-    </div >
+    </div>
   );
 }
 

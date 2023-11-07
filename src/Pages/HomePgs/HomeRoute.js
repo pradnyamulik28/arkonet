@@ -86,8 +86,12 @@ function openBookDemoForm(){
   return (
     <>
       <div className={` ${style.mainrow}`}>
-        <div><p className={style.book_now} onClick={openBookDemoForm}>Book Demo</p></div>
-        {/* <div className={style.headerwrap}> */}
+        <div>
+          <p className={style.book_now} onClick={openBookDemoForm}>
+            Book Demo
+          </p>
+        </div>
+
         <div className={`${style.header}`}>
           <div className={`${style.leftyear}`}>
             <img src={taxko} alt="" />
@@ -151,7 +155,6 @@ function openBookDemoForm(){
                 </button>
               </div>
               <div className="col-4">
-             
                 <ClientAccount />
               </div>
             </div>
@@ -159,21 +162,35 @@ function openBookDemoForm(){
         </div>
 
         <div className={`${style.neckbar}`}>
-          <div className={`${style.neckancher}`}>
+          <div className={`${style.dropdown}`}>
             <Link
-              onClick={(e) => {
-                handleClick("home");
-              }}
+            className={`${style.dropbtn} ${style.neckancher}`}
+             onClick={(e) => {
+              e.preventDefault();
+              navigate("");
+            }}
               id="home"
             >
               HOME
             </Link>
+            <div className={`${style.dropdowncontent} ${style.dropdown1}`}>
+            <Link
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("aboutus");
+              }}
+              id="aboutus"
+            >
+              ABOUT US
+            </Link>
+            </div>
           </div>
           <div>|</div>
           <div className={`${style.neckancher}`}>
             <Link
               onClick={(e) => {
-                handleClick("feature");
+                e.preventDefault();
+                navigate("feature");
               }}
               id="feature"
             >
@@ -184,9 +201,10 @@ function openBookDemoForm(){
           <div className={`${style.neckancher}`}>
             <Link
               onClick={(e) => {
-                handleClick("subscribe");
+                e.preventDefault();
+                navigate("subscriptionplan");
               }}
-              id="subscribe"
+              id="subscriptionplan"
             >
               SUBSCRIPTION PLAN
             </Link>
@@ -197,57 +215,60 @@ function openBookDemoForm(){
               PRODUCTS
             </Link>
             <div className={`${style.dropdowncontent} ${style.dropdown1}`}>
-              <Link onClick={(e) => {
-                    handleClick("demovideo");
-                  }}
-                  id="demovideo"                
+              <Link
+                onClick={(e) => {
+                e.preventDefault();
+                navigate("abouttaxko");
+                }}
+                id="abouttaxko"
                 className={`${style.dropbtn1} ${style.neckancher} ${style.acherline}`}
               >
                 TAXKO
               </Link>
               <Link
-                
                 id="taxkoenterprise"
-                className={`${style.dropbtn1} ${style.neckancher} ${style.acherline}`}
+                className={`${style.dropbtn1} ${style.neckancher} ${style.acherline} ${style.tooltip}`}
               >
                 TAXKO ENTERPRISE
+                <div className={`${style.tooltiptext}`}>Comming Soon..</div>
               </Link>
-              <Link className={`${style.ddancher}`}>REVIEWS</Link>
               
-              
-              {/* <div className={`${style.dropdowncontent2}`}></div> */}
+              <Link className={`${style.ddancher} ${style.tooltip}`}>REVIEWS
+              <div className={`${style.tooltiptext}`}>Comming Soon..</div>
+              </Link>
             </div>
           </div>
           <div>|</div>
-          <div className={`${style.neckancher}`}>
+          {/* <div className={`${style.neckancher}`}>
             <Link
               onClick={(e) => {
-                handleClick("aboutus");
+                e.preventDefault();
+                navigate("aboutus");
               }}
               id="aboutus"
             >
               ABOUT US
             </Link>
           </div>
-          <div>|</div>
+          <div>|</div> */}
           <div className={`${style.neckancher}`}>
             <Link
               onClick={(e) => {
-                handleClick("contact");
+                e.preventDefault();
+                navigate("contactus");
               }}
-              id="contact"
+              id="contactus"
             >
               CONTACT US
             </Link>
           </div>
         </div>
         {/* </div> */}
-        
 
-        {!isPanelActive && (
+        {/* {!isPanelActive && (
           <>
-            <div ref={homeRef} >
-            <HomePage />
+            <div ref={homeRef}>
+              <HomePage />
             </div>
             <br />
             <div ref={featureRef}>
@@ -267,16 +288,16 @@ function openBookDemoForm(){
             </div>
             <br />
             <div ref={aboutusRef}>
-              <AboutUs handleScroll={handleClick}/>
+              <AboutUs handleScroll={handleClick} />
             </div>
             <br />
             <div ref={contactRef}>
               <ContactUs />
             </div>
             <br />
-            {/* <div ref={ourTeamRef} className={style.ourteam}>
+            {<div ref={ourTeamRef} className={style.ourteam}>
             <OurTeam />
-            </div> */}
+            </div> }
           </>
         )}
         {isPanelActive && slideInformation && (
@@ -287,11 +308,23 @@ function openBookDemoForm(){
               info={slideInformation}
             />
           </div>
-        )}
+        )} */}
+
+       
 
         <Routes>
           <Route path="admin/User_registration" element={<Registration />} />
+          <Route path="" element={<HomePage />} />
+          <Route path="/feature" element={<Konwledge />} />
+          <Route path="/subscriptionplan" element={<SubscriptionPlan />} />
+          {/* <Route path="feature/subscriptionplan" element={<SubscriptionPlan />} /> */}
+          <Route path="/abouttaxko" element={<DemoVideo />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/contactus" element={<ContactUs />} />
         </Routes>
+
+
+       
 
         <div className={`${style.copyright}`}>
           <div className={`${style.dev}`}>

@@ -3,9 +3,12 @@
     background-color: #fff;
     width: 100%;
     height: fit-content;
+    border-radius: 6px;
+    padding: 20px 60px 30px 40px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .heading {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     font-weight: bold;
     font-size: large;
     color: #fed300;
@@ -45,9 +48,13 @@ width: 100%;
 .section_all {
     width: 80%;
     position: relative;
-    padding-top: 80px;
+    padding-top: 40px;
     padding-bottom: 80px;
     min-height: 100vh;
+}
+.section_title_all h3,
+.about_heading{
+color: #676763;
 }
 .section_title {
     font-weight: 700;

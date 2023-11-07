@@ -8,6 +8,8 @@ import { url_ } from '../../../Config';
 
 
 const GstrFileUpload = () => {
+  const subscription_status=localStorage.getItem('subscription_status');
+
   const Navigate = useNavigate();
   const clientid = useLocation().state.clientId;
   const year = useLocation().state.Year;
@@ -198,7 +200,25 @@ const GstrFileUpload = () => {
 
 
   const handleToggle = async (month) => {
-    if (fileResponse === true) {
+
+
+    if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        
+    }
+
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        
+    }
+
+   else{ if (fileResponse === true) {
       // console.log("It's TRUE");
     } else {
       try {
@@ -246,6 +266,8 @@ const GstrFileUpload = () => {
         }
       }
     }
+
+  }
   };
 
 
@@ -385,6 +407,26 @@ const GstrFileUpload = () => {
 
   // File Upload Code
 
+
+   // File Upload Code
+const checkSubsriptionStatus=(e)=>{
+  if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        e.preventDefault();
+    }
+
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        e.preventDefault();
+    }
+
+}
 
   const handleFileUpload = async (event, month) => {
     const file = event.target.files[0];
@@ -696,7 +738,7 @@ const GstrFileUpload = () => {
 
                     <div className={`${style.file_upload}  w-25`}>
                       <div className={style.image_upload_wrap}>
-                        <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.month)} />
+                        <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.month)} onClick={checkSubsriptionStatus} />
                         <div className={style.drag_text}>
                           <img src={upload} alt="" />
                           <h4>Upload File</h4>

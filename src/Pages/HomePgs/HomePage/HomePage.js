@@ -7,10 +7,11 @@ import introduction from "../../../Images/introduction.jpg";
 function HomePage() {
     
   return (
+    <div className={style.container}>
     <div className={` ${style.mainrow}`}>
  
-     <div id="carouselExampleControls" className={`carousel slide ${style.slider}`} data-ride="carousel">
-   <div class="carousel-inner">
+     <div id="carouselExampleControls" className={`carousel slide ${style.slider} `} data-ride="carousel">
+   <div class={`carousel-inner ${style.fadinganime}`}>
      <div class="carousel-item active">
        <img class="d-block w-100" src={introduction} alt="First slide"/>
      </div>
@@ -42,6 +43,7 @@ function HomePage() {
      
      
      
+     </div>
      </div>
   );
 }

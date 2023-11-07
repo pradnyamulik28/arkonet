@@ -14,6 +14,9 @@
     border-radius: 7px;
     box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 }
+.yellow a{
+    color: white;
+}
 
 .modal_footer{  
         flex-direction:column;

@@ -1,14 +1,16 @@
 import style from "./Knowledge.module.css";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import image1 from "../../../Images/gst.webp";
 import image2 from "../../../Images/online_file.jpg";
 import image3 from "../../../Images/tax_image.jpg";
 import image4 from "../../../Images/handsinservice-1.jpg";
 import image5 from "../../../Images/shared_image.jpeg";
+import { Navigate } from "react-router-dom";
 
-
+import InfoCard from "../InfoCard/InfoCard";
 const Card = ({ data, onCardClick, index }) => {
+  
   return (
     <div
       className={`flex justify-between bg-emerald-500 rounded-md overflow-hidden hover:-translate-y-1 hover:shadow-xl transition ${
@@ -28,7 +30,7 @@ const Card = ({ data, onCardClick, index }) => {
           src={data.imageSrc}
           alt={data.title}
         />
-        <Link onClick={() => onCardClick(data.id)} className={`${style.view}`}>
+        <Link onClick={(e) => onCardClick(e,data.id)} className={`${style.view}`}>
           View more
         </Link>
       </div>
@@ -39,6 +41,16 @@ const Card = ({ data, onCardClick, index }) => {
 function Konwledge(props) {
   // //////////////////////
   // Data Store Starts here
+
+  const [slideInformation, setSlideInformation] = useState(null);
+  const [isPanelActive, setIsPanelActive] = useState(false);
+  function handlePanel() {
+    setIsPanelActive(!isPanelActive);
+  }
+  const navigate=useNavigate();
+  useEffect(()=>{
+    setIsPanelActive(false)
+      },[])
 
   const [cardData, setCardData] = useState([
     {
@@ -120,9 +132,9 @@ function Konwledge(props) {
       imageSrc: image4,
 
       information: [
-        `Upon your membership with us, we will offer comprehensive technical assistance.,
-        Our specialized team is dedicated to resolving any technical challenges you may encounter.,
-        We offer numerous avenues for you to reach out to us when you encounter any software-related issues,,
+        `Upon your membership with us, we will offer comprehensive technical assistance.
+        Our specialized team is dedicated to resolving any technical challenges you may encounter.
+        We offer numerous avenues for you to reach out to us when you encounter any software-related issues,
         and we are committed to resolving them effectively.`,
       ],
     },
@@ -143,26 +155,34 @@ function Konwledge(props) {
     },
   ]);
 
-  const handleCardClick = (id) => {
-    // console.log(id);
+  const handleCardClick = (e,id) => {
+   
+    
     switch (id) {
       case 1:
-        props.handleScroll("slider", cardData[0]);
+       setSlideInformation(cardData[0]);
+       handlePanel()
         break;
       case 2:
-        props.handleScroll("slider", cardData[1]);
+        setSlideInformation( cardData[1]);
+        handlePanel()
         break;
       case 3:
-        props.handleScroll("slider", cardData[2]);
+        setSlideInformation( cardData[2]);
+        handlePanel()
         break;
-      case 4:
-        props.handleScroll("subscribe");
+      case 4:  
+      console.log("sub") 
+      e.preventDefault();     
+        navigate("/subscriptionplan");
         break;
       case 5:
-        props.handleScroll("slider", cardData[4]);
+        setSlideInformation( cardData[4]);
+        handlePanel()
         break;
       case 6:
-        props.handleScroll("slider", cardData[5]);
+        setSlideInformation( cardData[5]);
+        handlePanel()
         break;
       default:
         break;
@@ -170,14 +190,16 @@ function Konwledge(props) {
   };
 
   return (
+    <div className={style.container}>
     <div className={`${style.maincontainer}`}>
+      
        <link
           href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
           rel="stylesheet"
         />
       <h2 className={`${style.heading}`}>FEATURES</h2>
       <span className={`${style.seperator}`}></span>
-      <div className="px-4 py-8 max-w-5xl mx-auto">
+      {!isPanelActive &&<div className="px-4 py-8 max-w-5xl mx-auto">
         <div
           id="cards-container"
           className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
@@ -191,7 +213,17 @@ function Konwledge(props) {
             />
           ))}
         </div>
-      </div>
+      </div>}
+      {isPanelActive && slideInformation && (
+          <div>
+            <InfoCard
+              handlePanel={handlePanel}
+              isClose={isPanelActive}
+              info={slideInformation}
+            />
+          </div>
+        )}
+        </div>
     </div>
   );
 }
