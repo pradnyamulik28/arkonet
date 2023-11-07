@@ -7,9 +7,9 @@ function InfoCard(props) {
     <div className={`${style.outercontainer}`}>
       <section className={`${style.about_section} ${style.section}`}>
         {/* <div className={`${style.container}`}> */}
-          <div className={style.row}>
+          <div className="row">
             <div
-              className={`${style.content_column} col-lg-6 col-md-6 col-sm-6 order-2`}
+              className={`${style.content_column} col-lg-6 col-md-12 col-sm-12 order-2`}
             >
               <div className={`${style.inner_column}`}>
                 <div className={`${style.sec_title}`}>
@@ -31,7 +31,7 @@ function InfoCard(props) {
               </div>
             </div>
 
-            <div className={`${style.image_column} col-lg-6 col-md-6 col-sm-6`}>
+            <div className={`${style.image_column} col-lg-6 col-md-12 col-sm-12`}>
               <div className={`${style.inner_column} wow fadeInLeft`}>
               
                 <figure className={`${style.image_1}`}>

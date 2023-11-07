@@ -16,7 +16,7 @@ const GstrFolder = () => {
 
 
 
-  const folderTitle = ["GSTR-1", "GSTR-2", "GSTR-3B", "GSTR-9", "GSTR9A"];
+  const folderTitle = ["GSTR-1", "GSTR-2", "GSTR-3B", "GSTR-9", "GSTR-9A"];
 
   const getFolderColor = (index) => {
     const colors = ['text-primary', 'text-danger', 'text-warning', 'text-success', 'text-secondary', 'text-info'];

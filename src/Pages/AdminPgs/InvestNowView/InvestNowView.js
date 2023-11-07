@@ -26,7 +26,7 @@ const InvestNowView = () => {
       redirect: 'follow'
     };
 
-    fetch(`${url_}/Invest/allrecords?userId=${user_id}&category=${category}`, requestOptions)
+    fetch(`${url_}/Invest/allrecords?userId=${user_id}&category=${title}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result);

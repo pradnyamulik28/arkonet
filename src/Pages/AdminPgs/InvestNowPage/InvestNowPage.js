@@ -52,7 +52,7 @@ const InvestNow = () => {
 
     Navigate(`investNowview/${alt_name}/${title}`, {
       state: {
-        Investnowtitle: alt_name,
+        Investnowtitle: title,
         // InvestNowDbName: title
       },
     })

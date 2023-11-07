@@ -4,7 +4,6 @@ import upload from './upload.png';
 import Swal from 'sweetalert2';
 import { url_ } from '../../../Config';
 import { useLocation } from 'react-router-dom';
-import swal from 'sweetalert';
 
 
 const FileUpload = () => {
@@ -33,7 +32,6 @@ const FileUpload = () => {
   ];
 
   useEffect(() => {
-    
     fetchData();
   }, []);
 
@@ -140,15 +138,26 @@ const FileUpload = () => {
 
   const handleToggle = async () => {
 
+
     if(subscription_status==="grace_period")
     {
       Swal.fire({
         icon:"info",
         text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        
     }
 
-else{
-    if (fileResponse === true) {
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        
+    }
+
+
+
+    else{if (fileResponse === true) {
       console.log("It's TRUE");
     } else {
       try {
@@ -196,30 +205,26 @@ else{
   /////////////////////////////////////////////////////////////////////////////////////////////
 
   // File Upload Code
-const checkSubsriptionStatus=(e)=>{
-  if(subscription_status==="grace_period")
-    {
-      Swal.fire({
-        icon:"info",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        e.preventDefault();
-    }
-    else if(subscription_status==="not_subscribed")
-    {
-      Swal.fire({
-        icon:"info",
-        text:"Subscribe to avail this service."})
-        e.preventDefault();
-    }
-
-}
+  const checkSubsriptionStatus=(e)=>{
+    if(subscription_status==="grace_period")
+      {
+        Swal.fire({
+          icon:"info",
+          text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+          e.preventDefault();
+      }
+  
+      else if(subscription_status==="not_subscribed")
+      {
+        Swal.fire({
+          icon:"info",
+          text:"Subscribe to avail this service."})
+          e.preventDefault();
+      }
+  
+  }
 
   const handleFileUpload = async (event, filename) => {
-    
-    
-
-
-
     const file = event.target.files[0];
 
     if (file) {
@@ -262,7 +267,11 @@ const checkSubsriptionStatus=(e)=>{
     });
 
     if (result.isConfirmed) {
-
+      console.log("file", file);
+      console.log("userid", user_id);
+      console.log("clientid", clientid);
+      console.log("accountyear", year);
+      console.log("filename", filename);
 
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -339,7 +348,24 @@ const checkSubsriptionStatus=(e)=>{
   // Delete file Code
 
   const DeleteFile = async () => {
+    console.log("click")
+    if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        
+    }
 
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        
+    }
+
+    else{
 
     try {
       const result = await Swal.fire({
@@ -404,6 +430,8 @@ const checkSubsriptionStatus=(e)=>{
         console.log('Response Data:', error.response.text());
       }
     }
+
+  }
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -452,7 +480,6 @@ const checkSubsriptionStatus=(e)=>{
   function GoBack() {
     window.history.back(); // This will navigate to the previous page in the browser's history
   }
-
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   return (

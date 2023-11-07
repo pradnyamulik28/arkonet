@@ -49,16 +49,22 @@ const TotalClient = () => {
     });
 
   }
+  function GoBack() {
+    window.history.back(); // This will navigate to the previous page in the browser's history
+  }
   return (
     <div>
       <div>
         <form>
-          <div className="form-row m-4">
+          <div className="form-row m-4 d-flex align-items-center">
+            <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
+              &#8617;&nbsp;
+            </div>
             <div className="col-9">
               <input
                 type="text"
                 className={`form-control ${styles.round}`}
-                placeholder="Search Client by Name"
+                placeholder="Search Client by Name/PAN"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

@@ -192,48 +192,18 @@ const DocFolder = () => {
 
   const sendCountData = async (year) => {
 
-    const shortYear = year.toString().slice(-2);
-    const yearRange = `${year - 1}-${shortYear}`;
+    // const shortYear = year.toString().slice(-2);
+    const yearRange = `${year}-${(year + 1).toString().slice(-2)}`;
 
-
-
-
-
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-    const raw = JSON.stringify({
-      "userid": user_id,
-      "clientid": clientid,
-      "accountyear": yearRange,
-      "filednotfiled": "No"
+    Navigate('fileupload', {
+      state: {
+        ClientID: clientid,
+        Year: yearRange
+      },
     });
 
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
 
-    try {
-      const response = await fetch(`${url_}/saveData`, requestOptions);
-      const result = await response.text();
-      console.log(result);
-      console.log(clientid);
-      console.log(yearRange);
-      Navigate('fileupload', {
-        state: {
-          ClientID: clientid,
-          Year: yearRange
-        },
-      });
-
-
-    } catch (error) {
-      console.error('An error occurred while sending count data:', error);
-    }
+    console.log(yearRange)
 
   };
 

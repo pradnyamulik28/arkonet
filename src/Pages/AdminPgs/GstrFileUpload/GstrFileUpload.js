@@ -201,7 +201,6 @@ const GstrFileUpload = () => {
 
   const handleToggle = async (month) => {
 
-
     if(subscription_status==="grace_period")
     {
       Swal.fire({
@@ -217,8 +216,8 @@ const GstrFileUpload = () => {
         text:"Subscribe to avail this service."})
         
     }
-
-   else{ if (fileResponse === true) {
+    else{
+    if (fileResponse === true) {
       // console.log("It's TRUE");
     } else {
       try {
@@ -265,9 +264,7 @@ const GstrFileUpload = () => {
           console.log('Response Data:', error.response.text());
         }
       }
-    }
-
-  }
+    }}
   };
 
 
@@ -288,145 +285,59 @@ const GstrFileUpload = () => {
     return fileStatus; // Return the updated fileStatus
   });
 
-  console.log(NEWARRAY);
+  // console.log(NEWARRAY);
+
+  /////////////////////////////////////////////////////////////////////////////////////////////
+
+  function filterArrayBasedOnYear(data, currentYear, fyYear) {
+    if (fyYear === currentYear) {
+      const startIndex = data.findIndex(item => item.month === `April ${currentYear}`);
+      const endIndex = data.findIndex(item => item.month === `October ${currentYear}`);
+      return data.slice(startIndex, endIndex + 1).reverse();
+    } else {
+      return data;
+    }
+  }
+
+  // Given data
 
 
-  // const CurrentYear = new Date().getFullYear();
-  // let startMonth = (currentYear === CurrentYear) ? 3 : 0; // 3 corresponds to April
-
-  // let MMonths = [];
-  // if (CurrentYear === currentYear) {
-  //   for (let i = new Date().getMonth(); i >= startMonth; i--) {
-  //     MMonths.push(NEWARRAY[i]);
-  //   }
-  // } else {
-  //   for (let i = startMonth; i < 12; i++) {
-  //     MMonths.push(NEWARRAY[i]);
-  //   }
-  //   for (let i = 0; i < new Date().getMonth() + 1; i++) {
-  //     MMonths.push(NEWARRAY[i]);
-  //   }
-  // }
-
-  // // Print the result for demonstration
-  // console.log(months);
+  // Current year and fiscal year
+  const currentYearr = `${currentDate.getFullYear()}`;
+  const fyYear = `${currentYear}`;
 
 
+  console.log(currentYearr)
+  console.log(fyYear)
+  // Call the function with the data, current year, and fiscal year
+  const NEWARRAYUpdated = filterArrayBasedOnYear(NEWARRAY, currentYearr, fyYear);
+  console.log(NEWARRAYUpdated);
 
 
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // function RearrangedArray() {
-  //   const CurrentDate = new Date();
-  //   const CurrentYear = CurrentDate.getFullYear();
-  //   const CurrentMonth = CurrentDate.getMonth() + 1; // Since getMonth returns 0-indexed values
-
-  //   if (currentYear === CurrentYear) {
-  //     NEWARRAY.slice(6, CurrentMonth).reverse().map((item) => {
-  //       // console.log(item);
-  //     });
-  //   } else {
-  //     NEWARRAY.slice(6, 12).concat(NEWARRAY.slice(0, CurrentMonth)).map((item) => {
-  //       // console.log(item);
-  //     });
-  //   }
-  // }
-
-
-
-
-  // console.log(RearrangedArray())
-
-
-
-
-
-
-  // function checkAdult(data) {
-  //   return data.month.split(' ')[1] == String(new Date().getFullYear());
-  // }
-
-
-
-  // function rearrangeArrayByCurrentMonth(array) {
-  //   // Define a map to convert month names to month numbers
-  //   const monthMap = {
-  //     "January": 0,
-  //     "February": 1,
-  //     "March": 2,
-  //     "April": 3,
-  //     "May": 4,
-  //     "June": 5,
-  //     "July": 6,
-  //     "August": 7,
-  //     "September": 8,
-  //     "October": 9,
-  //     "November": 10,
-  //     "December": 11,
-  //   };
-
-
-  //   // Get the current date
-  //   // const currentDate = new Date("2023-01-19T17:12:09.084Z");
-  //   const currentDate = new Date();
-  //   // Sort the array by the month and year in descending order
-  //   array.sort((a, b) => {
-  //     const dateA = new Date(currentDate.getFullYear(), monthMap[a.month.split(' ')[0]], 1);
-  //     const dateB = new Date(currentDate.getFullYear(), monthMap[b.month.split(' ')[0]], 1);
-  //     return dateB - dateA;
-  //   });
-  //   // Find the index of the current month
-  //   const currentMonthIndex = array.findIndex(item => {
-  //     const monthName = item.month.split(' ')[0];
-  //     return monthMap[monthName] === currentDate.getMonth();
-  //   });
-
-
-  //   // Reorder the array so that it starts with the current month
-  //   // if (currentMonthIndex > -1) {
-  //   //   array = [...array.slice(currentMonthIndex), ...array.slice(0, currentMonthIndex)];
-  //   // }
-
-  //   if (currentDate.getMonth() > 2) {
-  //     console.log("Called")
-  //     array = [...array.slice(currentMonthIndex), ...array.slice(12 - currentDate.getMonth(), currentMonthIndex)];
-  //     array = array.filter(checkAdult)
-  //   }
-  //   else {
-  //     console.log("Not")
-  //     array = [...array.slice(currentMonthIndex), ...array.slice(0, currentMonthIndex)];
-  //   }
-
-
-  //   return array;
-  // }
-
-  // const rearrangedArray = rearrangeArrayByCurrentMonth(NEWARRAY);
-  // console.log(rearrangedArray);
 
   /////////////////////////////////////////////////////////////////////////////////////////////
 
   // File Upload Code
-
-
-   // File Upload Code
-const checkSubsriptionStatus=(e)=>{
-  if(subscription_status==="grace_period")
-    {
-      Swal.fire({
-        icon:"info",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        e.preventDefault();
-    }
-
-    else if(subscription_status==="not_subscribed")
-    {
-      Swal.fire({
-        icon:"info",
-        text:"Subscribe to avail this service."})
-        e.preventDefault();
-    }
-
-}
+  const checkSubsriptionStatus=(e)=>{
+    if(subscription_status==="grace_period")
+      {
+        Swal.fire({
+          icon:"info",
+          text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+          e.preventDefault();
+      }
+  
+      else if(subscription_status==="not_subscribed")
+      {
+        Swal.fire({
+          icon:"info",
+          text:"Subscribe to avail this service."})
+          e.preventDefault();
+      }
+  
+  }
 
   const handleFileUpload = async (event, month) => {
     const file = event.target.files[0];
@@ -547,7 +458,23 @@ const checkSubsriptionStatus=(e)=>{
 
   const DeleteFile = async () => {
 
+    if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        
+    }
 
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        
+    }
+
+    else{
     try {
       const result = await Swal.fire({
         title: 'Are you sure?',
@@ -613,6 +540,7 @@ const checkSubsriptionStatus=(e)=>{
         console.log('Response Data:', error.response.text());
       }
     }
+  }
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -728,7 +656,7 @@ const checkSubsriptionStatus=(e)=>{
 
 
 
-                {NEWARRAY.map((item, index) => (
+                {NEWARRAYUpdated.map((item, index) => (
                   <div className='d-flex align-items-center mb-2 w-100' key={index} >
 
 
@@ -738,7 +666,7 @@ const checkSubsriptionStatus=(e)=>{
 
                     <div className={`${style.file_upload}  w-25`}>
                       <div className={style.image_upload_wrap}>
-                        <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.month)} onClick={checkSubsriptionStatus} />
+                        <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.month)} onClick={checkSubsriptionStatus}/>
                         <div className={style.drag_text}>
                           <img src={upload} alt="" />
                           <h4>Upload File</h4>

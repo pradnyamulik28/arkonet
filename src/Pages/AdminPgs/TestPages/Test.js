@@ -1,13 +1,34 @@
-// { month: 'October 2023', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'November 2023', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'December 2023', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'January 2024', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'February 2024', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'March 2024', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'April 2023', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'May 2023', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'June 2023', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'July 2023', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'August 2023', status: false, fileid: null, filePath: null, filename: null, … }
-// { month: 'September 2023', status: false, fileid: null, filePath: null, filename: null, … }
+import React from 'react';
 
+const Test = () => {
+  return (
+    <div>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+        {/* Launch static backdrop modal */}
+      </button>
+
+      {/* <!-- Modal --> */}
+      <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Test;
