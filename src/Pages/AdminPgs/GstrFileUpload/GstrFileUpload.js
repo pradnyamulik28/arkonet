@@ -549,6 +549,25 @@ const GstrFileUpload = () => {
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
+
+
+    if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        
+    }
+
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        
+    }
+else{
+
     try {
       const response = await fetch(`${url_}/openGstfile/${file_ID}`, {
         method: 'GET',
@@ -581,6 +600,7 @@ const GstrFileUpload = () => {
     } catch (error) {
       console.error(`Error fetching or downloading ${contentType.toUpperCase()} file:`, error);
     }
+  }
   };
 
 

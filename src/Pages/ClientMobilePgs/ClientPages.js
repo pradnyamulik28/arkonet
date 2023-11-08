@@ -21,6 +21,7 @@ import ClientPassChange from "./ClientPassChange/ClientPassChange";
 import PaymentDetails from "./PaymentDetails/PaymentDetails";
 import KYC from "./KYC/KYC";
 import DOCs from "./DOCs/DOCs";
+import  ChatBot from "../../components/ChatBot/ChatBot"
 
 
 
@@ -54,7 +55,10 @@ function ClientPages() {
       <Route path="changepass" element={<ClientPassChange />} />
 
     </Routes>
+    <ChatBot />
+
     </SidebarProvider>
+    
   );
 }
 

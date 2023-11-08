@@ -129,6 +129,10 @@
     top: 95%;
   
   }
+
+  .disabled_link{
+    pointer-events: none;
+  }
   
    @media only screen and (max-height: 768px) {
     .headerbar{

@@ -6,9 +6,12 @@ import NPS from "../../../Images/sackinhand.png";
 import FD from "../../../Images/ticksack.png";
 import { Link, useNavigate } from "react-router-dom";
 import AdDisplay from "../../../components/AdDisplay/AdDisplay"
+import Swal from "sweetalert2";
 
 
 const InvestNow = () => {
+  const subscription_status=localStorage.getItem('subscription_status');
+
   const Navigate = useNavigate();
 
   const user_id = window.localStorage.getItem('user_id');
@@ -49,14 +52,29 @@ const InvestNow = () => {
 
 
   const Goto = (alt_name, title) => {
+    if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        
+    }
 
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        
+    }
+else{
     Navigate(`investNowview/${alt_name}/${title}`, {
       state: {
         Investnowtitle: title,
         // InvestNowDbName: title
       },
     })
-
+  }
 
   }
 

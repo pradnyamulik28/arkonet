@@ -37,6 +37,7 @@ import HelpClientMailView from './HelpClientMailView/HelpClientMailView';
 import KYCFile from './KYCFile/KYCFile';
 import DOCsFile from './DOCsFile/DOCsFile';
 import ClientList from './ClientList/ClientList'
+import  ChatBot from "../../components/ChatBot/ChatBot"
 
 const Adminhome = () => {
 
@@ -137,6 +138,7 @@ const Adminhome = () => {
 
             </Routes>
 
+            <ChatBot />
 
 
           </div>

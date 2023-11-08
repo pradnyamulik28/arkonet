@@ -4,6 +4,7 @@ import { url_ } from "../../../Config";
 import { Link, useLocation,useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
 import Spinner from '../../../components/Spinner/Spinner'
+import Swal from "sweetalert2";
 
 const ClientFileView = () => {
   const navigate = useNavigate();
@@ -13,6 +14,9 @@ const ClientFileView = () => {
   const year = useLocation().state.year;
   const AY=useLocation().state.AY;
   
+  
+  const it_subs_status=localStorage.getItem("it_subs_status");
+
 
   const [codeVisible, setCodeVisible] = useState(false);
   const [fileBlob, setFileBlob] = useState(null);
@@ -151,7 +155,15 @@ const ClientFileView = () => {
 
   //===========  Files Share Functionality =======================
   const shareFile = async () => {
-    //console.log(fileBlob.extractedNames);
+
+
+    if(it_subs_status==="grace_period" || it_subs_status==="off"){
+      Swal.fire({
+        icon:"info",
+        text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
+      })
+    }
+   else{
     const sharableFiles = [];
     fileBlob.pdfArray.map((item,index)=>{ 
       // console.log(fileBlob.extractedNames[index].isSelected)   
@@ -186,7 +198,7 @@ const ClientFileView = () => {
               
             }
     }
-    else{
+   
       
     }
   };
@@ -194,27 +206,16 @@ const ClientFileView = () => {
 
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
-    // console.log(fileBlob)
-    // console.log(fileName,file_ID)
 
 
-    // const newData = { ...fileBlob };
-
-    // // Find the index of the item to update within the items array
-    // const itemIndex = newData.extractedNames.findIndex(item => item.fileid === file_ID);
-  
-    // if (itemIndex !== -1) {
-    //   console.log(fileBlob.pdfArray[itemIndex]);
-    //   const blobUrl = URL.createObjectURL(fileBlob.pdfArray[itemIndex]);
-    //   console.log(blobUrl)
-    //   if (contentType === "pdf") {
-    //     setPdfBlobUrl(blobUrl);
-    //     const pdfWindow = window.open(blobUrl, "_blank");
-    //     pdfWindow.addEventListener("beforeunload", () => {
-    //       URL.revokeObjectURL(blobUrl);
-    //     });
-    //   }      
-    // } 
+    if(it_subs_status==="grace_period" || it_subs_status==="off"){
+      Swal.fire({
+        icon:"info",
+        text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
+      })
+    }
+   else{
+    
 setIsLoading(true)
 
 
@@ -250,6 +251,7 @@ setIsLoading(true)
         error
       );
     }
+  }
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////

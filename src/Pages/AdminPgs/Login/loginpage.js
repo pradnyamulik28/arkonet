@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 const Loginpage = ({ setLoggedIn }) => {
   const Navigate = useNavigate();
 
+  const grace_period_days=30;
+
   const [formdata, setFormdata] = useState({
     username: "",
     password: ""
@@ -24,7 +26,7 @@ const Loginpage = ({ setLoggedIn }) => {
 
   const checkSubscriptionStatus=async ()=>{
     
-    console.log("subcheck");
+   
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${localStorage.getItem("jwtToken")}`);
     
@@ -53,14 +55,14 @@ const Loginpage = ({ setLoggedIn }) => {
       else if(!result.subscriptionData.paid && result.subscriptionData.subendtdate===null){
         return 'not_subscribed';
       }
-      else if(!result.subscriptionData.paid && daysDiff<-30){
+      else if(!result.subscriptionData.paid && daysDiff<(-grace_period_days)){
         return 'off';
       }
-      else if(result.subscriptionData.paid && daysDiff<0){
+      else if(!result.subscriptionData.paid && daysDiff<0){
         localStorage.setItem("end_date",result.subscriptionData.subendtdate);
         const targetDate = new Date(result.subscriptionData.subendtdate.split("T")[0]); //Set Date to March 31
       const futureDate = new Date(targetDate);
-      futureDate.setDate(targetDate.getDate() + 30);
+      futureDate.setDate(targetDate.getDate() + grace_period_days);
 
         localStorage.setItem("grace_perido_end",futureDate)
         return 'grace_period'
@@ -166,8 +168,8 @@ const Loginpage = ({ setLoggedIn }) => {
                     const next_date=new Date(localStorage.getItem("grace_perido_end"))
                     Swal.fire({
                       icon: "info",
-                      text: `Your subscription has expired on ${end_date.getDate()} ${numberToMonth(end_date.getMonth()+1)},
-                       Your grace period to renew subscription is till ${next_date.getDate()} ${numberToMonth(next_date.getMonth()+1)}. After that all of your services will be stopped.`,
+                      text: `Your subscription has expired on ${end_date.getDate()} ${numberToMonth(end_date.getMonth()+1)} ${end_date.getFullYear()},
+                       Your grace period to renew subscription is till ${next_date.getDate()} ${numberToMonth(next_date.getMonth()+1)} ${next_date.getFullYear()}. After that all of your services will be stopped.`,
                     });
                     Navigate("dashboard");
                     setLoggedIn(true);

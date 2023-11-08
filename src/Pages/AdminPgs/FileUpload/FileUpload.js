@@ -348,7 +348,7 @@ const FileUpload = () => {
   // Delete file Code
 
   const DeleteFile = async () => {
-    console.log("click")
+   
     if(subscription_status==="grace_period")
     {
       Swal.fire({
@@ -440,6 +440,23 @@ const FileUpload = () => {
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
+
+    if(subscription_status==="grace_period")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
+        
+    }
+
+    else if(subscription_status==="not_subscribed")
+    {
+      Swal.fire({
+        icon:"info",
+        text:"Subscribe to avail this service."})
+        
+    }
+else{
     try {
       const response = await fetch(`${url_}/openfile/${file_ID}`, {
         method: 'GET',
@@ -472,6 +489,9 @@ const FileUpload = () => {
     } catch (error) {
       console.error(`Error fetching or downloading ${contentType.toUpperCase()} file:`, error);
     }
+
+
+  }
   };
   // console.log(clientid)
   // console.log(year)
@@ -566,9 +586,9 @@ const FileUpload = () => {
                           )}
 
                           {item.filename.toLowerCase().includes('excel') ? (
-                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={() => openFileAndDownload('xlsx', 'spreadsheet.xlsx', item.fileId)}></i>
+                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={(e) =>{e.preventDefault(); openFileAndDownload('xlsx', 'spreadsheet.xlsx', item.fileId)}}></i>
                           ) : (
-                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => openFileAndDownload('pdf', 'document.pdf', item.fileId)}></i>
+                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={(e) => {e.preventDefault(); openFileAndDownload('pdf', 'document.pdf', item.fileId)}}></i>
                           )}
 
                           <h6 className={style.filename_text} >

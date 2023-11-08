@@ -5,9 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSidebar } from "../ClientSideBar/SidebarContext";
 import { url_ } from "../../../Config";
 import NotificationBell from "../../../components/NotificationBell/NotificationBell"
+import Swal from "sweetalert2";
+
 function ClientDashboard() {
   const { toggleSidebar,no_of_notifications,handleNotification } = useSidebar();
 
+  const navigate=useNavigate();
+  
+  const gst_subs_status=localStorage.getItem("gst_subs_status");
+  const it_subs_status=localStorage.getItem("it_subs_status");
   
   const [clientInfo,setClientInfo]=useState({
     storedToken:window.localStorage.getItem("jwtToken"),
@@ -29,7 +35,7 @@ function ClientDashboard() {
     file:null,
     fileType:"",
     fileName:"Intimation u/s 139(9)",
-    Date:"November 22.2020",
+    Date:"January 01.2023",
     size:"0",    
 
   })
@@ -138,7 +144,6 @@ console.log(blobUrl)
 
 
 
-
 async function viewLastUploadedImage(){
   let fetchurl=``;
   if(clientInfo.client_id_it && clientInfo.client_id_gst)
@@ -210,7 +215,7 @@ if(clientInfo.client_id_it){
 await fetch(`${url_}/maxLastUpdateDatefileandfilednotfiled/${clientInfo.client_id_it}`, requestOptions)
 .then((response)=>response.json())
 .then((result)=>{
-  console.log("IT ",result);
+  // console.log("IT ",result);
   const retrivedDate=result.lastUpdateDate.split("-");
   lastUpdateCopy["ITLastUpdate"] = `${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`;  
 })
@@ -222,7 +227,7 @@ if(clientInfo.client_id_gst){
 await fetch(`${url_}/maxLastUpdateDateGSTfileandGSTfilednotfiled/${clientInfo.client_id_gst}`, requestOptions)
 .then((response)=>response.json())
 .then((result)=>{
-  console.log("GST",result);
+  // console.log("GST",result);
   const retrivedDate=result.lastUpdateDate.split("-");
   lastUpdateCopy["GstLastUpdate"] = `${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`;  
 })
@@ -234,7 +239,7 @@ await fetch(`${url_}/maxLastUpdateDateGSTfileandGSTfilednotfiled/${clientInfo.cl
 await fetch(`${url_}/maxLastUpdateDateforkycdoc/${clientInfo.PAN}`, requestOptions)
 .then((response)=>response.json())
 .then((result)=>{
-  console.log("KYC  ",result);
+  // console.log("KYC  ",result);
   const retrivedDate=result.split("-");
   lastUpdateCopy["KYCLastUpdate"] = `${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`;  
 })
@@ -246,7 +251,7 @@ await fetch(`${url_}/maxLastUpdateDateforkycdoc/${clientInfo.PAN}`, requestOptio
 await fetch(`${url_}/maxLastUpdateDateforDocument/${clientInfo.PAN}`, requestOptions)
 .then((response)=>response.json())
 .then((result)=>{
-  console.log("doc",result);
+  // console.log("doc",result);
   const retrivedDate=result.lastUpdateDate1.split("-");
   lastUpdateCopy["DocsLastUpdate"] = `${numberToMonth(retrivedDate[1])} ${retrivedDate[2]}.${retrivedDate[0]}`;  
 })
@@ -255,52 +260,12 @@ await fetch(`${url_}/maxLastUpdateDateforDocument/${clientInfo.PAN}`, requestOpt
 })
 
 
-console.log(lastUpdateCopy)
+// console.log(lastUpdateCopy)
 
 setLastUpdateDate(lastUpdateCopy)
 getLastFileInf();
   }
 
-
-  async function getLastFileInf(){
-    var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
-
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  redirect: 'follow'
-};
-
-let fetchurl=``;
-if(clientInfo.client_id_it && clientInfo.client_id_gst)
-{
-  fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_gst}`;
-}
-else if(clientInfo.client_id_it){
-  fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_it}`;
-}
-else if(clientInfo.client_id_gst){
-  fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
-}
-console.log(fetchurl)
-
-fetch(`${url_}/getlastUpdateallinformation/${fetchurl}/${clientInfo.PAN}`, requestOptions)
-  .then(response => response.json())
-  .then(result => {
-
-    const updateDate=new Date(result.lastUpdateDate1);
-    setLastUploadedPdf({...lastUploadedPdf,
-      file:null,
-      fileType:result.imagePath.split(".")[1],
-      fileName:result.imageName,
-      Date:`${numberToMonth(updateDate.getMonth())} ${updateDate.getDate()}.${updateDate.getFullYear()}`, 
-    })
-    fileSize();
-
-  })
-  .catch(error => console.log('error', error));
-  }
 
 
   async function fileSize()
@@ -326,14 +291,102 @@ else if(clientInfo.client_id_gst){
   fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
 }
 
-    await fetch(`${url_}/getlastUpdateallonefile/${fetchurl}/${clientInfo.PAN}`, requestOptions)
-    .then(response=>response.blob())
-    .then(result=>{
-      const sizeInBytes = result.size;
-    const fileSize =Math.floor(sizeInBytes / 1024);
-    setLastUploadedPdf({...lastUploadedPdf,size:fileSize>=1024?`${Math.floor(fileSize/1024)}MB`:`${fileSize}KB`})
-    //console.log(fileSize)    
-    }).catch(error=>console.log(error));
+    try {
+      const response = await fetch(
+        `${url_}/getlastUpdateallonefile/${fetchurl}/${clientInfo.PAN}`,
+        requestOptions
+      );
+      if (response.status === 200) {
+        const result = await response.blob();
+        const sizeInBytes = result.size;
+        const fileSize = Math.floor(sizeInBytes / 1024);
+        //console.log(fileSize)
+        return fileSize;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+
+  async function getLastFileInf(){
+
+    const filesize=await fileSize();
+
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${clientInfo.storedToken}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+let fetchurl=``;
+if(clientInfo.client_id_it && clientInfo.client_id_gst)
+{
+  fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_gst}`;
+}
+else if(clientInfo.client_id_it){
+  fetchurl=`${clientInfo.client_id_it}/${clientInfo.client_id_it}`;
+}
+else if(clientInfo.client_id_gst){
+  fetchurl=`${clientInfo.client_id_gst}/${clientInfo.client_id_gst}`;
+}
+// console.log(fetchurl)
+
+fetch(`${url_}/getlastUpdateallinformation/${fetchurl}/${clientInfo.PAN}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+
+    const updateDate=new Date(result.lastUpdateDate1);
+    setLastUploadedPdf({...lastUploadedPdf,
+      file:null,
+      fileType:result.imagePath.split(".")[1],
+      fileName:result.imageName,
+      Date:`${numberToMonth(updateDate.getMonth())} ${updateDate.getDate()}.${updateDate.getFullYear()}`, 
+      size:filesize>=1024?`${Math.floor(filesize/1024)}MB`:`${filesize}KB`
+    })
+   // fileSize();
+
+  })
+  .catch(error => console.log('error', error));
+  }
+  
+  function handleCardClick(e){
+    const card_name=e.currentTarget.id;
+   
+    switch(card_name){
+      case "clientincometax":
+        e.preventDefault();
+        if(it_subs_status==="off"){
+          Swal.fire({
+            icon:"info",
+            text:`This service has stopped.Kindly Contact your IT Tax Professional to resume your services.`
+          })
+        }
+        else{
+          navigate("clientincometax");
+        }
+        break;
+      
+        case "gstfolder":
+          e.preventDefault();
+          if(gst_subs_status==="off"){
+            Swal.fire({
+              icon:"info",
+              text:`This service has stopped.Kindly Contact your GST Tax Professional to resume your services.`
+            })
+          }
+          else{
+            navigate("gstfolder")
+          }
+          break;
+        
+      default:break;
+    }
   }
 
 
@@ -392,8 +445,8 @@ else if(clientInfo.client_id_gst){
     {/* Cards Starts*/}
     <div className={`row ${style.row2}`}>
     
-    {clientInfo.client_id_it&&<div className='col-6'>
-    <Link to="clientincometax" className={!clientInfo.client_id_it && style.disabled_link}>
+    {clientInfo.client_id_it&&<div className='col-6' id="clientincometax" onClick={handleCardClick}>
+    <Link  >
     <div className={`${style.uniclass} ${style.card1}`}>
     <div className={`${style.icons} `}>
     <div className={`${style.lefticons} `}>
@@ -416,8 +469,8 @@ else if(clientInfo.client_id_gst){
     </div>}
     
     
-    {clientInfo.client_id_gst&&<div className='col-6'>
-    <Link to="gstfolder" className={!clientInfo.client_id_gst && style.disabled_link}>
+    {clientInfo.client_id_gst&&<div className='col-6' id="gstfolder" onClick={handleCardClick}>
+    <Link >
     <div className={`${style.uniclass} ${style.card2}`}>
     <div className={`${style.icons} `}>
     <div className={`${style.lefticons} `}>
@@ -439,7 +492,7 @@ else if(clientInfo.client_id_gst){
     </Link>
     </div>}
     
-    <div className='col-6'>
+    <div className='col-6' id="kyc" onClick={handleCardClick}>
       <Link to="kyc">
     <div className={`${style.uniclass} ${style.card3}`}>
     <div className={`${style.icons} `}>
@@ -462,7 +515,7 @@ else if(clientInfo.client_id_gst){
     </Link>
     </div>
     
-    <div className='col-6'>
+    <div className='col-6' id="docs" onClick={handleCardClick}>
       <Link to="docs" >
     <div className={`${style.uniclass} ${style.card4}`}>
     <div className={`${style.icons} `}>
@@ -507,7 +560,7 @@ else if(clientInfo.client_id_gst){
     <div className={`${style.leftdear}`}>
     <div className={`${style.licon}`}>
     <h1>{lastUploadedPdf.fileType==="pdf"?<i className="fa-solid fa-file-pdf" style={{color: "#ff0000"}} onClick={viewLastUploadedFile}></i>
-    :<i class="fa-solid fa-image" style={{color:'#ff1100'}} onClick={viewLastUploadedImage}></i>}
+    :<i className="fa-solid fa-image" style={{color:'#ff1100'}} onClick={viewLastUploadedImage}></i>}
     
     </h1>
     </div>

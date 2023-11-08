@@ -123,7 +123,9 @@ const Navigate=useNavigate()
   ${localStorage.getItem("user_name")},
   Contact no : ${localStorage.getItem("mobile")}`;
 
-console.log(message)
+
+  const formattedMsg=message.replace(/\n/g, '<br>')
+// console.log(message)
 
     swal.fire({
       title: 'Sending Acknowledgement',
@@ -136,6 +138,8 @@ console.log(message)
 
 
     var myHeaders = new Headers();
+    myHeaders['Content-Type'] = 'multipart/form-data';
+
     myHeaders.append("Authorization", `Bearer ${userInfo.jwtToken}`);
 
     var formdata = new FormData();
@@ -145,7 +149,7 @@ console.log(message)
     formdata.append("subscriptionprice", subs_amount);
     formdata.append("subscriptiontype", subs_pack);
     formdata.append("subject", "Payment Acknowledgement");
-    formdata.append("text", message);
+    formdata.append("text", formattedMsg);
 
     var requestOptions = {
       method: "PUT",

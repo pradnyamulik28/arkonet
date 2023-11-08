@@ -7,6 +7,9 @@ import swal from "sweetalert2";
 // import arkonet from "../../Images/Arkonet.jpg";
 
 const UserSubscriptionPage = () => {
+
+  const subscription_status=localStorage.getItem(`subscription_status`)
+
   const Navigate = useNavigate();
   const [isRefferFriend,setIsRefferFriend]=useState(true);
   const [isSuggession,setIsSuggession]=useState(false);
@@ -290,7 +293,7 @@ fetchData();
             <p className={`${style.p2}`}>{userInfo.end_date}</p>
           </div>
           <div className={`${style.card2}`}>
-            <p className={`${style.cardp}`} onClick={GOTO}> {userInfo.end_date===null?`Subscribe`:`RENEW`}</p>
+            <p className={subscription_status==="on"?`${style.cardp} ${style.btndisabled}`:`${style.cardp}`} onClick={GOTO}> {subscription_status==="on"?`Active`:userInfo.end_date===null?`Subscribe`:`RENEW`}</p>
           </div>
         </div>
 

@@ -11,6 +11,8 @@ function GstFileView() {
 
   const year=useLocation().state.year;//`${parseInt((useLocation().state.year).split("-")[0])+1}-${parseInt((useLocation().state.year).split("-")[1])+1}`;
   
+  const gst_subs_status=localStorage.getItem("gst_subs_status");
+
   // console.log("year",year)
   const gstCategory=useLocation().state.gstCategory;
   const navigate=useNavigate();
@@ -178,7 +180,18 @@ function GstFileView() {
 
   //===========  Files Share Functionality =======================
   const shareFile = async () => {
-    //console.log(fileBlob.extractedNames);
+
+
+
+    if(gst_subs_status==="grace_period" || gst_subs_status==="off"){
+      swal.fire({
+        icon:"info",
+        text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
+      })
+    }
+    else{
+      
+    
     const sharableFiles = [];
     fileBlob.pdfArray.map((item,index)=>{ 
       // console.log(fileBlob.extractedNames[index].isSelected)   
@@ -213,7 +226,7 @@ function GstFileView() {
               
             }
     }
-    else{
+   
       
     }
   };
@@ -221,6 +234,15 @@ function GstFileView() {
 
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
+
+
+    if(gst_subs_status==="grace_period" || gst_subs_status==="off"){
+      swal.fire({
+        icon:"info",
+        text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
+      })
+    }
+    else{
     setIsLoading(true)
     try {
       const response = await fetch(`${url_}/openGstfile/${file_ID}`, {
@@ -254,6 +276,8 @@ function GstFileView() {
         error
       );
     }
+
+  }
   };
 
 

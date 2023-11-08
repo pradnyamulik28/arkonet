@@ -17,6 +17,8 @@ import Registration from "../AdminPgs/Registration/Registration";
 import InfoCard from "./InfoCard/InfoCard";
 import DemoVideo from "./DemoVideo/DemoVideo";
 import Presentation from "./Presentation/Presentation";
+import  ChatBot from "../../components/ChatBot/ChatBot"
+
 
 
 function HomeRoute() {
@@ -323,6 +325,7 @@ function openBookDemoForm(){
           <Route path="/contactus" element={<ContactUs />} />
         </Routes>
 
+        <ChatBot />
 
        
 

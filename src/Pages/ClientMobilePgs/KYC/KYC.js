@@ -9,6 +9,10 @@ function KYC() {
   const Navigate=useNavigate()
 
   const storedToken = window.localStorage.getItem("jwtToken");
+
+  const gst_subs_status=localStorage.getItem("gst_subs_status");
+  const it_subs_status=localStorage.getItem("it_subs_status");
+
   const client_pan=localStorage.getItem("pan");
 
   const maxSize=10;
@@ -113,6 +117,17 @@ let fetchUrl="";
 
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   const openFileAndDownload = async (fileid) => {
+
+    if((it_subs_status==="grace_period" || it_subs_status==="off")
+    && (gst_subs_status==="grace_period" || gst_subs_status==="off")
+    ){
+      swal.fire({
+        icon:"info",
+        text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
+      })
+    }
+
+else{
     let fetchUrl=""
     switch(fileid){
       case "aadhar_card":
@@ -165,6 +180,9 @@ let fetchUrl="";
         error
       );
     }
+
+
+  }
   };
 
 
@@ -230,6 +248,15 @@ let fetchUrl="";
 
   async function deleteFile(e){
 
+    if((it_subs_status==="grace_period" || it_subs_status==="off")
+    && (gst_subs_status==="grace_period" || gst_subs_status==="off")
+    ){
+      swal.fire({
+        icon:"info",
+        text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
+      })
+    }
+else{
     const selection=e.target.id;
     const updatedItems = [...KYCFiles];
     const index = updatedItems.findIndex((item) => item.id === e.target.id);
@@ -295,6 +322,8 @@ let fetchUrl="";
 }
 })
 
+
+  }
   }
   
 
@@ -392,11 +421,21 @@ if(file){
   };
 
   function handleSelectFile(e){
+    if((it_subs_status==="grace_period" || it_subs_status==="off")
+    && (gst_subs_status==="grace_period" || gst_subs_status==="off")
+    ){
+      swal.fire({
+        icon:"info",
+        text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
+      })
+    }
+    else{
     const fileid=e.currentTarget.id;    
     const index = KYCFiles.findIndex((item) => item.id === fileid);
     if (index !== -1) {
       KYCFiles[index].fileRef.current.click();
-    }    
+    }  
+  }  
       
   }
 

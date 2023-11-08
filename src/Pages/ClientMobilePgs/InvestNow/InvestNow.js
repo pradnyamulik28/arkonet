@@ -18,6 +18,8 @@ import { url_ } from "../../../Config";
 
 function InvestNow() {
 
+  const it_subs_status=localStorage.getItem("it_subs_status");
+
   const repeatRequestDuration=15;
 
   const Invest_Now=[{
@@ -177,6 +179,15 @@ function numberToMonth(number) {
 
   async function handleCardClick(e)
   {
+
+    if(it_subs_status==="grace_period" || it_subs_status==="off")
+    {
+      swal.fire({
+        icon:"info",
+        text:"This service is currently not available, to access this service kindly contact your Tax Professional to resume your services."
+      })
+    }
+    else{
     const category = `${e.currentTarget.id}`;
     if (!user_id_it) {
       swal.fire("Sorry!", `You are not registereg under Income Tax`, "error");
@@ -201,9 +212,7 @@ function numberToMonth(number) {
   ${localStorage.getItem("name")},
   Contact no : ${localStorage.getItem("mobile")}`;
 
-        //setInvestmentMail({...investmentMail,subject:subject,msg:message});
-        //console.log(subject);
-        //console.log(message,investmentMail.userid);
+
         sendEmail(client_id_it,user_id_it,subject,message,category);
       } else {
         swal.fire({
@@ -215,6 +224,7 @@ function numberToMonth(number) {
         
       }
     }
+  }
   }
 
   async function sendEmail(clientid,userid,subject,body,category)

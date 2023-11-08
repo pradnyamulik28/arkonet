@@ -118,7 +118,7 @@ await fetch(`${url_}/client/authenticate`, requestOptions)
       // Handle 404 Not Found error here
       // For example: throw new Error('Resource not found');
     } else if (response.status === 401) {
-      console.log("uuuuuuuuuuuuuuuu")
+     
       swal.fire("Failed!", "Invalid login credential !!!", "error");
       setCredentials({ Upassword: "" });
       // Handle 401 Unauthorized error here
