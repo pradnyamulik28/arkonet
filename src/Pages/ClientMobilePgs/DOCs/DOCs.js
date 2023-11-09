@@ -30,8 +30,8 @@ function DOCs() {
   async function deleteFile(e){
 
 
-    if((it_subs_status==="grace_period" || it_subs_status==="off")
-    && (gst_subs_status==="grace_period" || gst_subs_status==="off")
+    if((it_subs_status==="grace_period" || it_subs_status==="off" || it_subs_status===null)
+    && (gst_subs_status==="grace_period" || gst_subs_status==="off" || gst_subs_status===null)
     ){
       swal.fire({
         icon:"info",
@@ -153,8 +153,8 @@ const fetchUrl=`${url_}/client/uploaddocument`;
   const openFileAndDownload = async () => {
 
 
-    if((it_subs_status==="grace_period" || it_subs_status==="off")
-    && (gst_subs_status==="grace_period" || gst_subs_status==="off")
+    if((it_subs_status==="grace_period" || it_subs_status==="off" || it_subs_status===null)
+    && (gst_subs_status==="grace_period" || gst_subs_status==="off" || gst_subs_status===null)
     ){
       swal.fire({
         icon:"info",
@@ -391,8 +391,8 @@ if(file){
 
   function handleSelectFile(e){
 
-    if((it_subs_status==="grace_period" || it_subs_status==="off")
-    && (gst_subs_status==="grace_period" || gst_subs_status==="off")
+    if((it_subs_status==="grace_period" || it_subs_status==="off" || it_subs_status===null)
+    && (gst_subs_status==="grace_period" || gst_subs_status==="off" || gst_subs_status===null)
     ){
       swal.fire({
         icon:"info",
