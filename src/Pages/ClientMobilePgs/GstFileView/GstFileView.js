@@ -185,7 +185,7 @@ function GstFileView() {
 
     if(gst_subs_status==="grace_period" || gst_subs_status==="off"){
       swal.fire({
-        icon:"info",
+        icon:"warning",
         text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
       })
     }
@@ -238,7 +238,7 @@ function GstFileView() {
 
     if(gst_subs_status==="grace_period" || gst_subs_status==="off"){
       swal.fire({
-        icon:"info",
+        icon:"warning",
         text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
       })
     }

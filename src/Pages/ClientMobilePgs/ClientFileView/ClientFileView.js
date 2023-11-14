@@ -159,7 +159,7 @@ const ClientFileView = () => {
 
     if(it_subs_status==="grace_period" || it_subs_status==="off"){
       Swal.fire({
-        icon:"info",
+        icon:"warning",
         text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
       })
     }
@@ -210,7 +210,7 @@ const ClientFileView = () => {
 
     if(it_subs_status==="grace_period" || it_subs_status==="off"){
       Swal.fire({
-        icon:"info",
+        icon:"warning",
         text:"This is view only, to access this service kindly contact your Tax Professional to resume your services."
       })
     }

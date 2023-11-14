@@ -64,20 +64,75 @@ const UserSubscriptionPage = () => {
 
   }
 
+
+  
+  function DateConvert(ConvertingDate) {
+
+    if (ConvertingDate === null) {
+      return null;
+    } else {
+
+
+
+      const date = new Date(ConvertingDate);
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      const formattedDate = date.toLocaleDateString('en-GB', options);
+      return formattedDate;
+
+    }
+
+  }
+
+  function TimeConvert(ConvertingDate) {
+
+    if (ConvertingDate === null) {
+      return null;
+    } else {
+      const date = new Date(ConvertingDate);
+      const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+      const formattedTime = date.toLocaleTimeString('en-US', options);
+      return formattedTime;
+
+    }
+
+  }
+
+  function getTimeDifference(startDate, endDate) {
+    const startDateTime = new Date();
+    const endDateTime = new Date(endDate);
+    const timeDiff=((endDateTime.getHours()*60)+endDateTime.getMinutes())-
+    ((startDateTime.getHours()*60)+startDateTime.getMinutes())
+    
+    const hours = parseInt(timeDiff/60);
+    const minutes = timeDiff%60;
+
+    
+  
+    return { hours, minutes }; 
+  }
+
   const [userInfo,setUserInfo]=useState({
     userid:localStorage.getItem("user_id"),
     userPAN:localStorage.getItem("pan"),
     days_left:"0",
+    time_left:"0",
     referredBy:"Sonali Shyamkumar Goel",
     refferedPan:"",
     registration_date:"14 April 2024",
-    end_date:""
+    end_date:"",
+    end_time:"",
+    pack_amount:"",
+    pack_type:""
+
   });
 
 
   function copyReferralLink(){
-    const refferalLink=`http://localhost:3000/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${userInfo.userPAN}`;
-    navigator.clipboard.writeText(refferalLink);
+   // const refferalLink=`http://localhost:3000/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${userInfo.userPAN}`;
+    const refferalLink=`http://taxko.in/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${userInfo.userPAN}`;
+    const copy = require('clipboard-copy')
+    copy(refferalLink);
+   
     swal.fire('Refferal link has been copied to clipboard');
   }
 
@@ -112,16 +167,27 @@ try{
   const response=await fetch(`${url_}/subscriptionpackuserdata/${userInfo.userPAN}`, requestOptions);
 const result= await response.text();
 
+
+
 if(response.status===200)
 {
-  const data=JSON.parse(result)
- 
+  const data=JSON.parse(result) 
   
+  console.log(data,data.subscriptionData.subscriptiontype,data.subscriptionData.subscriptionprice)
+
   updateItem.referredBy=data.Refered_by_name  &&  data.Refered_by_name;
   
-  updateItem.registration_date=data.subscriptionData.registrationdate;
+  updateItem.registration_date=DateConvert(data.subscriptionData.registrationdate);
+
+  updateItem.pack_type=data.subscriptionData.subscriptiontype &&  data.subscriptionData.subscriptiontype;
+
+  updateItem.pack_amount=data.subscriptionData.subscriptionprice  && data.subscriptionData.subscriptionprice;
   
-  updateItem.end_date=data.subscriptionData.subendtdate &&  data.subscriptionData.subendtdate;
+  updateItem.end_date=data.subscriptionData.subendtdate &&  DateConvert(data.subscriptionData.subendtdate);
+
+  updateItem.end_time=data.getSubendtdate &&  TimeConvert(data.getSubendtdate);
+
+  updateItem.time_left=data.getSubendtdate &&  getTimeDifference(data.getSubendtdate, data.getSubendtdate);
   
   updateItem.refferedPan=data.subscriptionData.refrenceId &&  data.subscriptionData.refrenceId;
 
@@ -132,14 +198,20 @@ if(response.status===200)
 }
 
 
-console.log(updateItem)
 const daysDiff = (Math.floor((new Date(updateItem.end_date)-new Date())/ (1000 * 60 * 60 * 24)))+1;
+
+
+
 setUserInfo({...userInfo,
-  days_left:`${daysDiff}`,
+  days_left:daysDiff,
+  time_left:updateItem.time_left,//`${updateItem.time_left.hours}h : ${updateItem.time_left.minutes}m`,
   referredBy:updateItem.referredBy,
     refferedPan:updateItem.refferedPan,
     registration_date:updateItem.registration_date,
-    end_date:updateItem.end_date
+    end_date:updateItem.end_date,
+    pack_amount:updateItem.pack_amount,
+    pack_type:updateItem.pack_type,
+    end_time:updateItem.end_time
 });
   }
 
@@ -150,7 +222,7 @@ setUserInfo({...userInfo,
         refferFriend.name===""
         ||refferFriend.profession==="")
       {
-        console.log(isValidMobile)
+        // console.log(isValidMobile)
         swal.fire({
           icon:"warning",
           text:(!isValidMobile||refferFriend.contactNo==="")?`Invalid Mobile no`:
@@ -159,14 +231,14 @@ setUserInfo({...userInfo,
         })
       }
       else{
-        console.log(isValidMobile,refferFriend.name,refferFriend.contactNo,refferFriend.profession)
-        saveRefferFriend();
+        // console.log(isValidMobile,refferFriend.name,refferFriend.contactNo,refferFriend.profession)
+        saveRefferFriend(refferFriend.name,refferFriend.contactNo,refferFriend.profession);
       setRefferFriend({
         name:"",
         contactNo:"",
         profession:""
       })        
-      }     
+      }  
       
     }
     if(isSuggession){
@@ -187,7 +259,32 @@ setUserInfo({...userInfo,
     }
   }
 
-  async function saveRefferFriend() {
+  async function saveRefferFriend(name,contact,profession) {
+
+
+    const subject = `Referral Friend Request`;
+
+        const message = `Dear Support Team,
+  Greeting from TAXKO!
+
+  I hope this message finds you well. 
+  
+  One of our users, ${localStorage.getItem("user_name")}, has referred a new friend. The contact details of the referred individual are as follows:
+- Name:${name}
+- Contact Number:${contact}
+- Profession:${profession}
+
+  We place our confidence in your expertise and kindly request your assistance in reaching out to the aforementioned reference to gather more information.
+
+                    
+  Best regards,
+
+  ${localStorage.getItem("user_name")},
+  Contact no : ${localStorage.getItem("mobile")}`;
+
+  const formattedMsg=message.replace(/\n/g, '<br>')
+
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -198,6 +295,7 @@ setUserInfo({...userInfo,
       name: refferFriend.name,
       contactno: refferFriend.contactNo,
       profession: refferFriend.profession,
+      text: formattedMsg
     });
 
     var requestOptions = {
@@ -206,10 +304,11 @@ setUserInfo({...userInfo,
       body: raw,
       redirect: "follow",
     };
-
+console.log(subject);
+console.log(message);
     try {
       const response = await fetch(
-        `${url_}/save/Refear_a_friend`,
+        `${url_}/save/Refear_a_friend?subject=${subject}&text=${formattedMsg}`,
         requestOptions
       );
       const result = await response.text();
@@ -282,18 +381,28 @@ fetchData();
                               userInfo.days_left<=0 ? `${style.h31} ${style.subs_end}` : 
                                 `${style.h31} ${style.subs_about_end}`}
                                 >
-                {userInfo.end_date===null?``:Math.abs(userInfo.days_left)}</h3>
+                {userInfo.end_date===null ? ``  :
+                userInfo.days_left===0  ? `${Math.abs(userInfo.time_left.hours)}h : ${Math.abs(userInfo.time_left.minutes)}m` :
+                Math.abs(userInfo.days_left)}
+                </h3>
                
               <p className={`${style.p1}`}>{
-              userInfo.end_date===null?`Not Subscribed`:userInfo.days_left<0?`Days ago`:`Days Left`}</p>
+              userInfo.end_date===null  ? `Not Subscribed` :
+              userInfo.days_left<0  ? `Days ago` :
+              userInfo.days_left===0  ? 
+              (userInfo.time_left.hours<=0 && userInfo.time_left.minutes<=0)?`Time Ago`:
+              `Time Left`  : `Days Left`}
+              </p>
             </div>
           </div>
           <div className={`${style.mainheadtextual}`}>
             {userInfo.end_date===null?``:<p className={`${style.p1}`}>Subscription Ends on</p>}
-            <p className={`${style.p2}`}>{userInfo.end_date}</p>
+            <p className={`${style.p2}`}>{userInfo.end_date}&nbsp;&nbsp; {userInfo.end_time}</p>
+            <p className={`${style.sub_details}`}>Selected Pack:&nbsp;&nbsp;{userInfo.pack_type}  
+            &nbsp;&nbsp;&nbsp;&nbsp; Amount : &#8377;&nbsp;{userInfo.pack_amount}&nbsp;/- </p>
           </div>
-          <div className={`${style.card2}`}>
-            <p className={subscription_status==="on"?`${style.cardp} ${style.btndisabled}`:`${style.cardp}`} onClick={GOTO}> {subscription_status==="on"?`Active`:userInfo.end_date===null?`Subscribe`:`RENEW`}</p>
+          <div className={subscription_status==="on"?`${style.card2} ${style.active_subscription}`:`${style.card2}`}>
+            <p className={`${style.cardp} `} onClick={GOTO}> {subscription_status==="on"?`Active`:userInfo.end_date===null?`Subscribe`:`RENEW`}</p>
           </div>
         </div>
 

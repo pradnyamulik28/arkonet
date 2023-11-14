@@ -55,7 +55,7 @@ const InvestNow = () => {
     if(subscription_status==="grace_period")
     {
       Swal.fire({
-        icon:"info",
+        icon:"error",
         text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
         
     }
@@ -63,7 +63,7 @@ const InvestNow = () => {
     else if(subscription_status==="not_subscribed")
     {
       Swal.fire({
-        icon:"info",
+        icon:"error",
         text:"Subscribe to avail this service."})
         
     }

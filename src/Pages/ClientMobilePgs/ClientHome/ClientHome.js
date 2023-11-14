@@ -9,6 +9,7 @@ import NotificationBell from "../../../components/NotificationBell/NotificationB
 import AdDisplay from "../../../components/AdDisplay/AdDisplay";
 import {AdDetails} from "../../../ObjData/AdDetails";
 import swal from "sweetalert2";
+import WhatsappChat from "../../../components/WhatsappChat/WhatsappChat"
 
 function ClientHome() {
   const { toggleSidebar,no_of_notifications,handleNotification } = useSidebar();
@@ -64,13 +65,20 @@ async function checkSubscriptionStatus() {
         `${url_}/subscriptionpackuserdata/userid/${user_id_it}`,
         requestOptions
       );
-      const result = await response.json();
+      const result1=await response.json();
+      const result = result1.subscriptionData//await response.json();
+      // console.log(result)
       const daysDiff = (Math.floor((new Date(result.subendtdate)-new Date())/ (1000 * 60 * 60 * 24)))+1;
-      if(!result.paid && daysDiff<0 && daysDiff>(-grace_period_days)){ 
+      if(result.forcestop)
+      {
+        setITSubStatus("off")  
+        localStorage.setItem("it_subs_status",'off');
+      }
+      else if(!result.paid && daysDiff<0 && daysDiff>(-grace_period_days)){ 
         setITSubStatus("grace_period")  
         localStorage.setItem("it_subs_status",'grace_period');
       }
-      else if(result.paid && daysDiff>=0 ){
+      else if(result.paid && daysDiff>=0){
         setITSubStatus("on")  
         localStorage.setItem("it_subs_status",'on');
       }  
@@ -79,6 +87,9 @@ async function checkSubscriptionStatus() {
         localStorage.setItem("it_subs_status",'off');
       }
     }
+    else{
+      setITSubStatus("off");//localStorage.setItem("it_subs_status",'off'); 
+    }
 
 
     if (user_id_gst) {
@@ -86,9 +97,15 @@ async function checkSubscriptionStatus() {
         `${url_}/subscriptionpackuserdata/userid/${user_id_gst}`,
         requestOptions
       );
-      const result = await response.json();
+      const result1=await response.json();
+      const result = result1.subscriptionData//await response.json();
       const daysDiff = (Math.floor((new Date(result.subendtdate)-new Date())/ (1000 * 60 * 60 * 24)))+1;
-      if(!result.paid && (daysDiff<0 && daysDiff>(-grace_period_days))){
+      if(result.forcestop)
+      {
+        setITSubStatus("off")  
+        localStorage.setItem("gst_subs_status",'off');
+      }
+      else if(!result.paid && (daysDiff<0 && daysDiff>(-grace_period_days))){
         setGSTSubStatus("grace_period")   
         localStorage.setItem("gst_subs_status",'grace_period');
       }
@@ -101,13 +118,14 @@ async function checkSubscriptionStatus() {
         localStorage.setItem("gst_subs_status",'off');
     }
   }
+  else{
+    setGSTSubStatus("off")   
+    // localStorage.setItem("gst_subs_status",'off');
+  }
   
-  
-  
-
-  if(itSubStatus==="off" && gstSubStatus==="off"){
+  if((itSubStatus==="off" || itSubStatus===null)  && (gstSubStatus==="off"||gstSubStatus===null)){
     swal.fire({
-      icon:"info",
+      icon:"error",
       title:"Service Stopped.!",
       text:`Kindly Contact your Tax Professional to resume your services.`
     })
@@ -426,6 +444,7 @@ function deletFilePop(){// Get the current date
           {/* GST ends */}
         </div>
         {/* Data Ends */}
+        <WhatsappChat />
       </div>
       <h3 className={`${style.vesrion}`}>Version 1.0</h3>
     </div>

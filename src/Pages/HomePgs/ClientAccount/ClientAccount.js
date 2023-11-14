@@ -34,7 +34,7 @@ function ClientAccount() {
 }
 
   async function handleSubmit(e) {
-    console.log(isValidMobile);
+    
     e.preventDefault();
 
     if (
@@ -58,15 +58,41 @@ function ClientAccount() {
             // :!(formData.clientmobileno.test(e.target.value))&&`Please check mobile no entered`,
       });
     } else {
+
+
+
+
+
+      const subject = `Client Registration : `;
+
+        const message = `Dear Support Team,
+  Greeting from TAXKO!
+
+  I hope this message finds you well. 
+  
+  ${formData.clientname}(Contact No :${formData.clientmobileno}) has expressed interest in TAXKO. ${formData.clientname} has also shared the details of their tax consultant, as follows:
+- Name:${formData.taxprofname}
+- Contact Number:${formData.taxprofmobile}
+
+  We place our confidence in your expertise and kindly request your assistance in reaching out to the aforementioned references to gather more information.
+
+                    
+  Best regards,
+
+  ${formData.clientname},
+  Contact no : ${formData.clientmobileno}`;
+
+  const formattedMsg=message;//message.replace(/\n/g, '<br>')
+
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
       var raw = JSON.stringify({
         yourname: formData.clientname,
         yourmobileno: formData.clientmobileno,
         taxprofessionalname: formData.taxprofname,
         taxprofessionalmobile: formData.taxprofmobile,
+        text: formattedMsg
       });
 
       var requestOptions = {
@@ -75,10 +101,12 @@ function ClientAccount() {
         body: raw,
         redirect: "follow",
       };
+      // console.log(subject);
+      // console.log(message)
 
       try {
         const response = await fetch(
-          `${url_}/save/Client_TaxProfessional_data`,
+          `${url_}/save/Client_TaxProfessional_data?subject=${subject}&text=${formattedMsg}`,
           requestOptions
         );
         const result = await response.text();

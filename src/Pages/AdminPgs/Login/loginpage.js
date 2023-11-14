@@ -24,6 +24,24 @@ const Loginpage = ({ setLoggedIn }) => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
   };
 
+
+
+
+  function getTimeDifference(startDate, endDate) {
+    const startDateTime = new Date();
+    const endDateTime = new Date(endDate);
+    const timeDiff=((endDateTime.getHours()*60)+endDateTime.getMinutes())-
+    ((startDateTime.getHours()*60)+startDateTime.getMinutes())
+    
+    const hours = parseInt(timeDiff/60);
+    console.log(hours)
+    const minutes = timeDiff%60;
+  
+    return { hours, minutes }; 
+  }
+
+
+
   const checkSubscriptionStatus=async ()=>{
     
    
@@ -41,12 +59,13 @@ const Loginpage = ({ setLoggedIn }) => {
       requestOptions
     );
     const result = await response.json();
-    //console.log(result.subscriptionData);
+    //console.log(result.getSubendtdate);
     
     if (response.status === 200) {
      
       const daysDiff = (Math.floor((new Date(result.subscriptionData.subendtdate)-new Date())/ (1000 * 60 * 60 * 24)))+1;
-      console.log(daysDiff)
+      const time_left=result.getSubendtdate &&  getTimeDifference(new Date(), result.getSubendtdate);
+      // console.log(time_left)
     
       if(result.subscriptionData.forcestop)
       {
@@ -58,7 +77,10 @@ const Loginpage = ({ setLoggedIn }) => {
       else if(!result.subscriptionData.paid && daysDiff<(-grace_period_days)){
         return 'off';
       }
-      else if(!result.subscriptionData.paid && daysDiff<0){
+      else if(!result.subscriptionData.paid && daysDiff<=0 && time_left.hours<=0 && time_left.minutes<=0){
+        if(daysDiff===0){
+          localStorage.setItem("end_time",new Date(result.getSubendtdate))
+      }
         localStorage.setItem("end_date",result.subscriptionData.subendtdate);
         const targetDate = new Date(result.subscriptionData.subendtdate.split("T")[0]); //Set Date to March 31
       const futureDate = new Date(targetDate);
@@ -68,6 +90,9 @@ const Loginpage = ({ setLoggedIn }) => {
         return 'grace_period'
       }
       else if(result.subscriptionData.paid && daysDiff>=0){
+        if(daysDiff===0){
+          localStorage.setItem("end_time",new Date(result.getSubendtdate))
+      }
         return 'on'
       }  
     }
@@ -110,9 +135,10 @@ const Loginpage = ({ setLoggedIn }) => {
         },
         data: JSON.stringify(formdata),
       });
-      console.log(formdata)
+      // console.log(formdata)
       if (result.status === 200) {
-
+        // const end=await JSON.parse(result.text());
+        
         const jwtToken = result.data.token;
         const user_id = result.data.user.regId;
         const user_name = result.data.user.name;
@@ -134,7 +160,7 @@ const Loginpage = ({ setLoggedIn }) => {
                 switch (subscription_status) {
                   case "forceful_stop":
                     Swal.fire({
-                      icon: "warning",
+                      icon: "error",
                       text: `Your services has been stoped due to some reasons. Kindly contact admin team to resume your services.`,
                     });
                     setFormdata({
@@ -146,7 +172,7 @@ const Loginpage = ({ setLoggedIn }) => {
         
                     case "not_subscribed":              
                       Swal.fire({
-                        icon: "info",
+                        icon: "warning",
                         text: `Subsribe to avail services.`,
                       });
                       Navigate("UserSubscriptionPage");
@@ -156,7 +182,7 @@ const Loginpage = ({ setLoggedIn }) => {
                   case "off":
                     console.log("off")
                     Swal.fire({
-                      icon: "info",
+                      icon: "error",
                       text: `Your subscription and grace period has expired please renew your pack to resume your services.`,
                     });
                     Navigate("UserSubscriptionPage");
@@ -167,7 +193,7 @@ const Loginpage = ({ setLoggedIn }) => {
                     const end_date=new Date(localStorage.getItem("end_date"));
                     const next_date=new Date(localStorage.getItem("grace_perido_end"))
                     Swal.fire({
-                      icon: "info",
+                      icon: "warning",
                       text: `Your subscription has expired on ${end_date.getDate()} ${numberToMonth(end_date.getMonth()+1)} ${end_date.getFullYear()},
                        Your grace period to renew subscription is till ${next_date.getDate()} ${numberToMonth(next_date.getMonth()+1)} ${next_date.getFullYear()}. After that all of your services will be stopped.`,
                     });

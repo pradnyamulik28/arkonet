@@ -46,8 +46,8 @@ function InfoCard(props) {
             <span className={`${style.title}`}>Who we are ?</span>
             <h2>We are Post-Tax-Filing Platform</h2>
           </div>
-          <div className={`${style.text}`}>
-          <img title="" src={flow_chart} alt="" />
+          <div className={`${style.featureimg}`}>
+          <img className={style.featureimg} title="" src={flow_chart} alt="" />
           </div>
         
           

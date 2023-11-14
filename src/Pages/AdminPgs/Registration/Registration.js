@@ -48,7 +48,7 @@ const Registration = () => {
     state: "",
     whatsApp_Link: "",
     investNow_Email: "",
-    refrenceId: referralParam?referralParam.split('_')[1]:"",
+    refrenceId: referralParam?referralParam.split('_')[1]:null,
     password: "",
     confirmpassword: ""
   });

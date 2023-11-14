@@ -363,7 +363,7 @@ fetch(`${url_}/getlastUpdateallinformation/${fetchurl}/${clientInfo.PAN}`, reque
         e.preventDefault();
         if(it_subs_status==="off"){
           Swal.fire({
-            icon:"info",
+            icon:"error",
             text:`This service has stopped.Kindly Contact your IT Tax Professional to resume your services.`
           })
         }
@@ -376,7 +376,7 @@ fetch(`${url_}/getlastUpdateallinformation/${fetchurl}/${clientInfo.PAN}`, reque
           e.preventDefault();
           if(gst_subs_status==="off"){
             Swal.fire({
-              icon:"info",
+              icon:"error",
               text:`This service has stopped.Kindly Contact your GST Tax Professional to resume your services.`
             })
           }

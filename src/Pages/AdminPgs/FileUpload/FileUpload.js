@@ -142,7 +142,7 @@ const FileUpload = () => {
     if(subscription_status==="grace_period")
     {
       Swal.fire({
-        icon:"info",
+        icon:"error",
         text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
         
     }
@@ -150,7 +150,7 @@ const FileUpload = () => {
     else if(subscription_status==="not_subscribed")
     {
       Swal.fire({
-        icon:"info",
+        icon:"error",
         text:"Subscribe to avail this service."})
         
     }
@@ -209,7 +209,7 @@ const FileUpload = () => {
     if(subscription_status==="grace_period")
       {
         Swal.fire({
-          icon:"info",
+          icon:"error",
           text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
           e.preventDefault();
       }
@@ -217,7 +217,7 @@ const FileUpload = () => {
       else if(subscription_status==="not_subscribed")
       {
         Swal.fire({
-          icon:"info",
+          icon:"error",
           text:"Subscribe to avail this service."})
           e.preventDefault();
       }
@@ -352,7 +352,7 @@ const FileUpload = () => {
     if(subscription_status==="grace_period")
     {
       Swal.fire({
-        icon:"info",
+        icon:"error",
         text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
         
     }
@@ -360,7 +360,7 @@ const FileUpload = () => {
     else if(subscription_status==="not_subscribed")
     {
       Swal.fire({
-        icon:"info",
+        icon:"error",
         text:"Subscribe to avail this service."})
         
     }
@@ -444,7 +444,7 @@ const FileUpload = () => {
     if(subscription_status==="grace_period")
     {
       Swal.fire({
-        icon:"info",
+        icon:"error",
         text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
         
     }
@@ -452,7 +452,7 @@ const FileUpload = () => {
     else if(subscription_status==="not_subscribed")
     {
       Swal.fire({
-        icon:"info",
+        icon:"error",
         text:"Subscribe to avail this service."})
         
     }

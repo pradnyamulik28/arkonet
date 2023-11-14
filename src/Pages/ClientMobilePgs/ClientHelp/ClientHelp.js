@@ -22,6 +22,8 @@ function ClientHelp() {
 
 
   const [helpMail,setHelpMail]=useState({subject:"",msg:"",
+  itclientid:localStorage.getItem("client_id_it"),
+  gstclientid:localStorage.getItem("client_id_gst"),
   ituserid:localStorage.getItem("user_id_it"),
   itusername:"",
   gstuserid:localStorage.getItem("user_id_gst"),
@@ -185,7 +187,7 @@ Best regards,
 ${localStorage.getItem("name")},
 Contact no : ${localStorage.getItem("mobile")}`);
 
-console.log(helpMail.ituserid,helpMail.itusername,helpMail.gstuserid,helpMail.gstusername)
+// console.log(helpMail.ituserid,helpMail.itusername,helpMail.gstuserid,helpMail.gstusername)
 switch(formdata.query_nature)
 {
   
@@ -200,7 +202,7 @@ switch(formdata.query_nature)
         })
       }
       else{
-      sendEmail("1",helpMail.gstuserid,subject,message,formdata.query_nature);
+      sendEmail(helpMail.gstclientid,helpMail.gstuserid,subject,message,formdata.query_nature);
       }
     }
     else{
@@ -218,7 +220,7 @@ switch(formdata.query_nature)
         })
       }
       else{
-      sendEmail("1",helpMail.ituserid,subject,message,formdata.query_nature);
+      sendEmail(helpMail.itclientid,helpMail.ituserid,subject,message,formdata.query_nature);
       }
     }
     else{

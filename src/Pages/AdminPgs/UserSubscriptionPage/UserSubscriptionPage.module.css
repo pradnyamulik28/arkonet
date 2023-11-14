@@ -129,6 +129,7 @@ ul {
   color: #e4c61f;
   font-weight: bold;
   text-shadow: none;
+  text-align: center;
 }
 
 .mainheadtextual {
@@ -200,6 +201,17 @@ ul {
   font-size: 110%;
 }
 
+.title2 {
+  width: 20%;
+  margin-left: 4vw;
+  vertical-align: middle;
+  padding-top: 1%;
+  font-weight: bold;
+  color: #ffd500;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.24);
+  font-size: 110%;
+}
+
 .subs_end{
   color: red;
   animation: blink 2s linear infinite;
@@ -213,6 +225,13 @@ ul {
   cursor: none;
 }
 
+.active_subscription{
+  background-color: #40d740;
+
+}
+.sub_details{
+  font-weight: bold;
+}
 
 @keyframes blink{
 0%{opacity: 0;}
@@ -221,6 +240,15 @@ ul {
 }
 
 .value {
+  vertical-align: middle;
+  padding-top: 1%;
+  font-weight: bold;
+  color: #000000;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.24);
+  font-size: 110%;
+}
+
+.value2 {
   vertical-align: middle;
   padding-top: 1%;
   font-weight: bold;
