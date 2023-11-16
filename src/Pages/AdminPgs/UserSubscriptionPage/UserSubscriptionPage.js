@@ -261,6 +261,15 @@ setUserInfo({...userInfo,
 
   async function saveRefferFriend(name,contact,profession) {
 
+    
+    swal.fire({
+      title: 'Saving details',
+      text: 'Please wait...',
+      showConfirmButton: false,
+      onBeforeOpen: () => {
+        swal.showLoading();
+      },
+    });
 
     const subject = `Referral Friend Request`;
 
@@ -275,51 +284,52 @@ setUserInfo({...userInfo,
 - Profession:${profession}
 
   We place our confidence in your expertise and kindly request your assistance in reaching out to the aforementioned reference to gather more information.
-
                     
   Best regards,
 
   ${localStorage.getItem("user_name")},
   Contact no : ${localStorage.getItem("mobile")}`;
 
-  const formattedMsg=message.replace(/\n/g, '<br>')
 
 
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-    var raw = JSON.stringify({
-      userid: userInfo.userid,
-      pan: userInfo.userPAN,
-      name: refferFriend.name,
-      contactno: refferFriend.contactNo,
-      profession: refferFriend.profession,
-      text: formattedMsg
-    });
+    var formdata = new FormData();
+    formdata.append("userid", userInfo.userid);
+    formdata.append("pan", userInfo.userPAN);
+    formdata.append("name", refferFriend.name);
+    formdata.append("contactno", refferFriend.contactNo);
+    formdata.append("profession", "121sadad");
+    formdata.append("subject", subject);
+    formdata.append("text", message);
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
-      body: raw,
-      redirect: "follow",
+      body: formdata,
+      redirect: 'follow'
     };
-console.log(subject);
-console.log(message);
+
+
+
     try {
       const response = await fetch(
-        `${url_}/save/Refear_a_friend?subject=${subject}&text=${formattedMsg}`,
+        `${url_}/save/Refear_a_friend`,
         requestOptions
       );
       const result = await response.text();
 
       if (response.status === 200) {
+        swal.close();
+
         swal.fire({
           icon: "success",
           text: "Thank you for refference.",
         });
       }
     } catch (error) {
+      swal.close();
       console.log(error);
     }
   }

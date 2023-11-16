@@ -61,6 +61,14 @@ function ClientAccount() {
 
 
 
+      swal.fire({
+        title: 'Saving details',
+        text: 'Please wait...',
+        showConfirmButton: false,
+        onBeforeOpen: () => {
+          swal.showLoading();
+        },
+      });
 
 
       const subject = `Client Registration : `;
@@ -81,43 +89,41 @@ function ClientAccount() {
 
   ${formData.clientname},
   Contact no : ${formData.clientmobileno}`;
+     
 
-  const formattedMsg=message;//message.replace(/\n/g, '<br>')
+     
 
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      var raw = JSON.stringify({
-        yourname: formData.clientname,
-        yourmobileno: formData.clientmobileno,
-        taxprofessionalname: formData.taxprofname,
-        taxprofessionalmobile: formData.taxprofmobile,
-        text: formattedMsg
-      });
+      var formdata = new FormData();
+formdata.append("subject", subject);
+formdata.append("text",message);
+formdata.append("yourname", formData.clientname);
+formdata.append("yourmobileno", formData.clientmobileno);
+formdata.append("taxprofessionalname", formData.taxprofname);
+formdata.append("taxprofessionalmobile",formData.taxprofmobile);
 
       var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow'
       };
-      // console.log(subject);
-      // console.log(message)
+     
 
       try {
         const response = await fetch(
-          `${url_}/save/Client_TaxProfessional_data?subject=${subject}&text=${formattedMsg}`,
+          `${url_}/save/Client_TaxProfessional_data`,
           requestOptions
         );
         const result = await response.text();
         if (response.status === 200) {
           swal.close();
+          
           swal.fire({
             icon: "success",
             text: "Thank you for registering with us. We will contact you soon.",
           });
         }
       } catch (error) {
+        swal.close();
         console.log(error);
       }
 clearForm()
