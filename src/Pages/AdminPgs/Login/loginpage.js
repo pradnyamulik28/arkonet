@@ -65,7 +65,7 @@ const Loginpage = ({ setLoggedIn }) => {
      
       const daysDiff = (Math.floor((new Date(result.subscriptionData.subendtdate)-new Date())/ (1000 * 60 * 60 * 24)))+1;
       const time_left=result.getSubendtdate &&  getTimeDifference(new Date(), result.getSubendtdate);
-      // console.log(time_left)
+     // console.log(time_left)
     
       if(result.subscriptionData.forcestop)
       {
@@ -77,7 +77,7 @@ const Loginpage = ({ setLoggedIn }) => {
       else if(!result.subscriptionData.paid && daysDiff<(-grace_period_days)){
         return 'off';
       }
-      else if(!result.subscriptionData.paid && daysDiff<=0 && time_left.hours<=0 && time_left.minutes<=0){
+      else if(!result.subscriptionData.paid && (daysDiff<0 || (daysDiff===0 && time_left.hours<=0 && time_left.minutes<=0))){
         if(daysDiff===0){
           localStorage.setItem("end_time",new Date(result.getSubendtdate))
       }
