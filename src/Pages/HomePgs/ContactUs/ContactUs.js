@@ -255,15 +255,19 @@ function ContactUs() {
          
             <iframe
               title="map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4544.579964450332!2d74.23297943894102!3d16.70083637274872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1019213886153%3A0xab33886478d32ae1!2sRETINUE%20ASSOCIATES!5e0!3m2!1sen!2sin!4v1698471233844!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3821.4056949935434!2d74.23990207696836!3d16.706597403866294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1012292d39783%3A0x817c1a1da55d15f6!2sARKONET%20GLOBAL!5e0!3m2!1sen!2sin!4v1698480061370!5m2!1sen!2sin"
               width="100%"
-              height="50%"
+              height="70%"
               frameborder="0"
               style={{ border: "0", "height":"100%" }}
-              allowfullscreen=""
+             
               aria-hidden="false"
               tabindex="0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
+           
           </div>
         {/* </div> */}
 

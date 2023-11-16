@@ -149,7 +149,7 @@ const SubscriptionPlan = () => {
 
       <div className={`${style.Subplan_para} text-center display-6 mt-1`}>
         <p>
-          In this digital world, subscribe TAXKO at less than your printing paper cost. Serve your clients with more efficient manner. Access anytime & anywhere.
+        In this digital world, subscribe to TAXKO at less than your printing paper cost. Serve your clients in a more efficient manner. Access anytime and anywhere.
         </p>
       </div>
       <div className={`${style.sub_table}`}>

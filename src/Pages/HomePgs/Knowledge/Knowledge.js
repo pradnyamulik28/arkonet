@@ -56,16 +56,16 @@ function Konwledge(props) {
     {
       id: 1,
       title: "Facilities given by TAXKO",
-      subtitle: "Explore different facilities provided by TAXKO. ",
+      subtitle: "Explore the different facilities provided by TAXKO. ",
       subtitle2:"TAXKO offers an array of facilities",
       imageSrc: image2,
       information: [
         `Income Tax & GST integrated dashboard.`,
-        `Easy create, edit and view client Information.`,
+        `Easy create, edit and view client information.`,
         `ITR and GST pdf file upload by tax professional.`,
-        `GST yearly folders, Month wise view and types of filing inside`,
+        `GST yearly folders, month wise view and types of filing inside`,
         `KYC upload facility to client.`,
-        `View ITR and GST Filed status.`,
+        `View ITR and GST filed status.`,
         `Client can view , download, print and share the files uploaded.`
       ],
     },
@@ -74,21 +74,21 @@ function Konwledge(props) {
       title: "Unique Features.?",
       subtitle: `Post-Filing of Tax Returns are considered in customer service and is one of the major unique feature of TAXKO`,
       subtitle2:
-        "We are the ONLY Post-Filing Platform in the field of ITR and GST",
+        "We are the ONLY post-filing platform in the field of ITR and GST.",
       imageSrc: image3,
       information: [
-        `Pre-Filing of Tax Returns like Income Tax Return (Direct Tax) 
-        and Goods & Service Tax-GST (Indirect Tax) are primary 
+        `Pre-filing of tax returns like income tax returns (direct tax)
+        and Goods & Service Tax (GST) (Indirect Tax) are primary
         taxation segments in India.`,
-        `Post-Filing of Tax Returns are considered in customer 
-        service. Managing client data, filed documents, handover 
-        of filed documents to client, maintaining filing status, 
-        tracking of filed return status for client etc. But currently there are no players in this segment.`,
+        `Post-filing of tax returns is considered in customer
+         service. Managing client data, filed documents, handover
+        of filed documents to the client, maintaining filing status,
+        tracking of filed return status for clients, etc. But currently, there are no players in this segment.`,
         `TAXKO is going to bridge this gap by providing a platform that will connect tax professionals with
          their clients.`,
-        `In addition to this but following are unique facilities that makes TAXKO inevitable choice:`,
-        `ITR & GST document upload and Delete by Tax Professional ONLY.`,
-         `InvestNow for cross selling of financial products.`,
+        `In addition to this following are unique facilities that makes TAXKO inevitable choice:`,
+        `ITR & GST document upload and delete by tax professional ONLY.`,
+         `InvestNow for cross-selling of financial products.`,
         `KYC upload facility to client.`
       ],
     },
@@ -96,7 +96,7 @@ function Konwledge(props) {
       id: 3,
       title: "Why TAXKO?",
       subtitle:
-        "TAXKO is one of the best and leading cloud storage based Tax filing platform.",
+        "TAXKO is one of the best and leading cloud-based tax filing platforms.",
       
       imageSrc: image1,
 
@@ -146,9 +146,9 @@ function Konwledge(props) {
       imageSrc: image3,
       information: [
         `In addition to the impressive features already available, we are continually enhancing our platform to provide you with an even more comprehensive and versatile experience.
-         We are excited to introduce following range of new features and facilities that will further elevate your interaction with our platform.`,
+         We are excited to introduce a range of new features and facilities that will further elevate your interaction with our platform.`,
         `Form 16 upload facility by client or employee.`,
-        `Notification pannel to notify your clients in one click including image attraction.`,
+        `Notification panel to notify your clients in one click, including image attraction.`,
          `www.filemytaxreturns.com to get new ITR filing in queue direct from client.`,
         `Direct WhatsApp link of consultant.`,
       ],
