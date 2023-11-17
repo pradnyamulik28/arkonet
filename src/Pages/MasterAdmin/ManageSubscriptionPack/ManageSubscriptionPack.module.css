@@ -1,0 +1,41 @@
+.Subplan_title {
+  color: #ffd401;
+}
+
+.seperator {
+  border-bottom: 1px solid #a2a2a2;
+  width: 45px;
+  display: inline-block;
+  margin: 10px;
+}
+
+.box_shadow {
+  margin: 2rem 0rem 2rem 0rem !important;
+  border-radius: 6px;
+  padding: 20px 60px 30px 40px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+}
+
+.add_plan_btn span {
+  height: 2rem;
+  width: 8rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffd401;
+  color: white;
+  font-weight: bolder;
+  font-size: 18px;
+  text-shadow: 2px 3px 5px #000000;
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Subplan_para {
+  font-family: 'Times New Roman', Times, serif;
+  color: gray;
+}

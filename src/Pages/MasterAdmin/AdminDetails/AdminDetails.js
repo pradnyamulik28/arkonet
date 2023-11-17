@@ -51,7 +51,7 @@ function AdminDetails() {
         await fetch(`${url_}/user/countbyprofession`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                // console.log(result)
+                console.log(result)
                 setadmincountscategory(result)
             })
             .catch((error) => {
@@ -205,7 +205,13 @@ function AdminDetails() {
                                                 items.category === "GST" ? "text-primary" : null
                                             }
                                           `}>{items.category}</h6></div>
-                                        <div className={`${style.value}`} style={{ cursor: "pointer" }} onClick={() => GOTOClients(items.category)}><p className={`${style.pv}`}>{items.count}</p></div>
+                                        <div className={`${style.value}`}  >
+                                            {items.category === "Income Tax" || items.category === "GST" ? (
+                                                <p className={`${style.pv}`} onClick={() => GOTOClients(items.category)} style={{ cursor: "pointer" }}>{items.count}</p>
+                                            ) : (
+                                                <p className={`${style.pv}`} >{items.count}</p>
+                                            )}
+                                        </div>
                                     </div>
                                 ))}
 
@@ -227,15 +233,15 @@ function AdminDetails() {
                             <div className={`${style.rtabular} mt-3`} >
                                 <div className={`${style.rtcol1}`}>
                                     <div className={`${style.title}`}><h6 className={`${style.pb}`}>Today</h6></div>
-                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("SToday")} style={{ cursor: "pointer" }}><h6 className={`${style.pv}`}>{adminSubscription.Today}</h6></div>
+                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("Today's Subscription")} style={{ cursor: "pointer" }}><h6 className={`${style.pv}`}>{adminSubscription.Today}</h6></div>
                                 </div>
                                 <div className={`${style.rtcol1}`}>
                                     <div className={`${style.title}`}><h6 className={`${style.pb}`}>Yesterday</h6></div>
-                                    <div className={`${style.value}  d-flex justify-content-center`} onClick={() => GOTOuserList("SYesterday")} style={{ cursor: "pointer" }}><h6 className={`${style.pv}`}>{adminSubscription.Yestarday}</h6></div>
+                                    <div className={`${style.value}  d-flex justify-content-center`} onClick={() => GOTOuserList("Yesterday's Subscription")} style={{ cursor: "pointer" }}><h6 className={`${style.pv}`}>{adminSubscription.Yestarday}</h6></div>
                                 </div>
                                 <div className={`${style.rtcol1}`}>
                                     <div className={`${style.title}`}><h6 className={`${style.pb}`}>Week</h6></div>
-                                    <div className={`${style.value}  d-flex justify-content-center`} onClick={() => GOTOuserList("SWeek")} style={{ cursor: "pointer" }}><h6 className={`${style.pv}`}>{adminSubscription.Weak}</h6></div>
+                                    <div className={`${style.value}  d-flex justify-content-center`} onClick={() => GOTOuserList("Week's Subscription")} style={{ cursor: "pointer" }}><h6 className={`${style.pv}`}>{adminSubscription.Weak}</h6></div>
                                 </div>
                             </div>
                         </div>
@@ -245,11 +251,11 @@ function AdminDetails() {
                             <div className={`${style.rtabular}`} >
                                 <div className={`${style.rmcol1}`}>
                                     <div className={`${style.title}`}><p className={`${style.p}`}>{`${CurrentYear}-${(CurrentYear + 1).toString().slice(-2)}`}</p></div>
-                                    <div className={`${style.value}  d-flex justify-content-center`} onClick={() => GOTOuserList("SPresentYear")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminSubscription.presentyear}</p></div>
+                                    <div className={`${style.value}  d-flex justify-content-center`} onClick={() => GOTOuserList("Present Year's Subscription")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminSubscription.presentyear}</p></div>
                                 </div>
                                 <div className={`${style.rmcol2}`}>
                                     <div className={`${style.title}`}><p className={`${style.p}`}>{`${CurrentYear - 1}-${CurrentYear.toString().slice(-2)}`}</p></div>
-                                    <div className={`${style.value}  d-flex justify-content-center`} onClick={() => GOTOuserList("SLastYear")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminSubscription.lastyear}</p></div>
+                                    <div className={`${style.value}  d-flex justify-content-center`} onClick={() => GOTOuserList("Last Year's Subscription")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminSubscription.lastyear}</p></div>
                                 </div>
                             </div>
                         </div>
@@ -272,15 +278,15 @@ function AdminDetails() {
                             <div className={`${style.rtabular}`} >
                                 <div className={`${style.rbcol1}`}>
                                     <div className={`${style.title}`}><span className={`${style.p}`}>Today</span></div>
-                                    <div className={`${style.value} d-flex justify-content-center `} onClick={() => GOTOuserList("RToday")} style={{ cursor: "pointer" }}><span className={`${style.pvr}`}>{adminRenewal.Today}</span></div>
+                                    <div className={`${style.value} d-flex justify-content-center `} onClick={() => GOTOuserList("Today's Renewal")} style={{ cursor: "pointer" }}><span className={`${style.pvr}`}>{adminRenewal.Today}</span></div>
                                 </div>
                                 <div className={`${style.rbcol2}`}>
                                     <div className={`${style.title}`}><span className={`${style.p}`}>Tomorrow</span></div>
-                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("RTomorrow")} style={{ cursor: "pointer" }}><span className={`${style.pvdr}`}>{adminRenewal.Tomorrow}</span></div>
+                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("Tomorrow's Renewal")} style={{ cursor: "pointer" }}><span className={`${style.pvdr}`}>{adminRenewal.Tomorrow}</span></div>
                                 </div>
                                 <div className={`${style.rbcol3}`}>
                                     <div className={`${style.title}`}><span className={`${style.p}`}>Week</span></div>
-                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("RWeek")} style={{ cursor: "pointer" }}><span className={`${style.pvy}`}>{adminRenewal.Weak}</span></div>
+                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("Week's Renewal")} style={{ cursor: "pointer" }}><span className={`${style.pvy}`}>{adminRenewal.Weak}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -289,15 +295,15 @@ function AdminDetails() {
                             <div className={`${style.rtabular}`} >
                                 <div className={`${style.rbcol1}`}>
                                     <div className={`${style.title}`}><p className={`${style.p}`}>Month</p></div>
-                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("RMonth")} style={{ cursor: "pointer" }}><p className={`${style.pv} text-warning`}>{adminRenewal.Month}</p></div>
+                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("Month's Renewal")} style={{ cursor: "pointer" }}><p className={`${style.pv} text-warning`}>{adminRenewal.Month}</p></div>
                                 </div>
                                 <div className={`${style.rbcol2}`}>
                                     <div className={`${style.title}`}><p className={`${style.p}`}>3 Months</p></div>
-                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("R3Months")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminRenewal.threeMonth}</p></div>
+                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("3 Months's Renewal")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminRenewal.threeMonth}</p></div>
                                 </div>
                                 <div className={`${style.rbcol3}`}>
                                     <div className={`${style.title}`}><p className={`${style.p}`}>6 Months</p></div>
-                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("R6Months")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminRenewal.sixMonth}</p></div>
+                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("6 Months's Renewal")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminRenewal.sixMonth}</p></div>
                                 </div>
                             </div>
                         </div>

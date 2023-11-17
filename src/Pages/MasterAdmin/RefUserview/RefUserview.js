@@ -96,28 +96,40 @@ const RefUserview = () => {
 
 
 
-                    {userdata
+                    {
 
-                        .filter(item =>
-                            item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            item.pan.toLowerCase().includes(searchQuery.toLowerCase())
+
+
+
+                        userdata.filter(item =>
+                            item.registration.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            item.registration.pan.toLowerCase().includes(searchQuery.toLowerCase())
+
                         )
 
 
-                        .map((item, index) => (
+                            .map((item, index) => (
 
-                            <div className={`${style.ddata}`}>
-                                <div className={`${style.name}`} ><p className={`${style.srno}`}>{index + 1}</p></div>
-                                <div className={`${style.name}`} ><p className={`${style.an}`}>{item.name}</p></div>
-                                <div className={`${style.name}`} ><p className={`${style.pan}`}>{item.pan}</p></div>
-                                <div className={`${style.name}`} ><p className={`${style.mobile}`}>{item.mobile}</p></div>
 
-                                {/* <div className={`${style.name}`} ><p className={`${style.reference} text - primary`} style={{ cursor: "pointer" }}>{item.count}</p></div> */}
 
-                                <div className={`${style.name}`} ><p className={`${style.status}`}><i class="fa-solid fa-circle" style={{ color: "#1eff00" }}></i></p></div>
-                            </div>
+                                <div className={`${style.ddata} `}>
+                                    <div className={`${style.name} `} ><p className={`${style.srno} `}>{index + 1}</p></div>
+                                    <div className={`${style.name} `} ><p className={`${style.an} `}>{item.registration.name}</p></div>
+                                    <div className={`${style.name} `} style={{ cursor: "pointer" }}><p className={`${style.pan}`}>{item.registration.pan}</p></div>
+                                    <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.registration.mobile}</p></div>
 
-                        ))}
+                                    {/* <div className={`${style.name} `} onClick={() => GOTOClients(item.registration.pan)}><p className={`${style.reference} text-primary`} style={{ cursor: "pointer" }}>{item.count}</p></div> */}
+
+
+                                    <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={item.substartdatebyuser === null ? { color: "#d2cccc" } : { color: item.status ? "#32e132" : "#ff0000" }}></i></p></div>
+                                </div>
+
+                            ))
+
+
+
+
+                    }
 
 
 

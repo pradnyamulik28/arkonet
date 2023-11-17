@@ -39,17 +39,17 @@ const UserList = () => {
         
         
         
-        ${userProf === "SToday" ? `${url_}/subscriptions/today` :
-        userProf === "SYesterday" ? `${url_}/subscriptions/yestarday` :
-          userProf === "SWeek" ? `${url_}/subscriptionslist/week` :
-            userProf === "SPresentYear" ? `${url_}/subscriptionslist/year` :
-              userProf === "SLastYear" ? `${url_}/subscriptionslist/previousyear` :
-                userProf === "RToday" ? `${url_}/Renewal/today` :
-                  userProf === "RTomorrow" ? `${url_}/Renewal/tommarow` :
-                    userProf === "RWeek" ? `${url_}/Renewal/week` :
-                      userProf === "RMonth" ? `${url_}/Renewal/month` :
-                        userProf === "R3Months" ? `${url_}/Renewal/threemonth` :
-                          userProf === "R6Months" ? `${url_}/Renewal/sixmonth` :
+        ${userProf === "Today's Subscription" ? `${url_}/subscriptions/today` :
+        userProf === "Yesterday's Subscription" ? `${url_}/subscriptions/yestarday` :
+          userProf === "Week's Subscription" ? `${url_}/subscriptionslist/week` :
+            userProf === "Present Year's Subscription" ? `${url_}/subscriptionslist/year` :
+              userProf === "Last Year's Subscription" ? `${url_}/subscriptionslist/previousyear` :
+                userProf === "Today's Renewal" ? `${url_}/Renewal/today` :
+                  userProf === "Tomorrow's Renewal" ? `${url_}/Renewal/tommarow` :
+                    userProf === "Week's Renewal" ? `${url_}/Renewal/week` :
+                      userProf === "Month's Renewal" ? `${url_}/Renewal/month` :
+                        userProf === "3 Months's Renewal" ? `${url_}/Renewal/threemonth` :
+                          userProf === "6 Months's Renewal" ? `${url_}/Renewal/sixmonth` :
 
                             null}
 

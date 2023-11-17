@@ -30,7 +30,7 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
         if (pglink === "searchadmin") {
             Navigate("searchadmin", {
                 state: {
-                    userProfession: "AllUser"
+                    userProfession: "All"
                 },
             })
             console.log(pglink)
@@ -39,12 +39,17 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
         } else if (pglink === "clientview") {
             Navigate(pglink, {
                 state: {
-                    ClientCategory: "AllClients"
+                    ClientCategory: "All"
                 },
             })
             setActiveLink(pglink);
             console.log(pglink,)
 
+        } else if (pglink === "subPackDetails") {
+            Navigate(pglink)
+
+            setActiveLink(pglink);
+            console.log(pglink,)
         } else {
 
             console.log(pglink,)
@@ -60,18 +65,22 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                     <img className={styles.taxo_logo} src={Applogo} alt="" />
                 </Link>
                 {loggedIn ? (
-                    <>
+                    <div >
 
                         <Link to="/masteradmin/admindashboard/" onClick={() => handleLinkClick('dashboard')}>
-                            <h6 className={activeLink === 'dashboard' ? 'font-weight-bold' : ''}>Dashboard</h6>
+                            <h6 className={activeLink === 'dashboard' ? 'font-weight-bold mt-4' : 'mt-4'}>Dashboard</h6>
                         </Link>
 
                         <div onClick={() => handleLinkClick('searchadmin')}>
-                            <h6 className={activeLink === 'searchadmin' ? 'font-weight-bold' : ''}>Admins</h6>
+                            <h6 className={activeLink === 'searchadmin' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Admins</h6>
                         </div>
 
                         <div onClick={() => handleLinkClick('clientview')}>
-                            <h6 className={activeLink === 'clientview' ? 'font-weight-bold' : ''}>Clients</h6>
+                            <h6 className={activeLink === 'clientview' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Clients</h6>
+                        </div>
+
+                        <div onClick={() => handleLinkClick('subPackDetails')}>
+                            <h6 className={activeLink === 'subPackDetails' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Manage Subsription</h6>
                         </div>
 
                         {/* <Link to="/masteradmin/admindashboard/" onClick={() => handleLinkClick('dashboard')}>
@@ -86,10 +95,12 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
 
 
 
+                        <div className='mt-4'>
 
-                        <Link to="" className={styles.logout_text} onClick={handleLogout}><h6>Logout</h6></Link>
+                            <Link to="" className={`${styles.logout_text} mt-4`} onClick={handleLogout}><h6>Logout</h6></Link>
+                        </div>
 
-                    </>
+                    </div>
                 ) : (
                     <>
 

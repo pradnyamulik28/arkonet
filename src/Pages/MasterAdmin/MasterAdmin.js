@@ -15,18 +15,15 @@ import RefUserview from './RefUserview/RefUserview';
 import UserSubscriptionPlan from './UserSubscriptionPlan/UserSubscriptionPlan'
 import UserData from './UserData/UserData';
 import UserList from './UsersList/UserList';
+import ManageSubscription from './ManageSubscriptionPack/ManageSubscriptionPack';
+// import ChatBot from '../../components/ChatBot/ChatBot';
+// import WhatsappChat from '../../components/WhatsappChat';
 
 const MasterAdmin = () => {
-  // const [showIntoro, setShowIntoro] = useState(true);
-  // // const [loggedIn, setLoggedIn] = useState(false);
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowIntoro(false);
-  //   }, 3000);
-  //   return () => clearTimeout(timer);
-  // }, []);
+
 
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('LogedIn'));
+  //  console.log('admin', loggedIn);
 
 
   return (
@@ -45,12 +42,14 @@ const MasterAdmin = () => {
 
             <Routes>
 
-              <Route exact path='' element={<MasterLogIn />} />
+              <Route exact path='' element={<MasterLogIn setLoggedIn={setLoggedIn} />} />
               {/* <Route exact path='intropage' element={<IntroPage />} /> */}
 
               <Route exact path='admindashboard' element={<AdminDetails />} />
               <Route exact path='searchadmin' element={<SearchAdmin />} />
-              <Route exact path='/searchadmin/refUser' element={<RefUserview />} />
+              <Route exact path='searchadmin/Userdata' element={<UserData />} />
+              <Route exact path='searchadmin/refUser' element={<RefUserview />} />
+              <Route exact path='searchadmin/Userdata/userSubPlan' element={<UserSubscriptionPlan />} />
               <Route exact path='clientview' element={<MasterClientView />} />
 
               <Route exact path='admindashboard/searchadmin' element={<SearchAdmin />} />
@@ -59,12 +58,17 @@ const MasterAdmin = () => {
               <Route exact path='admindashboard/searchadmin/refUser' element={<RefUserview />} />
 
               <Route exact path='admindashboard/userlist' element={<UserList />} />
+              <Route exact path='admindashboard/userlist/Userdata' element={<UserData />} />
+              <Route exact path='admindashboard/userlist/Userdata/userSubPlan' element={<UserSubscriptionPlan />} />
 
               <Route exact path='admindashboard/clientview' element={<MasterClientView />} />
+
+              <Route exact path='subPackDetails' element={<ManageSubscription />} />
               {/* <Route exact path='sidebar' element={<SideBar />} /> */}
 
 
             </Routes>
+            {/* <WhatsappChat/> */}
 
 
           </div>

@@ -52,14 +52,24 @@ const MasterClientView = () => {
     await fetch(`
     ${ccategory === "Income Tax" ? `${url_}/clients-by-categories/Income_tax,Both` :
         ccategory === "GST" ? `${url_}/clients-by-categories/GST,Both` :
-          ccategory === "AllClients" ? `${url_}/clients-by-categories/GST,Both` :
+          ccategory === "All" ? `${url_}/listofallclients/allclient` :
             null}
         
         `, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        // console.log(result.users)
-        setClientdata(result.users)
+
+        console.log(result)
+        const uniquePANs = new Set();
+
+        const filteredData = result.users.filter(item => {
+          if (uniquePANs.has(item.pan)) {
+            return false;
+          }
+          uniquePANs.add(item.pan);
+          return true;
+        });
+        setClientdata(filteredData)
       })
       .catch((error) => {
         console.log(error);

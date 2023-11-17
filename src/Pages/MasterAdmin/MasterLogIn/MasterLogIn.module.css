@@ -123,3 +123,8 @@
 }
 
 /* bottom Port Ends */
+
+.icon a {
+    margin: 0 15px;
+    color: #19191a;
+}

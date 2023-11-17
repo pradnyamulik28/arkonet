@@ -1,6 +1,7 @@
 .workport {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .sidebar {
@@ -94,7 +95,7 @@ ul {
   /* overflow: hidden; */
   margin: 0;
   padding: 0;
-  width: 80%;
+  width: 90%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -129,6 +130,7 @@ ul {
   color: #e4c61f;
   font-weight: bold;
   text-shadow: none;
+  text-align: center;
 }
 
 .mainheadtextual {
@@ -212,30 +214,7 @@ ul {
   animation: blink 2s linear infinite;
 }
 
-.inputs input {
-  border-radius: 8px;
-  border: none;
-  background-color: #f6f6f6;
-  box-shadow: inset 0px 1px 1px #bfbfbfe6;
-  height: 2rem;
-  width: 15rem;
-  padding-left: 15px;
-}
 
-.Sub_btn button {
-  height: 2rem;
-  width: 70%;
-  border-radius: 10px;
-  border: none;
-  background-color: #ffd401;
-  color: white;
-
-  font-weight: bolder;
-  font-size: 20px;
-  text-shadow: 2px 3px 5px #000000;
-  /* margin-bottom: 10px; */
-  cursor: pointer;
-}
 
 @keyframes blink {
   0% {
@@ -440,4 +419,45 @@ ul {
   .p1 {
     font-size: 150%;
   }
+}
+
+
+/* //////////////////////////////////////////////////ADD DAYS/////////////////////////////////////////////// */
+
+
+.inputs input {
+  border-radius: 8px;
+  border: none;
+  background-color: #f6f6f6;
+  box-shadow: inset 0px 1px 1px #bfbfbfe6;
+  height: 2rem;
+  width: 15rem;
+  padding-left: 15px;
+}
+
+.Sub_btn button {
+  height: 2rem;
+  width: 70%;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffd401;
+  color: white;
+
+  font-weight: bolder;
+  font-size: 20px;
+  text-shadow: 2px 3px 5px #000000;
+  /* margin-bottom: 10px; */
+  cursor: pointer;
+}
+
+.react-datepicker {
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+  font-size: 0.8rem;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #aeaeae;
+  border-radius: 0.3rem;
+  display: flex;
+  position: relative;
+  /* Add more custom styles here if needed */
 }
