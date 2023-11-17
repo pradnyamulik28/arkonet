@@ -407,9 +407,9 @@ fetchData();
           </div>
           <div className={`${style.mainheadtextual}`}>
             {userInfo.end_date===null?``:<p className={`${style.p1}`}>Subscription Ends on</p>}
-            <p className={`${style.p2}`}>{userInfo.end_date}&nbsp;&nbsp; {userInfo.end_time}</p>
+            {!userInfo.end_date===null  &&<><p className={`${style.p2}`}>{userInfo.end_date}&nbsp;&nbsp; {userInfo.end_time}</p>
             <p className={`${style.sub_details}`}>Selected Pack:&nbsp;&nbsp;{userInfo.pack_type}  
-            &nbsp;&nbsp;&nbsp;&nbsp; Amount : &#8377;&nbsp;{userInfo.pack_amount}&nbsp;/- </p>
+            &nbsp;&nbsp;&nbsp;&nbsp; Amount : &#8377;&nbsp;{userInfo.pack_amount}&nbsp;/- </p></>}
           </div>
           <div className={subscription_status==="on"?`${style.card2} ${style.active_subscription}`:`${style.card2}`}>
             <p className={`${style.cardp} `} onClick={GOTO}> {subscription_status==="on"?`Active`:userInfo.end_date===null?`Subscribe`:`RENEW`}</p>

@@ -53,8 +53,8 @@ const GstrFolder = () => {
           <span className='text-primary ml-5'>F.Y {year}</span>
           <div className="row">
             {folderTitle.map((title, index) => (
-              <div onClick={() => GoTo(title)} key={index} className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <div className={styles.folderlink}> {/* Pass the year to SendData */}
+              <div key={index} className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div className={styles.folderlink} onClick={() => GoTo(title)}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
                     <div className={styles.icon}>
                       <p className={styles.icons}>

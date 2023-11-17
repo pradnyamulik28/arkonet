@@ -26,7 +26,7 @@
 }
 
 
-button:active {
+.changePass button:active {
   box-shadow: 4px 2px 5px 0 #9ba4ab;
   transform: translateY(4px);
 }

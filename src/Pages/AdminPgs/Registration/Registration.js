@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Registration.module.css';
-import { Link, useNavigate,useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import swal from 'sweetalert2';
 import formfields from './formfields';
@@ -10,15 +10,15 @@ const Registration = () => {
   const Navigate = useNavigate();
 
 
-  const { referralParam } = useParams();//get User Info from url
+  const { referralParam } = useParams();  //get User Info from url
 
-    // if(referralParam)
-    // {
-    //   const [timestamp, refereduserId] = referralParam.split('_');
-    //   console.log("Timestamp:",timestamp,"    Reffered by :",refereduserId);
-    // }
+  // if(referralParam)
+  // {
+  //   const [timestamp, refereduserId] = referralParam.split('_');
+  //   console.log("Timestamp:",timestamp,"    Reffered by :",refereduserId);
+  // }
 
-    
+
 
   //Tocheck Password strength
   const [strenghtScore, setStrenghtScore] = useState("null");
@@ -48,21 +48,21 @@ const Registration = () => {
     state: "",
     whatsApp_Link: "",
     investNow_Email: "",
-    refrenceId: referralParam?referralParam.split('_')[1]:null,
+    refrenceId: referralParam ? referralParam.split('_')[1] : null,
     password: "",
     confirmpassword: ""
   });
 
-  
-useEffect(()=>{
-  if(referralParam){      
-    const inputElement = document.getElementsByName('refrenceId', 'text');
-    console.log("input field : ",inputElement.length)
-    if (inputElement.length) {
-        inputElement[0].disabled  = true;
+
+  useEffect(() => {
+    if (referralParam) {
+      const inputElement = document.getElementsByName('refrenceId', 'text');
+      console.log("input field : ", inputElement.length)
+      if (inputElement.length) {
+        inputElement[0].disabled = true;
+      }
     }
-}
-},[])
+  }, [])
 
 
 
@@ -94,6 +94,10 @@ useEffect(()=>{
         }
         break;
 
+      case "membership_No":
+        setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
+        e.target.value = value.replace(/\D/g, "");
+        break;
 
       case "email":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
@@ -212,8 +216,8 @@ useEffect(()=>{
       return;
     } else {
       const url = `${url_}/createuser`;
-      console.log(url);
-
+      // console.log(url);
+      // console.log(formdata)
       try {
         const response = await fetch(url, {
           method: "POST",
@@ -231,7 +235,7 @@ useEffect(()=>{
           swal.fire("Failed!", `${result.message}`, "error");
         } else if (result.status === "UNAUTHORIZED") {
           swal.fire("Failed!", `${result.message}`, "error");
-        } else {
+        } else if (response.status === 200) {
           setFormdata({
             name: "",
             datebirth: "",

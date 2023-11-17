@@ -91,6 +91,7 @@ const TotalClient = () => {
               <th scope="col">Client Name</th>
               <th scope="col">PAN</th>
               <th scope="col">Mobile</th>
+              <th scope="col">Service</th>
               <th scope="col">Mail</th>
               <th scope="col">Action</th>
             </tr>
@@ -107,9 +108,10 @@ const TotalClient = () => {
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
                   {/* <Link to={`myfolder/${items.clientId}`} className='h6'> */}
-                  <td onClick={() => Goto(items.clientId, items.name, items.pan, items.category, items.profession)}>{items.pan}</td>
+                  <td onClick={() => Goto(items.clientId, items.name, items.pan, items.category, items.profession)} className='text-primary' style={{ cursor: "pointer" }}>{items.pan}</td>
                   {/* </Link> */}
                   <td>{items.mobile}</td>
+                  <td>{items.category}</td>
                   <td><Link to="" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope-at" viewBox="0 0 16 16">
                       <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z" />

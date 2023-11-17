@@ -1,5 +1,5 @@
 .cardd {
-  width: 22rem;
+  width: 28rem;
   border-radius: 15px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -27,12 +27,15 @@
   font-weight: bold;
   font-size: 14px;
 }
-.btndisable{  
-  cursor: not-allowed; 
+
+
+
+.btndisable {
+  cursor: not-allowed;
   pointer-events: none;
 }
 
-.btndisable .abtn{
+.btndisable .abtn {
   background-color: #9897a9;
 }
 

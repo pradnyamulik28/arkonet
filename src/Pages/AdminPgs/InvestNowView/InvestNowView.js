@@ -34,11 +34,18 @@ const InvestNowView = () => {
       })
       .catch(error => console.log('error', error));
   }
+  function GoBack() {
+    window.history.back(); // This will navigate to the previous page in the browser's history
+  }
+
   return (
     <div>
-      <div className='text-center mt-4 mb-5'>
+      <div className='d-flex justify-content-around mt-4 mb-5'>
+        <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
+          &#8617;&nbsp;
+        </div>
         <h3 className='display-3'><b>{title}</b></h3>
-
+        <div></div>
       </div>
       <div>
         <table className="table table-striped">

@@ -271,3 +271,7 @@ ul {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.24);
   box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 }
+
+.qrimg img {
+  width: 100%;
+}

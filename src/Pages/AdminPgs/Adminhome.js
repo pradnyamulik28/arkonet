@@ -25,7 +25,7 @@ import MyFolder from './MyFolderPage/MyFolder';
 import Gst from './GST/Gst';
 import GstrFolder from './GstrFolder/GstrFolder';
 import GstrFileUpload from './GstrFileUpload/GstrFileUpload';
-import Test from './TestPages/TestPages';
+import Test from './TestPages/Test';
 import GstClients from './GSTClients/GstClients';
 import CreateNewTicket from './CreateNewTicket/CreateNewTicket';
 import InvestNowPage from './InvestNowPage/InvestNowPage';
@@ -37,7 +37,8 @@ import HelpClientMailView from './HelpClientMailView/HelpClientMailView';
 import KYCFile from './KYCFile/KYCFile';
 import DOCsFile from './DOCsFile/DOCsFile';
 import ClientList from './ClientList/ClientList'
-import  ChatBot from "../../components/ChatBot/ChatBot"
+import ChatBot from "../../components/ChatBot/ChatBot"
+import WhatsappChat from "../../components/WhatsappChat/WhatsappChat"
 
 const Adminhome = () => {
 
@@ -121,6 +122,8 @@ const Adminhome = () => {
               <Route path="dashboard/gstclients/clientreg" element={<Protected Cmp={URegistration} />} />
               <Route path="dashboard/gstclients/Cupdate/:id" element={<Protected Cmp={Uupdate} />} />
               <Route path="dashboard/gstclients/myfolder" element={<Protected Cmp={MyFolder} />} />
+              <Route path="dashboard/gstclients/myfolder/incomefolder" element={<Protected Cmp={DocFolder} />} />
+              <Route path="dashboard/gstclients/myfolder/incomefolder/fileupload" element={<Protected Cmp={FileUpload} />} />
               <Route path="dashboard/gstclients/myfolder/kycfile" element={<Protected Cmp={KYCFile} />} />
               <Route path="dashboard/gstclients/myfolder/docfile" element={<Protected Cmp={DOCsFile} />} />
               <Route path="dashboard/gstclients/myfolder/gstfolder" element={<Protected Cmp={Gst} />} />
@@ -139,6 +142,7 @@ const Adminhome = () => {
             </Routes>
 
             <ChatBot />
+            <WhatsappChat />
 
 
           </div>

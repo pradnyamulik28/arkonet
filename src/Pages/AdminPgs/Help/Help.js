@@ -62,7 +62,7 @@ const Help = () => {
     <div>
       <div className='d-flex justify-content-between mt-5 mb-4'>
         <h2>Help</h2>
-        <h6 className={`mr-5 ${style.help_btn}`}><button onClick={Goto}> CREAT NEW TICKET</button></h6>
+        <h6 className={`mr-5 ${style.help_btn}`}><button onClick={Goto}> CREATE NEW TICKET</button></h6>
       </div>
       <div>
         <table className={`table table-striped ${style.helpTable}`}>
@@ -80,8 +80,8 @@ const Help = () => {
             {HelpClientdata.map(item => (
               <tr>
                 <td>{item.name}</td>
-                <td>{item.query}</td>
-                <td>{item.detail}</td>
+                <td>{(item.query).replace("in GST, for the", "GST,")}</td>
+                <td>{(item.detail).slice(0, 60)}</td>
                 <td onClick={() => GOTO(item.name, item.query, item.detail, item.date)} style={{ color: "blue", cursor: "pointer" }}>View</td>
               </tr>
             ))}

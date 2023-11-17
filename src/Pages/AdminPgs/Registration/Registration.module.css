@@ -50,7 +50,7 @@
   cursor: pointer;
 }
 
-button:active {
+.btn_submit button:active {
   box-shadow: 4px 2px 5px 0 gray;
   transform: translateY(4px);
 }

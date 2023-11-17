@@ -107,7 +107,7 @@ const GstClients = () => {
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
                   {/* <Link to={`myfolder/${items.clientId}`} className='h6'> */}
-                  <td onClick={() => Goto(items.clientId, items.name, items.pan, items.category, items.profession)}>{items.pan}</td>
+                  <td onClick={() => Goto(items.clientId, items.name, items.pan, items.category, items.profession)} className='text-primary' style={{ cursor: "pointer" }}>{items.pan}</td>
                   {/* </Link> */}
                   <td>{items.mobile}</td>
                   <td><Link to="" >

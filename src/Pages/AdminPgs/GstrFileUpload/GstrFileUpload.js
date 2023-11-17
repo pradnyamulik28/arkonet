@@ -8,7 +8,7 @@ import { url_ } from '../../../Config';
 
 
 const GstrFileUpload = () => {
-  const subscription_status=localStorage.getItem('subscription_status');
+  const subscription_status = localStorage.getItem('subscription_status');
 
   const Navigate = useNavigate();
   const clientid = useLocation().state.clientId;
@@ -16,6 +16,9 @@ const GstrFileUpload = () => {
   const gst_title = useLocation().state.Title;
 
 
+  // console.log(year)
+  // console.log(gst_title)
+  // console.log(clientid)
 
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
@@ -129,8 +132,8 @@ const GstrFileUpload = () => {
 
         return { fileid, extractedName, filePath };
       });
-      setDbfilename(extractedNames);
       // console.log(extractedNames)
+      setDbfilename(extractedNames);
     } catch (error) {
       console.error('An error occurred while fetching files:', error);
     }
@@ -201,70 +204,71 @@ const GstrFileUpload = () => {
 
   const handleToggle = async (month) => {
 
-    if(subscription_status==="grace_period")
-    {
+    if (subscription_status === "grace_period") {
       Swal.fire({
-        icon:"error",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+
     }
 
-    else if(subscription_status==="not_subscribed")
-    {
+    else if (subscription_status === "not_subscribed") {
       Swal.fire({
-        icon:"error",
-        text:"Subscribe to avail this service."})
-        
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+
     }
-    else{
-    if (fileResponse === true) {
-      // console.log("It's TRUE");
-    } else {
-      try {
-        const result = await Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, confirm!'
-        });
+    else {
+      if (fileResponse === true) {
+        // console.log("It's TRUE");
+      } else {
+        try {
+          const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, confirm!'
+          });
 
-        if (result.isConfirmed) {
-          var myHeaders = new Headers();
-          myHeaders.append("Authorization", `Bearer ${storedToken}`);
+          if (result.isConfirmed) {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-          var requestOptions = {
-            method: 'PUT',
-            headers: myHeaders,
-            redirect: 'follow'
-          };
+            var requestOptions = {
+              method: 'PUT',
+              headers: myHeaders,
+              redirect: 'follow'
+            };
 
-          fetch(`${url_}/GSTupdateFiledNotFiled/${user_id}/${clientid}/${month}/${year.slice(0, 4)}/${gst_title}`, requestOptions)
-            .then(response => console.log(response.status))
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-          window.location.reload();
+            fetch(`${url_}/GSTupdateFiledNotFiled/${user_id}/${clientid}/${month}/${year.slice(0, 4)}/${gst_title}`, requestOptions)
+              .then(response => console.log(response.status))
+              .then(result => console.log(result))
+              .catch(error => console.log('error', error));
+            window.location.reload();
 
-          // console.log(user_id)
-          // console.log(clientid)
-          // console.log(month)
-          // console.log(year.slice(0, 4))
-          // console.log(gst_title)
-        } else {
-          console.log("Canceled the toggle!");
-        }
-      } catch (error) {
-        console.log("Failed to call function!!!");
+            // console.log(user_id)
+            // console.log(clientid)
+            // console.log(month)
+            // console.log(year.slice(0, 4))
+            // console.log(gst_title)
+          } else {
+            console.log("Canceled the toggle!");
+          }
+        } catch (error) {
+          console.log("Failed to call function!!!");
 
-        console.log('Error:', error);
-        if (error.response) {
-          console.log('Response Status:', error.response.status);
-          console.log('Response Data:', error.response.text());
+          console.log('Error:', error);
+          if (error.response) {
+            console.log('Response Status:', error.response.status);
+            console.log('Response Data:', error.response.text());
+          }
         }
       }
-    }}
+    }
   };
 
 
@@ -291,11 +295,44 @@ const GstrFileUpload = () => {
 
   function filterArrayBasedOnYear(data, currentYear, fyYear) {
     if (fyYear === currentYear) {
-      const startIndex = data.findIndex(item => item.month === `April ${currentYear}`);
-      const endIndex = data.findIndex(item => item.month === `October ${currentYear}`);
-      return data.slice(startIndex, endIndex + 1).reverse();
+
+      const parseMonth = (monthString) => {
+        const [month, year] = monthString.split(' ');
+        return new Date(`${month} 1, ${year}`);
+      };
+
+      // Sort the data array based on the month
+      const rearrangeddata = data.sort((a, b) => parseMonth(a.month) - parseMonth(b.month));
+
+      // Get the current month and year
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1; // Adding 1 because months are zero-indexed
+      const currentYear = currentDate.getFullYear();
+
+      // Filter the array until the current month
+      const rearrangedDataUntilCurrentMonth = rearrangeddata.filter(item => {
+        const itemDate = new Date(item.month);
+        const itemMonth = itemDate.getMonth() + 1;
+        const itemYear = itemDate.getFullYear();
+
+        return itemYear < currentYear || (itemYear === currentYear && itemMonth <= currentMonth);
+      });
+
+      console.log(rearrangedDataUntilCurrentMonth);
+
+
+      return rearrangedDataUntilCurrentMonth.reverse();
+
     } else {
-      return data;
+      // Function to convert month string to Date object
+      const parseMonth = (monthString) => {
+        const [month, year] = monthString.split(' ');
+        return new Date(`${month} 1, ${year}`);
+      };
+
+      // Sort the data array based on the month
+      data.sort((a, b) => parseMonth(a.month) - parseMonth(b.month));
+      return data.reverse();
     }
   }
 
@@ -307,8 +344,8 @@ const GstrFileUpload = () => {
   const fyYear = `${currentYear}`;
 
 
-  console.log(currentYearr)
-  console.log(fyYear)
+  // console.log(currentYearr)
+  // console.log(fyYear)
   // Call the function with the data, current year, and fiscal year
   const NEWARRAYUpdated = filterArrayBasedOnYear(NEWARRAY, currentYearr, fyYear);
   console.log(NEWARRAYUpdated);
@@ -320,23 +357,23 @@ const GstrFileUpload = () => {
   /////////////////////////////////////////////////////////////////////////////////////////////
 
   // File Upload Code
-  const checkSubsriptionStatus=(e)=>{
-    if(subscription_status==="grace_period")
-      {
-        Swal.fire({
-          icon:"error",
-          text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-          e.preventDefault();
-      }
-  
-      else if(subscription_status==="not_subscribed")
-      {
-        Swal.fire({
-          icon:"error",
-          text:"Subscribe to avail this service."})
-          e.preventDefault();
-      }
-  
+  const checkSubsriptionStatus = (e) => {
+    if (subscription_status === "grace_period") {
+      Swal.fire({
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+      e.preventDefault();
+    }
+
+    else if (subscription_status === "not_subscribed") {
+      Swal.fire({
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+      e.preventDefault();
+    }
+
   }
 
   const handleFileUpload = async (event, month) => {
@@ -458,89 +495,89 @@ const GstrFileUpload = () => {
 
   const DeleteFile = async () => {
 
-    if(subscription_status==="grace_period")
-    {
+    if (subscription_status === "grace_period") {
       Swal.fire({
-        icon:"error",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+
     }
 
-    else if(subscription_status==="not_subscribed")
-    {
+    else if (subscription_status === "not_subscribed") {
       Swal.fire({
-        icon:"error",
-        text:"Subscribe to avail this service."})
-        
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+
     }
 
-    else{
-    try {
-      const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, confirm!'
-      });
-
-      if (result.isConfirmed) {
-
-
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-        var raw = JSON.stringify({
-          "fileIds": selectedFiles
+    else {
+      try {
+        const result = await Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, confirm!'
         });
 
-        var requestOptions = {
-          method: 'DELETE',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
+        if (result.isConfirmed) {
 
 
-        const response = await fetch(`${url_}/gstdeletefile`, requestOptions);
-        const responseData = await response.text();
-        console.log(responseData)
-        if (response.status === 200) {
-          await Swal.fire(
-            'Success.',
-            `${responseData}`,
-            'success'
-          )
-          window.location.reload();
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+          var raw = JSON.stringify({
+            "fileIds": selectedFiles
+          });
+
+          var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+
+
+          const response = await fetch(`${url_}/gstdeletefile`, requestOptions);
+          const responseData = await response.text();
+          console.log(responseData)
+          if (response.status === 200) {
+            await Swal.fire(
+              'Success.',
+              `${responseData}`,
+              'success'
+            )
+            window.location.reload();
+
+          } else {
+            Swal.fire(
+              'Failed!',
+              `${responseData}`,
+              'error'
+            )
+          }
+
+          console.log(selectedFiles)
+
 
         } else {
-          Swal.fire(
-            'Failed!',
-            `${responseData}`,
-            'error'
-          )
+          console.log("Canceled the delete!");
         }
+      } catch (error) {
+        console.log("Failed to call function!!!");
 
-        console.log(selectedFiles)
-
-
-      } else {
-        console.log("Canceled the delete!");
-      }
-    } catch (error) {
-      console.log("Failed to call function!!!");
-
-      console.log('Error:', error);
-      if (error.response) {
-        console.log('Response Status:', error.response.status);
-        console.log('Response Data:', error.response.text());
+        console.log('Error:', error);
+        if (error.response) {
+          console.log('Response Status:', error.response.status);
+          console.log('Response Data:', error.response.text());
+        }
       }
     }
-  }
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -551,56 +588,56 @@ const GstrFileUpload = () => {
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
 
 
-    if(subscription_status==="grace_period")
-    {
+    if (subscription_status === "grace_period") {
       Swal.fire({
-        icon:"error",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+
     }
 
-    else if(subscription_status==="not_subscribed")
-    {
+    else if (subscription_status === "not_subscribed") {
       Swal.fire({
-        icon:"error",
-        text:"Subscribe to avail this service."})
-        
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+
     }
-else{
+    else {
 
-    try {
-      const response = await fetch(`${url_}/openGstfile/${file_ID}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const arrayBuffer = await response.arrayBuffer();
-      const fileBlob = new Blob([arrayBuffer], { type: `application/${contentType}` });
-      const blobUrl = URL.createObjectURL(fileBlob);
-
-      if (contentType === 'pdf') {
-        setPdfBlobUrl(blobUrl);
-        const pdfWindow = window.open(blobUrl, '_blank');
-        pdfWindow.addEventListener('beforeunload', () => {
-          URL.revokeObjectURL(blobUrl);
+      try {
+        const response = await fetch(`${url_}/openGstfile/${file_ID}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
         });
-      } else if (contentType === 'xlsx') {
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = fileName;
-        link.click();
-        URL.revokeObjectURL(blobUrl);
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const fileBlob = new Blob([arrayBuffer], { type: `application/${contentType}` });
+        const blobUrl = URL.createObjectURL(fileBlob);
+
+        if (contentType === 'pdf') {
+          setPdfBlobUrl(blobUrl);
+          const pdfWindow = window.open(blobUrl, '_blank');
+          pdfWindow.addEventListener('beforeunload', () => {
+            URL.revokeObjectURL(blobUrl);
+          });
+        } else if (contentType === 'xlsx') {
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = fileName;
+          link.click();
+          URL.revokeObjectURL(blobUrl);
+        }
+      } catch (error) {
+        console.error(`Error fetching or downloading ${contentType.toUpperCase()} file:`, error);
       }
-    } catch (error) {
-      console.error(`Error fetching or downloading ${contentType.toUpperCase()} file:`, error);
     }
-  }
   };
 
 
@@ -612,7 +649,7 @@ else{
   return (
 
     <div className="container">
-      <div className="row m-5">
+      <div className="row mt-5">
 
 
         <div className="w-100" id="maindiv">
@@ -669,85 +706,85 @@ else{
             </div>
 
 
-            <div className='container'>
-              <div className="">
+            <div className='w-100'>
 
 
 
 
 
-                {NEWARRAYUpdated.map((item, index) => (
-                  <div className='d-flex align-items-center mb-2 w-100' key={index} >
+
+              {NEWARRAYUpdated.map((item, index) => (
+                <div className='d-flex align-items-center mb-2 w-100 row' key={index} >
 
 
-                    <div className={`${style.gstr1_mothn_filename}`}>
-                      <h4 className={`${style.filename_text} text-danger`} >{item.month}</h4>
-                    </div>
+                  <div className={`${style.gstr1_mothn_filename} col`}>
+                    <h4 className={`${style.filename_text} text-danger`} >{item.month}</h4>
+                  </div>
 
-                    <div className={`${style.file_upload}  w-25`}>
-                      <div className={style.image_upload_wrap}>
-                        <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.month)} onClick={checkSubsriptionStatus}/>
-                        <div className={style.drag_text}>
-                          <img src={upload} alt="" />
-                          <h4>Upload File</h4>
-                        </div>
+                  <div className={`${style.file_upload}  mr-2 ml-2 col`}>
+                    <div className={style.image_upload_wrap}>
+                      <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.month)} onClick={checkSubsriptionStatus} />
+                      <div className={style.drag_text}>
+                        <img src={upload} alt="" />
+                        <h4>Upload File</h4>
                       </div>
                     </div>
+                  </div>
 
 
-                    {item.status ? (
-                      <div className=' w-25'>
+                  {item.status ? (
+                    <div className=' col'>
 
-                        <div className={style.file_upload}>
-                          {codeVisible && (
-                            <label className={style.checkbox_label}>
-                              <input
-                                type="checkbox"
-                                className={style.checkbox}
-                                onChange={event => handleCheckboxChange(event, item.fileid)}
-                              />
-                              <span className={style.checkbox_custom}>
-                                <span className={style.checkbox_tick}></span>
-                              </span>
-                            </label>
-                          )}
-
-
-                          <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => openFileAndDownload('pdf', 'document.pdf', item.fileid)}>
-
-                          </i>
+                      <div className={style.file_upload}>
+                        {codeVisible && (
+                          <label className={style.checkbox_label}>
+                            <input
+                              type="checkbox"
+                              className={style.checkbox}
+                              onChange={event => handleCheckboxChange(event, item.fileid)}
+                            />
+                            <span className={style.checkbox_custom}>
+                              <span className={style.checkbox_tick}></span>
+                            </span>
+                          </label>
+                        )}
 
 
-                          <h6 className={style.filename_text} >
-                            {item.filename}
-                          </h6>
-                        </div>
+                        <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={() => openFileAndDownload('pdf', 'document.pdf', item.fileid)}>
+
+                        </i>
+
+
                       </div>
-                    ) : (
-
-                      <div className='w-25'></div>
-
-
-                    )}
-
-                    <div className={`${style.gstr_1_file_toggle}  `} style={{ margin: "auto" }}>
-                      <label className={`${style.switch}`}>
-                        <input type="checkbox" checked={item.filednotfiled === "yes" ? true : false} onChange={() => handleToggle(item.month)} />
-                        <span className={`${style.slider} ${style.round}`}></span>
-                      </label>
-
+                      <h6 className={`${style.filename_text} w-100`} >
+                        {item.filename}
+                      </h6>
                     </div>
+                  ) : (
 
+                    <div className=' col'></div>
+
+
+                  )}
+
+                  <div className={`${style.gstr_1_file_toggle} col d-flex justify-content-center `} style={{ margin: "auto" }}>
+                    <label className={`${style.switch}`}>
+                      <input type="checkbox" checked={item.filednotfiled === "yes" ? true : false} onChange={() => handleToggle(item.month)} />
+                      <span className={`${style.slider} ${style.round}`}></span>
+                    </label>
 
                   </div>
-                ))}
 
-              </div>
+
+                </div>
+              ))}
+
             </div>
-
           </div>
+
         </div>
       </div>
+
     </div >
 
   );

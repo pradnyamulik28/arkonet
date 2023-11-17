@@ -44,40 +44,16 @@ const Gst = () => {
 
 
 
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-    const raw = JSON.stringify({
-      "userid": user_id,
-      "clientid": clientid,
-      "accountyear": yearRange,
-      "filednotfiled": "No"
+
+    Navigate('gstrfolder', {
+      state: {
+        ClientID: clientid,
+        Year: yearRange
+      },
     });
 
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
 
-    try {
-      const response = await fetch(`${url_}/saveData`, requestOptions);
-      const result = await response.text();
-      console.log(result);
-      Navigate('gstrfolder', {
-        state: {
-          ClientID: clientid,
-          Year: yearRange
-        },
-      });
-
-    } catch (error) {
-      console.error('An error occurred while sending count data:', error);
-    }
-
-    console.log(yearRange)
   };
 
   function GoBack() {

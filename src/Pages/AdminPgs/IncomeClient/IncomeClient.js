@@ -109,7 +109,7 @@ const IncomeClient = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <td onClick={() => Gotoincome(items.clientId, items.name, items.pan, items.category, items.profession)}>{items.pan}</td>
+                  <td onClick={() => Gotoincome(items.clientId, items.name, items.pan, items.category, items.profession)} className='text-primary' style={{ cursor: "pointer" }}>{items.pan}</td>
                   <td>{items.mobile}</td>
                   <td>
                     <Link to="update">
