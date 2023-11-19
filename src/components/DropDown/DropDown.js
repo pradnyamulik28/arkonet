@@ -27,6 +27,10 @@ const DropDown = (props) => {
         !props.isProfessionNull && <ValidationError validationmsg={props.validationmsg} />
       )}
 
+{props.manadatory  &&  (
+          (props.name === "state" && !props.isStateNull) && <ValidationError validationmsg={props.validationmsg} />
+      )}
+
     </div>
 
 

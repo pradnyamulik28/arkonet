@@ -5,7 +5,6 @@ import HomePage from "./HomePage/HomePage"
 import SubscriptionPlan from "../AdminPgs/SubscriptionPlan/SubscriptionPlan";
 import AboutUs from "./AboutUs/AboutUs";
 import ContactUs from "./ContactUs/ContactUs";
-import OurTeam from "./OurTeam/OurTeam";
 import Konwledge from "./Knowledge/Knowledge";
 
 import style from "./HomeRoute.module.css";
@@ -14,10 +13,10 @@ import taxko from "../../Images/Taxko.jpg";
 
 import ClientAccount from "./ClientAccount/ClientAccount";
 import Registration from "../AdminPgs/Registration/Registration";
-import InfoCard from "./InfoCard/InfoCard";
 import DemoVideo from "./DemoVideo/DemoVideo";
-import Presentation from "./Presentation/Presentation";
 import  ChatBot from "../../components/ChatBot/ChatBot"
+import WhatsappChat from "../../components/WhatsappChat/WhatsappChat";
+import Careers from "./Careers/Careers";
 
 
 
@@ -264,6 +263,18 @@ function openBookDemoForm(){
               CONTACT US
             </Link>
           </div>
+          <div>|</div>
+          <div className={`${style.neckancher}`}>
+            <Link
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("careers");
+              }}
+              id="careers"
+            >
+              CAREERS
+            </Link>
+          </div>
         </div>
         {/* </div> */}
 
@@ -323,10 +334,11 @@ function openBookDemoForm(){
           <Route path="/abouttaxko" element={<DemoVideo />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/careers" element={<Careers />} />
         </Routes>
 
         <ChatBot />
-
+        <WhatsappChat />
        
 
         <div className={`${style.copyright}`}>

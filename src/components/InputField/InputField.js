@@ -41,6 +41,13 @@ const InputField = (props) => {
       {props.name === "pan" && (
         !props.isValidPAN && <ValidationError validationmsg={props.validationmsg} />
       )}
+      {props.manadatory  &&  (
+          (props.name === "address" && !props.isAddressNull) && <ValidationError validationmsg={props.validationmsg} />
+      )}
+      
+      {props.manadatory  &&  (
+          (props.name === "pin_code" && !props.isValidPIN) && <ValidationError validationmsg={props.validationmsg} />
+      )}
 
     </div >
   );
