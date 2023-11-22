@@ -18,6 +18,7 @@ import  ChatBot from "../../components/ChatBot/ChatBot"
 import WhatsappChat from "../../components/WhatsappChat/WhatsappChat";
 import Careers from "./Careers/Careers";
 
+import HandShake from "./HandShake/HandShake";
 
 
 function HomeRoute() {
@@ -278,50 +279,6 @@ function openBookDemoForm(){
         </div>
         {/* </div> */}
 
-        {/* {!isPanelActive && (
-          <>
-            <div ref={homeRef}>
-              <HomePage />
-            </div>
-            <br />
-            <div ref={featureRef}>
-              <Konwledge handleScroll={handleClick} />
-            </div>
-            <br />
-            <div ref={subscriptionRef}>
-              <SubscriptionPlan />
-            </div>
-            <br />
-            <div ref={videoRef}>
-              <DemoVideo />
-            </div>
-            <br />
-            <div ref={presentationRef}>
-              <Presentation />
-            </div>
-            <br />
-            <div ref={aboutusRef}>
-              <AboutUs handleScroll={handleClick} />
-            </div>
-            <br />
-            <div ref={contactRef}>
-              <ContactUs />
-            </div>
-            <br />
-            {<div ref={ourTeamRef} className={style.ourteam}>
-            <OurTeam />
-            </div> }
-          </>
-        )}
-        {isPanelActive && slideInformation && (
-          <div ref={sliderRef}>
-            <InfoCard
-              handlePanel={handlePanel}
-              isClose={isPanelActive}
-              info={slideInformation}
-            />
-          </div>
-        )} */}
 
        
 
@@ -339,7 +296,7 @@ function openBookDemoForm(){
 
         <ChatBot />
         <WhatsappChat />
-       
+       <HandShake />
 
         <div className={`${style.copyright}`}>
           <div className={`${style.dev}`}>

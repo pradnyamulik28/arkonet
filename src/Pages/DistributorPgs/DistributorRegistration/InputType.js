@@ -3,7 +3,7 @@ import InputField from "../../../components/InputField/InputField";
 import PasswordField from "../../../components/Password/PasswordField";
 //import styles from "./Registration.module.css";
 import DropDown from "../../../components/DropDown/DropDown";
-import Aprofesion_obj from "../../../ObjData/AProf.json";
+import Aprofesion_obj from "../../../ObjData/distributorProf.json";
 import States_obj from "../../../ObjData/States.json";
 
 //Render Input Fields depending on their type 

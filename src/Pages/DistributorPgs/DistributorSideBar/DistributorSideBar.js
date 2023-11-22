@@ -4,9 +4,12 @@ import styles from './DistributorSideBar.module.css';
 import Applogo from '../../../Images/taxko_logo.jpeg'
 import Cmpylogo from '../../../Images/Arkonet - Logo_page-0001.jpg'
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const DistributorSideBar = ({ loggedIn, setLoggedIn }) => {
     const Navigate = useNavigate();
+  const distributor_pan=localStorage.getItem("pan");
+
 
     useEffect(() => {
       
@@ -34,16 +37,14 @@ useEffect(()=>{
                 Navigate("/distributor/distributor_dash")    ;
                 setActiveLink("dashboard")
             break;
-            case "subscriptions":
-                setActiveLink("subscriptions")     
-            break;
+            
             case "investnow":
                 setActiveLink("investnow")  
                 Navigate("/distributor/investNow")    ;
             break;
-            case "rewards":
-                setActiveLink("rewards")     
-            break;
+            // case "rewards":
+            //     setActiveLink("rewards")     
+            // break;
             case "profile":
                 Navigate("update/distributor_reg");
                 setActiveLink("profile")     
@@ -51,6 +52,18 @@ useEffect(()=>{
             case "help":
                 setActiveLink("help");
                 Navigate("/distributor/help")    ;
+            break;
+
+            case "refferallink":
+                setActiveLink("refferallink") ;
+               
+                    // const refferalLink=`http://localhost:3000/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${userInfo.userPAN}`;
+                     const refferalLink=`http://taxko.in/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${distributor_pan}`;
+                     const copy = require('clipboard-copy')
+                     copy(refferalLink);
+                    
+                     Swal.fire('Refferal link has been copied to clipboard');
+                       
             break;
             default:break;
         }
@@ -73,20 +86,22 @@ useEffect(()=>{
                         </Link>
                         </div>
 
-                        <div onClick={() => handleLinkClick('subscriptions')}>
-                            <h6 className={activeLink === 'subscriptions' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Subsriptions</h6>
-                        </div>
+                       
 
                         <div onClick={() => handleLinkClick('investnow')}>
                             <h6 className={activeLink === 'investnow' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Invest Now</h6>
                         </div>
 
-                        <div onClick={() => handleLinkClick('rewards')}>
+                        {/* <div onClick={() => handleLinkClick('rewards')}>
                             <h6 className={activeLink === 'rewards' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Rewards</h6>
-                        </div>
+                        </div> */}
 
                         <div  onClick={() => handleLinkClick('profile')}>
                             <h6 className={activeLink === 'profile' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Profile</h6>
+                        </div>
+
+                        <div onClick={() => handleLinkClick('refferallink')}>
+                            <h6 className={activeLink === 'refferallink' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Generate Refferal Link</h6>
                         </div>
 
                         <div  onClick={() => handleLinkClick('help')}>

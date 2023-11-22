@@ -4,18 +4,18 @@ import { url_ } from '../../../Config';
 
 
 const InvestNowView = () => {
-  const { category } = useParams();
+ 
   const { title } = useParams();
   useEffect(() => {
 
-    // InvestNowMailView();
+    InvestNowMailView();
   }, []);
 
-  const user_id = window.localStorage.getItem('user_id');
+  
+  const distributor_mail = window.localStorage.getItem('email');
   const storedToken = window.localStorage.getItem('jwtToken');
   const [InvestNowClientdata, setInvestNowClientdata] = useState([]);
-  // const Intitle = useLocation().state.Investnowtitle;
-  // const Investnowdbname = useLocation().state.Investnowdb;
+  
   const InvestNowMailView = () => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -26,7 +26,7 @@ const InvestNowView = () => {
       redirect: 'follow'
     };
 
-    fetch(`${url_}/Invest/allrecords?userId=${user_id}&category=${title}`, requestOptions)
+    fetch(`${url_}/distrubutor/Invest/allrecords?InvestNow_Email=${distributor_mail}&category=${title}`, requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result);

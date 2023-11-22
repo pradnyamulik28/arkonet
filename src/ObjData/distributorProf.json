@@ -1,0 +1,59 @@
+[
+    {   "  val":"Chartered Accountant",
+        "option_name":"Chartered Accountant"
+    },
+
+    {   "val":"Company Secretary",
+        "option_name":"Company Secretary"
+    },
+
+    {   "val":"Accountant",
+        "option_name":"Accountant"
+    },
+
+    {   "val":"Advocate",
+        "option_name":"Advocate"
+    },
+
+    {   "val":"Software Developer",
+        "option_name":"Software Developer"
+    },
+
+    {   "val":"Educational Consultant",
+        "option_name":"Educational Consultant"
+    },
+
+    {   "val":"Consultant (other)",
+        "option_name":"Consultant (other)"
+    },
+
+    {   "val":"Stock Broker",
+        "option_name":"Stock Broker"
+    },
+
+    {   "val":"Insurance Agent",
+        "option_name":"Insurance Agent"
+    },
+
+    {   "val":"Mutual Fund Distributor",
+        "option_name":"Mutual Fund Distributor"
+    },
+
+    {   "val":"Banker",
+        "option_name":"Banker"
+    },
+
+    {   "val":"Credit Card Agent",
+        "option_name":"Credit Card Agent"
+    },
+
+    {   "val":"Loan Agent",
+        "option_name":"Loan Agent"
+    },
+    {   "val":"Service",
+    "option_name":"Service"  
+},
+    {   "val":"Other",
+        "option_name":"Other"  
+    }
+]

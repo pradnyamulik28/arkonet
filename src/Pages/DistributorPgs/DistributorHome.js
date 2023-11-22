@@ -7,6 +7,8 @@ import DistributorLogIn from "./DistributorLogIn/DistributorLogIn";
 import InvestNowView from './InvestNowView/InvestNowView';
 import InvestNowPage from "./InvestNowPage/InvestNowPage";
 import DistributorHelp from "./DistributorHelp/DistributorHelp";
+import ViewUsers from "./ViewUsers/ViewUsers";
+import ViewUserCategory from "./ViewUserCategory/ViewUserCategory";
 
 function DistributorHome() {
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem("LogedIn"));
@@ -26,6 +28,8 @@ function DistributorHome() {
               <Route path="distributor_reg" element={<DistributorRegistration />}/>
               <Route path="update/distributor_reg" element={<DistributorRegistration />}/>
               <Route path="/distributor_dash" element={<DistributorDash />} />
+              <Route path="/distributor_dash/userview" element={<ViewUsers />} />
+              <Route path="/distributor_dash/userviewc" element={<ViewUserCategory />} />
               <Route path="/investNow" element={<InvestNowPage />} />
               <Route path="/investNow/investNowview/:category/:title" element={<InvestNowView />} />
               <Route path="/help" element={<DistributorHelp />} />

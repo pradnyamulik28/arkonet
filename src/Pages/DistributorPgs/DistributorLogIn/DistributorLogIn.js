@@ -13,6 +13,10 @@ const DistributorLogIn = ({ setLoggedIn }) => {
         password: ""
     });
 
+    useEffect(()=>{
+      setLoggedIn(false);
+    },[])
+
     const handleChange = (e) => {
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
     };

@@ -83,19 +83,29 @@
   visibility: hidden;
 }
 
-.qrupload label {
+.fileupload label {
   width: 15rem;
-  color: red;
+  
   font-weight: bold;
 }
 
-.qrupload {
+.fileupload {
   display: flex;
   /* justify-content: center; */
   align-items: center;
 }
 
-
+.buttons{
+  height: 2rem;
+  width: 5rem;
+  border-radius: 10px;
+  border: none;
+  align-items: center;
+  font-size: 15px;
+  cursor: pointer;
+  
+  
+}
 
 .file_upload_input {
   position: absolute;

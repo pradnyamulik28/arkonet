@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import QueryOpt from "../../../ObjData/QueryOpt.json";
+import QueryOpt from "../../../ObjData/DistQueryOpt.json";
 import swal from "sweetalert2";
 import { url_ } from "../../../Config";
 import style from "./DistributorHelp.module.css";
 
 const DistributorHelp = () => {
 
-  const user_id = window.localStorage.getItem('user_id');
-  const user_name = window.localStorage.getItem('user_name');
+  const distributor_id = window.localStorage.getItem('distributor_id');
+  const distributor_name = window.localStorage.getItem('distributor_name');
   const storedToken = window.localStorage.getItem('jwtToken');
   const user_mobile = window.localStorage.getItem('mobile');
 
 
   const [formdata, setFormdata] = useState({
     query_nature: "",
-    financialyear: "",
+   
     details: ""
   });
 
@@ -23,12 +23,12 @@ const DistributorHelp = () => {
   const wordLimit = 100;
 
 
-  const [helpMail, setHelpMail] = useState({
-    subject: "", msg: "",
-    userid: user_id,
-    username: user_name
+  // const [helpMail, setHelpMail] = useState({
+  //   subject: "", msg: "",
+  //   userid: distributor_id,
+  //   username: distributor_name
    
-  });
+  // });
   
 
 
@@ -70,28 +70,28 @@ const DistributorHelp = () => {
 
   async function handleSubmit() {
 
-    if (!formdata.query_nature || !formdata.financialyear || !formdata.details) {
+    if (!formdata.query_nature ||  !formdata.details) {
       swal.fire("Failed!", "Please fill the mandatory fields!!", "error");
     }
     else {
-      const subject = `User's query in ${formdata.query_nature}, for the Financial year ${formdata.financialyear}`;
+      const subject = `Distributor's query in ${formdata.query_nature}, `;
 
 
       let message = ``;
 
 
       message = message.concat(`Dear, Taxko Team
-Greeting from ${user_name}
+Greeting from ${distributor_name}
 
 I hope this message finds you well. 
 
-${user_name}'s query details are as follows,
+${distributor_name}'s query details are as follows,
 
 ${formdata.details}
                     
 Best regards,
 
-${user_name},
+${distributor_name},
 Contact no : ${user_mobile}`);
 
 
@@ -101,7 +101,6 @@ Contact no : ${user_mobile}`);
       sendEmail(subject, message);
       setFormdata({
         query_nature: "",
-        financialyear: "",
         details: ""
       });
     }
@@ -109,6 +108,17 @@ Contact no : ${user_mobile}`);
 
 
   async function sendEmail(subject, body) {
+
+
+    swal.fire({
+      title: 'Sending Email',
+      text: 'Please wait...',
+      showConfirmButton: false,
+      onBeforeOpen: () => {
+        swal.showLoading();
+      },
+    });
+   
     
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "text/plain");
@@ -124,21 +134,24 @@ Contact no : ${user_mobile}`);
     };
 
     try {
-      const response = await fetch(`${url_}/sendemailuser/help?userid=${user_id}&subject=${subject}`, requestOptions)
+      const response = await fetch(`${url_}/sendemaildistributor/help?distributorId=${distributor_id}&subject=${subject}`, requestOptions)
       const result = await response.text();
       if (response.status === 200) {
-
+        swal.close();
         swal.fire({
           position: 'center',
           icon: 'success',
           title: 'Email sent.!',
+          text:"Our support team will contact you soon",
           showConfirmButton: false,
-          timer: 1500
+          timer: 5000
         })
       } else {
+        swal.close();
         swal.fire("Failed!", `${result}`, "error");
       }
     } catch (error) {
+      swal.close();
       swal.fire("Failed!", `${error}`, "error");
     }
 
@@ -174,20 +187,7 @@ Contact no : ${user_mobile}`);
           </select>
 
 
-          {/* Use this if dropdown menu */}
-
-          <label htmlFor="opts2" className={`${style.label1}`}>
-            For Financial Year <p className={`${style.p}`}>&#42;</p>
-          </label>
-          {/* <input id="opts2" type="text" className={`${style.text1}`} placeholder='2023-24' /> */}
-          <select name="financialyear" value={formdata.financialyear} className={`${style.ddmenu1}`} id="opts2" onChange={handleChange} required>
-            <option value="" disabled selected>Select The Year</option>
-            {lastFiveYearsArray.map((financial_year, index) =>
-              <option value={financial_year} key={index}>{financial_year}</option>
-            )}
-            <option value="notApplicable">Not Applicable</option>
-          </select>
-          {/* Use this if dropdown menu */}
+          
 
           <label htmlFor="text1" className={`${style.label1}`}>
             Details<p className={`${style.p}`}>&#42;</p>

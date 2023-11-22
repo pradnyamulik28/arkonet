@@ -10,13 +10,13 @@ function DistributorDash() {
     const storedToken = window.localStorage.getItem('jwtToken');
 
     useEffect(() => {
-        
+      Getdistributordata()
     }, []);
 
 
     const [distributorData,setDistributorData]=useState({
-        name:localStorage.getItem("distributor_name")
-
+        name:localStorage.getItem("distributor_name"),
+        pan:localStorage.getItem("pan")
     })
 
     const [admincounts, setadmincounts] = useState(0)
@@ -27,9 +27,9 @@ function DistributorDash() {
 
 
     const [earnings,setEarnings]=useState({
-        totalearnings:(175240).toLocaleString('en-IN'),
-        lastmonth:(26846).toLocaleString('en-IN'),
-        unpaid:(14800).toLocaleString('en-IN'),
+        totalearnings:"",//(175240).toLocaleString('en-IN'),
+        lastmonth:"",//(26846).toLocaleString('en-IN'),
+        unpaid:"",//(14800).toLocaleString('en-IN'),
     })
 
     const CurrentYear = new Date().getFullYear();
@@ -45,43 +45,36 @@ function DistributorDash() {
             headers: myHeaders,
             redirect: 'follow'
         };
-        await fetch(`${url_}/allusersdata/counts`, requestOptions)
+        await fetch(`${url_}/distrubutor/userscounts/${distributorData.pan}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                //console.log(result)
-                
+                               
                 setadmincounts(result.count)
             })
             .catch((error) => {
                 console.log(error);
             })
-        await fetch(`${url_}/user/countbyprofession`, requestOptions)
+        await fetch(`${url_}/distrubutoruser/countbyprofession/${distributorData.pan}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                // console.log(result)
+               
                 setadmincountscategory(result)
             })
             .catch((error) => {
                 console.log(error);
             })
-        await fetch(`${url_}/allclient/client-count`, requestOptions)
+       
+           
+        await fetch(`${url_}/distrubutor/listsubscription/${distributorData.pan}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                // console.log(result)
-                setadminClients(result)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            console.log(new Date().getFullYear())
-        await fetch(`${url_}/master/countsubscription`, requestOptions)
-            .then((response) => response.json())
-            .then((result) => {
-                
+               
                 const singleObject = result.reduce((acc, curr) => {
-                    if (curr.subscriptionCount === new Date().getFullYear()-1) {
+                  
+                    if (curr.subscriptionCount === `${new Date().getFullYear()-1}`) {
+                      console.log("match")
                         acc['lastyear'] = curr.count;
-                    } else if (curr.subscriptionCount === new Date().getFullYear()) {
+                    } else if (curr.subscriptionCount === `${new Date().getFullYear()}`) {
                         acc['presentyear'] = curr.count;
                     } else {
                         acc[curr.subscriptionCount] = curr.count;
@@ -89,13 +82,13 @@ function DistributorDash() {
                     return acc;
                 }, {});
                 setadminSubscription(singleObject);
-                // console.log(singleObject)
+                
 
             })
             .catch((error) => {
                 console.log(error);
             })
-        await fetch(`${url_}/master/countreneval`, requestOptions)
+        await fetch(`${url_}/distrubutor/countreneval/${distributorData.pan}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 const singleObjectRenewal = result.reduce((acc, curr) => {
@@ -109,35 +102,51 @@ function DistributorDash() {
                     return acc;
                 }, {});
                 setadminRenewal(singleObjectRenewal)
-                console.log(singleObjectRenewal);
+                // console.log(singleObjectRenewal);
             })
             .catch((error) => {
                 console.log(error);
             })
 
-    }
-    const GOTO = (category) => {
-        // Navigate('searchadmin', {
-        //     state: {
-        //         userProfession: category
-        //     },
-        // });
+
+            
+
+await fetch(`${url_}/everydistrubutor/incomecount/${distributorData.pan}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    // console.log(result)
+    const singleObject = result.reduce((acc, curr) => {
+                  
+      if (curr.category === `Total Earning`) {
+        
+          acc['totalearnings'] = curr.count.toLocaleString('en-IN');
+      } else if (curr.category === `Last Month`) {
+          acc['lastmonth'] = curr.count.toLocaleString('en-IN');
+      } else if(curr.category === `unpaid`){
+          acc['unpaid'] = curr.count.toLocaleString('en-IN');
+      }
+      return acc;
+  }, {});
+  setEarnings(singleObject);
+  })
+  .catch(error => console.log('error', error));
 
     }
+  
     const GOTOuserList = (category) => {
-        // Navigate('userlist', {
-        //     state: {
-        //         userProfession: category
-        //     },
-        // });
+      Navigate('userview', {
+        state: {
+            userProfession: category
+        },
+    });
 
     }
-    const GOTOClients = (category) => {
-        // Navigate('clientview', {
-        //     state: {
-        //         ClientCategory: category
-        //     },
-        // });
+    const GOTOuserbyCategory = (category) => {
+      Navigate('userviewc', {
+        state: {
+            userProfession: category
+        },
+    });
 
     }
     return (
@@ -182,7 +191,7 @@ function DistributorDash() {
                           </td>
 
                           <td
-                            onClick={() => GOTO(item.profession)}
+                            onClick={() => GOTOuserbyCategory(item.profession)}
                             style={{ cursor: "pointer" }}
                           >
                             <b>{item.count}</b>

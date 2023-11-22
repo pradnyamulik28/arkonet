@@ -5,12 +5,14 @@ import { url_ } from '../../../Config';
 import swal from 'sweetalert2';
 import Formfields from './formfields';
 import InputType from "./InputType"
-// import PaymentDetails from '../PaymentDetails/PaymentDetails';
+import PaymentDetails from '../PaymentDetails/PaymentDetails';
 
 const DistributorRegistration = () => {
   
   const location=useLocation();
   const Navigate = useNavigate();
+  const storedToken=localStorage.getItem("jwtToken");
+  const distributor_id=localStorage.getItem("distributor_id");
  
   const [formfields,setFormFields]=useState(Formfields);
 
@@ -60,24 +62,7 @@ const DistributorRegistration = () => {
   const [isValidPIN, setIsValidPIN] = useState(true);
   const [isStateNull, setIsStateNull] = useState(true);
 
-  /*
   
-  
-  {
-    name:null,
-    datebirth:null,
-    profession:null,
-    pan:null,
-    telephone:null,
-    mobile:null,
-    address:null,
-    email:null,
-    pin_code:null,
-    state:null,
-    whatsApp_Link:null,
-    password:null
-}
-  */
   const [formdata, setFormdata] = useState({
     name:null,
     datebirth:null,
@@ -102,16 +87,40 @@ useEffect(()=>{
 },[])
 
 
-function getDistributorData(){
+async function getDistributorData(){
 
   //Disable PAN Field 
   const inputElementpan = document.getElementsByName('pan', 'text');
-    console.log("input field : ",inputElementpan.length)
+    
     if (inputElementpan.length) {
         inputElementpan[0].disabled  = true;
     }
 
-    setFormdata({pan:localStorage.getItem("pan")})
+
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    const response = await fetch(
+      `${url_}/all/distributorbyid/${distributor_id}`,
+      requestOptions
+    );
+    const result = await response.json();
+    if (response.status === 200) {
+      // console.log(result);
+     
+      
+      setFormdata(result);
+    }
+
+    
+
 
 }
 
@@ -246,6 +255,7 @@ function getDistributorData(){
   };
 
   const handleUpdateForm = async (event) => {
+    console.log(formdata)
     event.preventDefault();
 
     if (!formdata.name) {
@@ -295,15 +305,16 @@ function getDistributorData(){
       console.log(formdata);
       return;
     } else {
-      const url = `${url_}/createuser`;
+      const url = `${url_}/updateDistribution/${distributor_id}`;
       console.log(url);
 
       try {
         const response = await fetch(url, {
-          method: "POST",
+          method: "PUT",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${storedToken}`
           },
           body: JSON.stringify(formdata),
         });
@@ -333,10 +344,10 @@ function getDistributorData(){
           });
           swal.fire(
             "Success",
-            "Registration successful. You can log in now.",
+            "Information updated.",
             "success"
           );
-          Navigate("/admin/");
+          
         }
 
       } catch (error) {
@@ -463,7 +474,14 @@ function getDistributorData(){
       }
     }
   };
-
+  function copyReferralLink(){
+    // const refferalLink=`http://localhost:3000/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${userInfo.userPAN}`;
+     const refferalLink=`http://taxko.in/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${formdata.pan}`;
+     const copy = require('clipboard-copy')
+     copy(refferalLink);
+    
+     swal.fire('Refferal link has been copied to clipboard');
+   }
 
 
   return (
@@ -473,7 +491,7 @@ function getDistributorData(){
           {formStatus==="registration"?<span> DISTRIBUTOR REGISTRATION FORM</span>:
           formStatus==="update"&&<span> DISTRIBUTOR UPDATE FORM</span>}
          {formStatus==="registration" &&<Link to="/distributor/"  ><span>Login</span></Link>}
-          {formStatus==="update" && <Link onClick={handleUpdateForm}><span>Update</span></Link>}
+          {formStatus==="update" && <Link onClick={handleUpdateForm}><span>Update</span></Link> }
         </div>
         <div className={styles.regform}>
           <form action="" onSubmit={handleSubmit}>
@@ -511,8 +529,13 @@ function getDistributorData(){
             </div>
           </form>
         </div>
+         
       </div>
-      {/* {formStatus==="update"&&<PaymentDetails />} */}
+      
+      {/* {formStatus==="update"&&
+      
+      <PaymentDetails /> */}
+      
     </div>
   );
 }
