@@ -169,7 +169,7 @@ const SubscriptionPlan = () => {
                   <input type="checkbox" name={item.subsplan} id="" checked={selectedCheckbox === index}
                   onChange={(e) => handleCheckboxChange(e, index)}  value={item.value} /></td>}
                 <td className='text-center'>{item.subtype}</td>
-                <td className='text-center'>&#8377;{item.subscriptionprice}/-</td>
+                <td className='text-center'>&#8377;{(item.subscriptionprice).toLocaleString('en-IN')}/-</td>
               </tr>
             ))}
           </tbody>

@@ -91,7 +91,7 @@ const DistributorLogIn = ({ setLoggedIn }) => {
           <div className={styles.right_body}>
             <div className={styles.header}>
               <div className={styles.greet}>
-                <h3>Welcome</h3>
+                <h3>Distributor Login</h3>
               </div>
               <div className={styles.app_title}>TAXKO</div>
               <div className={styles.app_desp}>

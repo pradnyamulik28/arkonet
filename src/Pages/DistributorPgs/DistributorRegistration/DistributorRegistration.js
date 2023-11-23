@@ -532,9 +532,9 @@ async function getDistributorData(){
          
       </div>
       
-      {/* {formStatus==="update"&&
+      {formStatus==="update"&&
       
-      <PaymentDetails /> */}
+      <PaymentDetails />}
       
     </div>
   );

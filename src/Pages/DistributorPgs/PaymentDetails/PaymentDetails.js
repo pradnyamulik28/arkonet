@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import Swal from "sweetalert2";
 import { useRef } from "react";
 import { url_ } from "../../../Config";
+import { file } from "jszip";
 
 function PaymentDetails(){
     const disrtributor_pan = window.localStorage.getItem('pan');
@@ -76,8 +77,12 @@ function PaymentDetails(){
   
      
         setBankdetails({ ...bankdetails, [e.target.name]: e.target.value });
-      
-  
+      if(e.target.name==="accountnumber"){
+        setBankdetails({ ...bankdetails, [e.target.name]: e.target.value.replace(/\D/g, "") });
+        e.target.value = e.target.value.replace(/\D/g, "");
+        
+      }
+        
       
     };
   
@@ -86,6 +91,7 @@ function PaymentDetails(){
     const SaveBankData = async (event) => {
       console.log(KYCFiles)
       event.preventDefault();
+      
 
       if(!bankdetails.bankname||!bankdetails.accountname||!bankdetails.accountnumber||!bankdetails.ifsc)
       {
@@ -109,13 +115,10 @@ function PaymentDetails(){
       
       var formdata = new FormData();
       formdata.append("imagePathProfile", KYCFiles[0].selectedFile  && KYCFiles[0].selectedFile);
-      formdata.append("imagePathAdhar", KYCFiles[1].selectedFile  &&  KYCFiles[1].selectedFile);
-      formdata.append("imagePathcheque", KYCFiles[3].selectedFile &&  KYCFiles[3].selectedFile);
       formdata.append("Bank_Name", bankdetails.bankname);
       formdata.append("AccountName", bankdetails.accountname);
       formdata.append("AccountNumber", bankdetails.accountnumber);
       formdata.append("IFSC", bankdetails.ifsc);
-      formdata.append("imagePathpan", KYCFiles[2].selectedFile  &&  KYCFiles[2].selectedFile);
       
       var requestOptions = {
         method: 'PUT',
@@ -160,6 +163,10 @@ function PaymentDetails(){
         reader.onload = () => {
           const dataURL = reader.result;
           updatedItems[0].imgsrc=dataURL;
+
+           updatedItems[0].selectedFile=new File([result], `$profile.jpeg`, {
+            type: "image/jpeg",
+          }); 
         };
         reader.readAsDataURL(result);
           })
@@ -206,18 +213,102 @@ function PaymentDetails(){
           })
       .catch((error)=>console.log(error));
       
-      
-// console.log(updatedItems)
     setKYCFiles(updatedItems);
     
    
+  }
+
+
+  async function saveKyc(e)
+  {
+     console.log(e.target.id)
+    const updatedItems = [...KYCFiles];
+    const index = updatedItems.findIndex((item) => item.id === e.target.id);
+
+    
+                
+    if (index !== -1) {
+
+
+      
+      Swal.fire({
+        title: 'Saving details',
+        text: 'Please wait...',
+        showConfirmButton: false,
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+var formdata = new FormData();
+formdata.append("pan", disrtributor_pan);
+
+
+let url_opt="";
+      switch (e.target.id) {
+        case "aadhar_card":
+          url_opt = "Kycadharimage";
+          formdata.append("imagePathAdhar", KYCFiles[1].selectedFile);
+
+          break;
+        case "pan_card":
+          url_opt = "Kycpanimage";
+          formdata.append("imagePathpan", KYCFiles[2].selectedFile);
+
+          break;
+        case "bank_cheque":
+          url_opt = "Kycchequeimage";
+
+          formdata.append("imagePathcheque", KYCFiles[3].selectedFile);
+
+          break;
+        default:
+          break;
+      }
+
+
+var requestOptions = {
+  method: 'PUT',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch(`${url_}/distributor/upload/${url_opt}`, requestOptions)
+  .then(response => {
+    if(response.status===200)
+    {
+      Swal.close();
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `${KYCFiles[index].name} Saved successfully.!!`,
+        showConfirmButton: false,
+        timer: 5000
+      }); 
+    }
+    response.text()}
+  )
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));     
+        
+        
+}
+
+
+
+
+
   }
 
   async function deleteFile(e){
     
     const updatedItems = [...KYCFiles];
     const index = updatedItems.findIndex((item) => item.id === e.target.id);
-    console.log(index)
+
     Swal.fire({
       title: 'Are you sure?',
       text: `${KYCFiles[index].name} will be Deleted .!!`,
@@ -228,18 +319,63 @@ function PaymentDetails(){
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-            SaveBankData(e);      
+                
     if (index !== -1) {
 
 
+      let url_opt="";
+      switch(e.target.id){
+        case "aadhar_card":
+          url_opt="Kycadharimage"  
+          break;
+        case "pan_card":
+          url_opt="Kycpanimage"  
+          break;
+        case "bank_cheque":
+          url_opt="Kycachequeimage"  
+          break;
+        default:
+          break;
+      }
+      Swal.fire({
+        title: 'Saving details',
+        text: 'Please wait...',
+        showConfirmButton: false,
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        },
+      });
 
-      const updatedItems = [...KYCFiles];    
-        updatedItems[index].isExist=false;
-        updatedItems[index].imgsrc=null;
-        updatedItems[index].selectedFile=null;
-        setKYCFiles(updatedItems);
+      var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-        SaveBankData(e)
+var formdata = new FormData();
+formdata.append("pan", disrtributor_pan);
+
+var requestOptions = {
+  method: 'PUT',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch(`${url_}/distributor/delete/${url_opt}`, requestOptions)
+  .then(response => {
+    if(response.status===200)
+    {
+      Swal.close();
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `${KYCFiles[index].name} Deleted successfully.!!`,
+        showConfirmButton: false,
+        timer: 5000
+      }); 
+    }
+    response.text()}
+  )
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));     
         
         
 }
@@ -420,7 +556,7 @@ const updatedItems = [...KYCFiles];
 
  await fetch(`${url_}/getdistributordetail/${disrtributor_pan}`, requestOptions)
   .then(response => response.json())
-  .then(result => {//console.log(result)   
+  .then(result => {console.log(result)   
 
     setBankdetails({
       bankname:result.bank_name,
@@ -432,8 +568,10 @@ const updatedItems = [...KYCFiles];
     if(result.imageNameprofile){
       const index = updatedItems.findIndex((item) => item.id === "profilepic");
       if (index !== -1){   
+       
         updatedItems[index].isExist=true;        
-          updatedItems[index].fileType="image";           
+          updatedItems[index].fileType="image";
+                  
       
     }}
 
@@ -498,27 +636,34 @@ useEffect(()=>{
         <div className={`${styles.detailtitle}`}>KYC DETAILS</div>
           <div className={`${styles.fileupload} mb-4 `}>
             <label >AADHAR CARD</label>
-            <button className={styles.buttons} onClick={handleSelectFile} id="aadhar_card">{KYCFiles[1].isExist?`Update`:`Upload`}</button>
-            {KYCFiles[1].isExist&&<><button className={styles.buttons} onClick={(e)=>{viewFile("aadhar_card")}}>View</button>
-            <button className={styles.buttons} id="aadhar_card" onClick={deleteFile}>Delete</button></>}
+            
+           { KYCFiles[1].selectedFile?<button className={`${styles.buttons} ${styles.btnupload}`} onClick={saveKyc} id="aadhar_card">Save</button>:
+           <button className={`${styles.buttons} ${styles.btnupload}`} onClick={handleSelectFile} id="aadhar_card">{KYCFiles[1].isExist?`Update`:`Upload`}</button>}
+
+            {KYCFiles[1].isExist&&<><button className={`${styles.buttons} ${styles.btnview}`} onClick={(e)=>{viewFile("aadhar_card")}}>View</button>
+            <button className={`${styles.buttons} ${styles.btndelete}`} id="aadhar_card" onClick={deleteFile}>Delete</button></>}
             <input type="file" style={{"display":"none"}} name="aadhar_card" id="aadhar_card" className={`${styles.qrinput}`} ref={KYCFiles[1].fileRef} onChange={(e)=>handleFileChange(e,"aadhar_card")} />
             
 
           </div>
           <div className={`${styles.fileupload} mb-4 `}>
             <label >PAN</label>
-            <button onClick={handleSelectFile} id="pan_card" className={styles.buttons}>{KYCFiles[2].isExist?`Update`:`Upload`}</button>
-            {KYCFiles[2].isExist&&<><button onClick={(e)=>{viewFile("pan_card")}} className={styles.buttons}>View</button>
-            <button id="pan_card" onClick={deleteFile} className={styles.buttons}>Delete</button></>}
+            { KYCFiles[2].selectedFile?<button className={`${styles.buttons} ${styles.btnupload}`} onClick={saveKyc} id="pan_card">Save</button>:
+            <button onClick={handleSelectFile} id="pan_card" className={`${styles.buttons} ${styles.btnupload}`}>{KYCFiles[2].isExist?`Update`:`Upload`}</button>}
+
+            {KYCFiles[2].isExist&&<><button onClick={(e)=>{viewFile("pan_card")}} className={`${styles.buttons} ${styles.btnview}`}>View</button>
+            <button id="pan_card" onClick={deleteFile} className={`${styles.buttons} ${styles.btndelete}`}>Delete</button></>}
             <input type="file" style={{"display":"none"}} name="pan_card" id="pan_card" className={`${styles.qrinput}`} ref={KYCFiles[2].fileRef} onChange={(e)=>handleFileChange(e,"pan_card")} />
             </div>
 
 
             <div className={`${styles.fileupload} mb-4 `}>
             <label >BANK CHEQUE</label>
-            <button className={styles.buttons} onClick={handleSelectFile} id="bank_cheque">{KYCFiles[3].isExist?`Update`:`Upload`}</button>
-            {KYCFiles[3].isExist&&<><button className={styles.buttons} onClick={(e)=>{viewFile("bank_cheque")}}>View</button>
-            <button className={styles.buttons} id="bank_cheque" onClick={deleteFile}>Delete</button></>}
+            { KYCFiles[3].selectedFile?<button className={`${styles.buttons} ${styles.btnupload}`} onClick={saveKyc} id="bank_cheque">Save</button>:
+            <button className={`${styles.buttons} ${styles.btnupload}`} onClick={handleSelectFile} id="bank_cheque">{KYCFiles[3].isExist?`Update`:`Upload`}</button>}
+
+            {KYCFiles[3].isExist&&<><button className={`${styles.buttons} ${styles.btnview}`} onClick={(e)=>{viewFile("bank_cheque")}}>View</button>
+            <button className={`${styles.buttons} ${styles.btndelete}`} id="bank_cheque" onClick={deleteFile}>Delete</button></>}
             <input type="file" style={{"display":"none"}} name="bank_cheque" id="bank_cheque" className={`${styles.qrinput}`} ref={KYCFiles[3].fileRef} onChange={(e)=>handleFileChange(e,"bank_cheque")}  />
             </div>
           <div className={`${styles.upiid} `}>
@@ -526,11 +671,11 @@ useEffect(()=>{
           </div>
           <div className={`${styles.detailtitle}`}>BANK DETAILS</div>
           <div className="accname">
-            <InputField lblname='BANK NAME' color='red' placeholder='Enter bank name' name='bankname' value={bankdetails.bankname} onChange={bankhandleChange} />
-            <InputField lblname='ACCOUNT NAME' color='red' placeholder='Enter account name' name='accountname' value={bankdetails.accountname} onChange={bankhandleChange} />
-            <InputField lblname='ACCOUNT NUMBER' color='red' placeholder='Enter account number' name='accountnumber' value={bankdetails.accountnumber} onChange={bankhandleChange} />
+            <InputField lblname='BANK NAME' color='red' placeholder='Enter bank name' name='bankname' value={bankdetails.bankname} onChange={bankhandleChange} manadatory="*"/>
+            <InputField lblname='ACCOUNT NAME' color='red' placeholder='Enter account name' name='accountname' value={bankdetails.accountname} onChange={bankhandleChange} manadatory="*"/>
+            <InputField lblname='ACCOUNT NUMBER' color='red' placeholder='Enter account number' name='accountnumber' value={bankdetails.accountnumber} onChange={bankhandleChange} manadatory="*"/>
             <div className={`${styles.ifsc} `}>
-              <InputField lblname='IFSC' color='red' placeholder='Enter IFSC code' name='ifsc' value={bankdetails.ifsc} onChange={bankhandleChange} />
+              <InputField lblname='IFSC' color='red' placeholder='Enter IFSC code' name='ifsc' value={bankdetails.ifsc} onChange={bankhandleChange} manadatory="*"/>
 
               {bankdatalength > 0 ?
                 (
