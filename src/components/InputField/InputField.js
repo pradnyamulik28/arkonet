@@ -46,7 +46,7 @@ const InputField = (props) => {
       )}
       
       {props.manadatory  &&  (
-          (props.name === "pin_code" && !props.isValidPIN) && <ValidationError validationmsg={props.validationmsg} />
+          ((props.name === "pin_code"||props.name === "pin_Code") && !props.isValidPIN) && <ValidationError validationmsg={props.validationmsg} />
       )}
 
     </div >

@@ -99,6 +99,7 @@
 .card2 .icons i{color: #567cf2}
 .card3 .icons i{color: #f35554}
 .card4 .icons i{color: #f4b51c}
+.card5 .icons i{color: rgb(85 216 173)}
 
 .card1 .righticons i{color: #36dce2}
 
@@ -114,6 +115,10 @@
 
 .card4 .uptext h5{color: #000000;
   text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);}
+
+
+  .card5 .uptext h5{color: #000000;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);}
 
   .disabled_link {
     pointer-events: none;

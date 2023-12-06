@@ -4,6 +4,8 @@ import styles from './ClientDocFolder.module.css';
 import { Link } from 'react-router-dom';
 import { useLocation,useNavigate } from 'react-router-dom'
 import { useSidebar } from '../ClientSideBar/SidebarContext';
+import { useState,useEffect } from 'react';
+import ClientFileBackup from '../ClientFileBackup/ClientFileBackup';
 
 
 
@@ -12,6 +14,7 @@ const ClientDocFolder = () => {
   const navigate = useNavigate();
 
   const { toggleSidebar } = useSidebar();
+  const currentYear = new Date().getFullYear();
   
 
   function getLastFiveYears() {
@@ -39,7 +42,30 @@ const ClientDocFolder = () => {
   };
 
  
-
+  const [isBackupFile,setBackupFile]=useState(false);
+      
+  function showBackupFile(){
+  
+      const todayDate = new Date();
+      const currentDate = new Date(todayDate.getFullYear(),todayDate.getMonth(),todayDate.getDate()); 
+      const targetDate = new Date(todayDate.getFullYear(), 2, 31);//Set Date to March 31
+    // console.log("Target date",targetDate)
+      const dayDifference =(targetDate.getTime() - currentDate.getTime())/ (1000 * 3600 * 24);
+     
+      // Check if it's 15 days or more before March 31st
+      if (dayDifference < 15 && dayDifference >0) {
+          setBackupFile(true);
+        }  
+        else{
+          setBackupFile(false);
+        }
+      }
+    
+      useEffect(()=>{
+        showBackupFile();
+      },[isBackupFile])
+  
+  
 
   return (
     
@@ -81,6 +107,13 @@ const ClientDocFolder = () => {
                 </Link>
               </div>
             ))}
+            {/* {isBackupFile&&<div className='col-6'>
+<ClientFileBackup title={`Backup ${currentYear-5}-${(currentYear-4).toString().slice(2)} files`} category="IT"/>
+</div>} */}
+
+{isBackupFile&&<div className='col-6'>
+<ClientFileBackup title={`Backup ${currentYear-4}-${(currentYear-3).toString().slice(2)} files`} category="IT"/>
+</div>}
           </div>
         </div>
       </div>

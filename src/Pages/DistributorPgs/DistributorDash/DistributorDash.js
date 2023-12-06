@@ -9,6 +9,8 @@ function DistributorDash() {
     const Navigate = useNavigate();
     const storedToken = window.localStorage.getItem('jwtToken');
 
+    const todate=new Date().getDate();
+
     useEffect(() => {
       Getdistributordata()
     }, []);
@@ -163,7 +165,7 @@ await fetch(`${url_}/everydistrubutor/incomecount/${distributorData.pan}`, reque
                 </h5>
                 <h6 classname={`${style.itoppara}`}>Total Subsriptions</h6>
                 <h3 classname={`${style.itopheaderlarge}`}>{admincounts}</h3>
-                <small classname={`${style.itopshrink}`}>As on date</small>
+                <small classname={`${style.itopshrink}`}>As on date {todate}</small>
               </div>
             </div>
 
@@ -250,7 +252,7 @@ await fetch(`${url_}/everydistrubutor/incomecount/${distributorData.pan}`, reque
               </div>
               <div className={`${style.rtb}`}>
                 <p>
-                  <b>As on Date</b>
+                  <b>As on Date {todate}</b>
                 </p>
               </div>
             </div>

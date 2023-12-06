@@ -143,7 +143,6 @@ const UserData = () => {
     ifsc: ""
   });
 
-
   const bankhandleChange = (e) => {
 
 
@@ -168,6 +167,7 @@ const UserData = () => {
       }
 
     }
+
     //=============================================================================
     switch (name) {
 
@@ -177,12 +177,21 @@ const UserData = () => {
         e.target.value = value.replace(/\D/g, "");
         break;
 
+
+
       case "upinumber":
+
         setBankdetails({ ...bankdetails, [e.target.name]: value.replace(/\D/g, "") });
         e.target.value = value.replace(/\D/g, "");
+
+
+
         break;
 
-      case "file":
+      case "qrcode":
+        setBankdetails({ ...bankdetails, [e.target.name]: e.target.files[0] });
+        break;
+      case "profilepic":
         setBankdetails({ ...bankdetails, [e.target.name]: e.target.files[0] });
         break;
 

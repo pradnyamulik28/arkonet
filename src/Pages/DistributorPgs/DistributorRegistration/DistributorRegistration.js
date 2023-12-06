@@ -7,7 +7,7 @@ import Formfields from './formfields';
 import InputType from "./InputType"
 import PaymentDetails from '../PaymentDetails/PaymentDetails';
 
-const DistributorRegistration = () => {
+const DistributorRegistration = ({ setLoggedIn }) => {
   
   const location=useLocation();
   const Navigate = useNavigate();
@@ -26,6 +26,7 @@ const DistributorRegistration = () => {
       case "/distributor/distributor_reg":
         setFormFields(Formfields);
         setFormStatus("registration");
+        setLoggedIn(false)
         break;
 
       case "/distributor/update/distributor_reg":
@@ -347,7 +348,7 @@ async function getDistributorData(){
             "Information updated.",
             "success"
           );
-          
+          window.location.reload();
         }
 
       } catch (error) {
@@ -474,14 +475,7 @@ async function getDistributorData(){
       }
     }
   };
-  function copyReferralLink(){
-    // const refferalLink=`http://localhost:3000/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${userInfo.userPAN}`;
-     const refferalLink=`http://taxko.in/admin/refferal/user/${parseInt(new Date().getTime() / 1000)}_${formdata.pan}`;
-     const copy = require('clipboard-copy')
-     copy(refferalLink);
-    
-     swal.fire('Refferal link has been copied to clipboard');
-   }
+  
 
 
   return (

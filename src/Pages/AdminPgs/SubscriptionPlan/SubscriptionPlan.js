@@ -129,13 +129,7 @@ const SubscriptionPlan = () => {
       }})
     }
     
-    //   , {
-    //   state: {
-    //     clientId: clientid,
-    //     Year: year,
-    //     Title: title
-    //   },
-    // })
+    
 
   }
   return (

@@ -2,11 +2,14 @@
 import { Link, useNavigate} from "react-router-dom";
 import style from "./GstFolder.module.css";
 import fd from "../../../Images/fourdots.svg"
+import ClientFileBackup from "../ClientFileBackup/ClientFileBackup";
+import { useState,useEffect } from "react";
 
 
 function GstFolder() {
  
   const Navigate = useNavigate();
+  const currentYear=new Date().getFullYear();
 
   function getLastFiveYears() {
     let currentYear = new Date().getFullYear();
@@ -18,7 +21,7 @@ function GstFolder() {
     }
 
     const lastFiveYears = [];
-    console.log(currentYear)
+    //console.log(currentYear)
     for (let i = 0; i < 5; i++) { // Change 6 to 5 to get the last five years
       lastFiveYears.push(`${currentYear-i }-${(currentYear-i+1).toString().slice(-2)}`);
     }
@@ -33,6 +36,34 @@ function GstFolder() {
     const colors = ['#567cf2', '#f4b51c', '#f11cd0', '#22b0b2', '#567cf2', 'text-info'];    
     return colors[index % colors.length];
   };
+
+
+
+  const [isBackupFile,setBackupFile]=useState(false);
+      
+function showBackupFile(){
+
+    const todayDate = new Date();
+    const currentDate = new Date(todayDate.getFullYear(),todayDate.getMonth(),todayDate.getDate()); 
+    const targetDate = new Date(todayDate.getFullYear(), 2, 31);//Set Date to March 31
+    // console.log("Target date",targetDate)
+  
+    const dayDifference =(targetDate.getTime() - currentDate.getTime())/ (1000 * 3600 * 24);
+    
+    // Check if it's 15 days or more before March 31st
+    if (dayDifference < 15 && dayDifference >0) {
+        setBackupFile(true);
+      }  
+      else{
+        setBackupFile(false);
+      }
+    }
+  
+    useEffect(()=>{
+      showBackupFile();
+    },[isBackupFile])
+
+
   return (
 <div className={`row ${style.row1}`}>
 <div className={`${style.allport}`}>
@@ -106,10 +137,13 @@ function GstFolder() {
 </div>
 )
 })}
+{isBackupFile&&<div className='col-6'>
+{/* <ClientFileBackup title={`Backup ${currentYear-5}-${(currentYear-4).toString().slice(2)} files`} category="GST"/> */}
+<ClientFileBackup title={`Backup ${currentYear-4}-${(currentYear-3).toString().slice(2)} files`} category="GST"/>
+</div>}
 </div>
 
 {/* Cards Ends ....................................................................................................... */}
-
 
 </div>
 </div>

@@ -470,18 +470,37 @@ const UserSubscriptionPage = () => {
     const dayss = e.target.value;
     const days = parseInt(dayss);
 
+    if (Number.isInteger(days)) {
 
+      if (dayss < 0) {
+        swal.fire("Error", "Value should be greater than 0", "error");
+        setAddedDays(0);
+      } else if (dayss > 30) {
+        swal.fire("Error", "Value should be less than or equal to 30", "error");
+        setAddedDays(0);
+      } else {
+        setAddedDays(days);
+        if (addedDays !== '') {
+          if (endDate instanceof Date) {
+            const newEndDate = new Date(endDate);
+            newEndDate.setDate(endDate.getDate() + days - addedDays);
+            setEndDate(newEndDate);
 
-    if (dayss < 0 && dayss === null) {
-      swal.fire("Error", "Value should be greater than 0", "error");
-    } else if (dayss > 30) {
-      swal.fire("Error", "Value should be less than or equal to 30", "error");
-    } else {
-      setAddedDays(days);
-      if (addedDays !== '') {
-        if (endDate instanceof Date) {
-          const newEndDate = new Date(endDate);
-          newEndDate.setDate(endDate.getDate() + days - addedDays);
+            const date = new Date(newEndDate);
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            const day = ('0' + date.getDate()).slice(-2);
+            const formattedDate = `${year}-${month}-${day}`;
+            console.log(formattedDate); // Output: 2023-11-27
+
+            setfinalenddate(formattedDate)
+            // Output the result
+            console.log(formattedDate);
+
+          }
+        } else {
+          const newEndDate = new Date(startDate);
+          newEndDate.setDate(startDate.getDate() + days);
           setEndDate(newEndDate);
 
           const date = new Date(newEndDate);
@@ -492,25 +511,15 @@ const UserSubscriptionPage = () => {
           console.log(formattedDate); // Output: 2023-11-27
 
           setfinalenddate(formattedDate)
-          // Output the result
-          console.log(formattedDate);
-
         }
-      } else {
-        const newEndDate = new Date(startDate);
-        newEndDate.setDate(startDate.getDate() + days);
-        setEndDate(newEndDate);
-
-        const date = new Date(newEndDate);
-        const year = date.getFullYear();
-        const month = ('0' + (date.getMonth() + 1)).slice(-2);
-        const day = ('0' + date.getDate()).slice(-2);
-        const formattedDate = `${year}-${month}-${day}`;
-        console.log(formattedDate); // Output: 2023-11-27
-
-        setfinalenddate(formattedDate)
       }
+
+
+
+    } else {
+      swal.fire("Error", "Value should be greater than 0 and less than 30", "error");
     }
+
 
   };
   const submitdateandclient = async () => {

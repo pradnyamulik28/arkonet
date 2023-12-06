@@ -50,15 +50,20 @@ const UserList = () => {
                       userProf === "Month's Renewal" ? `${url_}/Renewal/month` :
                         userProf === "3 Months's Renewal" ? `${url_}/Renewal/threemonth` :
                           userProf === "6 Months's Renewal" ? `${url_}/Renewal/sixmonth` :
+                            userProf === "Distributor List" ? `${url_}/all/distributor` :
 
-                            null}
+                              null}
 
     `, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result)
-
-        setuserdata(result)
+        // console.log(result)
+        if (userProf === "Distributor List") {
+          const filteredData = result.filter(item => item.status === true);
+          setuserdata(filteredData)
+        } else {
+          setuserdata(result)
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -73,6 +78,16 @@ const UserList = () => {
     Navigate('Userdata', {
       state: {
         UserId: userid,
+
+      },
+    });
+
+  }
+  const GotoDistributorData = (distributorid, distributorpan) => {
+    Navigate('distributordata', {
+      state: {
+        DistributorID: distributorid,
+        DistributorPAN: distributorpan,
 
       },
     });
@@ -114,7 +129,7 @@ const UserList = () => {
 
           <div className={`${style.drow} `}>
             <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>Admin Name</p></div>
+            <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>{userProf === "Distributor List" ? "Distributor" : "Admin Name"}</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>
@@ -137,9 +152,23 @@ const UserList = () => {
                 <div className={`${style.ddata} `}>
                   <div className={`${style.name} `} ><p className={`${style.srno} `}>{index + 1}</p></div>
                   <div className={`${style.name} `} ><p className={`${style.an} `}>{item.name}</p></div>
-                  <div className={`${style.name} `} onClick={() => GOTOUserdata(item.regId)} style={{ cursor: "pointer" }}><p className={`${style.pan} text-primary`}>{item.pan}</p></div>
+                  <div className={`${style.name} `}
+                    onClick={
+                      userProf === "Distributor List" ?
+                        () => GotoDistributorData(item.id, item.pan) :
+                        () => GOTOUserdata(item.regId)
+                    } style={{ cursor: "pointer" }}>
+                    <p className={`${style.pan} text-primary`}>{item.pan}</p></div>
                   <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.mobile}</p></div>
-                  <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.paid ? "#32e132" : "#ff0000" }}></i></p></div>
+
+                  {
+                    userProf === "Distributor List" ?
+                      (
+                        <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.status ? "#32e132" : "#ff0000" }}></i></p></div>
+                      ) : (
+                        <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.paid ? "#32e132" : "#ff0000" }}></i></p></div>
+                      )
+                  }
                 </div>
 
               ))

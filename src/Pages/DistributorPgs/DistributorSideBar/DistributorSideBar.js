@@ -74,7 +74,7 @@ useEffect(()=>{
         // <div className="container">
         <div className={`${styles.sidebar}`}>
             <div className={`d-flex flex-column justify-content-evenly ${styles.navbar}  `}>
-                <Link to={"dashboard"}>
+                <Link to={"/"}>
                     <img className={styles.taxo_logo} src={Applogo} alt="" />
                 </Link>
                 {loggedIn ? (

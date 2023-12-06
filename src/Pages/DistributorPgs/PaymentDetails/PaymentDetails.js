@@ -289,6 +289,7 @@ fetch(`${url_}/distributor/upload/${url_opt}`, requestOptions)
         showConfirmButton: false,
         timer: 5000
       }); 
+      window.location.reload();
     }
     response.text()}
   )
@@ -371,6 +372,7 @@ fetch(`${url_}/distributor/delete/${url_opt}`, requestOptions)
         showConfirmButton: false,
         timer: 5000
       }); 
+      window.location.reload();
     }
     response.text()}
   )

@@ -39,7 +39,10 @@ import DOCsFile from './DOCsFile/DOCsFile';
 import ClientList from './ClientList/ClientList'
 import ChatBot from "../../components/ChatBot/ChatBot"
 import WhatsappChat from "../../components/WhatsappChat/WhatsappChat"
-
+import TallyBackup from './TallyBackup/TallyBackup';
+import TallyBackupView from './TallyBackup/TallyBackupView';
+import ClientTallyBackup from './ClientTallyBackup/ClientTallyBackup';
+import ClientTallyView from './ClientTallyBackup/ClientTallyView';
 const Adminhome = () => {
 
 
@@ -87,6 +90,18 @@ const Adminhome = () => {
 
               <Route path="investNow" element={<Protected Cmp={InvestNowPage} />} />
               <Route path="investNow/investNowview/:category/:title" element={<Protected Cmp={InvestNowView} />} />
+
+              <Route path="tallybackup" element={<Protected Cmp={TallyBackup} />} />
+              <Route path="tallybackup/tallyview" element={<Protected Cmp={TallyBackupView} />} />
+
+
+              <Route path="/dashboard/tc/myfolder/tallyclient" element={<Protected Cmp={ClientTallyBackup} />} />
+              <Route path="/dashboard/tc/myfolder/tallyclient/clienttallyview" element={<Protected Cmp={ClientTallyView} />} />
+              <Route path="/dashboard/tic/myfolder/tallyclient" element={<Protected Cmp={ClientTallyBackup} />} />
+              <Route path="/dashboard/tic/myfolder/tallyclient/clienttallyview" element={<Protected Cmp={ClientTallyView} />} />
+              <Route path="/dashboard/gstclients/myfolder/tallyclient" element={<Protected Cmp={ClientTallyBackup} />} />
+              <Route path="/dashboard/gstclients/myfolder/tallyclient/clienttallyview" element={<Protected Cmp={ClientTallyView} />} />
+
               <Route path="dashboard" element={<Protected Cmp={Dashboard} />} />
               <Route path="dashboard/clientreg" element={<Protected Cmp={URegistration} />} />
 
@@ -113,9 +128,9 @@ const Adminhome = () => {
               <Route path="dashboard/tic/myfolder/docfile" element={<Protected Cmp={DOCsFile} />} />
               <Route path="dashboard/tic/myfolder/incomefolder" element={<Protected Cmp={DocFolder} />} />
               <Route path="dashboard/tic/myfolder/incomefolder/fileupload" element={<Protected Cmp={FileUpload} />} />
-              {/* <Route path="dashboard/tic/myfolder/gstfolder" element={<Protected Cmp={Gst} />} />
+              <Route path="dashboard/tic/myfolder/gstfolder" element={<Protected Cmp={Gst} />} />
               <Route path="dashboard/tic/myfolder/gstfolder/gstrfolder" element={<Protected Cmp={GstrFolder} />} />
-              <Route path="dashboard/tic/myfolder/gstfolder/gstrfolder/gstrfileupload" element={<Protected Cmp={GstrFileUpload} />} /> */}
+              <Route path="dashboard/tic/myfolder/gstfolder/gstrfolder/gstrfileupload" element={<Protected Cmp={GstrFileUpload} />} />
 
 
               <Route path="dashboard/gstclients" element={<Protected Cmp={GstClients} />} />

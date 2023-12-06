@@ -30,6 +30,10 @@
   justify-content: center;
   align-items: center;
 }
+.viewmail{
+  cursor: pointer;
+  width: fit-content;
+}
 
 .ubtn_submit button {
   border-radius: 10px;
@@ -44,7 +48,7 @@
 
 }
 
-button:active {
+.ubtn_submit button:active {
   box-shadow: 4px 2px 5px 0 gray;
   transform: translateY(4px);
 }
@@ -74,4 +78,11 @@ button:active {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.discount_input input {
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: 2rem;
 }

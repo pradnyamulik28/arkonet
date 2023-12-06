@@ -21,6 +21,7 @@ function AdminDetails() {
 
 
     const [admincounts, setadmincounts] = useState()
+    const [distributorsCounts, setdistributorsCounts] = useState()
     const [admincountscategory, setadmincountscategory] = useState([])
     const [adminClients, setadminClients] = useState([])
     const [adminSubscription, setadminSubscription] = useState([]);
@@ -51,8 +52,18 @@ function AdminDetails() {
         await fetch(`${url_}/user/countbyprofession`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
+                // console.log(result)
                 setadmincountscategory(result)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        await fetch(`${url_}/all/distributor`, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                // console.log(result.length)
+                const filteredData = result.filter(item => item.status === true);
+                setdistributorsCounts(filteredData.length)
             })
             .catch((error) => {
                 console.log(error);
@@ -101,7 +112,7 @@ function AdminDetails() {
                     return acc;
                 }, {});
                 setadminRenewal(singleObjectRenewal)
-                console.log(singleObjectRenewal);
+                // console.log(singleObjectRenewal);
             })
             .catch((error) => {
                 console.log(error);
@@ -142,12 +153,49 @@ function AdminDetails() {
                 {/* Left col starts */}
                 <div className={`${style.leftcol}`}>
 
-                    <div className={`${style.ltop}`}>
-                        <div className={`${style.ltopcontaint}`}>
-                            <h5 classname={`${style.itopheadersmall}`}>ADMIN</h5>
-                            <h6 classname={`${style.itoppara}`}>Total Admin</h6>
-                            <h3 classname={`${style.itopheaderlarge}`}>{admincounts}</h3>
-                            <small classname={`${style.itopshrink}`}>As on date</small>
+                    <div className={`${style.ltop} `}>
+                        {/* <div className={`${style.ltopcontaint}`}>
+                            <h5 className={`${style.itopheadersmall}`}>ADMIN</h5>
+                            <div className="">
+                                <div>
+                                    <h6 className={`${style.itoppara}`}>Total Admin</h6>
+                                    <h3 className={`${style.itopheaderlarge} `}>{admincounts}</h3>
+                                </div>
+                                <div>
+                                    <h6 className={`${style.itoppara}`}>Total Distributors</h6>
+                                    <h3 className={`${style.itopheaderlarge}`}>{admincounts}</h3>
+                                </div>
+                            </div>
+                            <small className={`${style.itopshrink}`}>As on date</small>
+                        </div> */}
+
+                        <div className="mt-3">
+                            <h5 className={`${style.itopheadersmall} `}>ADMIN</h5>
+                        </div>
+                        <div className="d-flex justify-content-around w-100">
+                            <div className="d-flex flex-column align-items-center" style={{ cursor: "pointer" }} >
+                                <h6 className={`${style.itoppara}`}>Total Admin</h6>
+                                <h3 className={`${style.itopheaderlarge}`} onClick={() => {
+                                    Navigate("searchadmin", {
+                                        state: {
+                                            userProfession: "All"
+                                        },
+                                    })
+                                }}>{admincounts}</h3>
+                            </div>
+                            <div className="d-flex flex-column align-items-center" style={{ cursor: "pointer" }}>
+                                <h6 className={`${style.itoppara}`}>Total Distributors</h6>
+                                <h3 className={`${style.itopheaderlarge}`} onClick={() => {
+                                    Navigate('userlist', {
+                                        state: {
+                                            userProfession: "Distributor List"
+                                        },
+                                    });
+                                }}>{distributorsCounts}</h3>
+                            </div>
+                        </div>
+                        <div className="mb-2">
+                            <small className={`${style.itopshrink}`}>As on date</small>
                         </div>
                     </div>
 
@@ -193,7 +241,7 @@ function AdminDetails() {
 
                     <div className={`${style.Rtop}`}>
                         <div className={`${style.rtt}`}>
-                            <h5 classname={`${style.client}`}>CLIENT</h5>
+                            <h5 className={`${style.client}`}>CLIENT</h5>
                         </div>
                         <div className={`${style.rtm}`}>
                             <div className={`${style.rtabular}`} >
@@ -227,7 +275,7 @@ function AdminDetails() {
 
                     <div className={`${style.Rtop}`}>
                         <div className={`${style.rtt}`}>
-                            <h5 classname={`${style.client}`}>SUBSCRIPTION</h5>
+                            <h5 className={`${style.client}`}>SUBSCRIPTION</h5>
                         </div>
                         <div className={`${style.rtm}`}>
                             <div className={`${style.rtabular} mt-3`} >
@@ -271,7 +319,7 @@ function AdminDetails() {
 
                     <div className={`${style.Rbottom}`}>
                         <div className={`${style.rbt}`}>
-                            <h5 classname={`${style.renewal}`}>RENEWAL</h5>
+                            <h5 className={`${style.renewal}`}>RENEWAL</h5>
                         </div>
 
                         <div className={`${style.rbm}`}>

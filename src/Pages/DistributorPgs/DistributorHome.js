@@ -25,7 +25,7 @@ function DistributorHome() {
           <div className={`w-75`}>
             <Routes>
               <Route path="" element={<DistributorLogIn setLoggedIn={setLoggedIn}/>} />
-              <Route path="distributor_reg" element={<DistributorRegistration />}/>
+              <Route path="distributor_reg" element={<DistributorRegistration setLoggedIn={setLoggedIn} />}/>
               <Route path="update/distributor_reg" element={<DistributorRegistration />}/>
               <Route path="/distributor_dash" element={<DistributorDash />} />
               <Route path="/distributor_dash/userview" element={<ViewUsers />} />

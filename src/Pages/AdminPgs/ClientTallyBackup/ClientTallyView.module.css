@@ -1,0 +1,38 @@
+.h1{
+    color: black;
+}
+.pusdouploadport{
+    cursor: pointer;
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.btn .psudobutton
+{
+    background-color: #d3b2ef;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    padding: 5px;
+}
+.btn .psudobutton:active{
+    box-shadow: 1px 3px 1px #7b2cbf inset;
+}
+
+
+.mainport,.slot{
+text-align: center;
+border:2px dashed #7b2cbf;
+border-radius: 30px;
+padding: 1rem;
+max-width: fit-content;
+min-width: 15rem;
+cursor: pointer;
+}
+

@@ -43,13 +43,30 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                 },
             })
             setActiveLink(pglink);
-            console.log(pglink,)
+            console.log(pglink)
 
         } else if (pglink === "subPackDetails") {
             Navigate(pglink)
 
             setActiveLink(pglink);
             console.log(pglink,)
+
+        } else if (pglink === "distributor") {
+            Navigate('distributor', {
+                state: {
+                    userProfession: "Distributor List"
+                },
+            });
+            // console.log(pglink)
+            setActiveLink(pglink);
+        } else if (pglink === "distriPayments") {
+            Navigate('distriPayments', {
+                state: {
+                    userProfession: "Distributor List"
+                },
+            });
+            // console.log(pglink)
+            setActiveLink(pglink);
         } else {
 
             console.log(pglink,)
@@ -80,7 +97,15 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                         </div>
 
                         <div onClick={() => handleLinkClick('subPackDetails')}>
-                            <h6 className={activeLink === 'subPackDetails' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Manage Subsription</h6>
+                            <h6 className={activeLink === 'subPackDetails' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Manage Subsriptions</h6>
+                        </div>
+
+                        <div onClick={() => handleLinkClick('distributor')}>
+                            <h6 className={activeLink === 'distributor' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Manage Distributors</h6>
+                        </div>
+
+                        <div onClick={() => handleLinkClick('distriPayments')}>
+                            <h6 className={activeLink === 'distriPayments' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Distributors Payment</h6>
                         </div>
 
                         {/* <Link to="/masteradmin/admindashboard/" onClick={() => handleLinkClick('dashboard')}>

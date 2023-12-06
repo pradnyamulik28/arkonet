@@ -5,6 +5,7 @@ import { url_ } from '../../../Config';
 import swal from 'sweetalert2';
 import formfields from './formfields';
 import InputType from "./InputType"
+import Swal from 'sweetalert2';
 
 const Registration = () => {
   const Navigate = useNavigate();
@@ -31,8 +32,9 @@ const Registration = () => {
   const [isValidMobile, setIsValidMobile] = useState(true);
   const [isValidPAN, setIsValidPAN] = useState(true);
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
+  const [isValidPIN, setIsValidPIN] = useState(true);
 
-
+const [email,setEmail]=useState()
   //const [buttonDisable,setButtonDisable]=useState(true);
   const [formdata, setFormdata] = useState({
     name: "",
@@ -47,7 +49,7 @@ const Registration = () => {
     pin_Code: "",
     state: "",
     whatsApp_Link: "",
-    investNow_Email: "",
+    investNow_Email: [],
     refrenceId: referralParam ? referralParam.split('_')[1] : null,
     password: "",
     confirmpassword: ""
@@ -72,31 +74,22 @@ const Registration = () => {
 
     //=============================================================================
     switch (name) {
-
       case "name":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
         if (!e.target.value) {
           setIsNameNull(false);
-        }
-        else {
+        } else {
           setIsNameNull(true);
         }
         break;
-
 
       case "profession":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
         if (!e.target.value) {
           setIsProfessionNull(false);
-        }
-        else {
+        } else {
           setIsProfessionNull(true);
         }
-        break;
-
-      case "membership_No":
-        setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
-        e.target.value = value.replace(/\D/g, "");
         break;
 
       case "email":
@@ -126,6 +119,21 @@ const Registration = () => {
         e.target.value = value.replace(/\D/g, "");
         break;
 
+
+        case "pin_Code":
+        setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
+        e.target.value = value.replace(/\D/g, "");
+        // Basic pin code validation
+        const pinPattern = /^[1-9]{1}[0-9]{5}$/;
+        setIsValidPIN(pinPattern.test(e.target.value));
+        break;
+
+      case "investNow_Email":
+      
+        setEmail(value);
+        // setFormdata({ ...formdata, investNow_Email: "" });
+        break;
+
       case "password":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
         //----Password Strenght-------
@@ -137,7 +145,6 @@ const Registration = () => {
           setStrenghtScore("null");
         }
 
-
         //---check Password match-----
         if (formdata.confirmpassword !== value) {
           setIsPasswordMatch(false);
@@ -147,10 +154,8 @@ const Registration = () => {
 
         break;
 
-
       case "confirmpassword":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
-
 
         //---check Password match-----
         if (formdata.password !== value) {
@@ -160,7 +165,6 @@ const Registration = () => {
         }
         break;
 
-
       default:
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
     }
@@ -168,6 +172,39 @@ const Registration = () => {
 
 
   };
+
+
+  function manageMailList(event,index){
+          event.preventDefault();
+          
+          switch (event.target.id) {
+            case "add":
+              const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (!email || !emailPattern.test(email)||formdata.investNow_Email.includes(email)) {
+                Swal.fire({
+                  icon: "error",
+                  text: !email
+                    ? "Blank field..!!"
+                    : !emailPattern.test(email) ? "Invalid email..!!" 
+                    : formdata.investNow_Email.includes(email) && "Item already exists",
+                });
+              } else {
+               
+                  setFormdata({...formdata, investNow_Email: [email,...formdata.investNow_Email ]});
+                  setEmail('');
+                
+              }
+              break;
+
+            case "remove":
+              const updatedItems = [...formdata.investNow_Email];
+              updatedItems.splice(index, 1);
+              setFormdata({...formdata,investNow_Email:updatedItems});
+              break;
+            default:
+              break;
+          }
+  }
 
 
   const handleSubmit = async (event) => {
@@ -193,6 +230,8 @@ const Registration = () => {
     const mobilePattern = /^[789]\d{9}$/;
     setIsValidMobile(mobilePattern.test(formdata.mobile));
 
+    const pinPattern = /^[1-9]{1}[0-9]{5}$/;
+    setIsValidPIN(pinPattern.test(formdata.pin_Code));
     // Check Password Match
     if (
       formdata.password !== formdata.confirmpassword ||
@@ -208,6 +247,7 @@ const Registration = () => {
       !formdata.profession ||
       !isValidPAN ||
       !isValidMobile ||
+      !isValidPIN||
       !isValidEmail ||
       !isPasswordMatch
     ) {
@@ -218,6 +258,31 @@ const Registration = () => {
       const url = `${url_}/createuser`;
       // console.log(url);
       // console.log(formdata)
+
+
+      var raw = JSON.stringify({
+        "user": {
+          name: formdata.name,
+          datebirth: formdata.datebirth,
+          membership_No: formdata.membership_No,
+          profession:formdata.profession,
+          pan: formdata.pan,
+          telephone: formdata.telephone,
+          mobile: formdata.mobile,
+          email: formdata.email,
+          office_Address: formdata.office_Address,
+          pin_Code: formdata.pin_Code,
+          state: formdata.state,
+          whatsApp_Link: formdata.whatsApp_Link,
+          password: formdata.password,
+          refrenceId: formdata.refrenceId,
+
+        },
+        "invest_now_email": formdata.investNow_Email
+      });
+
+
+
       try {
         const response = await fetch(url, {
           method: "POST",
@@ -225,7 +290,7 @@ const Registration = () => {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formdata),
+          body: raw,
         });
 
         const result = await response.json()
@@ -249,7 +314,7 @@ const Registration = () => {
             pin_Code: "",
             state: "",
             whatsApp_Link: "",
-            investNow_Email: "",
+            investNow_Email: [],
             refrenceId: "",
             password: "",
             confirmpassword: "",
@@ -284,26 +349,49 @@ const Registration = () => {
         </div>
         <div className={styles.regform}>
           <form action="" onSubmit={handleSubmit}>
-            <div className={styles.first}>
+            <div >
               {formfields.map((formfield) => (
+                <>
+                <div className={formfield.name==="investNow_Email"&&`${styles.first}`}>
                 <InputType
                   key={"k" + formfield.id}
                   labelname={formfield.labelname}
                   name={formfield.name}
                   type={formfield.type}
                   placeholder={formfield.placeholder}
-                  value={formdata[formfield.name]}
+                  value={formfield.name==="investNow_Email"?email:formdata[formfield.name]}
                   mandatory={formfield.mandatory}
                   onChange={handleChange}
                   validationmsg={formfield.validationmsg}
                   strenghtScore={formfield.name === "password" ? strenghtScore : ""}
                   isNameNull={formfield.name === "name" && isNameNull}
                   isValidEmail={formfield.name === "email" && isValidEmail}
+                  isValidPIN={formfield.name === "pin_Code" && isValidPIN}
                   isValidMobile={formfield.name === "mobile" && isValidMobile}
                   isValidPAN={formfield.name === "pan" && isValidPAN}
                   isPasswordMatch={formfield.name === "confirmpassword" && isPasswordMatch}
                   isProfessionNull={formfield.name === "profession" && isProfessionNull}
                 />
+                {formfield.name==="investNow_Email"&&<i class="fa-solid fa-plus" style={{"margin":"0px 20px","cursor":"pointer","float":"right","position":"relative","top":"1rem","right":"0rem"}} 
+                id="add" onClick={(e)=>{manageMailList(e)}}></i>}
+
+                </div>
+                {formfield.name==="investNow_Email"&&
+                <>
+               
+                 <ul className={formdata.investNow_Email.length>0&&`${styles.emaillist}`}>
+                 {formdata.investNow_Email.map((email, index) => (                  
+                  <li key={index}  className={styles.emailitem}>
+                    <i class="fa fa-times" aria-hidden="true" id="remove" 
+                    onClick={(e)=>{manageMailList(e,index)}}>
+                    </i>
+                      {email}
+                  </li>
+                 ))}
+               </ul>
+               </>
+                }
+                </>
               ))}
               <div className={`${styles.btn_submit} mt-4`}>
                 <button type="submit" onClick={handleSubmit}>

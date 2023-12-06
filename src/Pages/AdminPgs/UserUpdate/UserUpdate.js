@@ -15,7 +15,11 @@ const UserUpdate = () => {
 
 
   const user_id = window.localStorage.getItem('user_id');
+  const user_pan = window.localStorage.getItem('pan');
   const storedToken = window.localStorage.getItem('jwtToken');
+  const [dbMailList,setdbMailList]=useState([]);
+  const [combinedlist,setCombinedList]=useState([]);
+const [email,setEmail]=useState()
 
   const [values, setValues] = useState({
     name: "",
@@ -29,8 +33,9 @@ const UserUpdate = () => {
     pin_Code: "",
     state: "",
     whatsApp_Link: "",
-    investNow_Email: "",
+    investNow_Email: [],
     userid: `${user_id}`,
+
   })
 
 
@@ -55,7 +60,7 @@ const UserUpdate = () => {
         .then(response => response.json())
         .then(res => {
           console.log(res);
-          setValues({
+          const updatedItems={
             name: res.name,
             datebirth: res.datebirth,
             profession: res.profession,
@@ -67,9 +72,10 @@ const UserUpdate = () => {
             pin_Code: res.pin_code,
             state: res.state,
             whatsApp_Link: res.whatsApp_Link,
-            investNow_Email: res.investNow_Email,
+            investNow_Email:[], //res.investNow_Email,
             userid: `${user_id}`,
-          })
+          }
+          fetchMailList(updatedItems);
 
         })
         .catch(error => {
@@ -82,9 +88,97 @@ const UserUpdate = () => {
     }
   }
 
+async function updateInvestMails(){
+const db=dbMailList.map(item=>item.investNow_Email);
+
+  const updateMails=values.investNow_Email.filter(item => !db.includes(item))
+// console.log("current : ",values.investNow_Email)
+// console.log("db : ",db);
+console.log("newelements : ",updateMails.length)
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${storedToken}`);
+  
+  var raw = JSON.stringify(updateMails);
+  
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+  
+ if(updateMails.length>0){ fetch(`${url_}/Invest_now/save-emails/${user_pan}`, requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));}
+}
+
+  async function fetchMailList(updatedItems){
+
+    
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+  
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+  
+    try {
+      const response = await fetch(`${url_}/Invest_now/get_all/by-pan/${user_pan}`, requestOptions);
+      const result = await response.json();
+      if(response.status===200)
+      {
+        updatedItems.investNow_Email=result.map((item)=>item.investNow_Email)
+          setdbMailList(result);
+      }
+  
+    }catch(error){
+        console.log(error)
+      }
+
+
+      setValues(updatedItems)
+
+  }
+
+
+
+  async function deleteMails(){
+
+
+  const deleteIds=dbMailList.filter(item => !values.investNow_Email.includes(item.investNow_Email)).map((item)=>item.id)
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var raw = JSON.stringify(deleteIds);
+    
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    
+    fetch(`${url_}/Invest_now/delete_by_id`, requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+
 
   const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    if(e.target.name==="investNow_Email"){
+      setEmail(e.target.value);
+    }
+    else{
+      setValues({ ...values, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = (event) => {
@@ -101,11 +195,26 @@ const UserUpdate = () => {
           'Authorization': `Bearer ${storedToken}`
         },
 
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          name: values.name,
+          datebirth: values.datebirth,
+          membership_No: values.membership_No,
+          profession:values.profession,
+          pan: values.pan,
+          telephone: values.telephone,
+          mobile: values.mobile,
+          email: values.email,
+          office_Address: values.office_Address,
+          pin_Code: values.pin_Code,
+          state: values.state,
+          whatsApp_Link: values.whatsApp_Link,
+        }),
       })
         .then(res => {
+          deleteMails();
+          updateInvestMails();
           swal("Success", "Data updated successfully.", "success");
-          window.history.back();
+          window.location.reload();
           console.log(values)
         })
         .catch(error => {
@@ -179,12 +288,12 @@ const UserUpdate = () => {
 
         setBankdetails({ ...bankdetails, [e.target.name]: value.replace(/\D/g, "") });
         e.target.value = value.replace(/\D/g, "");
-
-
-
         break;
 
-      case "file":
+      case "qrcode":
+        setBankdetails({ ...bankdetails, [e.target.name]: e.target.files[0] });
+        break;
+      case "profilepic":
         setBankdetails({ ...bankdetails, [e.target.name]: e.target.files[0] });
         break;
 
@@ -254,6 +363,8 @@ const UserUpdate = () => {
     formdata.append("UPI_Number", bankdetails.upinumber);
     formdata.append("image", bankdetails.profilepic);
 
+
+    console.log(formdata)
     var requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -287,6 +398,7 @@ const UserUpdate = () => {
 
 
   const UpdateBankData = async (e) => {
+    console.log(bankdetails)
     e.preventDefault();
 
     var myHeaders = new Headers();
@@ -332,6 +444,54 @@ const UserUpdate = () => {
     }
   };
 
+
+  function manageMailList(event,index){
+    event.preventDefault();
+    
+    switch (event.target.id) {
+      case "add":
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailPattern.test(email)||values.investNow_Email.includes(email)) {
+          Swal.fire({
+            icon: "error",
+            text: !email
+              ? "Blank field..!!"
+              : !emailPattern.test(email) ? "Invalid email..!!" 
+              : values.investNow_Email.includes(email) && "Item already exists",
+          });
+        } else {
+         
+            setValues({...values, investNow_Email: [email,...values.investNow_Email ]});
+            setEmail('');
+          
+        }
+        break;
+
+      case "remove":
+        console.log(index)
+        Swal.fire({
+          
+          title: `Remove`,
+          text:`${values.investNow_Email[index]}  .?`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const updatedItems = [...values.investNow_Email];
+        updatedItems.splice(index, 1);
+        setValues({...values,investNow_Email:updatedItems});
+          }
+        });
+       
+        break;
+      default:
+        break;
+    }
+}
+
   const imageSrc = imgcontent ? `data:image/jpeg;base64,${imgcontent}` : profileimg;
 
   return (
@@ -359,7 +519,27 @@ const UserUpdate = () => {
               <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={values.pin_Code} />
               <DropDown value_array={States_obj} lblname='State' name='state' value={values.state} onChange={handleChange} />
               <InputField placeholder='Enter your whatsapp link' onChange={handleChange} lblname='Whatsapp Link' name='whatsApp_Link' value={values.whatsApp_Link} />
-              <InputField placeholder='Enter your investnow email' onChange={handleChange} lblname='InvestNow Email' name='investNow_Email' value={values.investNow_Email} />
+              
+              <div className={`${styles.investnow}`}>
+              <InputField placeholder='Enter your investnow email' onChange={handleChange} lblname='InvestNow Email' name='investNow_Email' value={email} />
+              <i class="fa-solid fa-plus" style={{"margin":"0px 20px","cursor":"pointer","float":"right","position":"relative","top":"1rem","right":"0rem"}} 
+                id="add" onClick={(e)=>{manageMailList(e)}}></i>
+               </div>
+              <>               
+               <ul className={values.investNow_Email.length>0 &&  `${styles.emaillist}`}>
+               {values.investNow_Email.map((email, index) => (                  
+                <li key={index}  className={styles.emailitem}>
+                  <i class="fa fa-times" aria-hidden="true" id="remove" 
+                  onClick={(e)=>{manageMailList(e,index)}}>
+                  </i>
+                    {email}
+                </li>
+               ))}
+             </ul>
+             </>       
+              
+              
+              
             </div>
 
           </form>

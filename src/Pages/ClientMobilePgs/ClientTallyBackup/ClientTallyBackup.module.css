@@ -1,0 +1,69 @@
+
+
+.outercontainer {
+    height: 100vh;
+    width: 100vw;
+    height: -webkit-fill-availabel;
+    margin: 0;
+    overflow: hidden; 
+  }
+  .row1{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100vw;
+    margin-left: 0.1%;
+  }
+.header {
+    height: 5vh;
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .leftear a {
+    margin-right: 3vw;
+    color: black;
+  }
+.profileimg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .myfolder_btn {
+    /* justify-content: space-evenly; */
+  }
+  
+  .myfolder_folder {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 31px 10px;
+  }
+  
+  .folder {
+    height: 8rem;
+    width: 9rem;
+    border-radius: 15%;
+  cursor: pointer;
+  }
+  
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 15px;
+  }
+  
+  .folder_date {
+    font-size: 12px;
+    font-weight: 400;
+  }
+  
+  .myfolder_folder a {
+    text-decoration: none;
+  }

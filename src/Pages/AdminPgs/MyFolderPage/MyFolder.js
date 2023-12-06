@@ -44,7 +44,7 @@ const MyFolder = () => {
       redirect: 'follow'
     };
 
-    fetch(`${url_}/getclientimage/${clientid}`, requestOptions)
+    fetch(`${url_}/getclientimage/${clientpan}`, requestOptions)
       .then(response => response.json())
       .then(res => {
         // console.log(res.content);
@@ -219,6 +219,16 @@ const MyFolder = () => {
     })
   }
 
+
+  const GoToTallyBackup = () => {
+    Navigate('tallyclient', {
+      state: {
+        clientId: clientid,
+        ClientPan: clientpan
+      },
+    })
+  }
+
   const imageSrc = imgcontent ? `data:image/jpeg;base64,${imgcontent}` : imgprofile;
 
   return (
@@ -331,6 +341,22 @@ const MyFolder = () => {
                     </span>
                   </div>
                   <h5 className={`ml-2`}>Docs</h5>
+                  <div className={`${styles.folder_date} ml-2`}>{doclastdate}</div>
+                </div>
+              </div>
+
+
+              <div onClick={GoToTallyBackup}>
+                <div className={`${styles.folder}`} style={{ backgroundColor: "#dff1df",color:"#28a745" }}>
+                  <div className={`${styles.icons}`}>
+                    <span className="mt-2">
+                      <i className={`${styles.folder_icon} bi bi-folder-fill h1`}></i>
+                    </span>
+                    <span className="mt-3">
+                      <i className="bi bi-three-dots-vertical h4"></i>
+                    </span>
+                  </div>
+                  <h5 className={`ml-2`}>Tally Backup</h5>
                   <div className={`${styles.folder_date} ml-2`}>{doclastdate}</div>
                 </div>
               </div>

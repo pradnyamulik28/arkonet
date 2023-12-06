@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 
 const InvestNow = () => {
-  const subscription_status=localStorage.getItem('subscription_status');
+  const subscription_status = localStorage.getItem('subscription_status');
 
   const Navigate = useNavigate();
 
@@ -52,29 +52,29 @@ const InvestNow = () => {
 
 
   const Goto = (alt_name, title) => {
-    if(subscription_status==="grace_period")
-    {
+    if (subscription_status === "grace_period") {
       Swal.fire({
-        icon:"error",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+
     }
 
-    else if(subscription_status==="not_subscribed")
-    {
+    else if (subscription_status === "not_subscribed") {
       Swal.fire({
-        icon:"error",
-        text:"Subscribe to avail this service."})
-        
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+
     }
-else{
-    Navigate(`investNowview/${alt_name}/${title}`, {
-      state: {
-        Investnowtitle: title,
-        // InvestNowDbName: title
-      },
-    })
-  }
+    else {
+      Navigate(`investNowview/${alt_name}/${title}`, {
+        state: {
+          Investnowtitle: title,
+          // InvestNowDbName: title
+        },
+      })
+    }
 
   }
 

@@ -108,10 +108,78 @@ const KYCFile = () => {
     }
   };
 
+  async function viewImage(fileid)
+  {
 
 
-  async function getImageData(fetchURL, index) {
 
+    
+      let fetchUrl = ""
+      switch (fileid) {
+        case "aadhar_card":
+          fetchUrl = `getclientkycadhar`;
+          break;
+  
+        case "pan_card":
+          fetchUrl = `getclientkycapan`;
+          break;
+  
+        case "bank_cheque":
+          fetchUrl = `getclientkyccheck`;
+  
+          break;
+  
+        default:
+          break;
+  
+      }
+
+
+
+
+    try {
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+
+      fetch(`${url_}/${fetchUrl}/${client_pan}`, requestOptions)
+        .then((response) => response.arrayBuffer())
+        .then((result) => {
+          const fileBlob = new Blob([result], {
+            type: `image/jpeg`,
+          });
+         
+        
+
+            const blobUrl = URL.createObjectURL(fileBlob);
+            // console.log(blobUrl)
+      
+      
+            const pdfWindow = window.open(blobUrl, "_blank");
+            pdfWindow.addEventListener("beforeunload", () => {
+              URL.revokeObjectURL(blobUrl);
+            });
+          
+        }).catch((error) => console.log(error));
+    } catch (error) {
+      console.error(
+        `Error fetching or downloading ${"pdf".toUpperCase()} file:`,
+        error
+      );
+    }
+
+  }
+
+
+  async function getImageData(fetchURL, index,view) {
+
+   
 
     try {
       var myHeaders = new Headers();
@@ -128,7 +196,7 @@ const KYCFile = () => {
         .then((response) => response.arrayBuffer())
         .then((result) => {
           const fileBlob = new Blob([result], {
-            type: `image/*`,
+            type: `image/jpeg`,
           });
           const blobToDataURL = (blob) => {
             const reader = new FileReader();
@@ -141,7 +209,7 @@ const KYCFile = () => {
             reader.readAsDataURL(blob);
           };
           blobToDataURL(fileBlob);
-
+         
         }).catch((error) => console.log(error));
     } catch (error) {
       console.error(
@@ -149,7 +217,12 @@ const KYCFile = () => {
         error
       );
     }
+
+
+    
   }
+
+  
 
   // function handleSelectFile(e) {
   //   const fileid = e.currentTarget.id;
@@ -278,7 +351,7 @@ const KYCFile = () => {
                         <>
                           <i
                             className="bi bi-file-earmark-pdf-fill text-danger"
-                            style={{ "font-size": "4rem" }}
+                            style={{ "font-size": "4rem" ,"cursor":"pointer"}}
                             onClick={(e) => {
                               e.preventDefault();
                               openFileAndDownload(item.id);
@@ -291,7 +364,9 @@ const KYCFile = () => {
                           src={item.imgsrc}
                           alt="Preview"
                           className={`${style.img}`}
+                          style={{"cursor":"pointer"}}
                           loading="lazy"
+                          onClick={(e)=>{viewImage(item.id);}}
                         />
                       )}
                     </div>

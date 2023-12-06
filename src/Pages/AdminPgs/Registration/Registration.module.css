@@ -54,3 +54,36 @@
   box-shadow: 4px 2px 5px 0 gray;
   transform: translateY(4px);
 }
+
+.first{
+  display: flex;
+  width: 100%;
+}
+.addsign{
+  cursor: pointer;
+  float: right;
+  position: relative;
+  right: 0rem;
+  top: 1rem;
+}
+
+.emaillist{
+  margin-left: 12rem;
+    border-radius: 20px;
+    max-height: 7.5rem;
+    width: 50%;
+    padding: 10px;
+    border: none;
+    box-shadow: 0 1px 2px black;
+    overflow-y: auto;
+}
+
+.emailitem{
+  display: flex;
+  align-items: center;
+}
+.emailitem i{
+  cursor: pointer;
+  margin-right: 1rem;
+ 
+}

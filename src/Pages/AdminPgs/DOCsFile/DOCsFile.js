@@ -125,7 +125,47 @@ const DOCsFile = () => {
 
 
 
+  async function viewImage()
+  {
 
+    try {
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+
+      fetch(`${url_}/getclientdocument/${client_pan}`, requestOptions)
+        .then((response) => response.arrayBuffer())
+        .then((result) => {
+          const fileBlob = new Blob([result], {
+            type: `image/jpeg`,
+          });
+         
+        
+
+            const blobUrl = URL.createObjectURL(fileBlob);
+            // console.log(blobUrl)
+      
+      
+            const pdfWindow = window.open(blobUrl, "_blank");
+            pdfWindow.addEventListener("beforeunload", () => {
+              URL.revokeObjectURL(blobUrl);
+            });
+          
+        }).catch((error) => console.log(error));
+    } catch (error) {
+      console.error(
+        `Error fetching or downloading ${"pdf".toUpperCase()} file:`,
+        error
+      );
+    }
+
+  }
 
 
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
@@ -404,7 +444,7 @@ const DOCsFile = () => {
                       <>
                         <i
                           className="bi bi-file-earmark-pdf-fill text-danger"
-                          style={{ "font-size": "4rem" }} onClick={item.isExist && openFileAndDownload}
+                          style={{ "font-size": "4rem","cursor":"pointer" }} onClick={item.isExist && openFileAndDownload}
                         >
 
                         </i>
@@ -415,6 +455,8 @@ const DOCsFile = () => {
                         src={item.imgsrc}
                         alt="Preview"
                         className={`${style.img}`}
+                        style={{"cursor":"pointer"}}
+                        onClick={(e)=>{viewImage();}}
                       />
                     )}
                   </div>

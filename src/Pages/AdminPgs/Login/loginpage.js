@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './loginpage.module.css';
 import axios from "axios";
 import { url_ } from '../../../Config';
@@ -24,6 +24,9 @@ const Loginpage = ({ setLoggedIn }) => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
   };
 
+  useEffect(()=>{
+    setLoggedIn(false)
+  },[])
 
 
 
@@ -143,6 +146,7 @@ const Loginpage = ({ setLoggedIn }) => {
         const user_name = result.data.user.name;
         const user_mobile = result.data.user.mobile;
         const user_pan = result.data.user.pan;
+        const user_profession = result.data.user.profession;
 
         localStorage.setItem('jwtToken', jwtToken);
         localStorage.setItem('user_name', user_name);
@@ -150,6 +154,7 @@ const Loginpage = ({ setLoggedIn }) => {
         localStorage.setItem('LogedIn', 'true');
         localStorage.setItem('mobile', user_mobile);
         localStorage.setItem('pan', user_pan);
+        localStorage.setItem('profession', user_profession);
 
 
         const sub_status = await checkSubscriptionStatus();//console.log(sub_status)

@@ -149,22 +149,22 @@ clearForm()
       </div>
 
       <div
-        class="modal fade "
+        className="modal fade "
         id="exampleModal"
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title " id="exampleModalLabel">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title " id="exampleModalLabel">
                 <b>WHO IS YOUR TAX PROFESSIONAL</b>
               </h5>
               <button
                 type="button"
-                class="close"
+                className="close"
                 data-dismiss="modal"
                 aria-label="Close"
                 ref={closemodal}
@@ -174,7 +174,7 @@ clearForm()
               </button>
             </div>
 
-            <div class="modal-header">
+            <div className="modal-header">
               <p
                 style={{
                   textAlign: "center",
@@ -187,7 +187,7 @@ clearForm()
               </p>
             </div>
 
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
                 <div className="form-group">
                   <label htmlFor="">YOUR NAME</label>
@@ -203,7 +203,7 @@ clearForm()
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="">YOUR MONILE NUMBER</label>
+                  <label htmlFor="">YOUR MOBILE NUMBER</label>
                   <input
                     type="text"
                     onChange={handleChange}
@@ -242,11 +242,11 @@ clearForm()
                 </div>
               </form>
             </div>
-            <div class={`modal-footer ${style.modal_footer}`}>
-              {/* <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> */}
+            <div className={`modal-footer ${style.modal_footer}`}>
+              {/* <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button> */}
               <button
                 type="button"
-                class={`btn btn-warning ${style.btn}`}
+                className={`btn btn-warning ${style.btn}`}
                 onClick={handleSubmit}
               >
                 Submit
@@ -258,122 +258,6 @@ clearForm()
       </div>
     </div>
 
-    /*    <div>
-                <div className={`modal  bd-example-modal-lg`} id="modal_name">
-                  <div className="modal-dialog modal-lg modal-dialog-centered">
-                    <div className="modal-content">
-                      <div
-                        className="modal-header justify-content-center"
-                        style={{
-                          flexDirection: "column",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div className={style.title}>
-                          <h5>WHO IS YOUR TAX PROFESSIONAL? <span aria-hidden="true" style={{"font-size":"2rem", "alignSelf":"end"}}>&times;</span></h5>
-                         
-  
-
-                        </div>
-                        <div>
-                          <p
-                            style={{
-                              textAlign: "center",
-                              fontSize: "1rem",
-                              fontWeight: "200",
-                            }}
-                          >
-                            Please tell us about your Tax Professional and we
-                            will let hom/her know you are looking for filed tax
-                            documents on TAXKO
-                          </p>
-                        </div>
-                      </div>
-                      <div className="modal-body">
-                        <form>
-                          <div className="form-group">
-                            <label htmlFor="">YOUR NAME</label>
-                            <input
-                              type="text"
-                              onChange={handleChange}
-                              className={`form-control ${style.inputText}`}
-                              name="clientname"
-                              id="clientname"
-                              value={formData.clientname}
-                              autocomplete="off"
-                              placeholder="FULL NAME"
-                            />
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="">YOUR MONILE NUMBER</label>
-                            <input
-                              type="text"
-                              onChange={handleChange}
-                              className={`form-control ${style.inputText}`}
-                              value={formData.clientmobileno}
-                              name="clientmobileno"
-                              id="clientmobileno"
-                              autocomplete="off"
-                            />
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="">YOUR TAX PROFESSIONAL NAME</label>
-                            <input
-                              type="text"
-                              onChange={handleChange}
-                              className={`form-control ${style.inputText}`}
-                              name="taxprofname"
-                              value={formData.taxprofname}
-                              id="taxprofname"
-                              autocomplete="off"
-                            />
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="">
-                              YOUR TAX PROFESSIONAL MOBILE NUMBER
-                            </label>
-                            <input
-                              type="text"
-                              onChange={handleChange}
-                              className={`form-control ${style.inputText}`}
-                              name="taxprofmobile"
-                              value={formData.taxprofmobile}
-                              id="taxprofmobile"
-                              autocomplete="off"
-                              maxLength={10}
-                            />
-                          </div>
-                        </form>
-                      </div>
-
-                    
-                      <div
-                        className="modal-footer"
-                        style={{
-                          flexDirection: "column",
-                          alignItems: "center",
-                        }}
-                      >
-                        <button
-                          className={`${style.btn} btn-warning`}
-                          type="submit"
-                          onClick={handleSubmit}
-                        >
-                          Submit
-                        </button>
-                        <img
-                          src={taxko}
-                          className={`${style.modalimg}`}
-                          alt=""
-                        />
-                      </div>
-                    
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-              */
   );
 }
 

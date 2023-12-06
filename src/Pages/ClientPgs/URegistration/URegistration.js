@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styles from './URegistration.module.css';
 
@@ -20,6 +20,7 @@ const URegistration = () => {
   const Navigate = useNavigate();
   // Access JWT token and remove double quotes
   const user_id = window.localStorage.getItem('user_id');
+  const user_pan = window.localStorage.getItem('pan');
   const storedToken = window.localStorage.getItem('jwtToken');
   // const cleanedToken = window.storedToken.replace(/^"(.*)"$/, '$1');
 
@@ -30,7 +31,23 @@ const URegistration = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidMobile, setIsValidMobile] = useState(true);
   const [isValidPAN, setIsValidPAN] = useState(true);
+  const [isValidPIN, setIsValidPIN] = useState(true);
+  const [fieldDisable, setFieldDisable] = useState('');
+  const [SUbmitbtn, setSUbmitbtn] = useState(false);
 
+  const [Income_Tax_Radio, setIncome_Tax_Radio] = useState(false);
+  const [GST_Radio, setGST_Radio] = useState(false);
+  const [Both_Radio, setBoth_Radio] = useState(false);
+
+  const [mailList,setMailList]=useState(
+    [      
+      {
+        "val":"Other",
+        "option_name":"Other"
+      }
+    
+    ]
+  )
   const [formdata, setFormdata] = useState({
     address: "",
     email: "",
@@ -39,18 +56,61 @@ const URegistration = () => {
     pin_Code: "",
     profession: "",
     state: "",
+    invest_now_email:"",
     telephone: "",
     category: "",
     dob: "",
     name: "",
     residential_status: "",
     userid: `${user_id}`,
+    
   });
 
+useEffect(()=>{
+  fetchMailList();
+},[])
+
+async function fetchMailList(){
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  try {
+    const response = await fetch(`${url_}/Invest_now/get_all/by-pan/${user_pan}`, requestOptions);
+    const result = await response.json();
+    
+    const updateItems=[...mailList]
+    result.map((item)=>{      
+      updateItems.push({
+        id: item.id,
+        pan: item.pan,
+        val: item.investNow_Email,
+        option_name: item.investNow_Email,
+      });
+    })
+    // console.log(updateItems)
+setMailList(updateItems)
+  }catch(error){
+      console.log(error)
+    }
+}
 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "pan") {
+      if (value.length === 10) {
+        FetchClientDATA(value);
+      }
+      // console.log(value)
+    }
+
     //=============================================================================
     switch (name) {
 
@@ -98,13 +158,42 @@ const URegistration = () => {
         setIsValidMobile(mobilePattern.test(e.target.value));
         break;
 
+      case "pin_Code":
+          setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
+          e.target.value = value.replace(/\D/g, "");
+          // Basic pin code validation
+          const pinPattern = /^[1-9]{1}[0-9]{5}$/;
+          setIsValidPIN(pinPattern.test(e.target.value));
+          break;
+
       case "telephone":
         setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
         e.target.value = value.replace(/\D/g, "");
         break;
 
 
-
+        case "invest_now_email":
+          const index = formfields.findIndex(item => item.name === "invest_now_email");
+          if(index !==-1){
+          if(formfields[index].type==="dropdown"&&e.target.value==="Other")
+          {            
+              formfields[index].type="text";
+              if(e.target.value==="Other"){
+                setFormdata({ ...formdata, [e.target.name]: "" });
+                e.target.value = "";
+              }              
+          }
+          else if(formfields[index].type==="dropdown" && e.target.value!=="Other"){
+            formfields[index].type="dropdown";
+            setFormdata({ ...formdata, [e.target.name]: e.target.value });
+          }
+          else{
+            setFormdata({ ...formdata, [e.target.name]: e.target.value });
+          }
+        }
+        
+      
+          break;
       default:
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
     }
@@ -112,9 +201,77 @@ const URegistration = () => {
 
   };
 
+
+
+
+
+
+  const FetchClientDATA = async (Cpan) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    try {
+      const response = await fetch(`${url_}/pan?pan=${Cpan}`, requestOptions);
+      const result = await response.json();
+      console.log(result);
+
+
+
+
+      const extractedData = result.users[0];
+
+
+      let usersLength = result.users;
+
+      if (usersLength.length === 2) {
+        swal.fire("Client Already registered for Income Tax and GST");
+        setFormdata({
+          pan: ""
+        })
+      } else if (result.users[0].category === "Both") {
+        swal.fire("Client Already registered for Income Tax and GST");
+        setFormdata({
+          pan: ""
+        })
+      } else if (result.users[0].userid == user_id) {
+        swal.fire(`Client Already registered for ${extractedData.category}`);
+        setFieldDisable(true);
+        setIncome_Tax_Radio(true);
+        setGST_Radio(true);
+        setFormdata(extractedData);
+      } else {
+        if (result.users[0].category === "GST") {
+          swal.fire(`Client Already registered for ${extractedData.category}`);
+          setFieldDisable(true);
+          setGST_Radio(true);
+          setBoth_Radio(true)
+          setFormdata(extractedData);
+        } else {
+          swal.fire(`Client Already registered for ${extractedData.category}`);
+          setFieldDisable(true);
+          setIncome_Tax_Radio(true);
+          setBoth_Radio(true)
+          setFormdata(extractedData);
+        }
+      }
+
+
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
+
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+console.log(formdata.invest_now_email)
 
 
 
@@ -138,6 +295,8 @@ const URegistration = () => {
     const mobilePattern = /^[789]\d{9}$/;
     setIsValidMobile(mobilePattern.test(formdata.mobile));
 
+    const pinPattern = /^[1-9]{1}[0-9]{5}$/;
+    setIsValidPIN(pinPattern.test(formdata.pin_Code));
 
 
     // Check Form Fields
@@ -146,6 +305,7 @@ const URegistration = () => {
       !formdata.profession ||
       !isValidPAN ||
       !isValidMobile ||
+      !isValidPIN||
       !isValidEmail ||
       !formdata.category
 
@@ -154,28 +314,51 @@ const URegistration = () => {
       console.log(formdata);
       return;
     } else {
-      const url = `${url_}/createclient`;
-      console.log(url);
+      // const url = `${url_}/createclient`;
+      // console.log(url);
+      console.log(formdata);
+      // console.log(user_id)
+
+
+
+
 
       try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${storedToken}`
-          },
-          body: JSON.stringify(formdata),
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append(
+          "Authorization",
+          `Bearer ${storedToken}`);
+
+        const raw = JSON.stringify({
+          name: formdata.name,
+          dob: formdata.dob,
+          profession: formdata.profession,
+          pan: formdata.pan,
+          telephone: formdata.telephone,
+          mobile: formdata.mobile,
+          email: formdata.email,
+          address: formdata.address,
+          pin_code: formdata.pin_Code,
+          state: formdata.state,
+          residential_status: formdata.residential_status,
+          category: formdata.category,
+          userid: user_id,
+          invest_now_email:formdata.invest_now_email
         });
 
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
 
-        const result = await response.json()
-        console.log("response", result);
-
-        if (result.status === "NOT_FOUND") {
-          swal.fire("Failed!", `${result.message}`, "error");
-        } else if (result.status === "UNAUTHORIZED") {
-          swal.fire("Failed!", `${result.message}`, "error");
-        } else {
+        const response = await fetch(`${url_}/createclient`, requestOptions);
+        const result = await response.text();
+        console.log(result);
+        if (response.status === 200) {
+          swal.fire("Success!", `${result}`, "success");
           setFormdata({
             address: "",
             email: "",
@@ -189,23 +372,19 @@ const URegistration = () => {
             dob: "",
             name: "",
             residential_status: "",
-            userid: `${user_id}`,
+            userid: "",
+            invest_now_email:""
           });
-          swal.fire(
-            "Success",
-            "Registered successful.",
-            "success"
-          );
+          setFieldDisable(false)
           Navigate(-1)
+        } else {
+          swal.fire("Failed!", `${result}`, "error");
         }
       } catch (error) {
-        swal.fire(
-          "Failed!",
-          "Server Down!! Please try again later!!!!",
-          "error"
-        );
-        console.error(error);
+        console.error('error', error);
       }
+
+
     }
   };
 
@@ -222,11 +401,12 @@ const URegistration = () => {
           <span>CLIENT REGISTRATION FORM</span>
         </div>
         <div className={styles.regform}>
-          <form action="/" onSubmit={handleSubmit}>
+          <form >
 
             <div className={styles.radio}>
-              <RadioInput name='category' label='Income Tax' value='Income_Tax' checked={formdata.category === 'Income_Tax'} onChange={handleChange} manadatory='*' />
-              <RadioInput name='category' label='Demo' value='Demo' checked={formdata.category === 'Demo'} onChange={handleChange} manadatory='*' />
+              <RadioInput name='category' label='Income Tax' value='Income_Tax' checked={formdata.category === 'Income_Tax'} onChange={handleChange} manadatory='*' disabled={Income_Tax_Radio} />
+              <RadioInput name='category' label='GST' value='GST' checked={formdata.category === 'GST'} onChange={handleChange} manadatory='*' disabled={GST_Radio} />
+              <RadioInput name='category' label='Both' value='Both' checked={formdata.category === 'Both'} onChange={handleChange} manadatory='*' disabled={Both_Radio} />
 
             </div>
 
@@ -237,23 +417,28 @@ const URegistration = () => {
                 name={formfield.name}
                 type={formfield.type}
                 placeholder={formfield.placeholder}
-                value={formdata.value}
+                value={formdata[formfield.name]}
                 mandatory={formfield.mandatory}
                 onChange={handleChange}
+                disabled={(formfield.name==="invest_now_email"&&GST_Radio)?false
+                            :fieldDisable}
                 validationmsg={formfield.validationmsg}
-                // strengh/tScore={formfield.name === "password" ? strenghtScore : ""}
                 isNameNull={formfield.name === "name" && isNameNull}
+                isValidPIN={formfield.name === "pin_Code" && isValidPIN}
                 isValidEmail={formfield.name === "email" && isValidEmail}
                 isValidMobile={formfield.name === "mobile" && isValidMobile}
                 isValidPAN={formfield.name === "pan" && isValidPAN}
-                // isPasswordMatch={formfield.name === "confirmpassword" && isPasswordMatch}
                 isProfessionNull={formfield.name === "profession" && isProfessionNull}
+                mailList={mailList}
               />
             ))}
 
 
             <div className={styles.btn_submit}>
-              <button type="submit" onClick={handleSubmit}>SUBMIT</button>
+              {SUbmitbtn ? null : (
+
+                <button type="submit" onClick={handleSubmit}>SUBMIT</button>
+              )}
             </div>
 
           </form>

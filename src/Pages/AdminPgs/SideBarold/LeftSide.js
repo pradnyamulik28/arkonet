@@ -66,6 +66,10 @@ const LeftSide = ({ loggedIn, setLoggedIn }) => {
                 <h6 className={activeLink === 'myclients' ? 'font-weight-bold' : ''}>My Clients</h6>
               </Link>
 
+              <Link to="tallybackup" onClick={() => handleLinkClick('tallybackup')}>
+                <h6 className={activeLink === 'tallybackup' ? 'font-weight-bold' : ''}>Tally Backup</h6>
+              </Link>
+
               <Link to="changepass" onClick={() => handleLinkClick('changepass')}>
                 <h6 className={activeLink === 'changepass' ? 'font-weight-bold' : ''}>Change Password</h6>
               </Link>            </>}

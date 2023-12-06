@@ -2,6 +2,15 @@
 //List of Input Fields
 const formfields = [
   {
+    labelname: "PAN",
+    id: "pan",
+    name: "pan",
+    type: "text",
+    placeholder: "Enter your PAN",
+    mandatory: true,
+    validationmsg: "Enter Valid PAN"
+  },
+  {
     labelname: "Name",
     id: "name",
     name: "name",
@@ -28,15 +37,7 @@ const formfields = [
     mandatory: true,
     validationmsg: "Select Profession"
   },
-  {
-    labelname: "PAN",
-    id: "pan",
-    name: "pan",
-    type: "text",
-    placeholder: "Enter your PAN",
-    mandatory: true,
-    validationmsg: "Enter Valid PAN"
-  },
+
   {
     labelname: "Telephone",
     id: "telephone",
@@ -79,8 +80,8 @@ const formfields = [
     name: "pin_Code",
     type: "text",
     placeholder: "Enter your pin",
-    mandatory: false,
-    validationmsg: ""
+    mandatory: true,
+    validationmsg: "Enter valid pin"
   },
   {
     labelname: "State",
@@ -88,6 +89,15 @@ const formfields = [
     name: "state",
     type: "dropdown",
     placeholder: "",
+    mandatory: false,
+    validationmsg: ""
+  },
+  {
+    labelname: "InvestNow Email",
+    id: "invest_now_email",
+    name: "invest_now_email",
+    type: "dropdown",
+    placeholder: "Enter your investnow email",
     mandatory: false,
     validationmsg: ""
   }

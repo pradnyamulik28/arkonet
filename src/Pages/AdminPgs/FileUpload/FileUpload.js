@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 const FileUpload = () => {
 
-  const subscription_status=localStorage.getItem('subscription_status');
+  const subscription_status = localStorage.getItem('subscription_status');
 
 
   const user_id = window.localStorage.getItem('user_id');
@@ -139,89 +139,90 @@ const FileUpload = () => {
   const handleToggle = async () => {
 
 
-    if(subscription_status==="grace_period")
-    {
+    if (subscription_status === "grace_period") {
       Swal.fire({
-        icon:"error",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+
     }
 
-    else if(subscription_status==="not_subscribed")
-    {
+    else if (subscription_status === "not_subscribed") {
       Swal.fire({
-        icon:"error",
-        text:"Subscribe to avail this service."})
-        
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+
     }
 
 
 
-    else{if (fileResponse === true) {
-      console.log("It's TRUE");
-    } else {
-      try {
-        const result = await Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, confirm!'
-        });
+    else {
+      if (fileResponse === true) {
+        console.log("It's TRUE");
+      } else {
+        try {
+          const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, confirm!'
+          });
 
-        if (result.isConfirmed) {
-          var myHeaders = new Headers();
-          myHeaders.append("Authorization", `Bearer ${storedToken}`);
+          if (result.isConfirmed) {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-          var requestOptions = {
-            method: 'PUT',
-            headers: myHeaders,
-            redirect: 'follow'
-          };
+            var requestOptions = {
+              method: 'PUT',
+              headers: myHeaders,
+              redirect: 'follow'
+            };
 
-          fetch(`${url_}/updateFiledNotFiled/${user_id}/${clientid}/${year}`, requestOptions)
-            .then(response => console.log(response.status))
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-          window.location.reload();
-        } else {
-          console.log("Canceled the toggle!");
-        }
-      } catch (error) {
-        console.log("Failed to call function!!!");
+            fetch(`${url_}/updateFiledNotFiled/${user_id}/${clientid}/${year}`, requestOptions)
+              .then(response => console.log(response.status))
+              .then(result => console.log(result))
+              .catch(error => console.log('error', error));
+            window.location.reload();
+          } else {
+            console.log("Canceled the toggle!");
+          }
+        } catch (error) {
+          console.log("Failed to call function!!!");
 
-        console.log('Error:', error);
-        if (error.response) {
-          console.log('Response Status:', error.response.status);
-          console.log('Response Data:', error.response.text());
+          console.log('Error:', error);
+          if (error.response) {
+            console.log('Response Status:', error.response.status);
+            console.log('Response Data:', error.response.text());
+          }
         }
       }
-    }
 
-  }
+    }
   };
   /////////////////////////////////////////////////////////////////////////////////////////////
 
   // File Upload Code
-  const checkSubsriptionStatus=(e)=>{
-    if(subscription_status==="grace_period")
-      {
-        Swal.fire({
-          icon:"error",
-          text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-          e.preventDefault();
-      }
-  
-      else if(subscription_status==="not_subscribed")
-      {
-        Swal.fire({
-          icon:"error",
-          text:"Subscribe to avail this service."})
-          e.preventDefault();
-      }
-  
+  const checkSubsriptionStatus = (e) => {
+    if (subscription_status === "grace_period") {
+      Swal.fire({
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+      e.preventDefault();
+    }
+
+    else if (subscription_status === "not_subscribed") {
+      Swal.fire({
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+      e.preventDefault();
+    }
+
   }
 
   const handleFileUpload = async (event, filename) => {
@@ -348,90 +349,90 @@ const FileUpload = () => {
   // Delete file Code
 
   const DeleteFile = async () => {
-   
-    if(subscription_status==="grace_period")
-    {
+
+    if (subscription_status === "grace_period") {
       Swal.fire({
-        icon:"error",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+
     }
 
-    else if(subscription_status==="not_subscribed")
-    {
+    else if (subscription_status === "not_subscribed") {
       Swal.fire({
-        icon:"error",
-        text:"Subscribe to avail this service."})
-        
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+
     }
 
-    else{
+    else {
 
-    try {
-      const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, confirm!'
-      });
-
-      if (result.isConfirmed) {
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-        var raw = JSON.stringify({
-          "fileIds": selectedFiles
+      try {
+        const result = await Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, confirm!'
         });
 
-        var requestOptions = {
-          method: 'DELETE',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
+        if (result.isConfirmed) {
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+          var raw = JSON.stringify({
+            "fileIds": selectedFiles
+          });
+
+          var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
 
 
-        const response = await fetch(`${url_}/deletefile`, requestOptions);
-        const responseData = await response.text();
-        console.log(responseData)
-        if (response.status === 200) {
-          await Swal.fire(
-            'Success.',
-            `${responseData}`,
-            'success'
-          )
-          window.location.reload();
+          const response = await fetch(`${url_}/deletefile`, requestOptions);
+          const responseData = await response.text();
+          console.log(responseData)
+          if (response.status === 200) {
+            await Swal.fire(
+              'Success.',
+              `${responseData}`,
+              'success'
+            )
+            window.location.reload();
+
+          } else {
+            Swal.fire(
+              'Failed!',
+              `${responseData}`,
+              'error'
+            )
+          }
+
+          console.log(selectedFiles)
+
 
         } else {
-          Swal.fire(
-            'Failed!',
-            `${responseData}`,
-            'error'
-          )
+          console.log("Canceled the delete!");
         }
+      } catch (error) {
+        console.log("Failed to call function!!!");
 
-        console.log(selectedFiles)
-
-
-      } else {
-        console.log("Canceled the delete!");
+        console.log('Error:', error);
+        if (error.response) {
+          console.log('Response Status:', error.response.status);
+          console.log('Response Data:', error.response.text());
+        }
       }
-    } catch (error) {
-      console.log("Failed to call function!!!");
 
-      console.log('Error:', error);
-      if (error.response) {
-        console.log('Response Status:', error.response.status);
-        console.log('Response Data:', error.response.text());
-      }
     }
-
-  }
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -441,57 +442,57 @@ const FileUpload = () => {
 
   const openFileAndDownload = async (contentType, fileName, file_ID) => {
 
-    if(subscription_status==="grace_period")
-    {
+    if (subscription_status === "grace_period") {
       Swal.fire({
-        icon:"error",
-        text:"Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."})
-        
+        icon: "error",
+        text: "Sorry this service is currently not available due to end of subscription. Renew subscription to resume services."
+      })
+
     }
 
-    else if(subscription_status==="not_subscribed")
-    {
+    else if (subscription_status === "not_subscribed") {
       Swal.fire({
-        icon:"error",
-        text:"Subscribe to avail this service."})
-        
+        icon: "error",
+        text: "Subscribe to avail this service."
+      })
+
     }
-else{
-    try {
-      const response = await fetch(`${url_}/openfile/${file_ID}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const arrayBuffer = await response.arrayBuffer();
-      const fileBlob = new Blob([arrayBuffer], { type: `application/${contentType}` });
-      const blobUrl = URL.createObjectURL(fileBlob);
-
-      if (contentType === 'pdf') {
-        setPdfBlobUrl(blobUrl);
-        const pdfWindow = window.open(blobUrl, '_blank');
-        pdfWindow.addEventListener('beforeunload', () => {
-          URL.revokeObjectURL(blobUrl);
+    else {
+      try {
+        const response = await fetch(`${url_}/openfile/${file_ID}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
         });
-      } else if (contentType === 'xlsx') {
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = fileName;
-        link.click();
-        URL.revokeObjectURL(blobUrl);
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const fileBlob = new Blob([arrayBuffer], { type: `application/${contentType}` });
+        const blobUrl = URL.createObjectURL(fileBlob);
+
+        if (contentType === 'pdf') {
+          setPdfBlobUrl(blobUrl);
+          const pdfWindow = window.open(blobUrl, '_blank');
+          pdfWindow.addEventListener('beforeunload', () => {
+            URL.revokeObjectURL(blobUrl);
+          });
+        } else if (contentType === 'xlsx') {
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = fileName;
+          link.click();
+          URL.revokeObjectURL(blobUrl);
+        }
+      } catch (error) {
+        console.error(`Error fetching or downloading ${contentType.toUpperCase()} file:`, error);
       }
-    } catch (error) {
-      console.error(`Error fetching or downloading ${contentType.toUpperCase()} file:`, error);
+
+
     }
-
-
-  }
   };
   // console.log(clientid)
   // console.log(year)
@@ -586,9 +587,9 @@ else{
                           )}
 
                           {item.filename.toLowerCase().includes('excel') ? (
-                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={(e) =>{e.preventDefault(); openFileAndDownload('xlsx', 'spreadsheet.xlsx', item.fileId)}}></i>
+                            <i className="bi bi-file-earmark-excel-fill text-success" onDoubleClick={(e) => { e.preventDefault(); openFileAndDownload('xlsx', 'spreadsheet.xlsx', item.fileId) }}></i>
                           ) : (
-                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={(e) => {e.preventDefault(); openFileAndDownload('pdf', 'document.pdf', item.fileId)}}></i>
+                            <i className="bi bi-file-earmark-pdf-fill text-danger" onDoubleClick={(e) => { e.preventDefault(); openFileAndDownload('pdf', 'document.pdf', item.fileId) }}></i>
                           )}
 
                           <h6 className={style.filename_text} >
@@ -601,7 +602,7 @@ else{
                     ) : (
                       <div className={style.file_upload}>
                         <div className={style.image_upload_wrap}>
-                          <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.filename)} onClick={checkSubsriptionStatus}/>
+                          <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.filename)} onClick={checkSubsriptionStatus} />
                           <div className={style.drag_text}>
                             <img src={upload} alt="" />
                             <h4>Upload File</h4>

@@ -21,9 +21,10 @@ import ClientPassChange from "./ClientPassChange/ClientPassChange";
 import PaymentDetails from "./PaymentDetails/PaymentDetails";
 import KYC from "./KYC/KYC";
 import DOCs from "./DOCs/DOCs";
+import ClientTallyBackup from "./ClientTallyBackup/ClientTallyBackup";
 import  ChatBot from "../../components/ChatBot/ChatBot"
-
-
+import ClientTallyView from "./ClientTallyBackup/ClientTallyView";
+import ProfileUpdate from "./ProfileUpdate/ProfileUpdate";
 
 function ClientPages() {
   return (
@@ -46,6 +47,9 @@ function ClientPages() {
 
       <Route path="clientdashboard/kyc" element={<KYC />} />
       <Route path="clientdashboard/docs" element={<DOCs />} />
+
+      <Route path="clientdashboard/tallybackup" element={<ClientTallyBackup />} />
+      <Route path="clientdashboard/tallybackup/tallyview" element={<ClientTallyView />} />
       
       <Route path="caprofile" element={<CAProfile />} />
       <Route path="caprofile/payment" element={<PaymentDetails />} />
@@ -53,6 +57,8 @@ function ClientPages() {
       <Route path="investnow" element={<InvestNow />} />            
       <Route path="help" element={<ClientHelp />} />
       <Route path="changepass" element={<ClientPassChange />} />
+      <Route path="updateinfo" element={<ProfileUpdate />} />            
+
 
     </Routes>
     <ChatBot />
