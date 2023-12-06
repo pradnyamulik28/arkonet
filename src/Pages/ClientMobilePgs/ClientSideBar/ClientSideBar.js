@@ -111,9 +111,9 @@ useEffect(() => {
             <h5>
               <Link to="changepass" onClick={toggleSidebar}>Change Password</Link>
             </h5>
-            {/* <h5>
+            <h5>
               <Link to="updateinfo" onClick={toggleSidebar}>Update Information</Link>
-            </h5> */}
+            </h5>
           </div>
           {/* Adress Ends......................................................................................................... */}
 

@@ -53,7 +53,7 @@ const URegistration = () => {
     email: "",
     mobile: "",
     pan: "",
-    pin_Code: "",
+    pin_code: "",
     profession: "",
     state: "",
     invest_now_email:"",
@@ -158,7 +158,7 @@ setMailList(updateItems)
         setIsValidMobile(mobilePattern.test(e.target.value));
         break;
 
-      case "pin_Code":
+      case "pin_code":
           setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
           e.target.value = value.replace(/\D/g, "");
           // Basic pin code validation
@@ -296,7 +296,7 @@ console.log(formdata.invest_now_email)
     setIsValidMobile(mobilePattern.test(formdata.mobile));
 
     const pinPattern = /^[1-9]{1}[0-9]{5}$/;
-    setIsValidPIN(pinPattern.test(formdata.pin_Code));
+    setIsValidPIN(pinPattern.test(formdata.pin_code));
 
 
     // Check Form Fields
@@ -339,7 +339,7 @@ console.log(formdata.invest_now_email)
           mobile: formdata.mobile,
           email: formdata.email,
           address: formdata.address,
-          pin_code: formdata.pin_Code,
+          pin_code: formdata.pin_code,
           state: formdata.state,
           residential_status: formdata.residential_status,
           category: formdata.category,
@@ -364,7 +364,7 @@ console.log(formdata.invest_now_email)
             email: "",
             mobile: "",
             pan: "",
-            pin_Code: "",
+            pin_code: "",
             profession: "",
             state: "",
             telephone: "",
@@ -424,7 +424,7 @@ console.log(formdata.invest_now_email)
                             :fieldDisable}
                 validationmsg={formfield.validationmsg}
                 isNameNull={formfield.name === "name" && isNameNull}
-                isValidPIN={formfield.name === "pin_Code" && isValidPIN}
+                isValidPIN={formfield.name === "pin_code" && isValidPIN}
                 isValidEmail={formfield.name === "email" && isValidEmail}
                 isValidMobile={formfield.name === "mobile" && isValidMobile}
                 isValidPAN={formfield.name === "pan" && isValidPAN}

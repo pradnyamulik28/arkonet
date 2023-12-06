@@ -21,8 +21,8 @@ const formfields = [
   },
   {
     labelname: "DOB/DOI",
-    id: "datebirth",
-    name: "datebirth",
+    id: "dob",
+    name: "dob",
     type: "date",
     placeholder: "",
     mandatory: false,
@@ -67,8 +67,8 @@ const formfields = [
   },
   {
     labelname: " Addresss",
-    id: "Address",
-    name: "Address",
+    id: "address",
+    name: "address",
     type: "text",
     placeholder: "Enter your address",
     mandatory: false,
@@ -76,8 +76,8 @@ const formfields = [
   },
   {
     labelname: "Pin Code",
-    id: "pin_Code",
-    name: "pin_Code",
+    id: "pin_code",
+    name: "pin_code",
     type: "text",
     placeholder: "Enter your pin",
     mandatory: true,

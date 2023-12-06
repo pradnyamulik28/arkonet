@@ -15,6 +15,9 @@ function ProfileUpdate(){
     const navigate=useNavigate();
   const storedToken = window.localStorage.getItem('jwtToken');
   const PAN=localStorage.getItem("pan");
+  
+ const client_id_it=localStorage.getItem("client_id_it");
+ const client_id_gst=localStorage.getItem("client_id_gst");
 
     const [profileImg, setProfileImg] = useState({
       src: null,
@@ -85,7 +88,7 @@ function ProfileUpdate(){
           setIsValidMobile(mobilePattern.test(e.target.value));
           break;
   
-        case "pin_Code":
+        case "pin_code":
             setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
             e.target.value = value.replace(/\D/g, "");
             // Basic pin code validation
@@ -119,6 +122,7 @@ function ProfileUpdate(){
             }
           }
           
+
         
             break;
         default:
@@ -133,7 +137,7 @@ function ProfileUpdate(){
     email: "",
     mobile: "",
     pan: "",
-    pin_Code: "",
+    pin_code: "",
     profession: "",
     state: "",
     invest_now_email:"",
@@ -143,10 +147,88 @@ function ProfileUpdate(){
     residential_status: "",
   });
 
+const [userPan,setUserPan]=useState()
+  
+  async function getCaInfo() {
+   
 
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+
+//===========Retrive Both Data==============
+
+    let isBoth=false;
+
+    try{
+      const GST_res=await fetch(`${url_}/getuserBypan/${PAN}/Both`, requestOptions);
+     const GST_User = await GST_res.json(); 
+     if (GST_res.status === 200) {      
+      isBoth=true;
+      return GST_User.userinfo.pan    
+    } 
+    }catch (error) {
+      
+    }
+    //===========Retrive IT User Data==============
+if(!isBoth){
+
+  if(client_id_it){
+    // console.log("IT",client_id_it)
+    try{
+      const IT_res=await fetch(`${url_}/getuserBypan/${PAN}/Income_Tax`, requestOptions);
+     const IT_User = await IT_res.json(); 
+     if (IT_res.status === 200) {
+      // console.log(IT_User.userinfo.pan);
+      return IT_User.userinfo.pan
+     
+    } 
+    }catch (error) {
+     
+    }
+  }
+  
+
+
+  
+
+
+  //Retrive GST User Data
+
+  else if(client_id_gst){
+    // console.log("gst ",client_id_gst)
+    try{
+      const GST_res=await fetch(`${url_}/getuserBypan/${PAN}/GST`, requestOptions);
+     const GST_User = await GST_res.json(); 
+     if (GST_res.status === 200) {
+      // console.log(GST_User.userinfo.pan)
+      // setUserPan(GST_User.userinfo.pan)
+      return GST_User.userinfo.pan
+    } 
+    }catch (error) {
+     
+    }
+  }
+  
+}
+    
+    
+    
+  }
 async function getClientInfo()
 {
-  const mailList1=await fetchMailList();
+ const user_pan= await getCaInfo();
+
+  const mailList1=await fetchMailList(user_pan);
+
+  // console.log(mailList1)
+
   var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
@@ -161,7 +243,18 @@ if(response.status===200)
 {
   const result=await response.json();
   const res=result.users[0]
-  console.log(res)
+  const index = formfields.findIndex(
+    (item) => item.name === "invest_now_email"
+  ); if (index !== -1) {
+  if (mailList1.length>0&&mailList1.includes(res.invest_now_email)) {   
+      formfields[index].type = "dropdown";    
+  }
+  else{
+    formfields[index].type = "text";    
+  }
+}
+
+
   setMailList(mailList1);
   setFormdata({
     address: res.address,
@@ -175,10 +268,12 @@ if(response.status===200)
     telephone: res.telephone,
     dob: res.dob,
     name: res.name,     
+    residential_status:res.residential_status
   });
 }
 }
 useEffect(()=>{
+  
   getClientInfo()
   getClientImage();
   
@@ -186,7 +281,8 @@ useEffect(()=>{
 
 
   
-async function fetchMailList(){
+async function fetchMailList(user_pan){
+  // console.log(user_pan)
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
@@ -197,21 +293,27 @@ async function fetchMailList(){
   };
 
   try {
-    const response = await fetch(`${url_}/Invest_now/get_all/by-pan/AAAAA1111A`, requestOptions);
-    const result = await response.json();
+    // console.log(`${url_}/Invest_now/get_all/by-pan/${user_pan}`)
+    const response = await fetch(`${url_}/Invest_now/get_all/by-pan/${user_pan}`, requestOptions);
+    if(response.status===200){
+      const result = await response.json();
+      const updateItems=[...mailList]
     
-    const updateItems=[...mailList]
-    result.map((item)=>{      
+      // console.log("result",result)
+      // const result = await response.json();      
+      result.map((item)=>{      
       updateItems.push({
         id: item.id,
         pan: item.pan,
         val: item.investNow_Email,
         option_name: item.investNow_Email,
       });
-    })
+    })    
+    
     return updateItems;
-    // console.log(updateItems)
-// setMailList(updateItems)
+    
+  }
+
   }catch(error){
       console.log(error)
     }
@@ -219,12 +321,14 @@ async function fetchMailList(){
 
 const [investnowtype,setInvestNowType]=useState("dropdown")
 
-function viewMailList(){
-  // setInvestNowType("dropdown")
+function viewMailList(e){
+  setInvestNowType("dropdown")
+  console.log("clicked")
   const index = formfields.findIndex(item => item.name === "invest_now_email");
   if(index !==-1){
   formfields[index].type="dropdown";
-}
+  }
+  handleChange(e)
               
 }
 
@@ -253,7 +357,7 @@ console.log(formdata.invest_now_email)
     setIsValidMobile(mobilePattern.test(formdata.mobile));
 
     const pinPattern = /^[1-9]{1}[0-9]{5}$/;
-    setIsValidPIN(pinPattern.test(formdata.pin_Code));
+    setIsValidPIN(pinPattern.test(formdata.pin_code));
 
 
     // Check Form Fields
@@ -267,7 +371,7 @@ console.log(formdata.invest_now_email)
       Swal.fire("Failed!", 
       !isValidMobile || !formdata.mobile ? "Invalid Mobile!!"
       : !isValidEmail || !formdata.email ? "Invalid Mail!!"
-      : !isValidPIN || !formdata.pin_Code ? "Invalid Pin code!!"
+      : !isValidPIN || !formdata.pin_code ? "Invalid Pin code!!"
       : "Please fill the mandatory fields!!", "error");
       console.log(formdata);
       return;
@@ -289,12 +393,12 @@ console.log(formdata.invest_now_email)
           mobile: formdata.mobile,
           email: formdata.email,
           address: formdata.address,
-          pin_code: formdata.pin_Code,
+          pin_code: formdata.pin_code,
           state: formdata.state,
           residential_status: formdata.residential_status,
           invest_now_email:formdata.invest_now_email
         });
-console.log(raw)
+// console.log(raw)
         const requestOptions = {
           method: "PUT",
           headers: myHeaders,
@@ -304,7 +408,7 @@ console.log(raw)
 
         const response = await fetch(`${url_}/updateByPanClient/${PAN}`, requestOptions);
         const result = await response.text();
-        console.log(result);
+        // console.log(result);
         if (response.status === 200) {
           Swal.fire("Success!", `Data Update Successful.`, "success");
           setFormdata({
@@ -312,14 +416,13 @@ console.log(raw)
             email: "",
             mobile: "",
             pan: "",
-            pin_Code: "",
+            pin_code: "",
             profession: "",
             state: "",
             telephone: "",
             dob: "",
             name: "",
             residential_status: "",
-            userid: "",
             invest_now_email:""
           });
           
