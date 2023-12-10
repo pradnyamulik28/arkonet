@@ -51,7 +51,10 @@
     margin: 5% 1rem;
     width: 85%;
   }
- 
+ /* .select{
+  max-height: 5rem;
+  overflow-y: auto;
+ } */
   .mandatory::after {
     content: ' *';
     color: red;

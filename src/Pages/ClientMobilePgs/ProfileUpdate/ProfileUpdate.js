@@ -425,6 +425,7 @@ console.log(formdata.invest_now_email)
             residential_status: "",
             invest_now_email:""
           });
+          window.location.reload();
           
         } else {
           Swal.fire("Failed!", `${result}`, "error");
@@ -631,7 +632,7 @@ return (
            {formfield.type==="dropdown"?          
            
               
-              <select id={formfield.id} value={formdata[formfield.name]} onChange={handleChange} name={formfield.name} className={`${style.ipc}`} >
+              <select id={formfield.id} value={formdata[formfield.name]} onChange={handleChange} name={formfield.name} className={`${style.ipc} ${style.select}`} >
             <option value="" >-- Select --</option>
             {              
               formfield.name==="state"&&States_obj.map((data) => {

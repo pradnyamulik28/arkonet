@@ -517,7 +517,7 @@ if(file){
   {
     if (
      
-      file.name.endsWith(".rar")
+      file.name.endsWith(".rar")||file.name.endsWith(".zip")
     ) {
       const reader = new FileReader();
 
@@ -535,7 +535,7 @@ if(file){
     } else {
       swal
         .fire({
-          title: `Select RAR file `,
+          title: `Select RAR/ZIP file `,
           icon: "info",
           confirmButtonText: "OK",
         })

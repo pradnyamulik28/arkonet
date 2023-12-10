@@ -56,7 +56,7 @@ export default class InputType extends React.Component {
       properties.maxLength=10;
       properties.isValidPAN=this.props.isValidPAN;
     }
-    if(this.props.name === "pin_Code")
+    if(this.props.name === "pin_code")
    {     properties.maxLength=6;
         properties.isValidPIN=this.props.isValidPIN;
     }

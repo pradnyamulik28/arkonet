@@ -18,7 +18,8 @@ function AdminDetails() {
     }, []);
 
 
-
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const todate=new Date().toLocaleDateString('en-GB', options);
 
     const [admincounts, setadmincounts] = useState()
     const [distributorsCounts, setdistributorsCounts] = useState()
@@ -195,7 +196,7 @@ function AdminDetails() {
                             </div>
                         </div>
                         <div className="mb-2">
-                            <small className={`${style.itopshrink}`}>As on date</small>
+                            <small className={`${style.itopshrink}`}>As on date {todate}</small>
                         </div>
                     </div>
 
@@ -265,7 +266,7 @@ function AdminDetails() {
 
                             </div>
                         </div>
-                        <div className={`${style.rtb}`}><p><b>As on Date</b></p></div>
+                        <div className={`${style.rtb}`}><p><b>As on Date {todate}</b></p></div>
                     </div>
 
 

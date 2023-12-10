@@ -1,10 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ReactDOM } from "react";
 import style from "./UserSubscriptionPage.module.css";
 import { useEffect, useState } from "react";
 import { url_ } from "../../../Config";
 import swal from "sweetalert2";
+import Swal from "sweetalert2";
 // import taxko from "../../Images/Taxko.jpg";
 // import arkonet from "../../Images/Arkonet.jpg";
+import PdfViewerModal from "../PdfViewerModal/PdfViewerModal";
 
 const UserSubscriptionPage = () => {
 
@@ -14,6 +17,20 @@ const UserSubscriptionPage = () => {
   const [isRefferFriend,setIsRefferFriend]=useState(true);
   const [isSuggession,setIsSuggession]=useState(false);
   const [isValidMobile, setIsValidMobile] = useState(true);
+
+  const [readTerm,setReadTerm]=useState(false);
+  const [termConfirm,setTermConfirm]=useState(false);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const pdfUrls = ['https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf']; // Replace with actual PDF URLs
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const storedToken=localStorage.getItem("jwtToken");
 
@@ -51,16 +68,19 @@ const UserSubscriptionPage = () => {
     }
   }
   const GOTO = () => {
+    if(termConfirm)
+    {
     Navigate('subscriptionplan')
-    // , {
-    //   state: {
-    //     clientId: cid,
-    //     clientname: cname,
-    //     clientpan: cpan,
-    //     clientCategory: ccategory,
-    //     clientProfession: cprofession,
-    //   },
-    // });
+
+    }
+    else
+    {
+      Swal.fire({
+        icon:"error",
+        text:"Please view and confirm terms and policies before proceeding..!!"
+      })
+    }
+    
 
   }
 
@@ -151,7 +171,7 @@ const UserSubscriptionPage = () => {
 
   async function fetchData(){
 
-console.log(userInfo.userPAN)
+// console.log(userInfo.userPAN)
 const updateItem={...userInfo};
 
     var myHeaders = new Headers();
@@ -200,7 +220,7 @@ if(response.status===200)
 
 const daysDiff = (Math.floor((new Date(updateItem.end_date)-new Date())/ (1000 * 60 * 60 * 24)))+1;
 
-
+console.log(updateItem)
 
 setUserInfo({...userInfo,
   days_left:daysDiff,
@@ -371,6 +391,16 @@ setUserInfo({...userInfo,
     }
   }
 
+  const handleChildData = (data) => {
+    setTermConfirm(data);
+  };
+
+
+function openTermConditions()
+{
+  setModalIsOpen(true)
+  
+}
 
   useEffect(()=>{
 fetchData();
@@ -407,13 +437,15 @@ fetchData();
           </div>
           <div className={`${style.mainheadtextual}`}>
             {userInfo.end_date===null?``:<p className={`${style.p1}`}>Subscription Ends on</p>}
-            {!userInfo.end_date===null  &&<><p className={`${style.p2}`}>{userInfo.end_date}&nbsp;&nbsp; {userInfo.end_time}</p>
+            {userInfo.end_date!==null  &&<><p className={`${style.p2}`}>{userInfo.end_date}&nbsp;&nbsp; {userInfo.end_time}</p>
             <p className={`${style.sub_details}`}>Selected Pack:&nbsp;&nbsp;{userInfo.pack_type}  
             &nbsp;&nbsp;&nbsp;&nbsp; Amount : &#8377;&nbsp;{userInfo.pack_amount}&nbsp;/- </p></>}
           </div>
           <div className={subscription_status==="on"?`${style.card2} ${style.active_subscription}`:`${style.card2}`}>
             <p className={`${style.cardp} `} onClick={GOTO}> {subscription_status==="on"?`Active`:userInfo.end_date===null?`Subscribe`:`RENEW`}</p>
           </div>
+          <p><Link onClick={openTermConditions}  >View terms of service and privacy policy</Link></p>
+          <PdfViewerModal isOpen={modalIsOpen} onClose={closeModal} onData={handleChildData}/>
         </div>
 
         <div className={`${style.mainneck}`}>

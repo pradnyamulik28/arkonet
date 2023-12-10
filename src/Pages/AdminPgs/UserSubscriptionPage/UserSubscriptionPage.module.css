@@ -354,7 +354,9 @@ ul {
   outline: none;
   border: none;
 }
-
+.confirmterm{
+  color: rgb(213, 21, 21);
+}
 
 
 @media only screen and (max-width: 600px) {

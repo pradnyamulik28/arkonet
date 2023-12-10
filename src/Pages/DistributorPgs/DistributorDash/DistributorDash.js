@@ -9,12 +9,12 @@ function DistributorDash() {
     const Navigate = useNavigate();
     const storedToken = window.localStorage.getItem('jwtToken');
 
-    const todate=new Date().getDate();
-
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const todate=new Date().toLocaleDateString('en-GB', options);
+    
     useEffect(() => {
       Getdistributordata()
     }, []);
-
 
     const [distributorData,setDistributorData]=useState({
         name:localStorage.getItem("distributor_name"),

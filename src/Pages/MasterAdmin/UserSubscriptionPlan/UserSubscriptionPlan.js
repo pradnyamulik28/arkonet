@@ -660,7 +660,7 @@ const UserSubscriptionPage = () => {
                     <div className="d-flex justify-content-center w-100">
                       <div className={`${style.mainadbominal} w-75 mb-3 `}>
                         {
-                          USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.hours <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.minutes <= 0 ? (
+                          (USERSUBSCRIPTIONDATA.USERREMAININGDAYS <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.hours <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.minutes <= 0) ? (
                             <button className={`${style.card3}`}
                               style={{
                                 border: "none",

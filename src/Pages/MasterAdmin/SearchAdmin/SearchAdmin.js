@@ -206,8 +206,8 @@ const SearchAdmin = () => {
                                         <p className={`${style.status} `}>
                                             <i class="fa-solid fa-circle"
                                                 style={
-                                                    subendDate === null ? { color: "#d2cccc" } :
-                                                        subendDate ? { color: "#32e132" } : { color: "#ff0000" }
+                                                    item.substartdatebyuser === null ? { color: "#d2cccc" } :
+                                                        item.status ? { color: "#32e132" } : { color: "#ff0000" }
                                                 }>
 
                                             </i>

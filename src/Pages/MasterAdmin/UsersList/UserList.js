@@ -57,7 +57,6 @@ const UserList = () => {
     `, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        // console.log(result)
         if (userProf === "Distributor List") {
           const filteredData = result.filter(item => item.status === true);
           setuserdata(filteredData)
@@ -75,6 +74,7 @@ const UserList = () => {
   }
 
   const GOTOUserdata = (userid) => {
+    console.log(userid)
     Navigate('Userdata', {
       state: {
         UserId: userid,
@@ -156,7 +156,7 @@ const UserList = () => {
                     onClick={
                       userProf === "Distributor List" ?
                         () => GotoDistributorData(item.id, item.pan) :
-                        () => GOTOUserdata(item.regId)
+                        () => GOTOUserdata(item.userid)
                     } style={{ cursor: "pointer" }}>
                     <p className={`${style.pan} text-primary`}>{item.pan}</p></div>
                   <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.mobile}</p></div>

@@ -31,7 +31,7 @@ const UserData = () => {
     mobile: "",
     email: "",
     office_Address: "",
-    pin_Code: "",
+    pin_code: "",
     state: "",
     whatsApp_Link: "",
     investNow_Email: "",
@@ -48,6 +48,7 @@ const UserData = () => {
 
 
   function GetClient() {
+    console.log(user_id)
     try {
 
       fetch(`${url_}/getuserByid/${user_id}`, {
@@ -69,7 +70,7 @@ const UserData = () => {
             mobile: res.mobile,
             email: res.email,
             office_Address: res.office_Address,
-            pin_Code: res.pin_code,
+            pin_code: res.pin_code,
             state: res.state,
             whatsApp_Link: res.whatsApp_Link,
             investNow_Email: res.investNow_Email,
@@ -380,7 +381,7 @@ const UserData = () => {
               <InputField type='number' placeholder='Enter your Mobile' onChange={handleChange} lblname='Mobile' name='mobile' value={values.mobile} maxLength='10' />
               <InputField placeholder='Enter your Email' onChange={handleChange} lblname='Email' name='email' value={values.email} />
               <InputField placeholder='Enter your office address' onChange={handleChange} lblname='Office Address' name='office_Address' value={values.office_Address} />
-              <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_Code' value={values.pin_Code} />
+              <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_code' value={values.pin_code} />
               <DropDown value_array={States_obj} lblname='State' name='state' value={values.state} onChange={handleChange} />
               <InputField placeholder='Enter your whatsapp link' onChange={handleChange} lblname='Whatsapp Link' name='whatsApp_Link' value={values.whatsApp_Link} />
               <InputField placeholder='Enter your investnow email' onChange={handleChange} lblname='InvestNow Email' name='investNow_Email' value={values.investNow_Email} />

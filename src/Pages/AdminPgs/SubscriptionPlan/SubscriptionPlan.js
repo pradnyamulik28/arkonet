@@ -50,7 +50,9 @@ const SubscriptionPlan = () => {
         }
         else if(!isVisiting && !isPaid){
           const finalPlanArray=result.filter((item)=>{
-            return !item.subtype.includes("Extra")
+            const subtype=item.subtype.toLowerCase();
+            // console.log(subtype)
+            return !subtype.includes("Extra".toLowerCase())
           })
           //console.log(finalPlanArray)
           setPlans(finalPlanArray);
@@ -121,7 +123,7 @@ const SubscriptionPlan = () => {
       
     }
     else{
-      console.log(plans[selectedCheckbox])
+      // console.log(plans[selectedCheckbox])
       Navigate('subcription',
       {state:{subs_pack:plans[selectedCheckbox].subtype,
         subs_amount:plans[selectedCheckbox].subscriptionprice,

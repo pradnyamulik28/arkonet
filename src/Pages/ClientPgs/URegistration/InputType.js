@@ -52,7 +52,7 @@ export default class InputType extends React.Component {
     if (this.props.name === "telephone") {
       properties.maxLength = 11;
     }
-    if(this.props.name === "pin_Code")
+    if(this.props.name === "pin_code")
     {     properties.maxLength=6;
          properties.isValidPIN=this.props.isValidPIN;
      }

@@ -46,7 +46,7 @@ const [email,setEmail]=useState()
     mobile: "",
     email: "",
     office_Address: "",
-    pin_Code: "",
+    pin_code: "",
     state: "",
     whatsApp_Link: "",
     investNow_Email: [],
@@ -120,7 +120,7 @@ const [email,setEmail]=useState()
         break;
 
 
-        case "pin_Code":
+        case "pin_code":
         setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
         e.target.value = value.replace(/\D/g, "");
         // Basic pin code validation
@@ -209,6 +209,7 @@ const [email,setEmail]=useState()
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // console.log(formdata)
 
     if (!formdata.name) {
       setIsNameNull(false);
@@ -231,7 +232,7 @@ const [email,setEmail]=useState()
     setIsValidMobile(mobilePattern.test(formdata.mobile));
 
     const pinPattern = /^[1-9]{1}[0-9]{5}$/;
-    setIsValidPIN(pinPattern.test(formdata.pin_Code));
+    setIsValidPIN(pinPattern.test(formdata.pin_code));
     // Check Password Match
     if (
       formdata.password !== formdata.confirmpassword ||
@@ -271,7 +272,7 @@ const [email,setEmail]=useState()
           mobile: formdata.mobile,
           email: formdata.email,
           office_Address: formdata.office_Address,
-          pin_Code: formdata.pin_Code,
+          pin_code: formdata.pin_code,
           state: formdata.state,
           whatsApp_Link: formdata.whatsApp_Link,
           password: formdata.password,
@@ -311,7 +312,7 @@ const [email,setEmail]=useState()
             mobile: "",
             email: "",
             office_Address: "",
-            pin_Code: "",
+            pin_code: "",
             state: "",
             whatsApp_Link: "",
             investNow_Email: [],
@@ -366,7 +367,7 @@ const [email,setEmail]=useState()
                   strenghtScore={formfield.name === "password" ? strenghtScore : ""}
                   isNameNull={formfield.name === "name" && isNameNull}
                   isValidEmail={formfield.name === "email" && isValidEmail}
-                  isValidPIN={formfield.name === "pin_Code" && isValidPIN}
+                  isValidPIN={formfield.name === "pin_code" && isValidPIN}
                   isValidMobile={formfield.name === "mobile" && isValidMobile}
                   isValidPAN={formfield.name === "pan" && isValidPAN}
                   isPasswordMatch={formfield.name === "confirmpassword" && isPasswordMatch}
