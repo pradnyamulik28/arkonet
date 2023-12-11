@@ -101,11 +101,25 @@ const Adminhome = () => {
               <Route path="/dashboard/tic/myfolder/tallyclient/clienttallyview" element={<Protected Cmp={ClientTallyView} />} />
               <Route path="/dashboard/gstclients/myfolder/tallyclient" element={<Protected Cmp={ClientTallyBackup} />} />
               <Route path="/dashboard/gstclients/myfolder/tallyclient/clienttallyview" element={<Protected Cmp={ClientTallyView} />} />
+              <Route path="/dashboard/clientlist/myfolder/tallyclient" element={<Protected Cmp={ClientTallyBackup} />} />
+              <Route path="/dashboard/clientlist/myfolder/tallyclient/clienttallyview" element={<Protected Cmp={ClientTallyView} />} />
+
 
               <Route path="dashboard" element={<Protected Cmp={Dashboard} />} />
               <Route path="dashboard/clientreg" element={<Protected Cmp={URegistration} />} />
 
               <Route path="dashboard/clientlist" element={<Protected Cmp={ClientList} />} />
+              <Route path="dashboard/clientlist/myfolder" element={<Protected Cmp={MyFolder} />} />
+              <Route path="dashboard/clientlist/myfolder/kycfile" element={<Protected Cmp={KYCFile} />} />
+              <Route path="dashboard/clientlist/myfolder/docfile" element={<Protected Cmp={DOCsFile} />} />
+              <Route path="dashboard/clientlist/myfolder/incomefolder" element={<Protected Cmp={DocFolder} />} />
+              <Route path="dashboard/clientlist/myfolder/incomefolder/fileupload" element={<Protected Cmp={FileUpload} />} />
+              <Route path="dashboard/clientlist/myfolder/gstfolder" element={<Protected Cmp={Gst} />} />
+              <Route path="dashboard/clientlist/myfolder/gstfolder/gstrfolder" element={<Protected Cmp={GstrFolder} />} />
+              <Route path="dashboard/clientlist/myfolder/gstfolder/gstrfolder/gstrfileupload" element={<Protected Cmp={GstrFileUpload} />} />
+
+
+
 
               <Route path="dashboard/tc" element={<Protected Cmp={TotalClient} />} />
               <Route path="dashboard/tc/clientreg" element={<Protected Cmp={URegistration} />} />

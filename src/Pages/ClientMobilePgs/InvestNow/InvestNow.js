@@ -213,7 +213,7 @@ function numberToMonth(number) {
   Contact no : ${localStorage.getItem("mobile")}`;
 
 
-        sendEmail(client_id_it,user_id_it,subject,message,category);
+        sendEmail(client_id_it,user_id_it,subject,message,category,localStorage.getItem("mobile"));
       } else {
         swal.fire({
           icon: "info",
@@ -227,7 +227,7 @@ function numberToMonth(number) {
   }
   }
 
-  async function sendEmail(clientid,userid,subject,body,category)
+  async function sendEmail(clientid,userid,subject,body,category,mobile)
   {
    
     swal.fire({
@@ -250,7 +250,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-try{const response=await fetch(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}&category=${category}`, requestOptions)
+try{const response=await fetch(`${url_}/sendemailclient?clientid=${clientid}&userid=${userid}&subject=${subject}&category=${category}&mobile=${mobile}`, requestOptions)
 const result = await response.text(); 
 if (response.status === 200) {
   swal.close();

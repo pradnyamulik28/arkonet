@@ -19,6 +19,7 @@ import WhatsappChat from "../../components/WhatsappChat/WhatsappChat";
 import Careers from "./Careers/Careers";
 
 import HandShake from "./HandShake/HandShake";
+import TermsPolicy from "./TermsPolicy/TermsPolicy";
 
 
 function HomeRoute() {
@@ -36,7 +37,11 @@ function HomeRoute() {
 
   const [isPanelActive, setIsPanelActive] = useState(false);
 
+  const [isTermOpen, setisTermOpen] = useState(false);
+  const [termOrPrivacy,setTermOrPrivacy]=useState();
+
   const [slideInformation, setSlideInformation] = useState(null);
+  const year=new Date().getFullYear()
 
   const handleClick = (id, slideInfo) => {
     setIsPanelActive(false);
@@ -80,9 +85,7 @@ function HomeRoute() {
 function openBookDemoForm(){
   window.open("https://share.hsforms.com/1Q_HmHyIsQWeBF1G1KQ3kNQqcgs4", '_blank');
 }
-  function handlePanel() {
-    setIsPanelActive(!isPanelActive);
-  }
+
 
   
   return (
@@ -287,7 +290,6 @@ function openBookDemoForm(){
           <Route path="" element={<HomePage />} />
           <Route path="/feature" element={<Konwledge />} />
           <Route path="/subscriptionplan" element={<SubscriptionPlan />} />
-          {/* <Route path="feature/subscriptionplan" element={<SubscriptionPlan />} /> */}
           <Route path="/abouttaxko" element={<DemoVideo />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contactus" element={<ContactUs />} />
@@ -297,7 +299,20 @@ function openBookDemoForm(){
         <ChatBot />
         <WhatsappChat />
        <HandShake />
+      <TermsPolicy isOpen={isTermOpen} onClose={()=>{setisTermOpen(false)}} name={termOrPrivacy}/>
 
+      <div class="container">
+  <footer class="py-2 my-2">
+    <ul class="nav justify-content-center border-bottom pb-1 mb-1">
+      <li class="nav-item"><Link to="" class="nav-link px-2 text-muted">Home</Link></li>
+      <li class="nav-item"><Link class="nav-link px-2 text-muted" onClick={()=>{setTermOrPrivacy("Terms of Service");setisTermOpen(true);}}>Terms of Service</Link></li>
+      <li class="nav-item"><Link class="nav-link px-2 text-muted" onClick={()=>{setTermOrPrivacy("Privacy Policy");setisTermOpen(true);}}>Privacy Policy</Link></li>
+      <li class="nav-item"><Link class="nav-link px-2 text-muted">FAQs</Link></li>
+      <li class="nav-item"><Link to="/aboutus" class="nav-link px-2 text-muted">About</Link></li>
+    </ul>
+   
+  </footer>
+</div>
         <div className={`${style.copyright}`}>
           <div className={`${style.dev}`}>
             <p>Developed & Managed By</p>
@@ -308,6 +323,8 @@ function openBookDemoForm(){
           <div className={`${style.version}`}>
             <p>Version 1.0</p>
           </div>
+          {/* <Footer /> */}
+          
         </div>
       </div>
     </>

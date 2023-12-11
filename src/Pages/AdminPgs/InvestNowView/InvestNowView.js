@@ -54,6 +54,7 @@ const InvestNowView = () => {
               <th scope="col">Name</th>
               <th scope="col">Category</th>
               <th scope="col">Subject</th>
+              <th scope="col">Mobile</th>
               <th scope="col">Date</th>
 
             </tr>
@@ -64,6 +65,7 @@ const InvestNowView = () => {
                 <td>{item.name}</td>
                 <td>{item.category}</td>
                 <td>{item.subject}</td>
+                <td>{item.mobile}</td>
                 <td>{item.date}</td>
               </tr>
             ))}

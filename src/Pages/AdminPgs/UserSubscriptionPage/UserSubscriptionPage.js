@@ -22,7 +22,6 @@ const UserSubscriptionPage = () => {
   const [termConfirm,setTermConfirm]=useState(false);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const pdfUrls = ['https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf']; // Replace with actual PDF URLs
 
   const openModal = () => {
     setModalIsOpen(true);

@@ -1,20 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
+import { pdfjs } from "react-pdf";
 import style from "./PdfViewerModal.module.css";
-import { Worker, Viewer,ScrollMode  } from '@react-pdf-viewer/core';
-// import { zoomPlugin } from '@react-pdf-viewer/zoom';
-// import '@react-pdf-viewer/core/lib/styles/index.css';
-// import '@react-pdf-viewer/zoom/lib/styles/index.css';
-import PDF from "../../../Files/Privacy_Policy.pdf"
-
-import Swal from "sweetalert2";
-
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-
+import { Worker, Viewer,} from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
-// pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`; // Adjust the version and path
+// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+
+import { url_ } from "../../../Config";
+
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
   import.meta.url
@@ -26,50 +19,64 @@ const [isChecked, setIsChecked] = useState(false);
 const [iserror,setError]=useState(false);
 
 
-const termFiles=[
+const [termFiles,setTermFiles]=useState([
   {
     id:"privacy_policy",
     name:"Privacy Policy",
-    file:require("../../../Files/Privacy_Policy.pdf"),
+    file:null,//require("../../../Files/Privacy_Policy.pdf"),
     viewRef:useRef(null),
-    defaultLayoutPluginInstance:defaultLayoutPlugin()
   },
   {
     id:"service_terms",
     name:"Terms of Service",
-    file:require("../../../Files/Terms_of_Service.pdf"),
+    file:null,//require("../../../Files/Terms_of_Service.pdf"),
     viewRef:useRef(null),
-    defaultLayoutPluginInstance:defaultLayoutPlugin()
   }
-]
+])
 
-const storedToken=localStorage.getItem("jwtToken")
   const fetchPdf = async () => {
-    var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${storedToken}`
-    );
+    
+    const updateItem=[...termFiles]
 
     var requestOptions = {
       method: "GET",
-      headers: myHeaders,
       redirect: "follow",
     };
 
    try {
      const response = await fetch(
-       "http://localhost:8085/openfile/1",
+       `${url_}/TermsOfServiceDownload/Privacy_Policy`,
        requestOptions
      );
      if (response.status === 200) {
+
       const result = await response.blob();
       const url = URL.createObjectURL(result);
-       setPdfBlob(url);
+      updateItem[0].file=url
+      
      }
    } catch (error) {
      console.log(error);
    }
+
+
+
+   try {
+    const response = await fetch(
+      `${url_}/TermsOfServiceDownload/Terms_of_Service`,
+      requestOptions
+    );
+    if (response.status === 200) {
+
+     const result = await response.blob();
+     const url = URL.createObjectURL(result);
+     updateItem[1].file=url
+      
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  setTermFiles(updateItem)
   };
  function confirmTheTerms(){
   if(isChecked)
@@ -107,8 +114,6 @@ const storedToken=localStorage.getItem("jwtToken")
                     >
                       <Viewer
                         fileUrl={item.file}
-                        plugins={[item.defaultLayoutPluginInstance]}
-                        ref={item.viewRef}
                       />
                     </Worker>
                   )}

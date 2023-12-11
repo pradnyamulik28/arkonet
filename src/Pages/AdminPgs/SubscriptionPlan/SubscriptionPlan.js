@@ -44,7 +44,7 @@ const SubscriptionPlan = () => {
       const result = await response.json();
       if (response.status === 200) {
         
-       if(isPaid||isVisiting)
+       if(isPaid)
         {
           setPlans(result)
         }

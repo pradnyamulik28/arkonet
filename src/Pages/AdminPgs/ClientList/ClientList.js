@@ -1,6 +1,6 @@
 import styles from '../TotalClients/TotalClient.module.css';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 
 const ClientList = () => {
@@ -12,7 +12,7 @@ const ClientList = () => {
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
 
-
+const Navigate=useNavigate()
   const totalClient = async () => {
 
     try {
@@ -65,6 +65,19 @@ const ClientList = () => {
   useEffect(() => {
     totalClient();
   }, []);
+
+  const Goto = (cid, cname, cpan, ccategory, cprofession) => {
+    Navigate('myfolder', {
+      state: {
+        clientId: cid,
+        clientname: cname,
+        clientpan: cpan,
+        clientCategory: ccategory,
+        clientProfession: cprofession,
+      },
+    });
+
+  }
   function GoBack() {
     window.history.back(); // This will navigate to the previous page in the browser's history
   }
@@ -120,7 +133,7 @@ const ClientList = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{items.name}</td>
-                  <td >{items.pan}</td>
+                  <td onClick={() => Goto(items.clientId, items.name, items.pan, items.category, items.profession)}className='text-primary' style={{ cursor: "pointer" }}>{items.pan}</td>
                   <td>{items.mobile}</td>
                   <td>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope-at" viewBox="0 0 16 16">
