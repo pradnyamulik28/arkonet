@@ -1,0 +1,99 @@
+.mainfooter{
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2vh;
+    color: white;
+    width: 100vw;
+}
+.upperFooter{
+    display: flex;
+    flex-direction: row;
+    background-color: #a0a7af;
+    padding-bottom: 2vh;
+}
+.paragraph p{
+    text-wrap: wrap;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+.column1, .column2, .column3, .column4{
+    width: 20%;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+    display: flex;
+    flex-direction: column;
+}
+.column2{
+    position: relative;
+    left: 5vw;
+}
+.mainfooter a{
+    text-decoration: none;
+    color: white;
+    margin-top: 1vh;
+}
+.column3 a{
+    text-decoration: none;
+    color: white;
+}
+.paragraph{
+    width: 20vw;
+    margin-left: 2.5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    
+}
+.contact i{
+  margin-right: 1vw;  
+  margin-top: 1vw;
+}
+.colmap iframe{
+    border: 5px solid crimson;
+    border-radius: 15px ;
+}
+.imgArkonet img{
+    width: 200px;
+    margin-bottom: 1vh;
+}
+.imgArkonet{
+    display: flex;
+    justify-content: center;
+}
+.links{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+}
+.linkTitle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.logos{
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 2vh;
+}
+.logos i{
+    cursor: pointer;
+}
+.colTile p{
+    font-weight: 700;
+}
+.linkTitle{
+    font-weight: 700;
+    margin-top: 1vh;
+}
+.lowerFooter{
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+    background-color: #8d949b;
+    height: 5vh;
+}

@@ -65,7 +65,9 @@
     justify-content: center;
     text-align: center;
     width: 100%;
-    font-weight: 700  !important;
+    color: black !important;
+    font-weight: 900  !important;
+    font-size: 15px !important;
     margin: 0.5rem,0rem !important;
   }
   .terms{
