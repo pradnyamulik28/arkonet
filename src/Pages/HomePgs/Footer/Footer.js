@@ -56,11 +56,12 @@ function Footer() {
 
         <div className={`${style.column2}`}>
             <div className={`${style.colTile}`}><p classname={`${style.ptitle}`}>Quick Links</p></div>
-            <div className={`${style.ancher}`}><Link to="">Home</Link></div>
-            <div className={`${style.ancher}`}><Link to="/aboutus">About TAXKO</Link></div>
-            <div className={`${style.ancher}`}><Link onClick={()=>{setTermOrPrivacy("Terms of Service");setisTermOpen(true);}}>Terms of Service</Link></div>
+            <div className={`${style.ancher}`}><Link onClick={()=>{setTermOrPrivacy("Disclaimer");setisTermOpen(true);}}>Disclaimer</Link></div>
             <div className={`${style.ancher}`}><Link onClick={()=>{setTermOrPrivacy("Privacy Policy");setisTermOpen(true);}}>Privacy Policy</Link></div>
-            <div className={`${style.ancher}`}><Link >News and Updates</Link></div>
+            <div className={`${style.ancher}`}><Link onClick={()=>{setTermOrPrivacy("Terms Of Service");setisTermOpen(true);}}>Terms of Service </Link></div>
+            <div className={`${style.ancher}`}><Link onClick={()=>{setTermOrPrivacy("Payment Terms of Service");setisTermOpen(true);}}>Payment Terms of Service</Link></div>
+            <div className={`${style.ancher}`}><Link onClick={()=>{setTermOrPrivacy("Payment Privacy Policy");setisTermOpen(true);}}>Payment Privacy Policy</Link></div>
+            <div className={`${style.ancher}`}><Link onClick={()=>{setTermOrPrivacy("Refund Policy");setisTermOpen(true);}}>Refund Policies</Link></div>
         </div>
 
         <div className={`${style.column3}`}>

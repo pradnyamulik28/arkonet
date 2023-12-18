@@ -18,6 +18,7 @@
     text-wrap: wrap;
     margin-bottom: 0.5rem;
     width: 100%;
+    font-size: small;
 }
 .column1, .column2, .column3, .column4{
     width: 20%;
