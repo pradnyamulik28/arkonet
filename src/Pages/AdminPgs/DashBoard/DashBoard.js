@@ -16,6 +16,7 @@ const DashBoard = () => {
   const username = localStorage.getItem("user_name");
   const userpan = localStorage.getItem("pan");
   const userPro = localStorage.getItem("profession");
+  const logintime = TimeConvert(localStorage.getItem("logintime"));
 
 
   const options = { day: "numeric", month: "long", year: "numeric" };
@@ -44,6 +45,19 @@ const DashBoard = () => {
   const user_id = window.localStorage.getItem('user_id');
   const storedToken = window.localStorage.getItem('jwtToken');
 
+  function TimeConvert(ConvertingDate) {
+
+    if (ConvertingDate === null) {
+      return null;
+    } else {
+      const date = new Date(ConvertingDate);
+      const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+      const formattedTime = date.toLocaleTimeString('en-US', options);
+      return formattedTime;
+
+    }
+
+  }
 
   function handleLinkClick(e) {
     const isactive = checkSubscriptionStatus(e);
@@ -365,44 +379,63 @@ const DashBoard = () => {
   const imageSrc = imgcontent ? `data:image/jpeg;base64,${imgcontent}` : imgprofile;
 
   return (
-
-
-
     <div>
       <div className="container">
-        <div className='row'>
-          <div className='col-12 justify-content-center'>
-          <div className={`card mt-4 mb-2 ${styles.cardd1} text-center`} >
-              
-              <div className={`m-3 w-100`}>
-                {/* <h5 className={`card-title font-weight-bold text-primary`}>User Profile</h5> */}
+        <div className="row">
+          <div className="col-12 justify-content-center">
+            <div className={`card mt-4 mb-2 ${styles.cardd1} text-center`}>
+              <div className={`${styles.profilerow} row`}>
+                <div className='col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12'>
                 <div className={`${styles.profileimg}`}>
-            <img src={imageSrc} alt="" className='mt-2 mb-2' />
-            <h3>{username}</h3>
-            <h5>{userpan}</h5>
-            <h6>{userPro}</h6>
-          </div>
+                <img  src={imageSrc} alt="" className="mt-2 mb-2" />                
+                <div style={{"marginLeft":"2rem","textAlign":"left"}}>
+                  <h3>{username}</h3>
+                  <h5>{userpan}</h5>
+                 </div>
+                </div>
+                </div>
+                <div className={`col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ${styles.content}`} >
+                <div className={styles.centrecoloum}>
+                  <h6 className='text-muted '>Profession&nbsp;&nbsp;: {userPro}</h6>                  
+                  {/* <h6 className='text-muted '>Date :  {todate}</h6> */}
+                  <h6 className='text-muted '>&#128337;Login Time&nbsp;&nbsp;: {logintime}</h6>
+                </div>              
                 
+                </div>
               </div>
             </div>
           </div>
-        
         </div>
-<div className="row">
-<div className="col-6">
-<div className={`card m-4 ${styles.cardd} text-center`} >
+        <div className="row">
+          <div className="col-6">
+            <div className={`card m-4 ${styles.cardd} text-center`}>
               <div className={`m-3 w-100 `}>
-                <h5 className={`card-title font-weight-bold ${styles.green}`}>F.Y. {fyyear}</h5>
-                <div className={`${styles.count} d-flex justify-content-around`}>
-                  <Link to="tc" className={` h6 card-link ${styles.black}`}>Total Clients
-                    <h6 className={`${styles.black} font-weight-bold`}>{Totalclient}</h6>
-
+                <h5 className={`card-title font-weight-bold ${styles.green}`}>
+                  F.Y. {fyyear}
+                </h5>
+                <div
+                  className={`${styles.count} d-flex justify-content-around`}
+                >
+                  <Link to="tc" className={` h6 card-link ${styles.black}`}>
+                    Total Clients
+                    <h6 className={`${styles.black} font-weight-bold`}>
+                      {Totalclient}
+                    </h6>
                   </Link>
-                  <Link to="tic" className={`h6 card-link ${styles.green}  `}>Income Tax
-                    <h6 className={`${styles.black} font-weight-bold`}>{TotalIncomeclient}</h6>
+                  <Link to="tic" className={`h6 card-link ${styles.green}  `}>
+                    Income Tax
+                    <h6 className={`${styles.black} font-weight-bold`}>
+                      {TotalIncomeclient}
+                    </h6>
                   </Link>
-                  <Link to="gstclients" className={`h6 card-link text-primary  `}>GST
-                    <h6 className={`${styles.black} font-weight-bold`}>{TotalGSTClients}</h6>
+                  <Link
+                    to="gstclients"
+                    className={`h6 card-link text-primary  `}
+                  >
+                    GST
+                    <h6 className={`${styles.black} font-weight-bold`}>
+                      {TotalGSTClients}
+                    </h6>
                   </Link>
                   {/* <Link to="gstclients" className={`h6 card-link text-primary  `}>Both
                     <h6 className={`${styles.black} font-weight-bold`}>{TotalGSTClients}</h6>
@@ -420,7 +453,7 @@ const DashBoard = () => {
                     value="ADD CLIENT"
                     className={` h6 ${styles.abtn}`}
                   />
-                </Link> 
+                </Link>
                 {/* <Link
                   // to="clientreg"
                   className={
@@ -437,123 +470,189 @@ const DashBoard = () => {
                   
                 </Link>    */}
                 {/* <ExcelToJsonConverter />           */}
-                </div>
-
+              </div>
             </div>
 
-
-
-
-            <div className={`card m-4 ${styles.cardd} `} >
-
+            <div className={`card m-4 ${styles.cardd} `}>
               <div className={`m-4 w-100`}>
                 <div className="top d-flex justify-content-between">
-                  <h3 className={`card-title font-weight-bold ${styles.green} `}>Income Tax</h3>
-                  <h3><i className={`fa-solid fa-ellipsis-vertical ${styles.green} `}  ></i></h3>
+                  <h3
+                    className={`card-title font-weight-bold ${styles.green} `}
+                  >
+                    Income Tax
+                  </h3>
+                  <h3>
+                    <i
+                      className={`fa-solid fa-ellipsis-vertical ${styles.green} `}
+                    ></i>
+                  </h3>
                 </div>
-                <div >
-
-                  <table className={`${styles.table} table text-center font-weight-bold`}>
+                <div>
+                  <table
+                    className={`${styles.table} table text-center font-weight-bold`}
+                  >
                     <thead>
                       <tr>
-                        <th scope="col" >Assessment Year</th>
-                        <th scope="col" className={`${styles.green} `}>Filed</th>
-                        <th scope="col" className={`text-danger `}>Not Filed</th>
+                        <th scope="col">Assessment Year</th>
+                        <th scope="col" className={`${styles.green} `}>
+                          Filed
+                        </th>
+                        <th scope="col" className={`text-danger `}>
+                          Not Filed
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       {filedata.map((items, index) => {
                         return (
-                          <tr key={index} >
+                          <tr key={index}>
                             <td>{items.accountyear}</td>
-                            <td className={`${styles.green} `} onClick={() => GOTO("IncomeFD", items.accountyear)} style={{ cursor: "pointer" }}>{items.filed}</td>
-                            <td className={`text-danger `} onClick={() => GOTO("IncomeNFD", items.accountyear)} style={{ cursor: "pointer" }}>{items.notfiled}</td>
+                            <td
+                              className={`${styles.green} `}
+                              onClick={() =>
+                                GOTO("IncomeFD", items.accountyear)
+                              }
+                              style={{ cursor: "pointer" }}
+                            >
+                              {items.filed}
+                            </td>
+                            <td
+                              className={`text-danger `}
+                              onClick={() =>
+                                GOTO("IncomeNFD", items.accountyear)
+                              }
+                              style={{ cursor: "pointer" }}
+                            >
+                              {items.notfiled}
+                            </td>
                           </tr>
                         );
                       })}
                     </tbody>
                   </table>
 
-                  <small >Last updated on {incomelatestupdatedata}</small>
-
-
+                  <small>Last updated on {incomelatestupdatedata}</small>
                 </div>
               </div>
             </div>
-</div>
-<div className="col-6">
-{/* <div className={`card m-4 ${styles.cardd} text-center`} >
-              
-              <div className={`m-3 w-100`}>
-                <h5 className={`card-title font-weight-bold text-primary`}>User Profile</h5>
-                <div className={`${styles.profileimg}`}>
-            <img src={imgprofile} alt="" className='mt-4 mb-4' />
-            <h3>{username}</h3>
-            <h5>{userpan}</h5>
-            <h6>{userPro}</h6>
           </div>
-                
-              </div>
-            </div> */}
+          <div className="col-6">
 
-
-            
-
-
-<div className={`card m-4 ${styles.cardd} text-center`} >
-            <h2 className='ml-4'>&lt;</h2>
+            <div className={`card m-4 ${styles.cardd} text-center`}>
+              <h2 className="ml-4">&lt;</h2>
               <div className={`m-3 w-100`}>
-                
-          <h5 className={`card-title font-weight-bold text-primary`}>FY {fyyear}</h5>
+                <h5 className={`card-title font-weight-bold text-primary`}>
+                  FY {fyyear}
+                </h5>
                 <div className={styles.count}>
-                  <div className={`h6 card-link ${styles.black}`}>Total Bill<h6 className={`${styles.black} font-weight-bold`}>{TotalclientPayment}</h6></div>
-                  <div className={`h6 card-link ${styles.black}`}>Received<h6 className={`${styles.green} font-weight-bold`}>{TotalClientsreceivedPayment}
-                  </h6></div>
-                  <div className={`h6 card-link ${styles.black}`} style={{ cursor: "pointer" }} onClick={() => GOTO("Pending", fyyear)}>Pending<h6 className={`text-danger font-weight-bold`}>{TotalclientpendingPayment}
-                  </h6></div>
-                  <div className={`h6 card-link ${styles.black}`} style={{ cursor: "pointer" }} onClick={() => GOTO("Pending", fyyear)}>Discount<h6 className={`text-success font-weight-bold`}>{TotalClientsdiscountPayment}
-                  </h6></div>
+                  <div className={`h6 card-link ${styles.black}`}>
+                    Total Bill
+                    <h6 className={`${styles.black} font-weight-bold`}>
+                      {TotalclientPayment}
+                    </h6>
+                  </div>
+                  <div className={`h6 card-link ${styles.black}`}>
+                    Received
+                    <h6 className={`${styles.green} font-weight-bold`}>
+                      {TotalClientsreceivedPayment}
+                    </h6>
+                  </div>
+                  <div
+                    className={`h6 card-link ${styles.black}`}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => GOTO("Pending", fyyear)}
+                  >
+                    Pending
+                    <h6 className={`text-danger font-weight-bold`}>
+                      {TotalclientpendingPayment}
+                    </h6>
+                  </div>
+                  <div
+                    className={`h6 card-link ${styles.black}`}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => GOTO("Pending", fyyear)}
+                  >
+                    Discount
+                    <h6 className={`text-success font-weight-bold`}>
+                      {TotalClientsdiscountPayment}
+                    </h6>
+                  </div>
                 </div>
-                <h6 className={`${styles.green} text-primary`}>As on {todate}</h6>
+                <h6 className={`${styles.green} text-primary`}>
+                  As on {todate}
+                </h6>
               </div>
             </div>
 
-
-
-            <div className={`card mt-4 ${styles.gst_cardd} `} >
-
+            <div className={`card mt-4 ${styles.gst_cardd} `}>
               <div className={`m-4 w-100`}>
                 <div className="top d-flex justify-content-between">
-                  <h3 className={`card-title font-weight-bold text-primary `}>GST</h3>
-                  <h3><i className={`fa-solid fa-ellipsis-vertical  text-primary`}  ></i></h3>
+                  <h3 className={`card-title font-weight-bold text-primary `}>
+                    GST
+                  </h3>
+                  <h3>
+                    <i
+                      className={`fa-solid fa-ellipsis-vertical  text-primary`}
+                    ></i>
+                  </h3>
                 </div>
-                <div >
+                <div>
                   <table className={`${styles.table} table font-weight-bold`}>
                     <thead>
                       <tr>
-
                         <th></th>
-                        <th colSpan="2" ><h4 className='font-weight-bold text-primary'>GSTR-1</h4></th>
-                        <th colSpan="2" ><h4 className='font-weight-bold text-primary'>GSTR-3B</h4></th>
+                        <th colSpan="2">
+                          <h4 className="font-weight-bold text-primary">
+                            GSTR-1
+                          </h4>
+                        </th>
+                        <th colSpan="2">
+                          <h4 className="font-weight-bold text-primary">
+                            GSTR-3B
+                          </h4>
+                        </th>
                       </tr>
                       <tr>
-                        <th className='font-weight-bold '>MONTH</th>
+                        <th className="font-weight-bold ">MONTH</th>
                         <th className={`text-success`}>Filed</th>
                         <th className={`text-danger`}>Not Filed</th>
                         <th className={`text-success`}>Filed</th>
                         <th className={`text-danger`}>Not Filed</th>
-
                       </tr>
                     </thead>
                     <tbody>
                       {displayData.map((items, index) => {
                         return (
                           <tr key={index}>
-                            <td className='text-black ' >{items.month}</td>
-                            <td className=' text-success  text-center' onClick={() => GOTO("GSTR1FD", items.month)} style={{ cursor: "pointer" }}>{items.GSTR1FD}</td>
-                            <td className=' text-danger text-center' onClick={() => GOTO("GSTR1NFD", items.month)} style={{ cursor: "pointer" }}>{items.GSTR1NFD}</td>
-                            <td className=' text-success text-center' onClick={() => GOTO("GSTR3BFD", items.month)} style={{ cursor: "pointer" }}>{items.GSTR3BFD}</td>
-                            <td className=' text-danger text-center' onClick={() => GOTO("GSTR3BNFD", items.month)} style={{ cursor: "pointer" }}>{items.GSTR3BNFD}</td>
+                            <td className="text-black ">{items.month}</td>
+                            <td
+                              className=" text-success  text-center"
+                              onClick={() => GOTO("GSTR1FD", items.month)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {items.GSTR1FD}
+                            </td>
+                            <td
+                              className=" text-danger text-center"
+                              onClick={() => GOTO("GSTR1NFD", items.month)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {items.GSTR1NFD}
+                            </td>
+                            <td
+                              className=" text-success text-center"
+                              onClick={() => GOTO("GSTR3BFD", items.month)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {items.GSTR3BFD}
+                            </td>
+                            <td
+                              className=" text-danger text-center"
+                              onClick={() => GOTO("GSTR3BNFD", items.month)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {items.GSTR3BNFD}
+                            </td>
                           </tr>
                         );
                       })}
@@ -561,13 +660,13 @@ const DashBoard = () => {
                   </table>
 
                   <div className="top d-flex justify-content-between">
-                    <small >Last updated on {gstlatestupdatedata}</small>
+                    <small>Last updated on {gstlatestupdatedata}</small>
                     {showAll ? (
                       <h6>
                         <span
                           className={`font-weight-bold text-primary`}
                           onClick={() => setShowAll(false)}
-                          style={{ cursor: 'pointer' }}
+                          style={{ cursor: "pointer" }}
                         >
                           Less...
                         </span>
@@ -577,25 +676,20 @@ const DashBoard = () => {
                         <span
                           className={`font-weight-bold text-primary`}
                           onClick={() => setShowAll(true)}
-                          style={{ cursor: 'pointer' }}
+                          style={{ cursor: "pointer" }}
                         >
                           More...
                         </span>
                       </h6>
                     )}
                   </div>
-
                 </div>
               </div>
             </div>
-</div>
-
-
-</div>
-        
-
+          </div>
+        </div>
       </div>
-    </div >
+    </div>
   );
 }
 

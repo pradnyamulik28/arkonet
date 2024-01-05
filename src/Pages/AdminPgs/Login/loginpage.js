@@ -155,6 +155,7 @@ const Loginpage = ({ setLoggedIn }) => {
         localStorage.setItem('mobile', user_mobile);
         localStorage.setItem('pan', user_pan);
         localStorage.setItem('profession', user_profession);
+        localStorage.setItem('logintime',new Date())
 
 
         const sub_status = await checkSubscriptionStatus();//console.log(sub_status)

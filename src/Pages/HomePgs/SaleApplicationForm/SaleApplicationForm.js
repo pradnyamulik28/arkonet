@@ -100,7 +100,7 @@ else{
     const subject = "Job Application for Sale manager";
 
     var formdata = new FormData();
-    formdata.append("recipient", "txkspprt@gmail.com");//"change mail to : contact@arkonetglobal.com"
+    formdata.append("recipient", "contact@arkonetglobal.com");//"change mail to : contact@arkonetglobal.com"
     formdata.append("text", formattedMsg);
     formdata.append("subject", subject);
     formdata.append("attachmentFileName", "resume_cv");
