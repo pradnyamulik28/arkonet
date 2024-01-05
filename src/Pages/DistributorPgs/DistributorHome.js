@@ -16,17 +16,17 @@ function DistributorHome() {
   return (
     <div>
       <div className="container-fluid">
-       
+
         <div className="row">
           <div className={`col-sm-3 col-md-3 col-lg-3 col-xl-3`}>
             <DistributorSideBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           </div>
 
-          <div className={`w-75`}>
+          <div className={`col-sm-9 col-md-9 col-lg-9 col-xl-9`}>
             <Routes>
-              <Route path="" element={<DistributorLogIn setLoggedIn={setLoggedIn}/>} />
-              <Route path="distributor_reg" element={<DistributorRegistration setLoggedIn={setLoggedIn} />}/>
-              <Route path="update/distributor_reg" element={<DistributorRegistration />}/>
+              <Route path="" element={<DistributorLogIn setLoggedIn={setLoggedIn} />} />
+              <Route path="distributor_reg" element={<DistributorRegistration setLoggedIn={setLoggedIn} />} />
+              <Route path="update/distributor_reg" element={<DistributorRegistration />} />
               <Route path="/distributor_dash" element={<DistributorDash />} />
               <Route path="/distributor_dash/userview" element={<ViewUsers />} />
               <Route path="/distributor_dash/userviewc" element={<ViewUserCategory />} />

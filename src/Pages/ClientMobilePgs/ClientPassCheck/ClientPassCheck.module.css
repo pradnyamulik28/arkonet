@@ -33,9 +33,11 @@ body{
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
-    margin-bottom: 4rem;/*old value 4rem*/
+    margin-bottom: 4rem;
+    /*old value 4rem*/
 }
-.header_otp{
+
+.header_otp {
     margin-bottom: 0rem;
 }
 
@@ -44,35 +46,40 @@ body{
 }
 
 
-.port{
+.port {
     display: flex;
     flex-direction: column;
-  }
-  .reset{
+}
+
+.reset {
     display: flex;
     flex-direction: column;
     margin-left: auto;
     margin-right: 15vw;
     margin-bottom: 2vh;
     text-decoration: underline;
-  }
-  .otpcluster{
+}
+
+.otpcluster {
     display: flex;
     flex-direction: row;
-  }
-  .otpcluster .o{
+}
+
+.otpcluster .o {
     font-size: 95%;
     font-weight: 500;
-  }
-  .optinp {
+}
+
+.optinp {
     width: 80%;
     height: 2.5rem;
     border-radius: 8px;
     border: 1px solid gainsboro;
     box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     transition: all 200ms ease-out;
-  }
-  .btnvr {
+}
+
+.btnvr {
     border: none;
     color: white;
     width: 5rem;
@@ -83,12 +90,13 @@ body{
     background-color: #ffd901;
     box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
-  }
-  .otpcluster {
+}
+
+.otpcluster {
     margin-bottom: 10%;
     margin-left: 2rem;
     width: 75%;
-  }
+}
 
 .inputs {
     display: flex;
@@ -96,7 +104,7 @@ body{
     align-items: center;
     width: 70%;
     width: 100vw;
-    
+
 }
 
 
@@ -105,9 +113,11 @@ body{
     width: 70%;
     flex-direction: column;
     align-items: flex-start;
-    margin: 3rem;/*old value only 3rem*/
+    margin: 3rem;
+    /*old value only 3rem*/
 }
-.form_opt{
+
+.form_opt {
     margin: 1rem 3rem;
 }
 
@@ -162,12 +172,14 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 3rem;/*old value 3rem*/
+    margin-bottom: 3rem;
+    /*old value 3rem*/
 }
 
-.button_opt{
+.button_opt {
     margin-bottom: 0.5rem;
 }
+
 /* button{
 
     color: white;
@@ -184,7 +196,7 @@ body{
     font-family: 'Rubik', sans-serif;
     box-shadow: 0 5px 3px 0 rgb(0 0 0 / 20%), 0 5px 25px 0 rgb(111 111 111 / 19%);
 } */
-img {
+.ClientPassImg img {
     width: 9rem;
 }
 
@@ -205,9 +217,9 @@ img {
 
 .disabled_fields {
     pointer-events: none;
-     /* Change the color to indicate it's disabled */
+    /* Change the color to indicate it's disabled */
     /* Add any other styling to indicate it's disabled */
-  }
+}
 
 #forgot {
     color: #ffd401;

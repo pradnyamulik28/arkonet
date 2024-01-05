@@ -517,7 +517,7 @@ const FileUpload = () => {
             <div className="uphead">
               <div className="row">
                 <div className="col">
-                  <h1 className='d-flex align-items-center'>
+                  <h1 className={`d-flex align-items-center ${style.h1}`}>
                     <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
                       &#8617;&nbsp;
                     </div>

@@ -3,6 +3,11 @@
   flex-direction: column;
   align-items: center;
 }
+.profileimg img{
+  width: 10rem;
+  height: 10rem;
+    }
+  
 
 .myfolder_btn {
   /* justify-content: space-evenly; */

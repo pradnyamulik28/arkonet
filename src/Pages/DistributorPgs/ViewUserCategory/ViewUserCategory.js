@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 const ViewUserCategory = () => {
-    const Navigate = useNavigate()
+    // const Navigate = useNavigate()
     const userProf = useLocation().state.userProfession;
     const storedToken = window.localStorage.getItem('jwtToken');
-  const distributor_pan=localStorage.getItem("pan")
+    const distributor_pan = localStorage.getItem("pan")
 
     // console.log(userProf)
     useEffect(() => {
@@ -80,7 +80,7 @@ const ViewUserCategory = () => {
                         setsubendDate(false)
                     }
                 }
-                
+
             })
             .catch((error) => {
                 console.log(error);
@@ -90,16 +90,16 @@ const ViewUserCategory = () => {
     function GoBack() {
         window.history.back(); // This will navigate to the previous page in the browser's history
     }
-    
-    const GOTOUserdata = (userid) => {
-        Navigate('Userdata', {
-            state: {
-                UserId: userid,
 
-            },
-        });
+    // const GOTOUserdata = (userid) => {
+    //     Navigate('Userdata', {
+    //         state: {
+    //             UserId: userid,
 
-    }
+    //         },
+    //     });
+
+    // }
     return (
 
 
@@ -132,63 +132,66 @@ const ViewUserCategory = () => {
                 {/* Top Port Ends */}
 
                 {/* Bottom Port Starts */}
-                <div className={`${style.bottom} `}>
 
-                    <div className={`${style.drow} `}>
-                        <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>
-                        <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>Admin Name</p></div>
-                        <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
-                        <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
-                        <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>
+                <div style={{ backgroundColor: "#fefbec", borderRadius: "1.5rem", marginTop: "20px", width: "95%", height: "100%" }} className='d-flex justify-content-center'>
+
+
+                    <div style={{ overflow: "auto", width: "95%" }} className={`${style.VUCtable}`}>
+                        <table>
+                            <thead>
+                                <tr className='text-warning'>
+                                    <th>Sr. No</th>
+                                    <th>Admin Name</th>
+                                    <th>PAN</th>
+                                    <th>Mobile</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+
+
+
+
+                                    userdata.filter(item =>
+                                        item.registration.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                        item.registration.pan.toLowerCase().includes(searchQuery.toLowerCase())
+
+                                    )
+
+
+                                        .map((item, index) => (
+
+
+                                            <tr>
+                                                <td>{index + 1}</td>
+                                                <td>{item.registration.name}</td>
+                                                <td>{item.registration.pan}</td>
+                                                <td>{item.registration.mobile}</td>
+                                                <td>
+                                                    <i class="fa-solid fa-circle"
+                                                        style={
+                                                            subendDate === null ? { color: "#d2cccc" } :
+                                                                subendDate ? { color: "#32e132" } : { color: "#ff0000" }
+                                                        }>
+
+                                                    </i>
+                                                </td>
+                                            </tr>
+
+                                        ))
+
+
+
+
+                                }
+
+                            </tbody>
+                        </table>
                     </div>
 
-
-                    {
-
-
-
-
-                        userdata.filter(item =>
-                            item.registration.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            item.registration.pan.toLowerCase().includes(searchQuery.toLowerCase())
-
-                        )
-
-
-                            .map((item, index) => (
-
-
-
-                                <div className={`${style.ddata} `}>
-                                    <div className={`${style.name} `} ><p className={`${style.srno} `}>{index + 1}</p></div>
-                                    <div className={`${style.name} `} ><p className={`${style.an} `}>{item.registration.name}</p></div>
-                                    <div className={`${style.name} `} ><p className={`${style.pan} text-primary`}>{item.registration.pan}</p></div>
-                                    <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.registration.mobile}</p></div>
-                                    <div className={`${style.name} `} >
-                                        <p className={`${style.status} `}>
-                                            <i class="fa-solid fa-circle"
-                                                style={
-                                                    subendDate === null ? { color: "#d2cccc" } :
-                                                        subendDate ? { color: "#32e132" } : { color: "#ff0000" }
-                                                }>
-
-                                            </i>
-                                        </p>
-                                    </div>
-                                </div>
-
-                            ))
-
-
-
-
-                    }
-
-
-
-
-
                 </div>
+
                 {/* Bottom Port Ends */}
 
 

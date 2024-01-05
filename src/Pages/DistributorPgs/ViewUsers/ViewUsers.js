@@ -10,9 +10,9 @@ const ViewUsers = () => {
   const Navigate = useNavigate()
   const userProf = useLocation().state.userProfession;
   const storedToken = window.localStorage.getItem('jwtToken');
-  const distributor_pan=localStorage.getItem("pan")
+  const distributor_pan = localStorage.getItem("pan")
 
-  
+
   useEffect(() => {
     GetUserDATA();
   }, []);
@@ -38,7 +38,7 @@ const ViewUsers = () => {
       redirect: 'follow'
 
     };
-    
+
     await fetch(`
         
         
@@ -55,25 +55,25 @@ const ViewUsers = () => {
                       userProf === "Month's Renewal" ? `${url_}/Renewal/month/distrubutor/${distributor_pan}` :
                         userProf === "3 Months's Renewal" ? `${url_}/Renewal/threemonth/distrubutor/${distributor_pan}` :
                           userProf === "6 Months's Renewal" ? `${url_}/Renewal/sixmonth/distrubutor/${distributor_pan}` :
-                
+
                             null}
 
     `, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result)
-        const filteredData=result.filter((item)=>{
-          if(new Date(item.subendtdate)<(new Date().getDate())){
+        const filteredData = result.filter((item) => {
+          if (new Date(item.subendtdate) < (new Date().getDate())) {
             return false
           }
-          else{
+          else {
             return true
           }
         })
         // console.log(filteredData)
         setuserdata(filteredData)
 
-        
+
       })
       .catch((error) => {
         console.log(error);
@@ -84,7 +84,7 @@ const ViewUsers = () => {
     window.history.back(); // This will navigate to the previous page in the browser's history
   }
 
-  
+
   return (
 
 
@@ -117,49 +117,70 @@ const ViewUsers = () => {
         {/* Top Port Ends */}
 
         {/* Bottom Port Starts */}
-        <div className={`${style.bottom} `}>
 
-          <div className={`${style.drow} `}>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>Admin Name</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>
+        <div style={{ backgroundColor: "#fefbec", borderRadius: "1.5rem", marginTop: "20px", width: "95%", height: "100%" }} className='d-flex justify-content-center'>
+
+
+          <div style={{ overflow: "auto", width: "95%" }} className={`${style.VUtable}`}>
+            <table>
+              <thead>
+                <tr className='text-warning'>
+                  <th>Sr. No</th>
+                  <th>Admin Name</th>
+                  <th>PAN</th>
+                  <th>Mobile</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+
+
+
+
+                  userdata
+                    .filter(item =>
+                      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      item.pan.toLowerCase().includes(searchQuery.toLowerCase())
+
+                    )
+
+
+                    .map((item, index) => (
+
+
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>{item.name}</td>
+                        <td>{item.pan}</td>
+                        <td>{item.mobile}</td>
+                        <td>
+                          <i class="fa-solid fa-circle" style={{ color: item.paid ? "#32e132" : "#ff0000" }}></i>
+                        </td>
+                      </tr>
+
+                    ))
+
+
+
+
+                }
+
+                {/* <tr>
+                  <td>1</td>
+                  <td>Pavan Jidimath</td>
+                  <td>PAVAN1999M</td>
+                  <td>9307110950</td>
+                  <td>
+                    <i class="fa-solid fa-circle" style={{ color: true ? "#32e132" : "#ff0000" }}></i>
+                  </td>
+                </tr> */}
+
+              </tbody>
+            </table>
           </div>
 
-
-          {
-            
-            
-            userdata
-              .filter(item =>
-                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                item.pan.toLowerCase().includes(searchQuery.toLowerCase())
-
-              )
-
-
-              .map((item, index) => (
-
-
-
-                <div className={`${style.ddata} `}>
-                  <div className={`${style.name} `} ><p className={`${style.srno} `}>{index + 1}</p></div>
-                  <div className={`${style.name} `} ><p className={`${style.an} `}>{item.name}</p></div>
-                  <div className={`${style.name} `}  ><p className={`${style.pan} text-primary`}>{item.pan}</p></div>
-                  <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.mobile}</p></div>
-                  <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.paid ? "#32e132" : "#ff0000" }}></i></p></div>
-                </div>
-
-              ))
-          }
-
-
-
-
         </div>
-      
-
 
       </div>
 

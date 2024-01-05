@@ -4,18 +4,18 @@ import { url_ } from '../../../Config';
 
 
 const InvestNowView = () => {
- 
+
   const { title } = useParams();
   useEffect(() => {
 
     InvestNowMailView();
-  }, []);
+  });
 
-  
+
   const distributor_mail = window.localStorage.getItem('email');
   const storedToken = window.localStorage.getItem('jwtToken');
   const [InvestNowClientdata, setInvestNowClientdata] = useState([]);
-  
+
   const InvestNowMailView = () => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Await, useNavigate } from "react-router-dom";
 import style from "./UserSubscriptionPlan.module.css";
 import { useEffect, useState } from "react";
 import { url_ } from "../../../Config";
@@ -38,10 +38,11 @@ const UserSubscriptionPage = () => {
     USERSUBENDIME: "",
     USERSUBTIMELEFT: "",
     USERID: useLocation().state.USERSUBID,
-    USERPAN: useLocation().state.USERSUBPAN
+    USERPAN: useLocation().state.USERSUBPAN,
+   
 
   });
-  // console.log(USERSUBSCRIPTIONDATA.USERID, USERSUBSCRIPTIONDATA.USERPAN)
+  console.log(USERSUBSCRIPTIONDATA.USERID, USERSUBSCRIPTIONDATA.USERPAN)
 
   const storedToken = localStorage.getItem("jwtToken");
 
@@ -182,6 +183,7 @@ const UserSubscriptionPage = () => {
       const hours = parseInt(timeDiff / 60);
       const minutes = timeDiff % 60;
 
+      console.log(hours, minutes)
 
 
       return { hours, minutes };
@@ -229,7 +231,7 @@ const UserSubscriptionPage = () => {
         USERREMAININGDAYS: CalculateRemainingDays(result.subscriptionData.subendtdate),
         USERSUBENDIME: TimeConvert(result.getSubendtdate),
         USERSUBTIMELEFT: getTimeDifference(result.getSubendtdate, result.getSubendtdate),
-        USERID: result.subscriptionData.userid,
+        USERID: result.subscriptionData.id,
         USERPAN: result.subscriptionData.pan,
 
 
@@ -400,8 +402,14 @@ const UserSubscriptionPage = () => {
       const result = await response.text();
       console.log(result);
       if (response.status === 200) {
-        await swal.fire("Success.", `${result}`, "success")
-        // console.log(result);
+       await swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Trial activated.!',
+          showConfirmButton: false,
+          timer: 7000
+        });
+        
         window.location.reload();
 
 
@@ -462,7 +470,7 @@ const UserSubscriptionPage = () => {
     setEndDate(end);
   };
 
-  const handleDaysChange = (e) => {
+  const handleDaysChange = (e,maxdays) => {
 
 
     // console.log(dayss)
@@ -475,8 +483,8 @@ const UserSubscriptionPage = () => {
       if (dayss < 0) {
         swal.fire("Error", "Value should be greater than 0", "error");
         setAddedDays(0);
-      } else if (dayss > 30) {
-        swal.fire("Error", "Value should be less than or equal to 30", "error");
+      } else if (dayss > maxdays) {
+        swal.fire("Error", `Value should be less than or equal to ${maxdays}`, "error");
         setAddedDays(0);
       } else {
         setAddedDays(days);
@@ -571,8 +579,89 @@ const UserSubscriptionPage = () => {
     setCurreantDATE(formattedDate)
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////
+function trialactivation(){
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This client will be given trial of 15 days.!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, activate!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      activateTrial()
+    }
+  });
+}
+  async function activateTrial() {
+
+    
+    
+    const blob = new Blob([''], { type: 'application/pdf' });
+
+    // Create a File object from the blob
+    const emptyFile = new File([blob], 'empty_file_attatchment.pdf');
+
+    const message = `Dear Accounts Team,
+  Greeting from TAXKO!
+
+  I hope this message finds you well. 
+  
+  Our client ${USERSUBSCRIPTIONDATA.USERNAME}, has been given trail subscription. Please assist the client in proceeding with the subscription purchase at your earliest convenience.
+                    
+  Best regards,
+
+  ${USERSUBSCRIPTIONDATA.USERNAME},
+  Contact no : ${USERSUBSCRIPTIONDATA.USERMOBILE}`;
 
 
+    const formattedMsg = message.replace(/\n/g, '<br>')
+    // console.log(message)
+
+    
+
+
+    
+    var myHeaders = new Headers();
+    myHeaders['Content-Type'] = 'multipart/form-data';
+
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var formdata = new FormData();
+    formdata.append("aceesclient", 250);
+    formdata.append("userid", USERSUBSCRIPTIONDATA.USERID);
+    formdata.append("attachmentContent", emptyFile);
+    formdata.append("subscriptionprice", 0);
+    formdata.append("subscriptiontype", "Trial");
+    formdata.append("subject", "Trial Pack Subscription");
+    formdata.append("text", formattedMsg);
+
+    var requestOptions = {
+      method: "PUT",
+      headers: myHeaders,
+      body: formdata,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(`${url_}/Subscription/${USERSUBSCRIPTIONDATA.USERPAN}`, requestOptions);
+      const result = await response.text();
+
+
+      if (response.status === 200) {
+        swal.close();
+        await ApproveUserSubscription();       
+        
+      } else {
+        swal.close();
+        swal.fire("Failed!", `${result}`, "error");
+      }
+    } catch (error) {
+      swal.close();
+      swal.fire("Failed!", `${error}`, "error");
+    }
+  }
 
 
   return (
@@ -615,7 +704,17 @@ const UserSubscriptionPage = () => {
           {USERSUBSCRIPTIONDATA.USERSUBSTARTDATEBYUSER === null ?
             (
               <div className={`w-100 mt-3 d-flex justify-content-center`}>
-                <h5><b>User not subscribed...</b></h5>
+                {/* <h5><b>User not subscribed...</b></h5> */}
+                <span
+                          className={`${style.card3}`}
+                          style={{
+                            border: "none",
+                            backgroundColor: "#ffd402",
+                          }}
+
+                        >
+                <p className={`${style.cardp} `} onClick={trialactivation}>Activate Trial</p>
+                        </span>
               </div>
             ) : (
               <div className={`w-100 `}>
@@ -660,6 +759,7 @@ const UserSubscriptionPage = () => {
                     <div className="d-flex justify-content-center w-100">
                       <div className={`${style.mainadbominal} w-75 mb-3 `}>
                         {
+                          (USERSUBSCRIPTIONDATA.USERREMAININGDAYS < 0)||
                           (USERSUBSCRIPTIONDATA.USERREMAININGDAYS <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.hours <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.minutes <= 0) ? (
                             <button className={`${style.card3}`}
                               style={{
@@ -711,10 +811,10 @@ const UserSubscriptionPage = () => {
                                         <input
                                           type="text"
                                           value={addedDays}
-                                          onChange={handleDaysChange}
+                                          onChange={(e)=>{handleDaysChange(e,USERSUBSCRIPTIONDATA.USERSUBSCRIPTIONTYPE==="Trial"?15:30)}}
                                           placeholder="Add days"
                                           min={0}
-                                          max={30}
+                                          max={USERSUBSCRIPTIONDATA.USERSUBSCRIPTIONTYPE==="Trial"?15:30}
                                         />
                                       </div>
                                       {/* <div className={`${style.inputs}`}>

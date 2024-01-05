@@ -211,6 +211,11 @@ console.log("newelements : ",updateMails.length)
         }),
       })
         .then(res => {
+          localStorage.setItem('user_name', values.name);
+        localStorage.setItem('mobile', values.mobile);
+        localStorage.setItem('profession', values.profession);  
+
+        
           deleteMails();
           updateInvestMails();
           swal("Success", "Data updated successfully.", "success");
@@ -498,7 +503,7 @@ console.log("newelements : ",updateMails.length)
     <div>
       <div className={styles.right}>
         <div className={`${styles.regtitle} d-flex justify-content-around m-4`}>
-          <span> USER UPDATE FORM</span>
+          <span> C.A UPDATE FORM</span>
           <div className={`${styles.btn_submit} `}>
             <button type="submit" onClick={handleSubmit}>
               UPDATE

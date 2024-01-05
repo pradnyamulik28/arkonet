@@ -8,20 +8,20 @@ import InputType from "./InputType"
 import PaymentDetails from '../PaymentDetails/PaymentDetails';
 
 const DistributorRegistration = ({ setLoggedIn }) => {
-  
-  const location=useLocation();
+
+  const location = useLocation();
   const Navigate = useNavigate();
-  const storedToken=localStorage.getItem("jwtToken");
-  const distributor_id=localStorage.getItem("distributor_id");
- 
-  const [formfields,setFormFields]=useState(Formfields);
+  const storedToken = localStorage.getItem("jwtToken");
+  const distributor_id = localStorage.getItem("distributor_id");
 
-  const [formStatus,setFormStatus]=useState("registration")//state : "registration"/"update"
+  const [formfields, setFormFields] = useState(Formfields);
+
+  const [formStatus, setFormStatus] = useState("registration")//state : "registration"/"update"
 
 
 
-  useEffect(()=>{
-    
+  useEffect(() => {
+
     switch (location.pathname) {
       case "/distributor/distributor_reg":
         setFormFields(Formfields);
@@ -31,8 +31,8 @@ const DistributorRegistration = ({ setLoggedIn }) => {
 
       case "/distributor/update/distributor_reg":
         //Remove Password Fields If Update
-        const filteredFields=formfields.filter((item)=>{
-          if(item.name==="password" || item.name==="confirmpassword"){
+        const filteredFields = formfields.filter((item) => {
+          if (item.name === "password" || item.name === "confirmpassword") {
             return false
           }
           else return true;
@@ -45,8 +45,8 @@ const DistributorRegistration = ({ setLoggedIn }) => {
       default:
         break;
     }
-      },[formStatus]);
- 
+  }, [formStatus]);
+
 
   const [strenghtScore, setStrenghtScore] = useState("null");
   const zxcvbn = require("zxcvbn");
@@ -59,42 +59,42 @@ const DistributorRegistration = ({ setLoggedIn }) => {
   const [isValidPAN, setIsValidPAN] = useState(true);
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
 
-  const [isAddressNull,setIsAddressNull]=useState(true);
+  const [isAddressNull, setIsAddressNull] = useState(true);
   const [isValidPIN, setIsValidPIN] = useState(true);
   const [isStateNull, setIsStateNull] = useState(true);
 
-  
+
   const [formdata, setFormdata] = useState({
-    name:null,
-    datebirth:null,
-    profession:null,
-    pan:null,
-    telephone:null,
-    mobile:null,
-    address:null,
-    email:null,
-    pin_code:null,
-    state:null,
-    whatsApp_Link:null,
-    password:null,
+    name: null,
+    datebirth: null,
+    profession: null,
+    pan: null,
+    telephone: null,
+    mobile: null,
+    address: null,
+    email: null,
+    pin_code: null,
+    state: null,
+    whatsApp_Link: null,
+    password: null,
     confirmpassword: null
   });
 
-  
-useEffect(()=>{
-     
-   
 
-},[])
+  useEffect(() => {
 
 
-async function getDistributorData(){
 
-  //Disable PAN Field 
-  const inputElementpan = document.getElementsByName('pan', 'text');
-    
+  }, [])
+
+
+  async function getDistributorData() {
+
+    //Disable PAN Field 
+    const inputElementpan = document.getElementsByName('pan', 'text');
+
     if (inputElementpan.length) {
-        inputElementpan[0].disabled  = true;
+      inputElementpan[0].disabled = true;
     }
 
 
@@ -115,15 +115,15 @@ async function getDistributorData(){
     const result = await response.json();
     if (response.status === 200) {
       // console.log(result);
-     
-      
+
+
       setFormdata(result);
     }
 
-    
 
 
-}
+
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -181,18 +181,18 @@ async function getDistributorData(){
         break;
 
 
-        case "address":
-          setFormdata({ ...formdata, [e.target.name]: e.target.value });
-          if (!e.target.value) {
-            setIsAddressNull(false);
-          }
-          else {
-            setIsAddressNull(true);
-          }
-          break;
+      case "address":
+        setFormdata({ ...formdata, [e.target.name]: e.target.value });
+        if (!e.target.value) {
+          setIsAddressNull(false);
+        }
+        else {
+          setIsAddressNull(true);
+        }
+        break;
 
 
-        case "pin_code":
+      case "pin_code":
         setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
         e.target.value = value.replace(/\D/g, "");
         // Basic pin code validation
@@ -201,7 +201,7 @@ async function getDistributorData(){
         break;
 
 
-        case "state":
+      case "state":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
         if (!e.target.value) {
           setIsStateNull(false);
@@ -266,10 +266,10 @@ async function getDistributorData(){
     if (!formdata.profession) {
       setIsProfessionNull(false);
     }
-    if(!formdata.address){
+    if (!formdata.address) {
       setIsAddressNull(false)
     }
-    if(!formdata.state){
+    if (!formdata.state) {
       setIsStateNull(false)
     }
 
@@ -288,7 +288,7 @@ async function getDistributorData(){
     const pinPattern = /^[1-9]{1}[0-9]{5}$/;
     setIsValidPIN(pinPattern.test(formdata.pin_code));
 
-   
+
 
     // Check Form Fields
     if (
@@ -297,10 +297,10 @@ async function getDistributorData(){
       !isValidPAN ||
       !isValidMobile ||
       !isValidEmail ||
-      !isAddressNull||
-      !isStateNull||
+      !isAddressNull ||
+      !isStateNull ||
       !isValidPIN
-     
+
     ) {
       swal.fire("Failed!", "Please fill the mandatory fields!!", "error");
       console.log(formdata);
@@ -374,10 +374,10 @@ async function getDistributorData(){
     if (!formdata.profession) {
       setIsProfessionNull(false);
     }
-    if(!formdata.address){
+    if (!formdata.address) {
       setIsAddressNull(false)
     }
-    if(!formdata.state){
+    if (!formdata.state) {
       setIsStateNull(false)
     }
 
@@ -412,9 +412,9 @@ async function getDistributorData(){
       !isValidPAN ||
       !isValidMobile ||
       !isValidEmail ||
-      !isAddressNull||
-      !isStateNull||
-      !isValidPIN||
+      !isAddressNull ||
+      !isStateNull ||
+      !isValidPIN ||
       !isPasswordMatch
     ) {
       swal.fire("Failed!", "Please fill the mandatory fields!!", "error");
@@ -475,17 +475,17 @@ async function getDistributorData(){
       }
     }
   };
-  
+
 
 
   return (
     <div>
       <div className={styles.right}>
         <div className={`${styles.regtitle} d-flex justify-content-around mb-2`}>
-          {formStatus==="registration"?<span> DISTRIBUTOR REGISTRATION FORM</span>:
-          formStatus==="update"&&<span> DISTRIBUTOR UPDATE FORM</span>}
-         {formStatus==="registration" &&<Link to="/distributor/"  ><span>Login</span></Link>}
-          {formStatus==="update" && <Link onClick={handleUpdateForm}><span>Update</span></Link> }
+          {formStatus === "registration" ? <span> DISTRIBUTOR REGISTRATION FORM</span> :
+            formStatus === "update" && <span> DISTRIBUTOR UPDATE FORM</span>}
+          {formStatus === "registration" && <Link to="/distributor/"  ><span>Login</span></Link>}
+          {formStatus === "update" && <Link onClick={handleUpdateForm}><span>Update</span></Link>}
         </div>
         <div className={styles.regform}>
           <form action="" onSubmit={handleSubmit}>
@@ -508,14 +508,14 @@ async function getDistributorData(){
                   isAddressNull={formfield.name === "address" && isAddressNull}
                   isValidPIN={formfield.name === "pin_code" && isValidPIN}
                   isStateNull={formfield.name === "state" && isStateNull}
-                  
+
                   isValidMobile={formfield.name === "mobile" && isValidMobile}
                   isValidPAN={formfield.name === "pan" && isValidPAN}
                   isPasswordMatch={formfield.name === "confirmpassword" && isPasswordMatch}
                   isProfessionNull={formfield.name === "profession" && isProfessionNull}
                 />
               ))}
-              {formStatus==="registration"&&<div className={`${styles.btn_submit} mt-4`}>
+              {formStatus === "registration" && <div className={`${styles.btn_submit} mt-4`}>
                 <button type="submit" onClick={handleSubmit}>
                   SUBMIT
                 </button>
@@ -523,13 +523,13 @@ async function getDistributorData(){
             </div>
           </form>
         </div>
-         
+
       </div>
-      
-      {formStatus==="update"&&
-      
-      <PaymentDetails />}
-      
+
+      {formStatus === "update" &&
+
+        <PaymentDetails />}
+
     </div>
   );
 }

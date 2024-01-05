@@ -171,11 +171,11 @@ function AdminDetails() {
                         </div> */}
 
                         <div className="mt-3">
-                            <h5 className={`${style.itopheadersmall} `}>ADMIN</h5>
+                            <h5 className={`${style.itopheadersmall} `}>USERS</h5>
                         </div>
                         <div className="d-flex justify-content-around w-100">
                             <div className="d-flex flex-column align-items-center" style={{ cursor: "pointer" }} >
-                                <h6 className={`${style.itoppara}`}>Total Admin</h6>
+                                <h6 className={`${style.itoppara}`}>Total C.A</h6>
                                 <h3 className={`${style.itopheaderlarge}`} onClick={() => {
                                     Navigate("searchadmin", {
                                         state: {
@@ -202,11 +202,11 @@ function AdminDetails() {
 
                     <div className={`${style.lbottom} `}>
                         <div className={`${style.lbotcontaint} `}>
-                            <div className={`${style.rt} `} ><h4 className={`${style.lboth2}`}><b>ADMIN DETAILS</b></h4></div>
+                            <div className={`${style.rt} `} ><h4 className={`${style.lboth2}`}><b>C.A DETAILS</b></h4></div>
                             <div className={`${style.tabular} `}>
 
                                 <div className={`${style.sinrow}`}>
-                                    <div className={`${style.title} mt-4 mb-3`}><h5>ADMIN TYPE</h5></div>
+                                    <div className={`${style.title} mt-4 mb-3`}><h5>C.A TYPE</h5></div>
                                     {/* <div className={`${style.value}`}></div> */}
                                 </div>
 

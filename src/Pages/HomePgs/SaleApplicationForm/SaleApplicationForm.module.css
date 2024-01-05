@@ -1,0 +1,9 @@
+.btn{
+    background-color: #fed300;
+    font-weight: 500;
+    color: #fff;
+}
+.saleform label::after {
+    content: " *";
+    color: #f88379;
+}

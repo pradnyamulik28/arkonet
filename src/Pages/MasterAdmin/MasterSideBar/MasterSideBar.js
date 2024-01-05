@@ -89,7 +89,7 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                         </Link>
 
                         <div onClick={() => handleLinkClick('searchadmin')}>
-                            <h6 className={activeLink === 'searchadmin' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Admins</h6>
+                            <h6 className={activeLink === 'searchadmin' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>C.A</h6>
                         </div>
 
                         <div onClick={() => handleLinkClick('clientview')}>

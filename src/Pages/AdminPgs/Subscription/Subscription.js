@@ -1,30 +1,30 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import style from './Subscription.module.css'; // Import the CSS module for styling
 import ImageModal from '../../../components/ImageModal/ImageModal'; // Import the ImageModal component
 import taxko from "../../../Images/Taxko.jpg";
-import arkonet from "../../../Images/Arkonet.jpg";
+import qrCodeimg from "../../../Images/ARKONET QRCODE.jpg";
 import swal from 'sweetalert2';
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
 
 const Subscription = () => {
-  const subscription_status=localStorage.getItem('subscription_status');
+  const subscription_status = localStorage.getItem('subscription_status');
 
-const Navigate=useNavigate()
-  const {subs_pack,subs_amount,no_of_client}=useLocation().state;
-  console.log(subs_pack,subs_amount,no_of_client);
+  const Navigate = useNavigate()
+  const { subs_pack, subs_amount, no_of_client } = useLocation().state;
+  console.log(subs_pack, subs_amount, no_of_client);
 
-  const userInfo={
-    userid:localStorage.getItem("user_id"),
-    userPAN:localStorage.getItem("pan"),
-    jwtToken:localStorage.getItem("jwtToken")
+  const userInfo = {
+    userid: localStorage.getItem("user_id"),
+    userPAN: localStorage.getItem("pan"),
+    jwtToken: localStorage.getItem("jwtToken")
   }
 
 
   const [modalVisible, setModalVisible] = useState(false);
   const fileInputRef = useRef(null);
-  const [selectedFile,setSelectedFile]=useState(null);
-  const maxSize=10;
+  const [selectedFile, setSelectedFile] = useState(null);
+  const maxSize = 10;
 
   const handleClick = () => {
     setModalVisible(true);
@@ -34,14 +34,14 @@ const Navigate=useNavigate()
     setModalVisible(false);
   };
 
-  function handleFileChange(e){
+  function handleFileChange(e) {
     const file = e.target.files[0];
-    if(file){
+    if (file) {
       const fileSizeInBytes = file.size;
-    const fileSizeInKb = fileSizeInBytes / 1024;
-    const fileSizeInMb = fileSizeInKb / 1024;
+      const fileSizeInKb = fileSizeInBytes / 1024;
+      const fileSizeInMb = fileSizeInKb / 1024;
       //console.log(fileSizeInBytes,":",fileSizeInKb+":",fileSizeInMb);
-      if (fileSizeInMb > maxSize){
+      if (fileSizeInMb > maxSize) {
         swal.fire({
           title: `Select file with a size less than ${maxSize} MB.`,
           text: 'Click OK to open a file reducer website in a new tab',
@@ -50,24 +50,23 @@ const Navigate=useNavigate()
           confirmButtonText: 'OK',
         }).then((result) => {
           if (result.isConfirmed) {
-            if(file.type === "image/jpeg" ||
-            file.type === "image/jpg" ||
-            file.type === "image/png" )
-            {
+            if (file.type === "image/jpeg" ||
+              file.type === "image/jpg" ||
+              file.type === "image/png") {
               window.open("https://www.reduceimages.com/", '_blank');
             }
-           
-            else{
+
+            else {
               window.open("https://www.ilovepdf.com/compress_pdf", '_blank');
             }
             fileInputRef.current.value = '';
           }
-          else{
+          else {
             fileInputRef.current.value = '';
           }
         });
       }
-      else{
+      else {
         const renamedFile = new File([file], `Payment_Acknowledgement.${file.type.split("/")[1]}`, {
           type: file.type,
         });
@@ -78,11 +77,11 @@ const Navigate=useNavigate()
           file.name.endsWith(".pdf")
         ) {
           const reader = new FileReader();
-    
-          reader.onload = (e) => {            
-            const binaryData = e.target.result;           
+
+          reader.onload = (e) => {
+            const binaryData = e.target.result;
             setSelectedFile(renamedFile);
-            
+
           };
           reader.readAsDataURL(file);
         }
@@ -124,8 +123,8 @@ const Navigate=useNavigate()
   Contact no : ${localStorage.getItem("mobile")}`;
 
 
-  const formattedMsg=message.replace(/\n/g, '<br>')
-// console.log(message)
+    const formattedMsg = message.replace(/\n/g, '<br>')
+    // console.log(message)
 
     swal.fire({
       title: 'Sending Acknowledgement',
@@ -158,9 +157,9 @@ const Navigate=useNavigate()
       redirect: "follow",
     };
 
-    try{
-      const response= await fetch(`${url_}/Subscription/${userInfo.userPAN}`, requestOptions);
-      const result=await response.text();
+    try {
+      const response = await fetch(`${url_}/Subscription/${userInfo.userPAN}`, requestOptions);
+      const result = await response.text();
 
 
       if (response.status === 200) {
@@ -169,26 +168,26 @@ const Navigate=useNavigate()
           position: 'center',
           icon: 'success',
           title: 'Acknowledgement Submitted.!',
-          text:"Thank you for payment.Your subscription will be activated soon.",
+          text: "Thank you for payment.Your subscription will be activated soon.",
           showConfirmButton: false,
           timer: 7000
-        }); 
-        if(subscription_status==="not_subscribed" || subscription_status==="off")
-        {
+        });
+        if (subscription_status === "not_subscribed" || subscription_status === "off") {
 
         }
-        else{
+        else {
           Navigate('/admin/dashboard');
         }
-       
-        
-      } else {  
+
+
+      } else {
         swal.close();
         swal.fire("Failed!", `${result}`, "error");
-      }}catch(error){
-        swal.close();
-        swal.fire("Failed!", `${error}`, "error");
       }
+    } catch (error) {
+      swal.close();
+      swal.fire("Failed!", `${error}`, "error");
+    }
   }
 
 
@@ -214,18 +213,26 @@ const Navigate=useNavigate()
             <div className={`${style.title}`}>
               <p className={`${style.titlepara}`}>QR CODE</p>
             </div>
-            <div className={`${style.value} d-flex align-items-center`}>
+            <div className={`${style.value} d-flex align-items-center`} data-toggle="modal" data-target=".bd-example-modal-lg">
               <h1 className={`${style.h11}`}><i class="fa-solid fa-qrcode" onClick={handleClick}></i></h1>
               <h6>(Click me to Scan/Pay)</h6>
             </div>
           </div>
-          {modalVisible && (
-            <ImageModal
-              imageSrc={arkonet} // Replace 'arkonet' with the appropriate image source
-              imageAlt="Arkonet"
-              closeModal={closeModal}
-            />
-          )}
+          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  {/* <h5 class="modal-title" id="exampleModalLabel">New message</h5> */}
+                  <span type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </span>
+                </div>
+                <div className='d-flex justify-content-center'>
+                  <img src={qrCodeimg} alt="QR Code...." style={{ width: "30rem" }} />
+                </div>
+              </div>
+            </div>
+          </div>
           <p className={`${style.pline}`} ></p>
 
           <div className={`${style.mainneck}`}>
@@ -296,9 +303,9 @@ const Navigate=useNavigate()
             <div className={`${style.rightcont}`}>
               <div className={`${style.rightconttop} mt-4`}>
                 <label htmlFor="file">
-                  <input className={`${style.input1}`} ref={fileInputRef} type="file" id='file' onChange={handleFileChange}/>
+                  <input className={`${style.input1}`} ref={fileInputRef} type="file" id='file' onChange={handleFileChange} />
                   <div className={`${style.card1}`}><p className={`${style.cardtext}`}>Upload here</p></div>
-                  <h6 className={`${style.h}`}>{selectedFile?selectedFile.name:"jpeg, pdf fromat accepted"}</h6></label>
+                  <h6 className={`${style.h}`}>{selectedFile ? selectedFile.name : "jpeg, pdf fromat accepted"}</h6></label>
               </div>
 
             </div>

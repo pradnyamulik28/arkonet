@@ -44,7 +44,7 @@ const GstrFolder = () => {
     <div className="container">
       <div className="row">
         <div className="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 mt-5" id={styles.maindiv}>
-          <h1 className='d-flex align-items-center'>
+          <h1 className={`d-flex align-items-center ${styles.h1}`}>
             <div className='text-black' style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
               &#8617;&nbsp;
             </div>

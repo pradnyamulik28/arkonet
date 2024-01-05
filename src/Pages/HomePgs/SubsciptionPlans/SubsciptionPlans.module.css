@@ -1,0 +1,125 @@
+.title{
+    display: flex;
+}
+
+.table{
+    margin: 1rem 0;
+    background: #fff;
+    width: 100%;
+    padding: 30px 30px;
+    position: relative;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.table .price_section{
+    display: flex;
+    justify-content: center;
+}
+
+.basic ::selection, .basic .price_area, .basic .inner_area {
+    background: #ffd861;
+}
+.basic .price_area, .basic .inner_area {
+    background: #ffd861;
+}
+.price_section .price_area {
+    height: 120px;
+    width: 120px;
+    background: #ffd861;
+    border-radius: 50%;
+    padding: 2px;
+}
+.price_section .price_area .inner_area {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    color: #fff;
+    line-height: 117px;
+    text-align: center;
+    position: relative;
+}
+.price_area .inner_area .text {
+    font-size: 25px;
+    font-weight: 400;
+    position: absolute;
+    top: -10px;
+    left: 17px;
+}
+.price_area .inner_area .price {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+
+.basic .package_name {
+    background: #ffecb3;
+}
+.table .package_name {
+    width: 100%;
+    height: 2px;
+    background: #ffecb3;
+    margin: 35px 0;
+    position: relative;
+}
+
+
+.basic .package_name::before {
+    content: "Details";
+}
+.table .package_name::before {
+    position: absolute;
+    content: "Details";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    font-size: 25px;
+    padding: 0 10px;
+    font-weight: bolder;
+}
+
+.table .features li {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.features li .list_name {
+    font-size: 17px;
+    font-weight: 400;
+}
+.features li .icon {
+    font-size: 15px;
+}
+.features li .icon.check {
+    color: #2db94d;
+}
+.features li .icon.cross {
+    color: #cd3241;
+}
+
+
+.custom_coursepage_title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* height: 400px; */
+    /* margin-top: -30px; */
+   color: #fff;
+  }
+
+  .plancontainer{
+    width: 100%;
+    padding: 1rem 3rem;
+    justify-content: center;
+    /* margin: 1rem 0; */
+    background: #3f62c2;
+    background: -moz-linear-gradient(-45deg, #3f62c2 0%, #7db9e8 100%);
+    background: -webkit-linear-gradient(-45deg, #3f62c2 0%,#7db9e8 100%);
+    background: linear-gradient(135deg, #3f62c2 0%,#7db9e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f62c2', endColorstr='#7db9e8',GradientType=1 );
+  }

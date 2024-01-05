@@ -113,7 +113,7 @@ const UserList = () => {
         <div className={`${style.top} `}>
           <div className={`${style.inputbox} `}>
             <div className={`${style.seachbox} `}>
-              <input type="search" className={`${style.inputbox} `} placeholder='Search Admin By PAN/Name'
+              <input type="search" className={`${style.inputbox} `} placeholder='Search C.A By PAN/Name'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
@@ -129,7 +129,7 @@ const UserList = () => {
 
           <div className={`${style.drow} `}>
             <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>{userProf === "Distributor List" ? "Distributor" : "Admin Name"}</p></div>
+            <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>{userProf === "Distributor List" ? "Distributor" : "C.A Name"}</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>

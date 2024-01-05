@@ -226,7 +226,13 @@ if(month<3){await fetch(`${url_}/GST_Statusfilednotfiled/${user_id_gst}/${client
   }
 
   async function getITFilestatus() {
-    const currentYear = new Date().getFullYear();
+    let currentYear = new Date().getFullYear();
+    const currentMonth=new Date().getMonth();
+
+    //if Month is Jan,Feb or March 
+    if(currentMonth<3){    
+      currentYear=currentYear-1
+    }
     const lastFewYears = [];
     for (let i = 0; i < 3; i++) { 
       

@@ -4,12 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import Swal from 'sweetalert2';
+import imgprofile from '../../../Images/profile.png'
+// import ExcelToJsonConverter from '../BulkImport/ExcelToJsonConverter';
 
 const DashBoard = () => {
 
   const [subscription_status, setSubscriptionStatus] = useState();
 
   // const subscription_status = localStorage.getItem(`subscription_status`)
+
+  const username = localStorage.getItem("user_name");
+  const userpan = localStorage.getItem("pan");
+  const userPro = localStorage.getItem("profession");
+
+
+  const options = { day: "numeric", month: "long", year: "numeric" };
+  const todate = new Date().toLocaleDateString("en-GB", options);
 
   const Navigate = useNavigate();
   const [Totalclient, setTotalclient] = useState();
@@ -129,7 +139,12 @@ const DashBoard = () => {
   }, []);
 
 
-  const currentYear = new Date().getFullYear();
+  let currentYear = new Date().getFullYear();
+  const currentMonth=new Date().getMonth();
+
+    if(currentMonth<3){    
+      currentYear=currentYear-1
+    }
   const fyyear = `${currentYear}-${(currentYear + 1).toString().slice(-2)}`
 
 
@@ -179,6 +194,7 @@ const DashBoard = () => {
       fetch(`${url_}/filedNotfiledCounts/${user_id}`, requestOptions)
         .then(response => response.json())
         .then(data => {
+          console.log(data)
           // const sortedData = data.sort((a, b) => b.accountyear.localeCompare(a.accountyear));
           setFiledata(data)
           // console.log(data)
@@ -236,7 +252,7 @@ const DashBoard = () => {
 
       const response = await fetch(`${url_}/getGSTData?userid=${user_id}`, requestOptions);
       const result = await response.json();
-      // console.log(result);
+      console.log(result);
 
 
       let data = [];
@@ -320,16 +336,61 @@ const DashBoard = () => {
 
   }
 
+  const [imgcontent,setImgContent]=useState(null)
+
+  function getProfileImage() {
+    try {
+
+      fetch(`${url_}/getpaymentDetails/${user_id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${storedToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(res => {            
+          setImgContent(res.content)   
+
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    } catch (error) {
+      console.warn("Error on function calling...")
+    }
+  }
+
+  useEffect(()=>{getProfileImage()},[])
+  const imageSrc = imgcontent ? `data:image/jpeg;base64,${imgcontent}` : imgprofile;
+
   return (
 
 
 
     <div>
       <div className="container">
-
-        <div className="row">
-          <div className="col-6">
-            <div className={`card m-4 ${styles.cardd} text-center`} >
+        <div className='row'>
+          <div className='col-12 justify-content-center'>
+          <div className={`card mt-4 mb-2 ${styles.cardd1} text-center`} >
+              
+              <div className={`m-3 w-100`}>
+                {/* <h5 className={`card-title font-weight-bold text-primary`}>User Profile</h5> */}
+                <div className={`${styles.profileimg}`}>
+            <img src={imageSrc} alt="" className='mt-2 mb-2' />
+            <h3>{username}</h3>
+            <h5>{userpan}</h5>
+            <h6>{userPro}</h6>
+          </div>
+                
+              </div>
+            </div>
+          </div>
+        
+        </div>
+<div className="row">
+<div className="col-6">
+<div className={`card m-4 ${styles.cardd} text-center`} >
               <div className={`m-3 w-100 `}>
                 <h5 className={`card-title font-weight-bold ${styles.green}`}>F.Y. {fyyear}</h5>
                 <div className={`${styles.count} d-flex justify-content-around`}>
@@ -359,37 +420,30 @@ const DashBoard = () => {
                     value="ADD CLIENT"
                     className={` h6 ${styles.abtn}`}
                   />
-                </Link>              </div>
-
-            </div>
-          </div>
-          <div className="col-6">
-            <div className={`card m-4 ${styles.cardd} text-center`} >
-              <h2 className='ml-4'>&lt;</h2>
-              <div className={`m-3 w-100`}>
-                <h5 className={`card-title font-weight-bold text-primary`}>FY {fyyear}</h5>
-                <div className={styles.count}>
-                  <div className={`h6 card-link ${styles.black}`}>Total Bill<h6 className={`${styles.black} font-weight-bold`}>{TotalclientPayment}</h6></div>
-                  <div className={`h6 card-link ${styles.black}`}>Received<h6 className={`${styles.green} font-weight-bold`}>{TotalClientsreceivedPayment}
-                  </h6></div>
-                  <div className={`h6 card-link ${styles.black}`} style={{ cursor: "pointer" }} onClick={() => GOTO("Pending", fyyear)}>Pending<h6 className={`text-danger font-weight-bold`}>{TotalclientpendingPayment}
-                  </h6></div>
-                  <div className={`h6 card-link ${styles.black}`} style={{ cursor: "pointer" }} onClick={() => GOTO("Pending", fyyear)}>Discount<h6 className={`text-success font-weight-bold`}>{TotalClientsdiscountPayment}
-                  </h6></div>
+                </Link> 
+                {/* <Link
+                  // to="clientreg"
+                  className={
+                    subscription_status === "on" ? `` : `${styles.btndisable}`
+                  }
+                  style={{"marginLeft":"6px"}}
+                  // onClick={handleLinkClick}
+                >
+                  <input
+                    type="submit"
+                    value="BULK IMPORT"
+                    className={` h6 ${styles.abtn}`}
+                  />
+                  
+                </Link>    */}
+                {/* <ExcelToJsonConverter />           */}
                 </div>
-                <h6 className={`${styles.green} text-primary`}>As on date</h6>
-              </div>
+
             </div>
-          </div>
-
-        </div>
 
 
 
 
-        <div className="row ">
-
-          <div className="col-6">
             <div className={`card m-4 ${styles.cardd} `} >
 
               <div className={`m-4 w-100`}>
@@ -426,12 +480,46 @@ const DashBoard = () => {
                 </div>
               </div>
             </div>
+</div>
+<div className="col-6">
+{/* <div className={`card m-4 ${styles.cardd} text-center`} >
+              
+              <div className={`m-3 w-100`}>
+                <h5 className={`card-title font-weight-bold text-primary`}>User Profile</h5>
+                <div className={`${styles.profileimg}`}>
+            <img src={imgprofile} alt="" className='mt-4 mb-4' />
+            <h3>{username}</h3>
+            <h5>{userpan}</h5>
+            <h6>{userPro}</h6>
           </div>
+                
+              </div>
+            </div> */}
 
 
-          {/* /////////////////////////////////////////////////////////////// */}
+            
 
-          <div className="col-6">
+
+<div className={`card m-4 ${styles.cardd} text-center`} >
+            <h2 className='ml-4'>&lt;</h2>
+              <div className={`m-3 w-100`}>
+                
+          <h5 className={`card-title font-weight-bold text-primary`}>FY {fyyear}</h5>
+                <div className={styles.count}>
+                  <div className={`h6 card-link ${styles.black}`}>Total Bill<h6 className={`${styles.black} font-weight-bold`}>{TotalclientPayment}</h6></div>
+                  <div className={`h6 card-link ${styles.black}`}>Received<h6 className={`${styles.green} font-weight-bold`}>{TotalClientsreceivedPayment}
+                  </h6></div>
+                  <div className={`h6 card-link ${styles.black}`} style={{ cursor: "pointer" }} onClick={() => GOTO("Pending", fyyear)}>Pending<h6 className={`text-danger font-weight-bold`}>{TotalclientpendingPayment}
+                  </h6></div>
+                  <div className={`h6 card-link ${styles.black}`} style={{ cursor: "pointer" }} onClick={() => GOTO("Pending", fyyear)}>Discount<h6 className={`text-success font-weight-bold`}>{TotalClientsdiscountPayment}
+                  </h6></div>
+                </div>
+                <h6 className={`${styles.green} text-primary`}>As on {todate}</h6>
+              </div>
+            </div>
+
+
+
             <div className={`card mt-4 ${styles.gst_cardd} `} >
 
               <div className={`m-4 w-100`}>
@@ -500,8 +588,11 @@ const DashBoard = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+</div>
+
+
+</div>
+        
 
       </div>
     </div >

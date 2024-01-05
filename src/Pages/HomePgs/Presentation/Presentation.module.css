@@ -4,7 +4,12 @@
 
 
 /* On full screen mode */
+.maincontainer{
+  width:"80%";
+  text-align: center;
+  /* background-image: url("../../../Images/mainbg.jpg"); */
 
+}
 .outercontainer * {
   margin: 0;
   padding: 0;

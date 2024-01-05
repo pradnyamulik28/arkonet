@@ -549,3 +549,124 @@
 //   )
 // }
 // export default PaymentDetails;
+
+
+
+import style from '../../DistributorPgs/ViewUserCategory/ViewUserCategory.module.css';
+
+
+
+const Test = () => {
+
+
+
+
+
+
+
+
+  return (
+
+
+    <div className="d-flex w-100 ">
+
+
+      <div className={`${style.workport} `}>
+
+        {/* Top Port Starts */}
+        <h2 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
+          <div style={{ fontSize: "xxx-large", cursor: "pointer" }} >
+            &#8617;&nbsp;
+          </div>
+          <b>hi</b>
+          <div>
+          </div>
+        </h2>
+        <div className={`${style.top} `}>
+          <div className={`${style.inputbox} `}>
+            <div className={`${style.seachbox} `}>
+              <input type="search" className={`${style.inputbox} `} placeholder='Search Admin By PAN/Name'
+              // value={searchQuery}
+              // onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <div className={`${style.seachlogo} `}>
+              <h1><i class="fa-solid fa-magnifying-glass"></i></h1>
+            </div>
+          </div>
+        </div>
+        {/* Top Port Ends */}
+
+        {/* Bottom Port Starts */}
+        {/* <div style={{ overflowX: "auto", height: "100%" }} className='d-flex w-100 justify-content-center '>
+
+          <div className={`${style.bottom} `} >
+
+
+
+            <div className={`${style.drow} `}>
+              <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>
+              <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>Admin Name</p></div>
+              <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
+              <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
+              <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>
+            </div>
+
+
+
+            <div className={`${style.ddata} `}>
+              <div className={`${style.name} `} ><p className={`${style.srno} `}>1</p></div>
+              <div className={`${style.name} `} ><p className={`${style.an} `}>PAVAN</p></div>
+              <div className={`${style.name} `}  ><p className={`${style.pan} text-primary`}>PAVAN1999D</p></div>
+              <div className={`${style.name} `} ><p className={`${style.mobile} `}>9657812062</p></div>
+              <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: true ? "#32e132" : "#ff0000" }}></i></p></div>
+            </div>
+
+
+
+
+          </div>
+
+        </div> */}
+        {/* Bottom Port Ends */}
+        {/* ////////////////////////////////////// */}
+
+        <div style={{ backgroundColor: "#fefbec", borderRadius: "1.5rem", marginTop: "20px", width: "95%", height: "100%" }} className='d-flex justify-content-center'>
+
+
+          <div style={{ overflow: "auto", width: "95%" }}>
+            <table>
+              <thead>
+                <tr className='text-warning'>
+                  <th>Sr. No</th>
+                  <th>Admin Name</th>
+                  <th>PAN</th>
+                  <th>Mobile</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Pavan Jidimath</td>
+                  <td>Row 1, Cell 3</td>
+                  <td>Row 1, Cell 4</td>
+                  <td>Row 1, Cell 5</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        {/* ////////////////////////////////////// */}
+
+      </div>
+
+    </div >
+
+
+  );
+}
+
+export default Test;

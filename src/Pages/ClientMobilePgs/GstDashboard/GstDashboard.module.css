@@ -1,4 +1,4 @@
-  .row1{
+  .row1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,10 +7,12 @@
     height: 100%;
     width: 100vw;
   }
-  .headerbar{
+
+  .headerbar {
     margin-top: 2rem;
   }
-  .mobileport{
+
+  .mobileport {
     width: 90vw;
     height: auto;
     display: flex;
@@ -18,73 +20,86 @@
     justify-content: center;
     margin-left: 2rem;
   }
-  .gstport{
-    background-color: rgba(238,247,254,255);
+
+  .gstport {
+    background-color: rgba(238, 247, 254, 255);
     height: 80%;
     border-radius: 2rem;
     margin-top: 3rem;
-    box-shadow: 0 6px 3px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
-    color: rgba(27,70,212,255);
+    box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+    color: rgba(27, 70, 212, 255);
   }
-  .headmarg{
+
+  .headmarg {
     display: flex;
     justify-content: space-between;
     padding: 2rem;
     padding-bottom: 0.5rem;
     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
   }
-  .tiltecontainer{
+
+  .tiltecontainer {
     display: flex;
     justify-content: center;
     text-align: center;
     margin: 1rem 0rem 1rem 0.5rem;
   }
-  .titles{
+
+  .titles {
     font-size: 1.2rem;
     font-weight: bold;
     color: black;
     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
   }
-  .monthtitle{
+
+  .monthtitle {
     text-align: left;
-    
+
   }
-  .monthname{
+
+  .monthname {
     color: black;
     font-weight: bold;
     font-size: 90%;
     text-align: left;
   }
-  .status{
-    
+
+  .status {
+
     font-weight: bold;
     font-size: 90%;
   }
-  .row2{
+
+  .row2 {
     display: flex;
-  text-align: center;
-  align-items: start;
-  margin-left: 0.5rem;
+    text-align: center;
+    align-items: flex-start;
+    margin-left: 0.5rem;
   }
-  .lupdate{
-  color: rgba(155,174,215,255);
-  margin-left: 5%;
-  margin-top: 2rem;
+
+  .lupdate {
+    color: rgba(155, 174, 215, 255);
+    margin-left: 5%;
+    margin-top: 2rem;
   }
-  .filed{
+
+  .filed {
     color: #14c511;
   }
-  .notfiled{
-    color:#dc3545;
+
+  .notfiled {
+    color: #dc3545;
   }
-   @media only screen and (max-height: 768px) {
-    .monthname{
+
+  @media only screen and (max-height: 768px) {
+    .monthname {
       font-size: 80%;
       text-align: left;
     }
-    .status{
-     
+
+    .status {
+
       font-weight: bold;
       font-size: 84%;
     }
-    }
+  }

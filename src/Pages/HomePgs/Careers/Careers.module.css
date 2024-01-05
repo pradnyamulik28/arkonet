@@ -1,151 +1,236 @@
-
-.outercontainer{
-    display: flex;
-    /* justify-content: center; */
-    width: 100%;
-    
-    }
-
-    .section_all {
-    width: 70%;height: fit-content;
-    margin: 2em auto;
-    padding: 2em;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
-    border-radius: 10px;
-    text-align: left;
-    font-size: large;
+.section {
+  /* background-image: url("https://ld-wt73.template-help.com/wt_63506/images/bg-image-1.jpg"); */
+  background-image: url("../../../Images/careerbgimg.jpg");
+}
+.about {
+  /* opacity: 0; */
+  animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-
-.section_all img {
-    /* max-width: 100%; */
-    width: 65% !important;
-    height: 50% !important;
-    height: auto;
-    display: block;
-    margin: 1em auto;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.bgimage {
+  background-size: cover;
+  background-position: center center;
 }
 
-
-
-
-.section_all h1 {
-    color: #fed300;
-    font-size: 2em;
+.breadcrumbs_custom {
+  position: relative;
+  padding: 35px 0 40px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: #151515;
 }
 
-.section_all h2 {
-    color: #fed300;
+.breadcrumbs_custom h2 {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
-.outercontainer  .header {
-    background-color: #fed300;
-    color: #fff;
-    text-align: center;
-    padding: 1em;
-}
-.header h2{
-    color: #fff;
-}
-
-.section_all p {
-    line-height: 1.6;
+.breadcrumbs_custom li {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 32px;
+  font-size: 17px;
+  line-height: 1.7;
 }
 
-.section_all ul {
-    list-style-type: none;
-    padding: 0;
-}
-.blinkingstar{
-    color: gray;
-    animation: blink 1s infinite;
-}
-
-.section_all li::before {
-    content: '✓ ';
-    color: #fed300;
+.breadcrumbs_custom li:nth-child(1)::after {
+  content: "\1F852";
+  position: absolute;
+  top: 52%;
+  right: 5px;
+  display: inline-block;
+  font-size: inherit;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-50%);
 }
 
-.section_all .link {
-   color: #fff;
-    text-decoration: none;
-    font-weight: bold;
+.breadcrumbs_custom .breadcrumbs_custom_path li a,
+.breadcrumbs_custom .breadcrumbs_custom-path li a:focus,
+.breadcrumbs_custom .breadcrumbs_custom-path li a:active {
+  color: #ffe500;
+}
+.breadcrumbs_custom a:hover,
+.breadcrumbs_custom li.active {
+  color: #fff;
+}
+
+.breadcrumbs_custom li:last-child {
+  padding-right: 0;
+}
+
+.career p {
+  line-height: 1.6;
+}
+
+.career ul {
+  list-style-type: none;
+  padding: 0;
+}
+.career ul li {
+  font-size: medium;
+  margin-bottom: 5px;
+}
+.blinkingstar {
+  color: gray;
+  animation: blink 1s infinite;
+}
+
+.career li::before {
+  content: "✓ ";
+  color: #fed300;
+}
+
+.career .link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .login_link {
-    display: block;
-    text-align: right;
-    margin-top: 20px;
-    color: #fed300;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
+  display: block;
+  text-align: right;
+  margin-top: 20px;
+  color: #fed300;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .login_link:hover {
-    text-decoration: underline;
-    color: #fed300;
+  text-decoration: underline;
+  color: #fed300;
 }
 
-.section_all a:hover {
-    text-decoration: underline;
+.career a:hover {
+  text-decoration: underline;
 }
-
-
 
 .cta_button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 20px;
-    background-color: #fed300;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #fed300;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .cta_button:hover {
-    background-color: #fed300;
+  background-color: #fed300;
 }
 
+/* ===========    Sale manager join css */
+.section2 {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.joinus {
+  background-color: #33d68c;
+  border-radius: 20px;
+  width: 70%;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.joinus h2 {
+  color: #0c2b4a;
+  width: 60vh;
+  font-size: calc(20px + 1vw);
+  /* font-size: 2.5vw; */
+  font-weight: bolder;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.loginbtn {
+  border: none;
+  background-color: #fed300;
+  border-radius: 50px;
+  position: relative;
+  transition: all ease 0.5s;
+  border: solid 1px transparent;
+  padding-left: 60px;
+  padding-right: 30px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  cursor: pointer;
+}
 
+@media (min-width: 1200px) {
+  .container,
+  .container_wide {
+    max-width: 1200px;
+  }
+  .breadcrumbs_custom {
+    padding: 95px 0 110px;
+  }
+}
 
-.mainrow {
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    max-width: 100%;
+.container,
+.container_wide {
+  min-width: 270px;
+  max-width: 480px;
+}
+.modal_notify .modal_header {
+  border-radius: 3px 3px 0 0;
+}
+.modal_notify .modal_content {
+  border-radius: 3px;
+}
+
+@media (max-width:600px) {
+  
+}
+@media (min-width: 992px) {
+  .breadcrumbs_custom h2 {
+    font-size: 48px;
+    line-height: 1.16667;
+  }
+
+  .container,
+  .container_wide {
+    max-width: 960px;
+  }
+}
+@media (min-width: 768px) {
+  .container,
+  .container_wide {
+    max-width: 720px;
+  }
+  .breadcrumbs_custom {
+    padding: 70px 0 80px;
+  }
+}
+@media (max-width: 768px) {
+  .joinus h2 {
+    width: 40vw;
+    word-wrap: break-word;
+    font-size: calc(20px + 2vw);
+  }
+  .loginbtn{
+    width: 80%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;
+    padding-top: 15px;
     text-align: center;
   }
-  
-  
-  
-  
-  .slider {
-    margin-top: 4vh;
-    margin-bottom: 4vh;
-    width: 80% !important;
-    height: 50% !important;
-   
-  }
-  
-  
-  
-  
-  
-  @media only screen and (min-width: 300px) and (max-width: 600px) {
-    .slider {
-      margin-top: 2vh;
-      margin-bottom: 2vh;
-    }
-    
-  }
-  
+  /*.joinus{
+      height: 20vh;
+    } */
+}

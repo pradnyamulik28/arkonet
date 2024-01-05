@@ -1,10 +1,25 @@
-.cardd {
+.profileimg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileimg img{
+width: 5rem;
+height: 5rem;
+}
+
+.cardd,
+.cardd1 {
   width: 28rem;
   border-radius: 15px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.cardd1{
+  width: 93%;
 }
 
 .gst_cardd {

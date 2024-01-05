@@ -33,10 +33,10 @@ body {
 
 
 
-img {
+/* img {
   width: 70%;
   height: auto;
-}
+} */
 
 .icon {
   display: flex;
@@ -57,8 +57,8 @@ img {
   height: auto;
 }
 
-.maindiv h1 {
-  color: #1df619;
+.h1 {
+  color: #14c511;
   text-shadow: 1px 2px 2px #666666;
 }
 
@@ -93,7 +93,7 @@ img {
   left: 15px;
 }
 
-.logout{
+.logout {
   color: #ffd301;
   font-size: 1.2rem;
   font-weight: bold;
@@ -105,12 +105,13 @@ img {
   align-items: center;
 }
 
-.headerbar{
+.headerbar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
 #copyrights {
   position: relative;
 }

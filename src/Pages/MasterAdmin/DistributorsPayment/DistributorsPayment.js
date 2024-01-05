@@ -150,7 +150,7 @@ const DistributorsPayment = () => {
         <div className={`${style.top} `}>
           <div className={`${style.inputbox} `}>
             <div className={`${style.seachbox} `}>
-              <input type="search" className={`${style.inputbox} `} placeholder='Search Admin By PAN/Name'
+              <input type="search" className={`${style.inputbox} `} placeholder='Search Distributor By PAN/Name'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>

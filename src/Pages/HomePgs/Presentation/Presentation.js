@@ -256,6 +256,7 @@ function Presentation() {
   
 
   return (
+    <div className={`container mt-3 mb-3 ${style.maincontainer}`} style={{"width":"80%","textAlign":"center",}}>
     <div className={style.outercontainer}>
       <div class={style.heading}>TAXKO</div>
       <div className={style.container}>
@@ -327,6 +328,7 @@ function Presentation() {
               <i className="fa-solid fa-caret-right" id="right_btn"></i>
             </button>
           </section>
+    </div>
     </div>
   );
 }
