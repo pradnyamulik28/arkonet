@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { url_ } from "../../../Config";
 import state_list from "../../../ObjData/States.json";
 import style from "./BulkImport.module.css";
+import instruct_sample_file from "../../../Files/TAXKO_Instruction_Sample_File.xlsx"
 
 const BulkImport = ({fileInputRef}) => {
   const user_id = window.localStorage.getItem("user_id");
@@ -24,7 +25,25 @@ const BulkImport = ({fileInputRef}) => {
           const data = e.target.result;
           const workbook = XLSX.read(data, { type: "binary" });
           const jsonData = parseExcel(workbook);
-          saveAsJSON(jsonData);
+          // console.log(jsonData)
+          if(jsonData && jsonData.Income_Tax && jsonData.GST)
+            {saveAsJSON(jsonData);}
+          else {
+            e.target.value = null 
+            Swal.fire({
+              title: "Incorrect data format!",
+              text: `Please go through the file instructions.!
+                    Download Sample instruction file.?`,
+              icon: "info",
+              iconColor: "red",
+              confirmButtonText:"Download Sample",
+              showCancelButton:true
+            }).then((result) => {
+              if (result.isConfirmed) {
+                downloadSampleFile()
+              }
+            });
+          };
         } catch (error) {
           console.error("Error parsing Excel file:", error);
         }
@@ -39,6 +58,7 @@ const BulkImport = ({fileInputRef}) => {
           "Please select a valid file type (XLSX).",
           "error"
         );
+        downloadSampleFile()
         
         
       }
@@ -47,12 +67,39 @@ const BulkImport = ({fileInputRef}) => {
   };
 
   const parseExcel = (workbook) => {
-    const result = {};
-    workbook.SheetNames.forEach((sheetName) => {
-      const sheet = workbook.Sheets[sheetName];
-      result[sheetName] = XLSX.utils.sheet_to_json(sheet, { defval: "" });
-    });
-    return result;
+    const sheetNames=workbook.SheetNames;
+    
+    if (sheetNames.includes("Income_Tax") && sheetNames.includes("GST")) {
+      const result = {};
+      workbook.SheetNames.forEach((sheetName) => {
+        const sheet = workbook.Sheets[sheetName];
+
+        const clienRegFields=[          
+            "pan",
+            "name",
+            "dob",
+            "profession",
+            "telephone",
+            "mobile",
+            "email",
+            "address",
+            "pin_code",
+            "state",
+            "invest_now_email"        
+        ]
+        const columnNames =  XLSX.utils.sheet_to_json(sheet, { header: 1 })[0];
+      //  console.log( clienRegFields.length === columnNames.length &&
+      //   clienRegFields.every((element, index) => element === columnNames[index]))
+        
+        if( clienRegFields.length === columnNames.length &&
+          clienRegFields.every((element, index) => element === columnNames[index]))
+              result[sheetName] = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+        else
+          return null
+      });
+      return result;
+    }
+    
   };
 
   const saveAsJSON = async (jsonData) => {
@@ -156,6 +203,14 @@ const BulkImport = ({fileInputRef}) => {
       }
     });
   };
+
+  async function downloadSampleFile()
+  {
+    const response = await fetch(instruct_sample_file);
+    const arrayBuffer = await response.arrayBuffer();
+    const fileBlob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(fileBlob, "TAXKO_Instruction_Sample_File.xlsx");
+  }
 
   const handleConvertToExcel = (jsonData) => {
     const ws = XLSX.utils.json_to_sheet(jsonData);

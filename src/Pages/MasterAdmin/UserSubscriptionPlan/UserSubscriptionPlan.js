@@ -597,7 +597,7 @@ function trialactivation(){
 
     // Create a File object from the blob
     const emptyFile = new File([blob], 'empty_file_attatchment.pdf' );
-console.log(emptyFile)
+// console.log(emptyFile)
     const message = `Dear Accounts Team,
   Greeting from TAXKO!
 

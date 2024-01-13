@@ -11,6 +11,17 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+.cardd a{  
+  text-decoration: none;
+}
+.cardd p{
+color: #649e07;
+cursor: pointer;
+}
+.cardd p:hover{
+  text-decoration: underline;
+}
+
 
 .profileimg img{
 width: 7rem;

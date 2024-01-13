@@ -6,6 +6,10 @@ import { url_ } from '../../../Config';
 import Swal from 'sweetalert2';
 import imgprofile from '../../../Images/profile.png'
 import BulkImport from '../BulkImport/BulkImport';
+import instruct_sample_file from "../../../Files/TAXKO_Instruction_Sample_File.xlsx"
+import { saveAs } from "file-saver";
+
+
 
 const DashBoard = () => {
 
@@ -376,6 +380,14 @@ const DashBoard = () => {
     }
   }
 
+  async function downloadSampleFile()
+  {
+    const response = await fetch(instruct_sample_file);
+    const arrayBuffer = await response.arrayBuffer();
+    const fileBlob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(fileBlob, "TAXKO_Instruction_Sample_File.xlsx");
+  }
+
   useEffect(()=>{getProfileImage()},[])
   const imageSrc = imgcontent ? `data:image/jpeg;base64,${imgcontent}` : imgprofile;
 
@@ -458,7 +470,7 @@ const DashBoard = () => {
                 <Link
                   // to="clientreg"
                   className={
-                    subscription_status === "on" ? `` : `${styles.btndisable}`
+                    subscription_status === "on" ? styles.bulkimport : `${styles.btndisable}`
                   }
                   style={{"marginLeft":"6px"}}
                   onClick={(e)=>{ fileInputRef.current.click();}}
@@ -470,6 +482,7 @@ const DashBoard = () => {
                   />
                   
                 </Link>   
+                <p onClick={(e)=>{downloadSampleFile()}}>Sample file instructions</p>
                 <BulkImport fileInputRef={fileInputRef}/>  
               </div>
             </div>
