@@ -23,10 +23,12 @@ function AdminDetails() {
 
     const [admincounts, setadmincounts] = useState()
     const [distributorsCounts, setdistributorsCounts] = useState()
+    const [saleManagersCounts, setsaleManagersCounts] = useState(0)
     const [admincountscategory, setadmincountscategory] = useState([])
     const [adminClients, setadminClients] = useState([])
     const [adminSubscription, setadminSubscription] = useState([]);
-    const [adminRenewal, setadminRenewal] = useState([])
+    const [adminRenewal, setadminRenewal] = useState([]);
+    const [salesMgmCount, setsalesMgmCount] = useState([]);
 
 
     const CurrentYear = new Date().getFullYear();
@@ -65,6 +67,17 @@ function AdminDetails() {
                 // console.log(result.length)
                 const filteredData = result.filter(item => item.status === true);
                 setdistributorsCounts(filteredData.length)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
+            await fetch(`${url_}/listofsalesmanager/formasteradmin`, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                // console.log(result.length)
+                const filteredData = result.filter(item => item.status === true);
+                setsaleManagersCounts(filteredData.length-1)// MINUS 1 BECAUSE ID 1 IS FOR TAXKO 
             })
             .catch((error) => {
                 console.log(error);
@@ -148,8 +161,9 @@ function AdminDetails() {
 
         <div className="w-100">
             {/* <SideBar /> */}
-
+           
             <div className={`${style.workport}`}>
+                
 
                 {/* Left col starts */}
                 <div className={`${style.leftcol}`}>
@@ -174,8 +188,8 @@ function AdminDetails() {
                             <h5 className={`${style.itopheadersmall} `}>USERS</h5>
                         </div>
                         <div className="d-flex justify-content-around w-100">
-                            <div className="d-flex flex-column align-items-center" style={{ cursor: "pointer" }} >
-                                <h6 className={`${style.itoppara}`}>Total C.A</h6>
+                            <div className="d-flex flex-column align-items-center justify-content-around" style={{ cursor: "pointer" }} >
+                                <h6 className={`${style.itoppara}`}>Total CA</h6>
                                 <h3 className={`${style.itopheaderlarge}`} onClick={() => {
                                     Navigate("searchadmin", {
                                         state: {
@@ -184,15 +198,26 @@ function AdminDetails() {
                                     })
                                 }}>{admincounts}</h3>
                             </div>
-                            <div className="d-flex flex-column align-items-center" style={{ cursor: "pointer" }}>
+                            <div className="d-flex flex-column align-items-center justify-content-around" style={{ cursor: "pointer" }}>
                                 <h6 className={`${style.itoppara}`}>Total Distributors</h6>
                                 <h3 className={`${style.itopheaderlarge}`} onClick={() => {
-                                    Navigate('userlist', {
+                                    Navigate('distributorlist', {
                                         state: {
                                             userProfession: "Distributor List"
                                         },
                                     });
                                 }}>{distributorsCounts}</h3>
+                            </div>
+
+                            <div className="d-flex flex-column align-items-center justify-content-around" style={{ cursor: "pointer" }}>
+                                <h6 className={`${style.itoppara}`}>Total Sales Manager</h6>
+                                <h3 className={`${style.itopheaderlarge}`} onClick={() => {
+                                    Navigate('salemgmlist', {
+                                        state: {
+                                            userProfession: "Sale Manager List"
+                                        },
+                                    });
+                                }}>{saleManagersCounts}</h3>
                             </div>
                         </div>
                         <div className="mb-2">
@@ -202,11 +227,11 @@ function AdminDetails() {
 
                     <div className={`${style.lbottom} `}>
                         <div className={`${style.lbotcontaint} `}>
-                            <div className={`${style.rt} `} ><h4 className={`${style.lboth2}`}><b>C.A DETAILS</b></h4></div>
+                            <div className={`${style.rt} `} ><h4 className={`${style.lboth2}`}><b>CA DETAILS</b></h4></div>
                             <div className={`${style.tabular} `}>
 
                                 <div className={`${style.sinrow}`}>
-                                    <div className={`${style.title} mt-4 mb-3`}><h5>C.A TYPE</h5></div>
+                                    <div className={`${style.title} mt-4 mb-3`}><h5>CA TYPE</h5></div>
                                     {/* <div className={`${style.value}`}></div> */}
                                 </div>
 

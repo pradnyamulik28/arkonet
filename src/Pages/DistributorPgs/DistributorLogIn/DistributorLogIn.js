@@ -90,6 +90,7 @@ const DistributorLogIn = ({ setLoggedIn }) => {
       <div className={styles.right}>
         <div className={styles.right_body}>
           <div className={styles.header}>
+          <h5 style={{"color":"#9ba4ab","cursor":"pointer"}} onClick={(e)=>{Navigate("/")}}><i class="fa-regular fa-circle-left" style={{"fontSize":"1.5rem","color":"#ffd401"}}></i> &nbsp;Back to Website</h5>
             <div className={styles.greet}>
               <h3>Distributor Login</h3>
             </div>

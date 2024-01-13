@@ -42,7 +42,7 @@ const MasterLogIn = ({ setLoggedIn }) => {
 
 
             if (response.status === 200) {
-
+                
                 const jwtToken = result.token;
 
 
@@ -54,6 +54,7 @@ const MasterLogIn = ({ setLoggedIn }) => {
                 // console.log(result)
                 Navigate('admindashboard');
                 setLoggedIn(true);
+                
 
             }
 

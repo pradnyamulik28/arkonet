@@ -1,17 +1,18 @@
 import styles from './DashBoard.module.css'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import Swal from 'sweetalert2';
 import imgprofile from '../../../Images/profile.png'
-// import ExcelToJsonConverter from '../BulkImport/ExcelToJsonConverter';
+import BulkImport from '../BulkImport/BulkImport';
 
 const DashBoard = () => {
 
   const [subscription_status, setSubscriptionStatus] = useState();
 
   // const subscription_status = localStorage.getItem(`subscription_status`)
+  const fileInputRef = useRef(null);
 
   const username = localStorage.getItem("user_name");
   const userpan = localStorage.getItem("pan");
@@ -454,13 +455,13 @@ const DashBoard = () => {
                     className={` h6 ${styles.abtn}`}
                   />
                 </Link>
-                {/* <Link
+                <Link
                   // to="clientreg"
                   className={
                     subscription_status === "on" ? `` : `${styles.btndisable}`
                   }
                   style={{"marginLeft":"6px"}}
-                  // onClick={handleLinkClick}
+                  onClick={(e)=>{ fileInputRef.current.click();}}
                 >
                   <input
                     type="submit"
@@ -468,8 +469,8 @@ const DashBoard = () => {
                     className={` h6 ${styles.abtn}`}
                   />
                   
-                </Link>    */}
-                {/* <ExcelToJsonConverter />           */}
+                </Link>   
+                <BulkImport fileInputRef={fileInputRef}/>  
               </div>
             </div>
 

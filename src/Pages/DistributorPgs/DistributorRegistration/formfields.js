@@ -101,6 +101,24 @@ const formfields = [
     mandatory: false,
     validationmsg: ""
   },
+  {
+    labelname: "Nominee Name",
+    id: "nomineename",
+    name: "nomineename",
+    type: "text",
+    placeholder: "Enter nominee name",
+    mandatory: false,
+    validationmsg: ""
+  },
+  {
+    labelname: "Nominee Mobile",
+    id: "nomieemobile",
+    name: "nomieemobile",
+    type: "text",
+    placeholder: "Enter nominee mobile",
+    mandatory: false,
+    validationmsg: "Invalid mobile"
+  },
   
   {
     labelname: "Password",

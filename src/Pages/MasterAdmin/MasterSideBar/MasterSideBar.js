@@ -57,7 +57,6 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                     userProfession: "Distributor List"
                 },
             });
-            // console.log(pglink)
             setActiveLink(pglink);
         } else if (pglink === "distriPayments") {
             Navigate('distriPayments', {
@@ -65,11 +64,32 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                     userProfession: "Distributor List"
                 },
             });
-            // console.log(pglink)
             setActiveLink(pglink);
-        } else {
+        }
+        
+        else if (pglink === "addsalesManager") {
+            Navigate('addsalesManager');
+            setActiveLink(pglink);
+        }
+        else if (pglink === "setmanagertarget") {
+            Navigate('salemgmlist', {
+                state: {
+                    userProfession: "Sale Manager Target"
+                },
+            });
+            setActiveLink(pglink);
+        }
+        else if (pglink === "salePayments") {
+            Navigate('salePayments', {
+                state: {
+                    userProfession: "Sale Manager's Payment"
+                },
+            });
+            setActiveLink(pglink);
+        }
+        else {
 
-            console.log(pglink,)
+            console.log(pglink)
             setActiveLink(pglink);
         }
     };
@@ -89,11 +109,15 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                         </Link>
 
                         <div onClick={() => handleLinkClick('searchadmin')}>
-                            <h6 className={activeLink === 'searchadmin' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>C.A</h6>
+                            <h6 className={activeLink === 'searchadmin' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>CA</h6>
                         </div>
 
                         <div onClick={() => handleLinkClick('clientview')}>
                             <h6 className={activeLink === 'clientview' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Clients</h6>
+                        </div>
+
+                        <div onClick={() => handleLinkClick('addsalesManager')}>
+                            <h6 className={activeLink === 'addsalesManager' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Add Sales Manager</h6>
                         </div>
 
                         <div onClick={() => handleLinkClick('subPackDetails')}>
@@ -104,9 +128,22 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                             <h6 className={activeLink === 'distributor' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Manage Distributors</h6>
                         </div>
 
+                        <div onClick={() => handleLinkClick('setmanagertarget')}>
+                            <h6 className={activeLink === 'setmanagertarget' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Manage Sale Manager</h6>
+                        </div>
+
                         <div onClick={() => handleLinkClick('distriPayments')}>
                             <h6 className={activeLink === 'distriPayments' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Distributors Payment</h6>
                         </div>
+
+                        {/* <div onClick={() => handleLinkClick('salePayments')}>
+                            <h6 className={activeLink === 'salePayments' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Sale Manager Payment</h6>
+                        </div> */}
+
+                        <Link to="changepass" onClick={() => handleLinkClick('changepass')}>
+                        <h6 className={activeLink === 'changepass' ? 'font-weight-bold mt-4' : 'mt-4'}>Change Password</h6>
+                        </Link>
+                        
 
                         {/* <Link to="/masteradmin/admindashboard/" onClick={() => handleLinkClick('dashboard')}>
                             <h6 className={activeLink === 'dashboard' ? 'font-weight-bold' : ''}>Invest Now</h6>

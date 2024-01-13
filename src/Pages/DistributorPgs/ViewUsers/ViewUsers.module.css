@@ -187,11 +187,11 @@
   background-color: #f1ffff;
 }
 
-th {
+.VUtable th {
   background-color: #f1ffff;
 }
 
-tr {
+.VUtable tr {
   border-radius: 10px;
   margin-bottom: 10px;
 }

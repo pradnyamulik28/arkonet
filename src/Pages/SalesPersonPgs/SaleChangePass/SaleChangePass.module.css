@@ -1,0 +1,32 @@
+.title {
+  font-size: 1.5em;
+  text-shadow: 0 1px 2px #9ba4ab;
+}
+
+.changePass button {
+  height: 2.5rem;
+  width: 10rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffd401;
+  color: white;
+  /* font-weight: bolder; */
+  font-size: 23px;
+  text-shadow: 2px 3px 5px #000000;
+  cursor: pointer;
+}
+
+.changePass input {
+  border-radius: 20px;
+  height: 2rem;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  box-shadow: 0 1px 2px black;
+}
+
+
+.changePass button:active {
+  box-shadow: 4px 2px 5px 0 #9ba4ab;
+  transform: translateY(4px);
+}

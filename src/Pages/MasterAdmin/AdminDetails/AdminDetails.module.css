@@ -16,6 +16,13 @@
     /* height: 100%; */
 }
 
+.fullcol {
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+    /* height: 100%; */
+}
+
 .ltop {
     margin-top: 5%;
     height: auto;

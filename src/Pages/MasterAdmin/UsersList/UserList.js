@@ -34,10 +34,7 @@ const UserList = () => {
       redirect: 'follow'
 
     };
-    await fetch(`
-        
-        
-        
+    await fetch(`        
         
         ${userProf === "Today's Subscription" ? `${url_}/subscriptions/today` :
         userProf === "Yesterday's Subscription" ? `${url_}/subscriptions/yestarday` :
@@ -51,6 +48,7 @@ const UserList = () => {
                         userProf === "3 Months's Renewal" ? `${url_}/Renewal/threemonth` :
                           userProf === "6 Months's Renewal" ? `${url_}/Renewal/sixmonth` :
                             userProf === "Distributor List" ? `${url_}/all/distributor` :
+                              userProf === "Sale Manager List" ? `${url_}/listofsalesmanager/formasteradmin` :
 
                               null}
 
@@ -113,7 +111,7 @@ const UserList = () => {
         <div className={`${style.top} `}>
           <div className={`${style.inputbox} `}>
             <div className={`${style.seachbox} `}>
-              <input type="search" className={`${style.inputbox} `} placeholder='Search C.A By PAN/Name'
+              <input type="search" className={`${style.inputbox} `} placeholder='Search By PAN/Name'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
@@ -128,11 +126,11 @@ const UserList = () => {
         <div className={`${style.bottom} `}>
 
           <div className={`${style.drow} `}>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>{userProf === "Distributor List" ? "Distributor" : "C.A Name"}</p></div>
+            {userProf !== "Distributor List"&&<div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>}
+            <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>{userProf === "Distributor List" ? "Distributor" : "Admin Name"}</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>
+            {userProf !== "Sale Manager List"&&<div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>}
           </div>
 
 
@@ -165,7 +163,9 @@ const UserList = () => {
                     userProf === "Distributor List" ?
                       (
                         <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.status ? "#32e132" : "#ff0000" }}></i></p></div>
-                      ) : (
+                      ) : 
+                      userProf !== "Sale Manager List"&&
+                      (
                         <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.paid ? "#32e132" : "#ff0000" }}></i></p></div>
                       )
                   }

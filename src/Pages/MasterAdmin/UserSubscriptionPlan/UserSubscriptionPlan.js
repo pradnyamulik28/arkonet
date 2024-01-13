@@ -1,4 +1,4 @@
-import { Await, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import style from "./UserSubscriptionPlan.module.css";
 import { useEffect, useState } from "react";
 import { url_ } from "../../../Config";
@@ -11,6 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Swal from "sweetalert2";
 // import taxko from "../../Images/Taxko.jpg";
 // import arkonet from "../../Images/Arkonet.jpg";
+import samplepdf from "../../../Files/TestPDFfile.pdf"
 
 const UserSubscriptionPage = () => {
 
@@ -402,14 +403,8 @@ const UserSubscriptionPage = () => {
       const result = await response.text();
       console.log(result);
       if (response.status === 200) {
-       await swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Trial activated.!',
-          showConfirmButton: false,
-          timer: 7000
-        });
-        
+        // await swal.fire("Success.", `${result}`, "success")
+        // console.log(result);
         window.location.reload();
 
 
@@ -598,11 +593,11 @@ function trialactivation(){
 
     
     
-    const blob = new Blob([''], { type: 'application/pdf' });
+    const blob = new Blob([samplepdf], { type: 'application/pdf' });
 
     // Create a File object from the blob
-    const emptyFile = new File([blob], 'empty_file_attatchment.pdf');
-
+    const emptyFile = new File([blob], 'empty_file_attatchment.pdf' );
+console.log(emptyFile)
     const message = `Dear Accounts Team,
   Greeting from TAXKO!
 
@@ -617,7 +612,7 @@ function trialactivation(){
 
 
     const formattedMsg = message.replace(/\n/g, '<br>')
-    // console.log(message)
+    console.log(message)
 
     
 
@@ -651,7 +646,15 @@ function trialactivation(){
 
       if (response.status === 200) {
         swal.close();
-        await ApproveUserSubscription();       
+        await ApproveUserSubscription();
+        await swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Trial activated.!',
+          showConfirmButton: false,
+          timer: 7000
+        });
+        window.location.reload();
         
       } else {
         swal.close();

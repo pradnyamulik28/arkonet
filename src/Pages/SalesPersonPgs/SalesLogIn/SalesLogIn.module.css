@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.right {
+  width: 75vw;
+  /* height: 100vh; */
+  float: right;
+  position: relative;
+  left: 1rem;
+}
+
+.header,
+.main {
+  margin: 4rem 2rem;
+}
+
+.greet,
+.app_desp {
+  color: #9ba4ab;
+  margin: 2rem 0 0 0;
+  font-size: 1.5rem;
+}
+
+.app_title {
+  color: #ffd401;
+  font-weight: bolder;
+  font-size: 2rem;
+  letter-spacing: 20px;
+  overflow: hidden;
+}
+
+.user_id,
+.user_pass {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.btn_login button {
+  height: 3rem;
+  width: 15rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #ffd401;
+  color: white;
+
+  font-weight: bolder;
+  font-size: 23px;
+  text-shadow: 2px 3px 5px #000000;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+
+button:active {
+  box-shadow: 4px 2px 5px 0 #9ba4ab;
+  transform: translateY(4px);
+}
+
+.link {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.link a {
+  color: #ffd401;
+  font-size: 1.2rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.follow,
+.icon a {
+  margin: 0 15px;
+  color: #19191a;
+}
+
+.followtxt {
+  font-size: 0.90rem;
+  color: #9ba4ab;
+}
+
+.icon {
+  display: flex;
+  flex-direction: row;
+}
+
+@media only screen and (max-width: 1000px) {
+  .link a {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .right {
+    width: 100vw;
+  }
+}

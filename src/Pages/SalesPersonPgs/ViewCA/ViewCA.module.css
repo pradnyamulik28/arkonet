@@ -1,0 +1,231 @@
+.workport {
+  overflow: scroll;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Top Row starts */
+.top {
+  color: #d2cccc;
+  margin-top: 2%;
+  height: 7%;
+  width: 90%;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.inputbox {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 1.5rem;
+  background-color: #eef2fe;
+  padding-left: 15px;
+}
+
+.seachbox {
+  width: 90%;
+  border: none;
+  outline: none;
+}
+
+
+
+/* 
+  ::placeholder {
+    color: #abbdcb;
+    opacity: 1;
+    font-size: 1.5vw;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+  }
+  
+  ::-ms-input-placeholder {
+    color: #abbdcb;
+    opacity: 1;
+    font-size: 1.5vw;
+    text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+  } */
+
+.seachlogo {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Top Row ends */
+
+
+/* Bottom Row starts */
+.bottom {
+  margin-top: 5%;
+  height: 70%;
+  width: 90%;
+  background-color: #fefbec;
+  box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.drow {
+  height: 10%;
+  width: 90%;
+  background-color: #f1ffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 2.5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 3%;
+  padding-right: 3%;
+  align-items: center;
+}
+
+.gdtxt1,
+.gdtxt2,
+.gdtxt3,
+.gdtxt4,
+.gdtxt5,
+.gdtxt6 {
+  color: #f9d30c;
+  font-weight: bold;
+  font-size: 1.5vw;
+  margin-top: 1.5vh;
+}
+
+.ddata {
+  height: 10%;
+  width: 90%;
+  background-color: #f1ffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 2.5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 3%;
+  padding-right: 3%;
+  align-items: center;
+}
+
+.srno,
+.gdtxt1 {
+  width: 8vw;
+  text-align: center;
+}
+
+.an,
+.gdtxt2 {
+  width: 12vw;
+}
+
+.pan,
+.gdtxt3 {
+  width: 9vw;
+  text-align: center;
+}
+
+.mobile,
+.gdtxt4 {
+  width: 9vw;
+}
+
+.reference,
+.gdtxt5 {
+  width: 7vw;
+  text-align: center;
+  color: #ffd401;
+}
+
+.status,
+.gdtxt6 {
+  width: 5vw;
+  text-align: center;
+}
+
+.srno,
+.an,
+.pan,
+.mobile,
+.reference,
+.status {
+  margin-top: 2vh;
+}
+
+/* Bottom Row ends */
+
+
+
+.VUtable table {
+  /* width: 100%; */
+  border-collapse: separate;
+  border-spacing: 0 20px;
+  margin-top: 20px;
+  width: 95%;
+}
+
+.VUtable th,
+.VUtable td {
+  padding: 15px;
+  text-align: left;
+  border: none;
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.19);
+  background-color: #f1ffff;
+}
+
+.VUtable th {
+  background-color: #f1ffff;
+}
+
+.VUtable tr {
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.tab_bar {
+  display: flex;
+  width: 100%;
+  background-color: #eee; /* Change color as needed */
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  font-weight: bold;
+  font-size: 1vw;
+}
+
+.tab {
+  flex: 1;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+  background-color: #ddd; /* Change color as needed */
+}
+
+.tab.active {
+  box-shadow: 1px 3px 1px #b8b8b4 inset;
+  background-color: #d2cdcd;
+
+  /* border-bottom: 2px solid #333;  */
+}
+
+.tab-content {
+  flex: 1;
+  padding: 1rem;
+}

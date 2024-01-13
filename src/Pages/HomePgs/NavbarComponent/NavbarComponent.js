@@ -115,9 +115,9 @@ const NavbarComponent = ({ scrollToRef }) => {
                       <li style={{ "--delay": "3" }}>
                         <Link onClick={(e) => {e.preventDefault();navigate("/distributor/");}}>Distributor Login</Link>
                       </li>
-                      {/* <li style={{ "--delay": "3" }}>
+                       <li style={{ "--delay": "3" }}>
                         <Link onClick={(e) => {e.preventDefault();navigate("/sales");}}>Sale Manager Login</Link>
-                      </li> */}
+                      </li> 
                     </ul>
                     </Link>
                     <Link class={style.last_link}>

@@ -799,14 +799,14 @@ const DistributorData = () => {
           <form action="" onSubmit={handleSubmit}>
             <div className={`${styles.first} ml-5 w-75`}>
               <InputField placeholder='Enter your Name' onChange={handleChange} lblname='Name' name='name' value={values.name} />
-              <InputField placeholder='Enter your DOB in YYYYY-MM-DD' onChange={handleChange} lblname='DOB/DOI' name='datebirth' value={values.datebirth} />
+              <InputField type="date" placeholder='Enter your DOB in YYYYY-MM-DD' onChange={handleChange} lblname='DOB/DOI' name='datebirth' value={values.datebirth} />
               <DropDown value_array={Uprofesion_obj} lblname='Profession' name='profession' onChange={handleChange} value={values.profession} />
               <InputField placeholder='Enter your PAN' onChange={handleChange} lblname='PAN' name='pan' value={values.pan} disabled={true} />
-              <InputField type='number' placeholder='Enter your Telephone' onChange={handleChange} lblname='Telephone' name='telephone' value={values.telephone} maxLength='11' />
-              <InputField type='number' placeholder='Enter your Mobile' onChange={handleChange} lblname='Mobile' name='mobile' value={values.mobile} maxLength='10' />
+              <InputField type='text' placeholder='Enter your Telephone' onChange={handleChange} lblname='Telephone' name='telephone' value={values.telephone} maxLength='11' />
+              <InputField type='text' placeholder='Enter your Mobile' onChange={handleChange} lblname='Mobile' name='mobile' value={values.mobile} maxLength='10' />
               <InputField placeholder='Enter your Email' onChange={handleChange} lblname='Email' name='email' value={values.email} />
               <InputField placeholder='Enter your office address' onChange={handleChange} lblname='Office Address' name='address' value={values.address} />
-              <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_code' value={values.pin_code} />
+              <InputField placeholder='Enter your pin' onChange={handleChange} lblname='Pin Code' name='pin_code' value={values.pin_code} maxLength='6' />
               <DropDown value_array={States_obj} lblname='State' name='state' value={values.state} onChange={handleChange} />
               <InputField placeholder='Enter your whatsapp link' onChange={handleChange} lblname='Whatsapp Link' name='whatsApp_Link' value={values.whatsApp_Link} />
             </div>

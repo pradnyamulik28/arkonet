@@ -54,3 +54,25 @@ button:active {
   box-shadow: 4px 2px 5px 0 gray;
   transform: translateY(4px);
 }
+
+
+.radio {
+  display: flex;
+  height:3.5rem;
+  align-content: center;
+  align-items: center;
+}
+.radio .label{
+  width: 15rem;
+  color: black;
+  font-weight: bold;
+
+}
+
+.radiofield {
+  border: none;
+}
+
+.salelist{
+  display: flex;
+}

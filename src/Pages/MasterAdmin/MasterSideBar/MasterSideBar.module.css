@@ -28,6 +28,13 @@
   position: fixed;
   top: 25%;
   left: 10%;
+  height: 60vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none; 
+}
+.navbar::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
 }
 
 .navbar a {

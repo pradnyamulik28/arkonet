@@ -344,11 +344,13 @@ const UserData = () => {
     window.history.back(); // This will navigate to the previous page in the browser's history
   }
 
-  const GOTOUserSubPlan = (id, pan) => {
+  const GOTOUserSubPlan = (id, pan,name,mobile) => {
     Navigate('userSubPlan', {
       state: {
         USERSUBID: id,
-        USERSUBPAN: pan
+        USERSUBPAN: pan,
+        USERNAME:name,
+        USERMOBILE:mobile,
 
       },
     });
@@ -363,7 +365,7 @@ const UserData = () => {
           <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
             &#8617;&nbsp;
           </div>
-          <h3> C.A UPDATE FORM</h3>
+          <h3> USER UPDATE FORM</h3>
           <div className={`${styles.btn_submit} `}>
             <button type="submit" onClick={handleSubmit}>
               UPDATE

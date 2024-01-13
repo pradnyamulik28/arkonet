@@ -25,8 +25,11 @@ function DistributorHome() {
           <div className={`col-sm-9 col-md-9 col-lg-9 col-xl-9`}>
             <Routes>
               <Route path="" element={<DistributorLogIn setLoggedIn={setLoggedIn} />} />
+              
               <Route path="distributor_reg" element={<DistributorRegistration setLoggedIn={setLoggedIn} />} />
+              <Route path="/refferal/reg/:referralParam" element={<DistributorRegistration setLoggedIn={setLoggedIn} />} />
               <Route path="update/distributor_reg" element={<DistributorRegistration />} />
+
               <Route path="/distributor_dash" element={<DistributorDash />} />
               <Route path="/distributor_dash/userview" element={<ViewUsers />} />
               <Route path="/distributor_dash/userviewc" element={<ViewUserCategory />} />

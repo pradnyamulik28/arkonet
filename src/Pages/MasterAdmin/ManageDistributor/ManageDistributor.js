@@ -38,7 +38,7 @@ const ManageDistributor = () => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result)
-        const filteredData = result.filter(item => item.status === false);
+        const filteredData = result.filter(item => item.status === false && item.salesmanid===1);
         setuserdata(filteredData)
 
       })

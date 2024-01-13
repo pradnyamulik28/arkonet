@@ -229,11 +229,23 @@ function Presentation() {
 
   function moveSlide(e) {
     e.preventDefault();
-    console.log( e,currentSlideNo);
+    console.log( currentSlideNo);
     if (e.target.id === "right_btn") {
-      setCurrentSlideNo(currentSlideNo + 1);
+      if(currentSlideNo===totalSides)
+      {
+        setCurrentSlideNo(1)
+      }
+      else{
+        setCurrentSlideNo(currentSlideNo + 1);
+      }
     } else if (e.target.id === "left_btn" ) {
-      setCurrentSlideNo(currentSlideNo - 1);
+      if(currentSlideNo===1)
+      {
+        setCurrentSlideNo(totalSides)
+      }
+      else{
+        setCurrentSlideNo(currentSlideNo - 1);
+      }
     }
   }
 
@@ -286,33 +298,11 @@ function Presentation() {
       </div>
       <section className={style.navigation}>
           <p>{`${currentSlideNo} of ${totalSides}`}</p>
-            {/* <button
-              id="full_screen"
-              className={
-                isFullScreen
-                  ? `${style.btn_screen}`
-                  : `${style.btn_screen} ${style.show}`
-              }
-              onClick={screenMode}
-            >
-              <i className="fas fa-expand" id="full_screen"></i>
-            </button>
-
-            <button
-              id="small_screen"
-              className={
-                isFullScreen
-                  ? `${style.btn_screen} ${style.show}`
-                  : `${style.btn_screen}`
-              }
-              onClick={screenMode}
-            >
-              <i className="fas fa-compress" id="small_screen"></i>
-            </button> */}
+            
 
             <button
               id="left_btn"
-              className={currentSlideNo > 1 ? `${style.btn} ${style.show}`:`${style.btn}`}
+              className={`${style.btn} ${style.show}`}
               onClick={moveSlide}
             >
               <i className="fas fa-solid fa-caret-left" id="left_btn"></i>
@@ -321,7 +311,7 @@ function Presentation() {
             <button
               id="right_btn"
               className={
-                currentSlideNo < totalSides ? `${style.btn} ${style.show}` : `${style.btn}`
+                `${style.btn} ${style.show}`
               }
               onClick={moveSlide}
             >

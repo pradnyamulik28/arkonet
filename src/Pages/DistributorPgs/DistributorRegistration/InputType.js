@@ -57,6 +57,11 @@ export default class InputType extends React.Component {
         properties.maxLength=10;
         properties.isValidMobile=this.props.isValidMobile;
       break;
+
+      case "nomieemobile":
+        properties.maxLength=10;
+        properties.isValidMobile=this.props.isValidNomineeMobile;
+      break;
       
       case "telephone":
         properties.maxLength = 11;
@@ -71,7 +76,11 @@ export default class InputType extends React.Component {
         properties.maxLength=6;
         properties.isValidPIN=this.props.isValidPIN;
       break;
-      
+
+      case "salesmanager":
+        properties.value_array=this.props.list;
+      break;
+            
       default:
       
       break;

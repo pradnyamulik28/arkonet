@@ -342,3 +342,15 @@ animation:         ca3_fade_move_down 2s ease-in-out infinite;
   }
 }
 
+@media (max-width:768px) {
+  .head_fs40{
+    font-size: 1rem !important;
+  }
+  .second_line{
+    font-size: 1rem !important;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .first_line,.second_line,.head_fs40{white-space-collapse: collapse;}
+}

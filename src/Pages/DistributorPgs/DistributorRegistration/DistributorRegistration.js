@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from './DistributorRegistration.module.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { url_ } from '../../../Config';
 import swal from 'sweetalert2';
 import Formfields from './formfields';
 import InputType from "./InputType"
 import PaymentDetails from '../PaymentDetails/PaymentDetails';
+import RadioInput from '../../../components/RadioField/RadioInput';
 
 const DistributorRegistration = ({ setLoggedIn }) => {
 
@@ -15,36 +16,62 @@ const DistributorRegistration = ({ setLoggedIn }) => {
   const distributor_id = localStorage.getItem("distributor_id");
 
   const [formfields, setFormFields] = useState(Formfields);
+  const [formStatus, setFormStatus] = useState("registration")
 
-  const [formStatus, setFormStatus] = useState("registration")//state : "registration"/"update"
+  const [regBySaleMgm,setregBySaleMgm]=useState(false)
+  
 
-
-
+const { referralParam } = useParams();  //get User Info from url
+const [saleMgmReg,setSaleMgmReg]=useState(false)
   useEffect(() => {
+    if (referralParam) {
+            
+      setSaleMgmReg(true)
 
+      setFormFields(Formfields);
+        setFormStatus("registration");
+        setLoggedIn(false)
+        setSaleMgmReg(false)
+        setFormdata({...formdata,salesmanid:referralParam.split("_")[2]})
+    }
+    else{
+          
     switch (location.pathname) {
       case "/distributor/distributor_reg":
         setFormFields(Formfields);
         setFormStatus("registration");
-        setLoggedIn(false)
+        setLoggedIn(false);
+        setSaleMgmReg(false);
+        setFormdata({ ...formdata, salesmanid: "1" });
+        break;
+      case "/sales/salesmgm_dash/sale_reg":
+        setFormFields(Formfields);
+        setFormStatus("registration");        
+        setSaleMgmReg(true);
+        setregBySaleMgm(true)
+        setFormdata({
+          ...formdata,
+          salesmanid: localStorage.getItem("salesmanager_id"),
+        });
         break;
 
       case "/distributor/update/distributor_reg":
         //Remove Password Fields If Update
         const filteredFields = formfields.filter((item) => {
           if (item.name === "password" || item.name === "confirmpassword") {
-            return false
-          }
-          else return true;
-        })
+            return false;
+          } else return true;
+        });
         setFormFields(filteredFields);
         setFormStatus("update");
         getDistributorData();
+
         break;
 
       default:
         break;
     }
+  }
   }, [formStatus]);
 
 
@@ -63,8 +90,12 @@ const DistributorRegistration = ({ setLoggedIn }) => {
   const [isValidPIN, setIsValidPIN] = useState(true);
   const [isStateNull, setIsStateNull] = useState(true);
 
+  const [isValidNomineeMobile, setIsValidNomineeMobile] = useState(true);
+
+
 
   const [formdata, setFormdata] = useState({
+    salesmanid:null,
     name: null,
     datebirth: null,
     profession: null,
@@ -76,57 +107,58 @@ const DistributorRegistration = ({ setLoggedIn }) => {
     pin_code: null,
     state: null,
     whatsApp_Link: null,
+    nomineename:null,
+    nomieemobile:null,
     password: null,
     confirmpassword: null
   });
 
 
-  useEffect(() => {
 
+ 
 
-
-  }, [])
-
-
-  async function getDistributorData() {
+  async function getDistributorData(){
 
     //Disable PAN Field 
     const inputElementpan = document.getElementsByName('pan', 'text');
-
-    if (inputElementpan.length) {
-      inputElementpan[0].disabled = true;
-    }
-
-
-
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    const response = await fetch(
-      `${url_}/all/distributorbyid/${distributor_id}`,
-      requestOptions
-    );
-    const result = await response.json();
-    if (response.status === 200) {
-      // console.log(result);
-
-
-      setFormdata(result);
-    }
-
-
-
-
+      
+      if (inputElementpan.length) {
+          inputElementpan[0].disabled  = true;
+      }
+  
+  
+  
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
+  
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+  
+      const response = await fetch(
+        `${url_}/all/distributorbyid/${distributor_id}`,
+        requestOptions
+      );
+      const result = await response.json();
+      if (response.status === 200) {
+        // console.log(result);
+       
+        
+        setFormdata(result);
+      }
+  
+      
+  
+  
   }
+  
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const mobilePattern = /^[789]\d{9}$/;
 
     //=============================================================================
     switch (name) {
@@ -171,7 +203,6 @@ const DistributorRegistration = ({ setLoggedIn }) => {
         setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
         e.target.value = value.replace(/\D/g, "");
         // Basic mobile validation
-        const mobilePattern = /^[789]\d{9}$/;
         setIsValidMobile(mobilePattern.test(e.target.value));
         break;
 
@@ -211,6 +242,11 @@ const DistributorRegistration = ({ setLoggedIn }) => {
         }
         break;
 
+        case "nomieemobile":
+          setFormdata({ ...formdata, [e.target.name]: value.replace(/\D/g, "") });
+          e.target.value = value.replace(/\D/g, "");          
+          setIsValidNomineeMobile(mobilePattern.test(e.target.value));
+          break;
 
       case "password":
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
@@ -303,11 +339,11 @@ const DistributorRegistration = ({ setLoggedIn }) => {
 
     ) {
       swal.fire("Failed!", "Please fill the mandatory fields!!", "error");
-      console.log(formdata);
+      // console.log(formdata);
       return;
     } else {
       const url = `${url_}/updateDistribution/${distributor_id}`;
-      console.log(url);
+      // console.log(url);
 
       try {
         const response = await fetch(url, {
@@ -328,7 +364,9 @@ const DistributorRegistration = ({ setLoggedIn }) => {
         } else if (result.status === "UNAUTHORIZED") {
           swal.fire("Failed!", `${result.message}`, "error");
         } else {
-          setFormdata({
+        localStorage.setItem('distributor_name', formdata.name);
+        setFormdata({
+            salesmanid:null,
             name: null,
             datebirth: null,
             profession: null,
@@ -340,6 +378,8 @@ const DistributorRegistration = ({ setLoggedIn }) => {
             pin_code: null,
             state: null,
             whatsApp_Link: null,
+            nomineename:null,
+            nomieemobile:null,
             password: null,
             confirmpassword: null,
           });
@@ -443,6 +483,7 @@ const DistributorRegistration = ({ setLoggedIn }) => {
           swal.fire("Failed!", `${result.message}`, "error");
         } else {
           setFormdata({
+            salesmanid:null,
             name: null,
             datebirth: null,
             profession: null,
@@ -454,6 +495,8 @@ const DistributorRegistration = ({ setLoggedIn }) => {
             pin_code: null,
             state: null,
             whatsApp_Link: null,
+            nomineename:null,
+            nomieemobile:null,
             password: null,
             confirmpassword: null,
           });
@@ -462,7 +505,9 @@ const DistributorRegistration = ({ setLoggedIn }) => {
             "Registration successful. You can log in now.",
             "success"
           );
-          Navigate("/distributor/");
+          regBySaleMgm?
+          Navigate("/sales/salesmgm_dash"):
+          Navigate("/distributor/")
         }
 
       } catch (error) {
@@ -484,12 +529,14 @@ const DistributorRegistration = ({ setLoggedIn }) => {
         <div className={`${styles.regtitle} d-flex justify-content-around mb-2`}>
           {formStatus === "registration" ? <span> DISTRIBUTOR REGISTRATION FORM</span> :
             formStatus === "update" && <span> DISTRIBUTOR UPDATE FORM</span>}
-          {formStatus === "registration" && <Link to="/distributor/"  ><span>Login</span></Link>}
+          {(formStatus === "registration" && !regBySaleMgm) && <Link to="/distributor/"  ><span>Login</span></Link>}
           {formStatus === "update" && <Link onClick={handleUpdateForm}><span>Update</span></Link>}
         </div>
         <div className={styles.regform}>
           <form action="" onSubmit={handleSubmit}>
+          
             <div className={styles.first}>
+            
               {formfields.map((formfield) => (
                 <InputType
                   key={"k" + formfield.id}
@@ -513,6 +560,7 @@ const DistributorRegistration = ({ setLoggedIn }) => {
                   isValidPAN={formfield.name === "pan" && isValidPAN}
                   isPasswordMatch={formfield.name === "confirmpassword" && isPasswordMatch}
                   isProfessionNull={formfield.name === "profession" && isProfessionNull}
+                  isValidNomineeMobile={formfield.name === "nomieemobile" && isValidNomineeMobile}
                 />
               ))}
               {formStatus === "registration" && <div className={`${styles.btn_submit} mt-4`}>

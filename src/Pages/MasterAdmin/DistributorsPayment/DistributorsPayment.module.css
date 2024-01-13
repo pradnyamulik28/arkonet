@@ -177,7 +177,8 @@
 
 .btn_submit button {
   height: 2rem;
-  width: 75%;
+  /* width: 75%; */
+  width: fit-content;
   border-radius: 10px;
   border: none;
   background-color: #ffd401;

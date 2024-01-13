@@ -155,7 +155,7 @@ const Loginpage = ({ setLoggedIn }) => {
         localStorage.setItem('mobile', user_mobile);
         localStorage.setItem('pan', user_pan);
         localStorage.setItem('profession', user_profession);
-        localStorage.setItem('logintime',new Date())
+        localStorage.setItem('logintime',new Date());
 
 
         const sub_status = await checkSubscriptionStatus();//console.log(sub_status)
@@ -236,6 +236,7 @@ const Loginpage = ({ setLoggedIn }) => {
       <div className={styles.right}>
         <div className={styles.right_body}>
           <div className={styles.header}>
+          <h5 style={{"color":"#9ba4ab","cursor":"pointer"}} onClick={(e)=>{Navigate("/")}}><i class="fa-regular fa-circle-left" style={{"fontSize":"1.5rem","color":"#ffd401"}}></i> &nbsp;Back to Website</h5>
             <div className={styles.greet}>
               <h3>Welcome</h3>
             </div>

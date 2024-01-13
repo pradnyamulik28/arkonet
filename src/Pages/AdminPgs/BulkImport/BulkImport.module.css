@@ -1,0 +1,9 @@
+.swal_wide{
+    width:fit-content;
+}
+.single_line{
+    max-width: 3rem !important;
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
