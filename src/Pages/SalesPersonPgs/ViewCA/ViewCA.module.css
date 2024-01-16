@@ -229,3 +229,35 @@
   flex: 1;
   padding: 1rem;
 }
+
+@media screen and (max-width:480px ) {
+  .tab_bar{
+    font-size: small;
+  }
+  
+}
+@media screen and (min-width:481px) and (max-width:768px ) {
+  .tab_bar{
+    font-size: medium;
+  }
+  
+}
+
+ 
+@media screen and (max-width:768px) {
+  .gdtxt1,
+.gdtxt2,
+.gdtxt3,
+.gdtxt4,
+.gdtxt5,
+.gdtxt6,
+.srno,
+.an,
+.pan,
+.amount,
+.reference,
+.inputamount {
+  font-size: 0.9rem;
+}
+  
+}

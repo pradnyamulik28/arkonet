@@ -8,6 +8,9 @@ const TotalClient = () => {
   const [tcdata, setTcdata] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const sub_userid = window.localStorage.getItem('Sub_user_id');
+  const Sub_category = localStorage.getItem(`Category`)
+
   const totalClient = useCallback(() => {
     const user_id = window.localStorage.getItem('user_id');
     const storedToken = window.localStorage.getItem('jwtToken');
@@ -23,8 +26,15 @@ const TotalClient = () => {
       })
         .then(response => response.json())
         .then(data => {
-          setTcdata(data);
-          console.log("TC", data);
+
+          if (Sub_category !== "Sub User") {
+            setTcdata(data);
+            // console.log("TC", data);
+          } else {
+            const filteredResult = data.filter(item => item.subUserId == sub_userid);
+            setTcdata(filteredResult);
+
+          }
         })
         .catch(error => console.log(error));
     } catch (error) {
@@ -74,11 +84,20 @@ const TotalClient = () => {
                 </svg>
               </div>
             </div>
-            <div className="col-2">
+            {Sub_category !== "Sub User" ? (
+              <div className="col-2">
+                <div className={`${styles.Cbtn_submit}`}>
+                  <Link to='clientreg'><input type="submit" value="ADD CLIENT" /></Link>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+            {/* <div className="col-2">
               <div className={`${styles.Cbtn_submit}`}>
                 <Link to='clientreg'><input type="submit" value="ADD CLIENT" /></Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </form>
       </div>

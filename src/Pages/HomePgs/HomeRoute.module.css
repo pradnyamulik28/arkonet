@@ -1,6 +1,6 @@
 .navbar {
   overflow: hidden;
-  
+
   position: fixed;
   top: 0;
   width: 100%;
@@ -10,8 +10,10 @@
   padding: 16px;
   margin-top: 10vh;
   height: auto;
-  margin-right: 0; /* Used in this example to enable scrolling */
-  margin-left: 0; /* Used in this example to enable scrolling */
+  margin-right: 0;
+  /* Used in this example to enable scrolling */
+  margin-left: 0;
+  /* Used in this example to enable scrolling */
 }
 
 .book_now {
@@ -21,7 +23,7 @@
   border-top-left-radius: 15px 15px;
   border-top-right-radius: 15px 15px;
   color: #fff;
-  display:inline-block;
+  display: inline-block;
   font-size: 0.7rem;
   font-weight: 800 !important;
   letter-spacing: 1px;
@@ -29,56 +31,57 @@
   height: 2.5rem;
   line-height: 50px;
   position: fixed;
-  
+
   right: 0;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  -moz-transform:rotate(-90deg);
-  -ms-transform:rotate(-90deg);
-  -o-transform:rotate(-90deg);
-  -webkit-transform:rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
   transform-origin: bottom right;
-  
+
   z-index: 1000;
 }
 
-@media only screen and (min-width: 800px){
-  .book_now{
-      bottom: 12rem;
+@media only screen and (min-width: 800px) {
+  .book_now {
+    bottom: 12rem;
   }
-  
+
 }
 
 
 
 @media only screen and (max-width: 800px) {
-.book_now {
-  background: #fed300;
-  cursor: pointer;
-  border-radius: 50%;
-  /* border-top-left-radius: 15px 15px;
+  .book_now {
+    background: #fed300;
+    cursor: pointer;
+    border-radius: 50%;
+    /* border-top-left-radius: 15px 15px;
   border-top-right-radius: 15px 15px; */
-  color: #fff;
-  display:inline-block;
-  font-size: 0.4rem;
-  font-weight: 900;
-  width: 3.5rem;
-  height: 3.5rem;
-  line-height: 50px;
-  position: fixed;
-  bottom: 5.5rem;;
-  right: 1.8rem;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  -moz-transform:rotate(0deg);
-  -ms-transform:rotate(0deg);
-  -o-transform:rotate(0deg);
-  -webkit-transform:rotate(0deg);
-  transform-origin: bottom right;
-  
-  z-index: 1000;
-  
-}
+    color: #fff;
+    display: inline-block;
+    font-size: 0.4rem;
+    font-weight: 900;
+    width: 3.5rem;
+    height: 3.5rem;
+    line-height: 50px;
+    position: fixed;
+    bottom: 5.5rem;
+    ;
+    right: 1.8rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform-origin: bottom right;
+
+    z-index: 1000;
+
+  }
 }

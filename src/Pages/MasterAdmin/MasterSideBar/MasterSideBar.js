@@ -8,94 +8,108 @@ import { Link, useNavigate } from 'react-router-dom';
 const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
     const Navigate = useNavigate();
 
-    useEffect(() => {
-        // setIsLoggedIn(loggedIn);
+    useEffect(() => {        
         if (localStorage.length > 0) {
-            // setIsLoggedIn(localStorage.getItem('LogedIn'));
-            // setIsLoggedIn(true);
-        }
-        // console.log('is logged in',isLoggedIn);
+          setLoggedIn(JSON.parse(localStorage.getItem("LogedIn")));            
+        }        
     }, []);
 
 
     const handleLogout = () => {
         localStorage.clear();
         setLoggedIn(false);
+        Navigate("/masteradmin")
     };
 
 
     const [activeLink, setActiveLink] = useState(null);
 
     const handleLinkClick = (pglink) => {
-        if (pglink === "searchadmin") {
-            Navigate("searchadmin", {
-                state: {
-                    userProfession: "All"
-                },
-            })
-            console.log(pglink)
-            setActiveLink(pglink);
+        setActiveLink(pglink);
+      switch (pglink) {
+        case "dashboard":
+        //   
+          Navigate("admindashboard");
+          
+          break;
+        case "searchadmin":
+          Navigate("searchadmin", {
+            state: {
+              userProfession: "All",
+            },
+          });          
+          
+          break;
 
-        } else if (pglink === "clientview") {
-            Navigate(pglink, {
-                state: {
-                    ClientCategory: "All"
-                },
-            })
-            setActiveLink(pglink);
-            console.log(pglink)
+        case "clientview":
+          Navigate(pglink, {
+            state: {
+              ClientCategory: "All",
+            },
+          });
+          
+          
 
-        } else if (pglink === "subPackDetails") {
-            Navigate(pglink)
+          break;
+        case "subPackDetails":
+          Navigate(pglink);
 
-            setActiveLink(pglink);
-            console.log(pglink,)
+          
+          
 
-        } else if (pglink === "distributor") {
-            Navigate('distributor', {
-                state: {
-                    userProfession: "Distributor List"
-                },
-            });
-            setActiveLink(pglink);
-        } else if (pglink === "distriPayments") {
-            Navigate('distriPayments', {
-                state: {
-                    userProfession: "Distributor List"
-                },
-            });
-            setActiveLink(pglink);
-        }
-        
-        else if (pglink === "addsalesManager") {
-            Navigate('addsalesManager');
-            setActiveLink(pglink);
-        }
-        else if (pglink === "setmanagertarget") {
-            Navigate('salemgmlist', {
-                state: {
-                    userProfession: "Sale Manager Target"
-                },
-            });
-            setActiveLink(pglink);
-        }
-        else if (pglink === "salePayments") {
-            Navigate('salePayments', {
-                state: {
-                    userProfession: "Sale Manager's Payment"
-                },
-            });
-            setActiveLink(pglink);
-        }
-        else {
+          break;
+        case "distributor":
+          Navigate("distributor", {
+            state: {
+              userProfession: "Distributor List",
+            },
+          });
+          
+          break;
 
-            console.log(pglink)
-            setActiveLink(pglink);
-        }
+        case "distriPayments":
+          Navigate("distriPayments", {
+            state: {
+              userProfession: "Distributor List",
+            },
+          });
+          
+          break;
+
+        case "addsalesManager":
+          Navigate("addsalesManager");
+          
+          break;
+
+        case "setmanagertarget":
+          Navigate("salemgmlist", {
+            state: {
+              userProfession: "Sale Manager Target",
+            },
+          });
+          
+          break;
+
+        case "salePayments":
+          Navigate("salePayments", {
+            state: {
+              userProfession: "Sale Manager's Payment",
+            },
+          });
+          
+          break;
+          case "changepass":
+            Navigate("changepass");
+          
+
+            break;
+        default:
+          
+      }
     };
 
     return (
-        // <div className="container">
+        <>
         <div className={`${styles.sidebar}`}>
             <div className={`d-flex flex-column justify-content-evenly ${styles.navbar}  `}>
                 <Link to={"dashboard"}>
@@ -136,27 +150,13 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                             <h6 className={activeLink === 'distriPayments' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Distributors Payment</h6>
                         </div>
 
-                        {/* <div onClick={() => handleLinkClick('salePayments')}>
+                        <div onClick={() => handleLinkClick('salePayments')}>
                             <h6 className={activeLink === 'salePayments' ? 'font-weight-bold mt-4' : 'mt-4'} style={{ cursor: "pointer" }}>Sale Manager Payment</h6>
-                        </div> */}
+                        </div>
 
                         <Link to="changepass" onClick={() => handleLinkClick('changepass')}>
                         <h6 className={activeLink === 'changepass' ? 'font-weight-bold mt-4' : 'mt-4'}>Change Password</h6>
                         </Link>
-                        
-
-                        {/* <Link to="/masteradmin/admindashboard/" onClick={() => handleLinkClick('dashboard')}>
-                            <h6 className={activeLink === 'dashboard' ? 'font-weight-bold' : ''}>Invest Now</h6>
-                        </Link>
-
-                        <Link to="/masteradmin/admindashboard/" onClick={() => handleLinkClick('dashboard')}>
-                            <h6 className={activeLink === 'dashboard' ? 'font-weight-bold' : ''}>Service Requests</h6>
-                        </Link> */}
-
-
-
-
-
                         <div className='mt-4'>
 
                             <Link to="" className={`${styles.logout_text} mt-4`} onClick={handleLogout}><h6>Logout</h6></Link>
@@ -175,9 +175,34 @@ const MasterSideBar = ({ loggedIn, setLoggedIn }) => {
                 <h6 className={styles.poweredby}>Developed and Manage By</h6>
                 <img className={` ${styles.arko_logo}`} alt='logo' src={Cmpylogo} />
                 <h6 className={styles.version}>version 1.0</h6>
-            </div>
+            </div>            
         </div>
-        // </div>
+        {loggedIn&&<div class={`${styles.navbarH}`}>
+                    <div class={`${styles.containerH} ${styles.navcontainer}`}>
+                        <input class={`${styles.checkbox}`} type="checkbox" name="" id="" />
+                        <div class={`${styles.hamburgerlines}`}>
+                            <small class={`${styles.line} ${styles.line1}`}></small>
+                            <small class={`${styles.line} ${styles.line2}`}></small>
+                            <small class={`${styles.line} ${styles.line3}`}></small>
+                        </div>
+
+                        <div class={`${styles.menuitems}`}>
+                            <li onClick={() => handleLinkClick('dashboard')}><span className={activeLink === 'dashboard' ? 'font-weight-bold ' : ''} style={{ cursor: "pointer" }}>Dashboard</span></li>
+                            <li onClick={() => handleLinkClick('searchadmin')}><span className={activeLink === 'searchadmin' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>CA</span></li>
+                            <li onClick={() => handleLinkClick('clientview')}><span className={activeLink === 'clientview' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Clients</span></li>
+                            <li onClick={() => handleLinkClick('addsalesManager')}><span className={activeLink === 'addsalesManager' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Add Sales Manager</span></li>
+                            <li onClick={() => handleLinkClick('subPackDetails')}><span className={activeLink === 'subPackDetails' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }} >Manage Subsriptions</span></li>
+                            <li onClick={() => handleLinkClick('distributor')}><span className={activeLink === 'distributor' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }} >Manage Distributors</span></li>
+                            <li onClick={() => handleLinkClick('setmanagertarget')}><span className={activeLink === 'setmanagertarget' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }} >Manage Sale Manager</span></li>
+                            <li onClick={() => handleLinkClick('distriPayments')}><span className={activeLink === 'distriPayments' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }} >Distributors Payment</span></li>
+                            <li onClick={() => handleLinkClick('salePayments')}><span className={activeLink === 'salePayments' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }} >Sale Manager Payment</span></li>
+                            <li onClick={() => handleLinkClick('changepass')}><span className={activeLink === 'changepass' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Change Password</span></li>
+                            <li className={`${styles.logout_text}`} onClick={handleLogout}><span >Logout</span></li>
+                        </div>
+                    </div>
+                    
+                </div >}
+        </>
     );
 }
 

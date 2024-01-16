@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   margin-left: auto;
+  min-width: 800px;
 }
 
 /* Top Row starts */
@@ -89,10 +90,12 @@
   margin-top: 2.5%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding-left: 3%;
   padding-right: 3%;
   align-items: center;
+  /* min-width: 800px;
+  overflow-x: scroll; */
 }
 
 .gdtxt1,
@@ -103,12 +106,13 @@
 .gdtxt6 {
   color: #f9d30c;
   font-weight: bold;
-  font-size: 1.5vw;
+  font-size: 1.2rem;
   margin-top: 1.5vh;
+  width: fit-content;
 }
 
 .ddata {
-  height: 10%;
+  height: 10%;  
   width: 90%;
   background-color: #f1ffff;
   border-radius: 1.5rem;
@@ -116,44 +120,47 @@
   margin-top: 2.5%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding-left: 3%;
   padding-right: 3%;
   align-items: center;
+
+  /* min-width: 800px;
+  overflow-x: scroll; */
 }
 
 .srno,
 .gdtxt1 {
-  width: 8vw;
+  width: 50px;
   text-align: center;
 }
 
 .an,
 .gdtxt2 {
-  width: 12vw;
+  width: 150px;
 }
 
 .pan,
 .gdtxt3 {
-  width: 9vw;
+  width: 100px;
   text-align: center;
 }
 
 .mobile,
 .gdtxt4 {
-  width: 9vw;
+  width: 100px;
 }
 
 .reference,
 .gdtxt5 {
-  width: 7vw;
+  width: 50px;
   text-align: center;
   color: #ffd401;
 }
 
 .status,
 .gdtxt6 {
-  width: 5vw;
+  width: 50px;
   text-align: center;
 }
 
@@ -167,3 +174,26 @@
 }
 
 /* Bottom Row ends */
+
+
+@media screen and (max-width:768px) {
+  .gdtxt1,
+.gdtxt2,
+.gdtxt3,
+.gdtxt4,
+.gdtxt5,
+.gdtxt6,
+.srno,
+.an,
+.pan,
+.mobile,
+.reference,
+.status {
+  font-size: 0.9rem;
+}
+/* .gdtxt5,
+.reference{
+  display: none;
+} */
+  
+}

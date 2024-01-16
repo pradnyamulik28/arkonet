@@ -8,6 +8,10 @@ const IncomeClient = () => {
   const [cdata, setCdata] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+
+  const sub_userid = window.localStorage.getItem('Sub_user_id');
+  const Sub_category = localStorage.getItem(`Category`)
+
   const totalIncomeClient = useCallback(() => {
 
     const user_id = window.localStorage.getItem('user_id');
@@ -25,8 +29,17 @@ const IncomeClient = () => {
       })
         .then(response => response.json())
         .then(data => {
-          setCdata(data)
-          console.log(data)
+
+
+          if (Sub_category !== "Sub User") {
+            setCdata(data)
+            console.log(data)
+          } else {
+            const filteredResult = data.filter(item => item.subUserId == sub_userid);
+            setCdata(filteredResult)
+            // console.log(data)
+          }
+
         })
         .catch(error => console.log(error));
     } catch (error) {
@@ -78,11 +91,16 @@ const IncomeClient = () => {
                 </svg>
               </div>
             </div>
-            <div className="col-2">
-              <div className={`${styles.Cbtn_submit}`}>
-                <Link to='clientreg'><input type="submit" value="ADD CLIENT" /></Link>
+            {Sub_category !== "Sub User" ? (
+              <div className="col-2">
+                <div className={`${styles.Cbtn_submit}`}>
+                  <Link to='clientreg'><input type="submit" value="ADD CLIENT" /></Link>
+                </div>
               </div>
-            </div>
+            ) : (
+              <></>
+            )}
+
           </div>
         </form>
       </div>

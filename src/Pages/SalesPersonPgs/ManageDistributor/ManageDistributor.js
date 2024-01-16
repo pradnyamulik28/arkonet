@@ -110,11 +110,11 @@ const ManageDistributor = () => {
       <div className={`${style.workport} `}>
 
         {/* Top Port Starts */}
-        <h3 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
+        <h4 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
 
           <b>Distributor Requests</b>
 
-        </h3>
+        </h4>
         <div className={`${style.top} `}>
           <div className={`${style.inputbox} `}>
             <div className={`${style.seachbox} `}>
@@ -123,7 +123,7 @@ const ManageDistributor = () => {
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
             <div className={`${style.seachlogo} `}>
-              <h3><i class="fa-solid fa-magnifying-glass"></i></h3>
+              <h4><i class="fa-solid fa-magnifying-glass"></i></h4>
             </div>
           </div>
         </div>
@@ -162,8 +162,8 @@ const ManageDistributor = () => {
 
                   <div className={`${style.name} d-flex flex-column`} >
                     <p className={` `}>
-                    <i class="bi bi-check-circle-fill mr-4" style={{ fontSize: "xx-large", color: "green", cursor: "pointer" }} onClick={() => ApproveDistributor(item.id)}></i>
-                      <i class="bi bi-x-circle-fill " style={{ fontSize: "xx-large", color: "red","cursor":"pointer" }} onClick={() => BlockDistributor(item.id)}></i>
+                    <i className={`bi bi-check-circle-fill mr-2 ${style.approve}`} onClick={() => ApproveDistributor(item.id)}></i>
+                      <i className={`bi bi-x-circle-fill ${style.reject}`} onClick={() => BlockDistributor(item.id)}></i>
                     </p>
                   </div>
                 </div>

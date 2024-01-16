@@ -8,6 +8,8 @@
   flex-direction: column;
   align-items: center;
   margin-left: auto;
+  min-width: 800px;
+  
 }
 
 /* Top Row starts */
@@ -18,7 +20,6 @@
   width: 90%;
   border-radius: 1.5rem;
   box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
-
 }
 
 .inputbox {
@@ -103,7 +104,7 @@
 .gdtxt6 {
   color: #f9d30c;
   font-weight: bold;
-  font-size: 1.5vw;
+  font-size: 1.3vw;
   margin-top: 1.5vh;
 }
 
@@ -130,18 +131,19 @@
 
 .an,
 .gdtxt2 {
-  width: 8vw;
+  width: 150px;
 }
 
 .pan,
 .gdtxt3 {
-  width: 10vw;
+  width: 100px;
   /* text-align: center; */
 }
 
-.mobile,
+.amount,
 .gdtxt4 {
-  width: 3vw;
+  width: 100px;
+  text-align: right;
 }
 
 .reference,
@@ -151,9 +153,15 @@
   color: #ffd401;
 }
 
-.status,
+.inputamount,
 .gdtxt6 {
-  width: 8vw;
+  width: 100px;
+
+}
+.inputamount{
+  text-align: right;
+}
+.gdtxt6{
   text-align: center;
 }
 
@@ -167,9 +175,9 @@
 .srno,
 .an,
 .pan,
-.mobile,
+.amount,
 .reference,
-.status {
+.inputamount {
   margin-top: 2vh;
 }
 
@@ -188,4 +196,28 @@
   text-shadow: 2px 3px 5px #000000;
   margin: 10px;
   cursor: pointer;
+}
+
+
+
+@media screen and (max-width:768px) {
+  .gdtxt1,
+.gdtxt2,
+.gdtxt3,
+.gdtxt4,
+.gdtxt5,
+.gdtxt6,
+.srno,
+.an,
+.pan,
+.amount,
+.reference,
+.inputamount {
+  font-size: 0.9rem;
+}
+/* .gdtxt5,
+.reference{
+  display: none;
+} */
+  
 }

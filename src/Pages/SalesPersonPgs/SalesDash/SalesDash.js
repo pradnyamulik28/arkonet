@@ -805,10 +805,11 @@ function SalesDash() {
         .firstday.toISOString()
         .split("T")[0]
     }`;
+    let yearlyincentive=0;
     try {
       const response = await fetch(url, requestOptions);
       const yearSaledata = await response.json();
-      console.log(yearlyTarget)
+      // console.log(yearlyTarget)
       setYearlyData({
         title:
           month === 0
@@ -820,15 +821,27 @@ function SalesDash() {
         incentive: 0,
         difference: yearlyTarget - yearSaledata,
       });
+      yearlyincentive=yearSaledata >= yearlyTarget ? (yearSaledata * 1) / 100 : 0
+    } catch (error) {
+      console.log(error);
+    }
 
+
+
+    const url2 = `${url_}/incentative/unpaid/amount/by/salesmanager?pan=${sale_mgm_pan}`;
+    try {
+      const res = await fetch(url2, requestOptions);
+      const earingdata = await res.json();
       setEarnings({
-        yearly: yearSaledata >= yearlyTarget ? (yearSaledata * 1) / 100 : 0, //If yearly target achieved 1% on yearly sale
-        totalearnings: 0,
-        unpaid: 90,
+        yearly: yearlyincentive, //If yearly target achieved 1% on yearly sale
+        totalearnings: earingdata.TotalIncentive,
+        unpaid: Math.abs(earingdata.TotalIncentive-earingdata.TotalPaidPayments),
       });
     } catch (error) {
       console.log(error);
     }
+
+    
 
     // ===================    Get Year sale end   ==============================================================
   }
@@ -1531,8 +1544,8 @@ function moveSlide(e) {
                     <h6 className={style.pb}>Total</h6>
                   </div>
                   <div className={`${style.value}`}>
-                    {/* <p className={`${style.pv}`}>{earnings.totalearnings}</p> */}
-                    <p>Upcomming...</p>
+                    <p className={`${style.pv}`}>{earnings.totalearnings}</p>
+                    {/* <p>Upcomming...</p> */}
                   </div>
                 </div>
 
@@ -1541,8 +1554,8 @@ function moveSlide(e) {
                     <h6 className={style.pb}>Unpaid</h6>
                   </div>
                   <div className={`${style.value}`}>
-                    {/* <p className={`${style.pv}`}>{earnings.unpaid}</p> */}
-                    <p>Upcomming...</p>
+                    <p className={`${style.pv}`}>{earnings.unpaid}</p>
+                    {/* <p>Upcomming...</p> */}
 
                   </div>
                 </div>

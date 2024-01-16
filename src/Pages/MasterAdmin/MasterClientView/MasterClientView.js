@@ -104,7 +104,7 @@ const MasterClientView = () => {
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
             <div className={`${style.seachlogo}`}>
-              <h1><i class="fa-solid fa-magnifying-glass"></i></h1>
+              <h4><i class="fa-solid fa-magnifying-glass"></i></h4>
             </div>
           </div>
         </div>

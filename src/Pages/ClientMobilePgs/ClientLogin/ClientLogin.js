@@ -25,9 +25,9 @@ function ClientLogin() {
       const convertedText = text.replace(/[a-z]/g, (match) =>
         match.toUpperCase()
       );
-     
+
       e.target.value = convertedText;
-      setCredentials({ ...credentials, [e.target.name]: convertedText.replace( /[!@#$%^&*()_+{}\[\]:;<>,.?~\\|\/\-='"`]/g,"") });
+      setCredentials({ ...credentials, [e.target.name]: convertedText.replace(/[!@#$%^&*()_+{}\[\]:;<>,.?~\\|\/\-='"`]/g, "") });
     }
   }
 
@@ -55,6 +55,7 @@ function ClientLogin() {
 
       await fetch(`${url_}/client/isPasswordNull`, requestOptions)
         .then((response) => {
+
           if (response.status === 404) {
             swal.fire("Failed!", "User Not Found !!!", "error");
             setCredentials({ UID: "" });
@@ -70,10 +71,11 @@ function ClientLogin() {
           return response.json();
         })
         .then((result) => {
-          //console.log(result);
+          console.log(result);
           //Pass Password Status,clientpan) to next page
           Navigate(`clientpasscheck`, {
             state: {
+              DataTableName: result.TableName,
               isPasswordNull: result.isPasswordNull,
               clientpan: credentials.UID,
             },
@@ -149,7 +151,7 @@ function ClientLogin() {
               href="https://twitter.com/arkonetglobal?s=11&t=_tXcbzY9oJ0xsskd5YCcMw"
               id={`${style.twitter}`}
             >
-               <i className="bi-twitter-x fs-1 inverted"></i>
+              <i className="bi-twitter-x fs-1 inverted"></i>
               {/* <i
                 class="bi-twitter-x fs-3"
                 style={{ color: "#05022c" }}

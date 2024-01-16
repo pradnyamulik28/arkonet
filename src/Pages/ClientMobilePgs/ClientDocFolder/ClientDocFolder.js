@@ -74,7 +74,7 @@ const ClientDocFolder = () => {
       <div className="row" >
         <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 " id={styles.maindiv}>
           <div className={`${styles.headerbar}`}>
-          <h1 className={styles.h1}><b onClick={(e) => {
+          <h1><b onClick={(e) => {
                             e.preventDefault();
                             navigate(-1, {
                               state: { clientid: id},

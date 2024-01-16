@@ -24,6 +24,7 @@
     flex-direction: column;
     align-items: center;
     margin-left: auto;
+    min-width: 800px;
   }
   
   /* Top Row starts */
@@ -105,7 +106,7 @@
   .gdtxt6 {
     color: #f9d30c;
     font-weight: bold;
-    font-size: 1.5vw;
+    font-size: 1.1rem;
     margin-top: 1.5vh;
   }
   
@@ -132,19 +133,22 @@
   
   .an,
   .gdtxt2 {
-    width: 12vw;
+    width: 150px;
   }
   
   .pan,
   .gdtxt3 {
-    width: 9vw;
+    width: 100px;
     text-align: center;
   }
   
   .mobile,
   .gdtxt4 {
-    width: 9vw;
+    width: 100px;
+    text-align: center;
+
   }
+
   
   .reference,
   .gdtxt5 {
@@ -155,7 +159,7 @@
   
   .status,
   .gdtxt6 {
-    width: 5vw;
+    width: 60px;
     text-align: center;
   }
   
@@ -201,3 +205,36 @@
     padding: 1rem;
 }
   /* Bottom Row ends */
+  @media screen and (max-width:480px ) {
+    .tab_bar{
+      font-size: small;
+    }
+    
+  }
+  @media screen and (min-width:481px) and (max-width:768px ) {
+    .tab_bar{
+      font-size: medium;
+    }
+    
+  }
+
+
+
+  
+@media screen and (max-width:768px) {
+  .gdtxt1,
+.gdtxt2,
+.gdtxt3,
+.gdtxt4,
+.gdtxt5,
+.gdtxt6,
+.srno,
+.an,
+.pan,
+.amount,
+.reference,
+.inputamount {
+  font-size: 0.9rem;
+}
+  
+}

@@ -40,7 +40,7 @@ const UserSubscriptionPage = () => {
     USERSUBTIMELEFT: "",
     USERID: useLocation().state.USERSUBID,
     USERPAN: useLocation().state.USERSUBPAN,
-   
+
 
   });
   console.log(USERSUBSCRIPTIONDATA.USERID, USERSUBSCRIPTIONDATA.USERPAN)
@@ -465,7 +465,7 @@ const UserSubscriptionPage = () => {
     setEndDate(end);
   };
 
-  const handleDaysChange = (e,maxdays) => {
+  const handleDaysChange = (e, maxdays) => {
 
 
     // console.log(dayss)
@@ -574,30 +574,30 @@ const UserSubscriptionPage = () => {
     setCurreantDATE(formattedDate)
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-function trialactivation(){
-  Swal.fire({
-    title: "Are you sure?",
-    text: "This client will be given trial of 15 days.!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, activate!"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      activateTrial()
-    }
-  });
-}
+  function trialactivation() {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This client will be given trial of 15 days.!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, activate!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        activateTrial()
+      }
+    });
+  }
   async function activateTrial() {
 
-    
-    
+
+
     const blob = new Blob([samplepdf], { type: 'application/pdf' });
 
     // Create a File object from the blob
-    const emptyFile = new File([blob], 'empty_file_attatchment.pdf' );
-// console.log(emptyFile)
+    const emptyFile = new File([blob], 'empty_file_attatchment.pdf');
+    // console.log(emptyFile)
     const message = `Dear Accounts Team,
   Greeting from TAXKO!
 
@@ -614,10 +614,10 @@ function trialactivation(){
     const formattedMsg = message.replace(/\n/g, '<br>')
     console.log(message)
 
-    
 
 
-    
+
+
     var myHeaders = new Headers();
     myHeaders['Content-Type'] = 'multipart/form-data';
 
@@ -655,7 +655,7 @@ function trialactivation(){
           timer: 7000
         });
         window.location.reload();
-        
+
       } else {
         swal.close();
         swal.fire("Failed!", `${result}`, "error");
@@ -709,15 +709,15 @@ function trialactivation(){
               <div className={`w-100 mt-3 d-flex justify-content-center`}>
                 {/* <h5><b>User not subscribed...</b></h5> */}
                 <span
-                          className={`${style.card3}`}
-                          style={{
-                            border: "none",
-                            backgroundColor: "#ffd402",
-                          }}
+                  className={`${style.card3}`}
+                  style={{
+                    border: "none",
+                    backgroundColor: "#ffd402",
+                  }}
 
-                        >
-                <p className={`${style.cardp} `} onClick={trialactivation}>Activate Trial</p>
-                        </span>
+                >
+                  <p className={`${style.cardp} `} onClick={trialactivation}>Activate Trial</p>
+                </span>
               </div>
             ) : (
               <div className={`w-100 `}>
@@ -762,8 +762,8 @@ function trialactivation(){
                     <div className="d-flex justify-content-center w-100">
                       <div className={`${style.mainadbominal} w-75 mb-3 `}>
                         {
-                          (USERSUBSCRIPTIONDATA.USERREMAININGDAYS < 0)||
-                          (USERSUBSCRIPTIONDATA.USERREMAININGDAYS <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.hours <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.minutes <= 0) ? (
+                          (USERSUBSCRIPTIONDATA.USERREMAININGDAYS < 0) ||
+                            (USERSUBSCRIPTIONDATA.USERREMAININGDAYS <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.hours <= 0 && USERSUBSCRIPTIONDATA.USERSUBTIMELEFT.minutes <= 0) ? (
                             <button className={`${style.card3}`}
                               style={{
                                 border: "none",
@@ -814,10 +814,10 @@ function trialactivation(){
                                         <input
                                           type="text"
                                           value={addedDays}
-                                          onChange={(e)=>{handleDaysChange(e,USERSUBSCRIPTIONDATA.USERSUBSCRIPTIONTYPE==="Trial"?15:30)}}
+                                          onChange={(e) => { handleDaysChange(e, USERSUBSCRIPTIONDATA.USERSUBSCRIPTIONTYPE === "Trial" ? 15 : 30) }}
                                           placeholder="Add days"
                                           min={0}
-                                          max={USERSUBSCRIPTIONDATA.USERSUBSCRIPTIONTYPE==="Trial"?15:30}
+                                          max={USERSUBSCRIPTIONDATA.USERSUBSCRIPTIONTYPE === "Trial" ? 15 : 30}
                                         />
                                       </div>
                                       {/* <div className={`${style.inputs}`}>

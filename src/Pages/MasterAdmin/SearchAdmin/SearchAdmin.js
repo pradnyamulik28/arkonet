@@ -115,11 +115,12 @@ const SearchAdmin = () => {
     function GoBack() {
         window.history.back(); // This will navigate to the previous page in the browser's history
     }
-    const GOTOClients = (userpan) => {
+    const GOTOClients = (userpan, userid, usertitle) => {
         Navigate('refUser', {
             state: {
                 UserPan: userpan,
-                user_title: "Users"
+                UserID: userid,
+                user_title: usertitle
             },
         });
 
@@ -153,12 +154,12 @@ const SearchAdmin = () => {
                 <div className={`${style.top} `}>
                     <div className={`${style.inputbox} `}>
                         <div className={`${style.seachbox} `}>
-                            <input type="search" className={`${style.inputbox} `} placeholder='Search CA By PAN/Name'
+                            <input type="search" className={`${style.inputbox} `} placeholder='Search C.A By PAN/Name'
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)} />
                         </div>
                         <div className={`${style.seachlogo} `}>
-                            <h1><i class="fa-solid fa-magnifying-glass"></i></h1>
+                            <h4><i class="fa-solid fa-magnifying-glass"></i></h4>
                         </div>
                     </div>
                 </div>
@@ -169,10 +170,11 @@ const SearchAdmin = () => {
 
                     <div className={`${style.drow} `}>
                         <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>
-                        <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>CA Name</p></div>
+                        <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>C.A Name</p></div>
                         <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
                         <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
                         <div className={`${style.name} `} ><p className={`${style.gdtxt5} `}>Reference</p></div>
+                        <div className={`${style.name} `} ><p className={`${style.gdtxt5} ml-4 `}>Sub Users</p></div>
                         <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>
                     </div>
 
@@ -199,7 +201,8 @@ const SearchAdmin = () => {
                                     <div className={`${style.name} `} onClick={() => GOTOUserdata(item.registration.regId)} style={{ cursor: "pointer" }}><p className={`${style.pan} text-primary`}>{item.registration.pan}</p></div>
                                     <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.registration.mobile}</p></div>
 
-                                    <div className={`${style.name} `} onClick={() => GOTOClients(item.registration.pan)}><p className={`${style.reference} text-primary`} style={{ cursor: "pointer" }}>{item.count}</p></div>
+                                    <div className={`${style.name} ml-4 `} onClick={() => GOTOClients(item.registration.pan, item.registration.regId, "Users")}><p className={`${style.reference} text-primary`} style={{ cursor: "pointer" }}>{item.count}</p></div>
+                                    <div className={`${style.name} `} onClick={() => GOTOClients(item.registration.pan, item.registration.regId, "Sub Users")}><p className={`${style.reference} text-primary`} style={{ cursor: "pointer" }}>{item.countSubuser}</p></div>
 
 
                                     <div className={`${style.name} `} >

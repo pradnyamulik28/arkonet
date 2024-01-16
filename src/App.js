@@ -24,12 +24,12 @@ function App() {
           <Route path='/*' element={<HomeRoute />} />
           <Route path='/masteradmin/*' element={<MasterAdmin />} />
           <Route path='/admin/*' element={<Adminhome />} />
-          <Route path='/client/*' element={<ClientPages />} />   
-          <Route path='/distributor/*' element={<DistributorHome />} />          
-          <Route path='/sales/*' element={<SalesHome />} />          
+          <Route path='/client/*' element={<ClientPages />} />
+          <Route path='/distributor/*' element={<DistributorHome />} />
+          <Route path='/sales/*' element={<SalesHome />} />
         </Routes>
       </Router>
-      
+
     </div>
 
   );

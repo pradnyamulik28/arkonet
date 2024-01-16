@@ -8,6 +8,10 @@ const GstClients = () => {
   const [tcdata, setTcdata] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+
+  const sub_userid = window.localStorage.getItem('Sub_user_id');
+  const Sub_category = localStorage.getItem(`Category`)
+
   const totalGstClient = useCallback(() => {
     const user_id = window.localStorage.getItem('user_id');
     const storedToken = window.localStorage.getItem('jwtToken');
@@ -25,8 +29,18 @@ const GstClients = () => {
         .then(data => {
           setTcdata(data);
           console.log("Gst", data);
+
+          if (Sub_category !== "Sub User") {
+            setTcdata(data);
+            // console.log("Gst", data);
+          } else {
+            const filteredResult = data.filter(item => item.subUserId == sub_userid);
+            setTcdata(filteredResult);
+
+          }
+
         })
-        .catch(error => console.log(error));
+
     } catch (error) {
       console.warn("Error on function calling...");
     }
@@ -74,11 +88,15 @@ const GstClients = () => {
                 </svg>
               </div>
             </div>
-            <div className="col-2">
-              <div className={`${styles.Cbtn_submit}`}>
-                <Link to='clientreg'><input type="submit" value="ADD CLIENT" /></Link>
+            {Sub_category !== "Sub User" ? (
+              <div className="col-2">
+                <div className={`${styles.Cbtn_submit}`}>
+                  <Link to='clientreg'><input type="submit" value="ADD CLIENT" /></Link>
+                </div>
               </div>
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
         </form>
       </div>

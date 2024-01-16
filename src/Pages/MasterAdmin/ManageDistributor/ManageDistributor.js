@@ -1,4 +1,4 @@
-import style from '../SearchAdmin/SearchAdmin.module.css';
+import style from './ManageDistributor.module.css';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { url_ } from '../../../Config';
@@ -38,7 +38,7 @@ const ManageDistributor = () => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result)
-        const filteredData = result.filter(item => item.status === false && item.salesmanid===1);
+        const filteredData = result.filter(item => item.status === false && item.salesmanid === 1);
         setuserdata(filteredData)
 
       })
@@ -84,11 +84,9 @@ const ManageDistributor = () => {
       <div className={`${style.workport} `}>
 
         {/* Top Port Starts */}
-        <h2 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
-
+        <h4 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
           <b>Distributor Requests</b>
-
-        </h2>
+        </h4>
         <div className={`${style.top} `}>
           <div className={`${style.inputbox} `}>
             <div className={`${style.seachbox} `}>
@@ -97,7 +95,7 @@ const ManageDistributor = () => {
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
             <div className={`${style.seachlogo} `}>
-              <h1><i class="fa-solid fa-magnifying-glass"></i></h1>
+              <h4><i class="fa-solid fa-magnifying-glass"></i></h4>
             </div>
           </div>
         </div>
@@ -136,8 +134,8 @@ const ManageDistributor = () => {
 
                   <div className={`${style.name} d-flex flex-column`} >
                     <p className={` `}>
-                      <i class="bi bi-check-circle-fill mr-4" style={{ fontSize: "xx-large", color: "green", cursor: "pointer" }} onClick={() => ApproveDistributor(item.id)}></i>
-                      <i class="bi bi-x-circle-fill " style={{ fontSize: "xx-large", color: "red" }} ></i>
+                      <i className={`bi bi-check-circle-fill mr-2 ${style.approve}`} onClick={() => ApproveDistributor(item.id)}></i>
+                      <i className={`bi bi-x-circle-fill ${style.reject}`} ></i>
                     </p>
                   </div>
                 </div>

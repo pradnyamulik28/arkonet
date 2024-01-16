@@ -254,7 +254,7 @@ const SalesManagersList = () => {
     <div className="d-flex w-100">
       <div className={`${style.workport} `}>
         {/* Top Port Starts */}
-        <h2 className=" mt-2 d-flex justify-content-around align-items-center w-100">
+        <h4 className=" mt-2 d-flex justify-content-around align-items-center w-100">
           <div
             style={{ fontSize: "xxx-large", cursor: "pointer" }}
             onClick={GoBack}
@@ -263,7 +263,7 @@ const SalesManagersList = () => {
           </div>
           <b>{userProf}</b>
           <div></div>
-        </h2>
+        </h4>
         <div className={`${style.top} `}>
           <div className={`${style.inputbox} `}>
             <div className={`${style.seachbox} `}>
@@ -276,9 +276,9 @@ const SalesManagersList = () => {
               />
             </div>
             <div className={`${style.seachlogo} `}>
-              <h1>
+              <h4>
                 <i className="fa-solid fa-magnifying-glass"></i>
-              </h1>
+              </h4>
             </div>
           </div>
         </div>
@@ -326,7 +326,7 @@ const SalesManagersList = () => {
             )}
             {userProf === "Sale Manager Target" && activeTab !== 1 && (
               <div className={`${style.name} `}>
-                <p className={`${style.gdtxt6} `}>Amount</p>
+                <p className={`${style.gdtxt5} `}>Amount</p>
               </div>
             )}
             {userProf === "Sale Manager Target" && activeTab !== 1 && (
@@ -377,7 +377,7 @@ const SalesManagersList = () => {
                 )}
                 {/* {userProf === "Sale Manager Target" && activeTab !== 1 && ( */}
                   <div className={userProf === "Sale Manager Target" && activeTab !== 1 ?`${style.name}`:`${style.name} ${style.hide}`}>
-                    <p className={`${style.status} `}>
+                    <p className={`${style.inputamount} `}>
                       <input
                         id={item.id}
                         key={index}
@@ -387,11 +387,11 @@ const SalesManagersList = () => {
                           handleInputChange(index, e.target.value)
                         }
                         style={{
-                          width: "100%",
-                          borderRadius: "10px",
-                          border: "none",
-                          boxShadow: "inset 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
-                          paddingLeft: "5px",
+                          "width": "100%",
+                          "borderRadius": "5px",
+                          "border": "none",
+                          "boxShadow": "inset 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
+                          "paddingLeft": "5px",
                         }}
                       />
                     </p>
@@ -407,12 +407,12 @@ const SalesManagersList = () => {
                       saveSaleManagerTarget(e, item.id, item.pan, index,item.fixdate);
                     }}
                   >
-                    <button>UPDATE{item.fixdate}</button>
+                    <button>UPDATE</button>
                   </div>
                 )}
                 {userProf === "Sale Manager Target" && activeTab !== 1 && (
                   <div className={`${style.name} `}>
-                    <p className={`${style.status} `}>
+                    <p className={`${style.pan} `}>
                       <i
                         id="deactivate"
                         className="fa-solid fa-ban"

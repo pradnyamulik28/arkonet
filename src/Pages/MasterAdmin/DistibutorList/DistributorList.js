@@ -18,9 +18,9 @@ const DistibutorList = () => {
 
   const [activeTab, setActiveTab] = useState(0);
 
-  const [tabs,SetTabs] = useState([
+  const [tabs, SetTabs] = useState([
     { title: 'TAXKO' },
-    { title: 'SALE MANAGER',},
+    { title: 'SALE MANAGER', },
   ]);
 
 
@@ -43,7 +43,7 @@ const DistibutorList = () => {
       .then((result) => {
         if (userProf === "Distributor List") {
           const filteredData = result.filter(item => item.status === true);
-          setuserdata(filteredData.filter(item =>item.salesmanid===1))
+          setuserdata(filteredData.filter(item => item.salesmanid === 1))
           setallDistributor(filteredData)
         } else {
           setuserdata(result)
@@ -55,7 +55,7 @@ const DistibutorList = () => {
 
   }
   function GoBack() {
-    window.history.back(); 
+    window.history.back();
   }
   const GotoDistributorData = (distributorid, distributorpan) => {
     Navigate('distributordata', {
@@ -69,14 +69,14 @@ const DistibutorList = () => {
   }
 
 
-  function handleTabClick (index){
+  function handleTabClick(index) {
     setActiveTab(index);
-    if(index===0){
-        setuserdata(allDistributor.filter(item =>item.salesmanid===1))
+    if (index === 0) {
+      setuserdata(allDistributor.filter(item => item.salesmanid === 1))
     }
-    else{
-        setuserdata(allDistributor.filter(item =>item.salesmanid!==1))
-    }          
+    else {
+      setuserdata(allDistributor.filter(item => item.salesmanid !== 1))
+    }
   }
   return (
     <div className="d-flex w-100">
@@ -100,7 +100,7 @@ const DistibutorList = () => {
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
             <div className={`${style.seachlogo} `}>
-              <h1><i class="fa-solid fa-magnifying-glass"></i></h1>
+              <h4><i class="fa-solid fa-magnifying-glass"></i></h4>
             </div>
           </div>
         </div>
@@ -108,25 +108,25 @@ const DistibutorList = () => {
 
         {/* Bottom Port Starts */}
         <div className={`${style.bottom} `}>
-        <div className={`${style.tab_bar}`}>
-        {tabs.map((tab, index) => (
-            <div key={index}
-            onClick={(e) => {
-              e.preventDefault();
-              handleTabClick(index)
-              }} 
-            className={index===activeTab?`${style.tab} ${style.active}`:`${style.tab}`}>{tab.title}</div>
-        ))}
-        {/* <div className={`${style.tab} ${style.active}`}>TAXKO</div>
+          <div className={`${style.tab_bar}`}>
+            {tabs.map((tab, index) => (
+              <div key={index}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleTabClick(index)
+                }}
+                className={index === activeTab ? `${style.tab} ${style.active}` : `${style.tab}`}>{tab.title}</div>
+            ))}
+            {/* <div className={`${style.tab} ${style.active}`}>TAXKO</div>
         <div className={`${style.tab}`}>Sale Manager</div>         */}
-        </div>
+          </div>
           <div className={`${style.drow} `}>
             <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>{userProf === "Distributor List" ? "Distributor" : "Admin Name"}</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>
-            {(userProf === "Distributor List"&&activeTab===1)&&<div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Manager ID</p></div>}
+            {(userProf === "Distributor List" && activeTab === 1) && <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Manager ID</p></div>}
 
           </div>
 
@@ -148,12 +148,12 @@ const DistibutorList = () => {
                   <div className={`${style.name} `} ><p className={`${style.srno} `}>{index + 1}</p></div>
                   <div className={`${style.name} `} ><p className={`${style.an} `}>{item.name}</p></div>
                   <div className={`${style.name} `}
-                    onClick={() => GotoDistributorData(item.id, item.pan) }
-                     style={{ cursor: "pointer" }}>
+                    onClick={() => GotoDistributorData(item.id, item.pan)}
+                    style={{ cursor: "pointer" }}>
                     <p className={`${style.pan} text-primary`}>{item.pan}</p></div>
                   <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.mobile}</p></div>
                   <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.status ? "#32e132" : "#ff0000" }}></i></p></div>
-            {(userProf === "Distributor List"&&activeTab===1)&&<div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.salesmanid}</p></div>}
+                  {(userProf === "Distributor List" && activeTab === 1) && <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.salesmanid}</p></div>}
 
                 </div>
 

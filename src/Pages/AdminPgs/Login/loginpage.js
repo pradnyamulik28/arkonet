@@ -15,7 +15,7 @@ const Loginpage = ({ setLoggedIn }) => {
   const grace_period_days = 30;
 
   const [formdata, setFormdata] = useState({
-    username: "",
+    username: localStorage.getItem("User_Pan"),
     password: ""
 
 
@@ -24,9 +24,9 @@ const Loginpage = ({ setLoggedIn }) => {
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setLoggedIn(false)
-  },[])
+  }, [])
 
 
 
@@ -62,7 +62,7 @@ const Loginpage = ({ setLoggedIn }) => {
       requestOptions
     );
     const result = await response.json();
-    //console.log(result.getSubendtdate);
+    console.log(result);
 
     if (response.status === 200) {
 
@@ -137,16 +137,18 @@ const Loginpage = ({ setLoggedIn }) => {
         },
         data: JSON.stringify(formdata),
       });
-      // console.log(formdata)
+      console.log(result)
       if (result.status === 200) {
         // const end=await JSON.parse(result.text());
 
         const jwtToken = result.data.token;
         const user_id = result.data.user.regId;
+        const user_pan = result.data.user.pan;
         const user_name = result.data.user.name;
         const user_mobile = result.data.user.mobile;
-        const user_pan = result.data.user.pan;
         const user_profession = result.data.user.profession;
+        const email = result.data.user.email;
+        const End_Date = result.data.subenddate;
 
         localStorage.setItem('jwtToken', jwtToken);
         localStorage.setItem('user_name', user_name);
@@ -155,10 +157,17 @@ const Loginpage = ({ setLoggedIn }) => {
         localStorage.setItem('mobile', user_mobile);
         localStorage.setItem('pan', user_pan);
         localStorage.setItem('profession', user_profession);
-        localStorage.setItem('logintime',new Date());
+        localStorage.setItem('logintime', new Date());
+        localStorage.setItem('email', email);
+        localStorage.setItem('End_Date', End_Date);
+
+        localStorage.removeItem("User_Pan")
+        localStorage.removeItem("otp")
 
 
-        const sub_status = await checkSubscriptionStatus();//console.log(sub_status)
+
+        const sub_status = await checkSubscriptionStatus();
+        console.log(sub_status)
         localStorage.setItem(`subscription_status`, sub_status);
         // await checkSubscriptionStatus();
         const subscription_status = localStorage.getItem(`subscription_status`)
@@ -180,7 +189,7 @@ const Loginpage = ({ setLoggedIn }) => {
               icon: "warning",
               text: `Subsribe to avail services.`,
             });
-            Navigate("UserSubscriptionPage");
+            Navigate("/admin/UserSubscriptionPage");
             setLoggedIn(true);
             break;
 
@@ -190,7 +199,7 @@ const Loginpage = ({ setLoggedIn }) => {
               icon: "error",
               text: `Your subscription and grace period has expired please renew your pack to resume your services.`,
             });
-            Navigate("UserSubscriptionPage");
+            Navigate("/admin/UserSubscriptionPage");
             setLoggedIn(true);
             break;
 
@@ -202,12 +211,12 @@ const Loginpage = ({ setLoggedIn }) => {
               text: `Your subscription has expired on ${end_date.getDate()} ${numberToMonth(end_date.getMonth() + 1)} ${end_date.getFullYear()},
                        Your grace period to renew subscription is till ${next_date.getDate()} ${numberToMonth(next_date.getMonth() + 1)} ${next_date.getFullYear()}. After that all of your services will be stopped.`,
             });
-            Navigate("dashboard");
+            Navigate("/admin/dashboard");
             setLoggedIn(true);
 
             break;
           case "on":
-            Navigate("dashboard");
+            Navigate("/admin/dashboard");
             setLoggedIn(true);
 
             break;
@@ -236,7 +245,6 @@ const Loginpage = ({ setLoggedIn }) => {
       <div className={styles.right}>
         <div className={styles.right_body}>
           <div className={styles.header}>
-          <h5 style={{"color":"#9ba4ab","cursor":"pointer"}} onClick={(e)=>{Navigate("/")}}><i class="fa-regular fa-circle-left" style={{"fontSize":"1.5rem","color":"#ffd401"}}></i> &nbsp;Back to Website</h5>
             <div className={styles.greet}>
               <h3>Welcome</h3>
             </div>
@@ -248,10 +256,10 @@ const Loginpage = ({ setLoggedIn }) => {
           <div className={styles.main}>
             <form onSubmit={handleLogin} autoComplete=''>
               <div className={styles.form}>
-                <div className={styles.user_id}>
+                {/* <div className={styles.user_id}>
                   <InputField placeholder='Enter your PAN' onChange={handleChange} name='username' value={formdata.username} lblname='PAN' />
 
-                </div>
+                </div> */}
                 <div className={styles.user_pass}>
                   <InputField placeholder='Enter your Password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
                 </div>

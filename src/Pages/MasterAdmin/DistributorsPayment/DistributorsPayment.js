@@ -140,13 +140,11 @@ const DistributorsPayment = () => {
       <div className={`${style.workport} `}>
 
         {/* Top Port Starts */}
-        <h2 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
-          <div >
-          </div>
+        <h4 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
+          
           <b>Distributor's Payment</b>
-          <div>
-          </div>
-        </h2>
+          
+        </h4>
         <div className={`${style.top} `}>
           <div className={`${style.inputbox} `}>
             <div className={`${style.seachbox} `}>
@@ -155,7 +153,7 @@ const DistributorsPayment = () => {
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
             <div className={`${style.seachlogo} `}>
-              <h1><i class="fa-solid fa-magnifying-glass"></i></h1>
+              <h4><i class="fa-solid fa-magnifying-glass"></i></h4>
             </div>
           </div>
         </div>
@@ -167,10 +165,10 @@ const DistributorsPayment = () => {
           <div className={`${style.drow} `}>
             {/* <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div> */}
             <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>Name</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>PAN</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>Total Earning</p></div>
+            <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
+            <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Total Earning</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Paid</p></div>
-            <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Unpaid</p></div>
+            <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Unpaid</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Amount</p></div>
           </div>
 
@@ -191,24 +189,14 @@ const DistributorsPayment = () => {
                 <div className={`${style.ddata} `}>
                   {/* <div className={`${style.name} `} ><p className={`${style.srno} `}>{index + 1}</p></div> */}
                   <div className={`${style.name} `} ><p className={`${style.an} `}>{item.distibutor.name}</p></div>
-                  <div className={`${style.name} `} ><p className={`${style.an} `}>{item.distibutor.pan}</p></div>
-                  <div className={`${style.name} `}><p className={`${style.pan} `}>{item.totalEarning}</p></div>
-                  <div className={`${style.name} `} ><p className={`${style.mobile} `}>{item.paid}</p></div>
+                  <div className={`${style.name} `} ><p className={`${style.pan} `}>{item.distibutor.pan}</p></div>
+                  <div className={`${style.name} `}><p className={`${style.amount} `}>{item.totalEarning}</p></div>
+                  <div className={`${style.name} `} ><p className={`${style.amount} `}>{item.paid}</p></div>
 
 
-                  <div className={`${style.name} `} ><p className={`${style.status} `}>{item.unpaid}</p></div>
+                  <div className={`${style.name} `} ><p className={`${style.amount} `}>{item.unpaid}</p></div>
                   <div className={`${style.name} `} >
-                    <p className={`${style.status} `}>
-                      {/* <input type="text" name="amount" id=""
-                        onChange={distributorPaymenthandleChange}
-                        style={{
-                          width: "100%",
-                          borderRadius: "10px",
-                          border: "none",
-                          boxShadow: "inset 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
-                          paddingLeft: "5px",
-
-                        }} /> */}
+                    <p className={`${style.inputamount} `}>
                       <input
                         key={index}
                         type="text"
@@ -217,7 +205,7 @@ const DistributorsPayment = () => {
 
                         style={{
                           width: "100%",
-                          borderRadius: "10px",
+                          borderRadius: "5px",
                           border: "none",
                           boxShadow: "inset 0 6px 10px 0 rgba(0, 0, 0, 0.19)",
                           paddingLeft: "5px",

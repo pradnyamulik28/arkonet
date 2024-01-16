@@ -40,7 +40,7 @@ function ClientTallyBackup(){
                 <i className="bi bi-three-dots-vertical h4"></i>
               </span>
             </div>
-            <h5 className={`ml-2`}>From C.A</h5>
+            <h5 className={`ml-2`}>From Tax Professional</h5>
             <div className={`${styles.folder_date} ml-2`}></div>
           </div>
         </div>

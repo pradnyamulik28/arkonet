@@ -1,12 +1,12 @@
 .main_view {
     width: 100%;
-}
-
-/* .master_sidebar {
-    width: 50%;
-} */
-
-.workport {
+  }
+  
+  /* .master_sidebar {
+      width: 50%;
+  } */
+  
+  .workport {
     /* overflow: hidden; */
     margin: 0;
     padding: 0;
@@ -15,39 +15,39 @@
     display: flex;
     flex-direction: column;
     margin-left: auto;
-}
-
-/* Top Port Starts */
-.top {
+  }
+  
+  /* Top Port Starts */
+  .top {
     height: 70%;
     margin-left: 10%;
     margin-right: 10%;
-}
-
-.masterlogo {
+  }
+  
+  .masterlogo {
     height: 40%;
     display: flex;
     align-items: center;
-}
-
-.masterlogo img {
+  }
+  
+  .masterlogo img {
     height: 40%;
-}
-
-.inputboxes {
+  }
+  
+  .inputboxes {
     height: 40%;
     display: flex;
     flex-direction: column;
-}
-
-.buttonport {
+  }
+  
+  .buttonport {
     height: 20%;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.button1 {
+  }
+  
+  .button1 {
     color: white;
     background-color: #fdd212;
     border: none;
@@ -57,28 +57,28 @@
     border-radius: 10px;
     box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
-}
-
-.label1 {
+  }
+  
+  .label1 {
     font-size: 1.3vw;
     margin-bottom: -0.5rem;
-}
-
-.p {
+  }
+  
+  .p {
     display: inline-block;
     color: red;
     text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
-}
-
-.ddmenu1 {
+  }
+  
+  .ddmenu1 {
     margin-bottom: 1.5rem;
     border-radius: 10px;
     height: 3rem;
     border: none;
     outline: none;
     color: #c1c1c1;
-    font-family: 'Indie Flower', cursive;
-    font-family: 'Oswald', sans-serif;
+    font-family: "Indie Flower", cursive;
+    font-family: "Oswald", sans-serif;
     box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
     appearance: none;
     -webkit-appearance: none;
@@ -86,45 +86,63 @@
     padding: 0.5rem;
     background-color: white;
     width: 100%;
-}
-
-.ddmenu1:focus {
+  }
+  
+  .ddmenu1:focus {
     outline: none;
     border: none;
-}
-
-/* Top Port Ends */
-
-/* bottom Port Starts */
-.bottom {
+  }
+  
+  /* Top Port Ends */
+  
+  /* bottom Port Starts */
+  .bottom {
     height: 30%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 5vh;
-}
-
-.copyright {
+  }
+  
+  .copyright {
     width: 25%;
-}
-
-.textual {
+  }
+  
+  .textual {
     display: flex;
     flex-direction: row;
     justify-content: center;
     font-weight: 200;
-}
-
-.handles {
+  }
+  
+  .handles {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-}
-
-/* bottom Port Ends */
-
-.icon a {
+  }
+  
+  /* bottom Port Ends */
+  
+  .icon a {
     margin: 0 15px;
     color: #19191a;
-}
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .button1 {
+      font-size: 5vw !important;
+    }
+    .label1 {
+      font-size: 1rem;
+    }
+  }
+  @media only screen and (min-width: 481px) and (max-width: 768px) {
+    .button1 {
+      font-size: 2vw !important;
+    }
+    .label1 {
+      font-size: 1rem;
+    }
+  }
+  

@@ -50,7 +50,7 @@ const UserList = () => {
                             userProf === "Distributor List" ? `${url_}/all/distributor` :
                               userProf === "Sale Manager List" ? `${url_}/listofsalesmanager/formasteradmin` :
 
-                              null}
+                                null}
 
     `, requestOptions)
       .then((response) => response.json())
@@ -116,7 +116,7 @@ const UserList = () => {
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
             <div className={`${style.seachlogo} `}>
-              <h1><i class="fa-solid fa-magnifying-glass"></i></h1>
+              <h4><i class="fa-solid fa-magnifying-glass"></i></h4>
             </div>
           </div>
         </div>
@@ -126,11 +126,11 @@ const UserList = () => {
         <div className={`${style.bottom} `}>
 
           <div className={`${style.drow} `}>
-            {userProf !== "Distributor List"&&<div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>}
+            {userProf !== "Distributor List" && <div className={`${style.name} `} ><p className={`${style.gdtxt1} `}>Sr. No</p></div>}
             <div className={`${style.name} `} ><p className={`${style.gdtxt2} `}>{userProf === "Distributor List" ? "Distributor" : "Admin Name"}</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt3} `}>PAN</p></div>
             <div className={`${style.name} `} ><p className={`${style.gdtxt4} `}>Mobile</p></div>
-            {userProf !== "Sale Manager List"&&<div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>}
+            {userProf !== "Sale Manager List" && <div className={`${style.name} `} ><p className={`${style.gdtxt6} `}>Status</p></div>}
           </div>
 
 
@@ -163,8 +163,8 @@ const UserList = () => {
                     userProf === "Distributor List" ?
                       (
                         <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.status ? "#32e132" : "#ff0000" }}></i></p></div>
-                      ) : 
-                      userProf !== "Sale Manager List"&&
+                      ) :
+                      userProf !== "Sale Manager List" &&
                       (
                         <div className={`${style.name} `} ><p className={`${style.status} `}><i class="fa-solid fa-circle" style={{ color: item.paid ? "#32e132" : "#ff0000" }}></i></p></div>
                       )

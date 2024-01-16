@@ -42,19 +42,20 @@ const MasterLogIn = ({ setLoggedIn }) => {
 
 
             if (response.status === 200) {
-                
+
                 const jwtToken = result.token;
 
 
                 localStorage.setItem('jwtToken', jwtToken);
 
                 localStorage.setItem('LogedIn', 'true');
+                localStorage.setItem('Username', result.user.username);
 
 
                 // console.log(result)
                 Navigate('admindashboard');
                 setLoggedIn(true);
-                
+
 
             }
 
@@ -66,6 +67,9 @@ const MasterLogIn = ({ setLoggedIn }) => {
             });
         }
     };
+
+    useEffect(()=>{setLoggedIn(false)},[])
+
 
 
     return (

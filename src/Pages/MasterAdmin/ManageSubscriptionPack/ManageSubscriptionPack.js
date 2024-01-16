@@ -200,7 +200,7 @@ const ManageSubscriptionPack = () => {
 
 
   return (
-    <div>
+    <div className='d-flex justify-content-center'>
 
       <div className={`${style.box_shadow}`}>
         <div className={`${style.Subplan_title} text-center`}>

@@ -34,7 +34,14 @@ const MasterAdmin = () => {
 
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('LogedIn'));
   //  console.log('admin', loggedIn);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
+  useEffect(() => {
+      window.addEventListener("resize", () => {
+          const ismobile = window.innerWidth < 1024;
+          if (ismobile !== isMobile) setIsMobile(ismobile);
+      }, false);
+  }, [isMobile]);
 
   return (
     <div>
@@ -47,7 +54,7 @@ const MasterAdmin = () => {
             <MasterSideBar loggedIn={loggedIn} setLoggedIn={setLoggedIn}  />
           </div>
 
-          <div className={`w-75`}>
+          <div className={isMobile ?`w-100`:`w-75 `}>
 
 
             <Routes>

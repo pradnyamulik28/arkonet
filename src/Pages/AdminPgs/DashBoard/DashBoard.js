@@ -9,20 +9,24 @@ import BulkImport from '../BulkImport/BulkImport';
 import instruct_sample_file from "../../../Files/TAXKO_Instruction_Sample_File.xlsx"
 import { saveAs } from "file-saver";
 
-
-
 const DashBoard = () => {
+
+  const fileInputRef = useRef(null);
 
   const [subscription_status, setSubscriptionStatus] = useState();
 
   // const subscription_status = localStorage.getItem(`subscription_status`)
-  const fileInputRef = useRef(null);
 
   const username = localStorage.getItem("user_name");
   const userpan = localStorage.getItem("pan");
   const userPro = localStorage.getItem("profession");
   const logintime = TimeConvert(localStorage.getItem("logintime"));
 
+
+
+
+  const sub_userid = window.localStorage.getItem('Sub_user_id');
+  const Sub_category = localStorage.getItem(`Category`)
 
   const options = { day: "numeric", month: "long", year: "numeric" };
   const todate = new Date().toLocaleDateString("en-GB", options);
@@ -118,54 +122,176 @@ const DashBoard = () => {
   }, [subscription_status]);
 
   useEffect(() => {
+    if (Sub_category !== "Sub User") {
+      totalClient();
+      ClientsTotalPayment();
+      Income_FileCount();
+      Income_LatestUpdate();
+      GST_FileCount();
+      GST_LatestUpdate();
+    } else {
+      GetSubClientdata();
+    }
 
-    const totalClient = () => {
 
-      const url = `${url_}/counts/${user_id}`;
-
-
-
-      try {
-
-        fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${storedToken}`
-          }
-        })
-          .then(response => response.json())
-          .then(data => {
-            // console.log(data)
-            setTotalclient(data.totalClientCount)
-            setTotalIncomeclient(data.incomeTaxClientCount)
-            setTotalGSTClients(data.gst_ClientCount)
-            // console.log("Counts data", data)
-
-          })
-          .catch(error => console.log(error));
-      } catch (error) {
-        console.warn("Error on function calling...")
-      }
-    };
-
-    totalClient();
-    ClientsTotalPayment();
-    Income_FileCount();
-    Income_LatestUpdate();
-    GST_FileCount();
-    GST_LatestUpdate();
   }, []);
 
+  const GetSubClientdata = async () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    await fetch(`${url_}/getClientByUserid/${user_id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        const filteredResult = result.filter(item => item.subUserId == sub_userid);
+        // console.log(filteredResult.length)
+        setTotalclient(filteredResult.length)
+
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    await fetch(`${url_}/getClientByIncomeTax/${user_id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        const filteredResult = result.filter(item => item.subUserId == sub_userid);
+        // console.log(filteredResult.length)
+        setTotalIncomeclient(filteredResult.length)
+
+
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    await fetch(`${url_}/getClientByGst/${user_id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+
+        const filteredResult = result.filter(item => item.subUserId == sub_userid);
+        // console.log(filteredResult.length)
+        setTotalGSTClients(filteredResult.length)
+
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    await fetch(`${url_}/sumOFPaymentClientBySubUserid/${user_id}/${sub_userid}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        // console.log(result)
+        setTotalclientPayment(result.totalPayment.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
+        setTotalClientsreceivedPayment(result.receivedPayment.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
+        setTotalclientpendingPayment(result.pendingPayment.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
+        setTotalClientsdiscountPayment(result.discountPayment.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
+
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    await fetch(`${url_}/filedNotfiledCountsBySubUserid/${user_id}/${sub_userid}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        data.sort((a, b) => {
+          const yearA = parseInt(a.accountyear.split('-')[0]);
+          const yearB = parseInt(b.accountyear.split('-')[0]);
+
+          return yearA - yearB;
+        });
+        // console.log(data.reverse())
+        setFiledata(data.reverse())
+
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    await fetch(`${url_}/maxLastUpdateDateBySubUserid/${user_id}/${sub_userid}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+
+        if (data.lastUpdateDate === "Optional.empty") {
+          const date = new Date();
+          const options = { day: 'numeric', month: 'long', year: 'numeric' };
+          const formattedDate = date.toLocaleDateString('en-GB', options);
+          setincomelatestupdatedata(formattedDate);
+        } else {
+          const date = new Date(data.lastUpdateDate);
+          const options = { day: 'numeric', month: 'long', year: 'numeric' };
+          const formattedDate = date.toLocaleDateString('en-GB', options);
+          setincomelatestupdatedata(formattedDate);
+
+        }
+        // console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    await fetch(`${url_}/getGSTDataBySubUserid?userid=${user_id}&subUserid=${sub_userid}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    await fetch(`${url_}/GSTmaxLastUpdateDateBySubuser/${user_id}/${sub_userid}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+
+        // const date = new Date(data.lastUpdateDate);
+        // const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        // const formattedDate = date.toLocaleDateString('en-GB', options);
+        // setincomelatestupdatedata(formattedDate);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
 
   let currentYear = new Date().getFullYear();
-  const currentMonth=new Date().getMonth();
+  const currentMonth = new Date().getMonth();
 
-    if(currentMonth<3){    
-      currentYear=currentYear-1
-    }
+  if (currentMonth < 3) {
+    currentYear = currentYear - 1
+  }
   const fyyear = `${currentYear}-${(currentYear + 1).toString().slice(-2)}`
 
+  const totalClient = () => {
+
+    const url = `${url_}/counts/${user_id}`;
+
+
+
+    try {
+
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${storedToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data)
+          setTotalclient(data.totalClientCount)
+          setTotalIncomeclient(data.incomeTaxClientCount)
+          setTotalGSTClients(data.gst_ClientCount)
+          // console.log("Counts data", data)
+
+        })
+        .catch(error => console.log(error));
+    } catch (error) {
+      console.warn("Error on function calling...")
+    }
+  };
 
 
   const ClientsTotalPayment = async () => {
@@ -179,7 +305,7 @@ const DashBoard = () => {
         redirect: 'follow'
       };
 
-      const response = await fetch(`${url_}/sumOFPaymentClientByUserid/${user_id}/${fyyear}`, requestOptions);
+      const response = await fetch(`${url_}/sumOFPaymentClientByUserid/${user_id}`, requestOptions);
       const result = await response.json();
       // console.log(result);
 
@@ -213,10 +339,16 @@ const DashBoard = () => {
       fetch(`${url_}/filedNotfiledCounts/${user_id}`, requestOptions)
         .then(response => response.json())
         .then(data => {
-          console.log(data)
-          // const sortedData = data.sort((a, b) => b.accountyear.localeCompare(a.accountyear));
-          setFiledata(data)
           // console.log(data)
+          data.sort((a, b) => {
+            const yearA = parseInt(a.accountyear.split('-')[0]);
+            const yearB = parseInt(b.accountyear.split('-')[0]);
+
+            return yearA - yearB;
+          });
+          // console.log(data.reverse())
+          setFiledata(data.reverse())
+
         })
         // .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -244,10 +376,23 @@ const DashBoard = () => {
       })
         .then(response => response.json())
         .then(data => {
-          const date = new Date(data.lastUpdateDate);
-          const options = { day: 'numeric', month: 'long', year: 'numeric' };
-          const formattedDate = date.toLocaleDateString('en-GB', options);
-          setincomelatestupdatedata(formattedDate);
+
+          if (data.message === "Not_Found") {
+            const date = new Date();
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            const formattedDate = date.toLocaleDateString('en-GB', options);
+            setincomelatestupdatedata(formattedDate);
+          } else {
+            const date = new Date(data.lastUpdateDate);
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            const formattedDate = date.toLocaleDateString('en-GB', options);
+            setincomelatestupdatedata(formattedDate);
+
+          }
+          // const date = new Date(data.lastUpdateDate);
+          // const options = { day: 'numeric', month: 'long', year: 'numeric' };
+          // const formattedDate = date.toLocaleDateString('en-GB', options);
+          // setincomelatestupdatedata(formattedDate);
           // console.log(data)
         })
         .catch(error => console.log(error));
@@ -271,7 +416,8 @@ const DashBoard = () => {
 
       const response = await fetch(`${url_}/getGSTData?userid=${user_id}`, requestOptions);
       const result = await response.json();
-      console.log(result);
+      // console.log(result["GSTR-1"]);
+      // console.log(result);
 
 
       let data = [];
@@ -286,26 +432,26 @@ const DashBoard = () => {
         });
       });
 
-      // console.log(data);
-      // setgstdata(data)
+      // // console.log(data);
+      setgstdata(data)
 
 
 
 
 
-      const currentMonth = new Date().getMonth();
+      // const currentMonth = new Date().getMonth();
 
-      // Filter the data for months up to and including the current month
-      const filteredData = data.filter(entry => {
-        const entryMonth = new Date(entry.month + ' 1, 2023').getMonth();
-        return entryMonth <= currentMonth;
-      });
+      // // Filter the data for months up to and including the current month
+      // const filteredData = data.filter(entry => {
+      //   const entryMonth = new Date(entry.month + ' 1, 2023').getMonth();
+      //   return entryMonth <= currentMonth;
+      // });
 
-      // Reverse the order of the filtered data
-      const reversedData = filteredData.reverse();
+      // // Reverse the order of the filtered data
+      // const reversedData = filteredData.reverse();
 
-      // console.log(reversedData);
-      setgstdata(reversedData)
+      // // console.log(reversedData);
+      // setgstdata(reversedData)
 
 
 
@@ -332,11 +478,26 @@ const DashBoard = () => {
       })
         .then(response => response.json())
         .then(data => {
-          // console.log(data.MaxDate)
-          const date = new Date(data.MaxDate);
-          const options = { day: 'numeric', month: 'long', year: 'numeric' };
-          const formattedDate = date.toLocaleDateString('en-GB', options);
-          setgstLatestupdatedata(formattedDate)
+          // console.log(data)
+
+
+          if (data.message === "Not_Found") {
+            const date = new Date();
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            const formattedDate = date.toLocaleDateString('en-GB', options);
+            setgstLatestupdatedata(formattedDate);
+          } else {
+            const date = new Date(data.lastUpdateDate);
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            const formattedDate = date.toLocaleDateString('en-GB', options);
+            setgstLatestupdatedata(formattedDate);
+
+          }
+
+          // const date = new Date(data.MaxDate);
+          // const options = { day: 'numeric', month: 'long', year: 'numeric' };
+          // const formattedDate = date.toLocaleDateString('en-GB', options);
+          // setgstLatestupdatedata(formattedDate)
         })
         .catch(error => console.log(error));
     } catch (error) {
@@ -355,7 +516,7 @@ const DashBoard = () => {
 
   }
 
-  const [imgcontent,setImgContent]=useState(null)
+  const [imgcontent, setImgContent] = useState(null)
 
   function getProfileImage() {
     try {
@@ -367,9 +528,10 @@ const DashBoard = () => {
           'Authorization': `Bearer ${storedToken}`
         }
       })
-        .then(response => response.json())
-        .then(res => {            
-          setImgContent(res.content)   
+        .then(response => response.text())
+        .then(res => {
+          setImgContent(res.content)
+          // console.log(res)
 
         })
         .catch(error => {
@@ -380,40 +542,44 @@ const DashBoard = () => {
     }
   }
 
-  async function downloadSampleFile()
-  {
+
+  async function downloadSampleFile() {
     const response = await fetch(instruct_sample_file);
     const arrayBuffer = await response.arrayBuffer();
     const fileBlob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     saveAs(fileBlob, "TAXKO_Instruction_Sample_File.xlsx");
   }
 
-  useEffect(()=>{getProfileImage()},[])
+  useEffect(() => { getProfileImage() }, [])
   const imageSrc = imgcontent ? `data:image/jpeg;base64,${imgcontent}` : imgprofile;
 
   return (
     <div>
       <div className="container">
         <div className="row">
-          <div className="col-12 justify-content-center">
+          <div className="col-12 d-flex justify-content-center">
             <div className={`card mt-4 mb-2 ${styles.cardd1} text-center`}>
               <div className={`${styles.profilerow} row`}>
                 <div className='col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12'>
-                <div className={`${styles.profileimg}`}>
-                <img  src={imageSrc} alt="" className="mt-2 mb-2" />                
-                <div style={{"marginLeft":"2rem","textAlign":"left"}}>
-                  <h3>{username}</h3>
-                  <h5>{userpan}</h5>
-                 </div>
-                </div>
+                  <div className={`${styles.profileimg}`}>
+                    <img src={imageSrc} alt="" className="mt-2 mb-2" />
+                    <div style={{ "marginLeft": "2rem", "textAlign": "left" }}>
+                      <h3>{Sub_category !== "Sub User" ? username : localStorage.getItem("name")}</h3>
+                      <h5>{Sub_category !== "Sub User" ? userpan : localStorage.getItem("Sub_user_pan")}</h5>
+                    </div>
+                  </div>
                 </div>
                 <div className={`col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ${styles.content}`} >
-                <div className={styles.centrecoloum}>
-                  <h6 className='text-muted '>Profession&nbsp;&nbsp;: {userPro}</h6>                  
-                  {/* <h6 className='text-muted '>Date :  {todate}</h6> */}
-                  <h6 className='text-muted '>&#128337;Login Time&nbsp;&nbsp;: {logintime}</h6>
-                </div>              
-                
+                  <div className={styles.centrecoloum}>
+                    {Sub_category !== "Sub User" ? (
+                      <h6 className='text-muted '>Profession&nbsp;&nbsp;: {userPro}</h6>
+                    ) : (
+                      <h6 className='text-muted '>{Sub_category !== "Sub User" ? "" : "Sub-Login"}</h6>
+                    )}
+                    {/* <h6 className='text-muted '>Date :  {todate}</h6> */}
+                    <h6 className='text-muted '>&#128337;Login Time&nbsp;&nbsp;: {logintime}</h6>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -454,36 +620,43 @@ const DashBoard = () => {
                     <h6 className={`${styles.black} font-weight-bold`}>{TotalGSTClients}</h6>
                   </Link> */}
                 </div>
-                <Link
-                  to="clientreg"
-                  className={
-                    subscription_status === "on" ? `` : `${styles.btndisable}`
-                  }
-                  onClick={handleLinkClick}
-                >
-                  <input
-                    type="submit"
-                    value="ADD CLIENT"
-                    className={` h6 ${styles.abtn}`}
-                  />
-                </Link>
-                <Link
-                  // to="clientreg"
-                  className={
-                    subscription_status === "on" ? styles.bulkimport : `${styles.btndisable}`
-                  }
-                  style={{"marginLeft":"6px"}}
-                  onClick={(e)=>{ fileInputRef.current.click();}}
-                >
-                  <input
-                    type="submit"
-                    value="BULK IMPORT"
-                    className={` h6 ${styles.abtn}`}
-                  />
-                  
-                </Link>   
-                <p onClick={(e)=>{downloadSampleFile()}}>Sample file instructions</p>
-                <BulkImport fileInputRef={fileInputRef}/>  
+                {Sub_category !== "Sub User" &&
+                  <>
+                    <Link
+                      to="clientreg"
+                      className={
+                        subscription_status === "on" ? `` : `${styles.btndisable}`
+                      }
+                      onClick={handleLinkClick}
+                    >
+                      <input
+                        type="submit"
+                        value="ADD CLIENT"
+                        className={` h6 ${styles.abtn}`}
+                      />
+                    </Link>
+
+                    <Link
+                      // to="clientreg"
+                      className={
+                        subscription_status === "on" ? styles.bulkimport : `${styles.btndisable}`
+                      }
+                      style={{ "marginLeft": "6px" }}
+                      onClick={(e) => { fileInputRef.current.click(); }}
+                    >
+                      <input
+                        type="submit"
+                        value="BULK IMPORT"
+                        className={` h6 ${styles.abtn}`}
+                      />
+
+                    </Link>
+                    <p onClick={(e) => { downloadSampleFile() }}>Sample file instructions</p>
+                    <BulkImport fileInputRef={fileInputRef} />
+                  </>
+                }
+
+                <h6 className={`${styles.green} text-success`}>As on {todate}</h6>
               </div>
             </div>
 
@@ -553,7 +726,7 @@ const DashBoard = () => {
           <div className="col-6">
 
             <div className={`card m-4 ${styles.cardd} text-center`}>
-              <h2 className="ml-4">&lt;</h2>
+              {/* <h2 className="ml-4">&lt;</h2> */}
               <div className={`m-3 w-100`}>
                 <h5 className={`card-title font-weight-bold text-primary`}>
                   FY {fyyear}

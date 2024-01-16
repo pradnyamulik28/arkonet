@@ -30,6 +30,14 @@ function Hero() {
             </div>
           </div>
 
+          <div className={style.multilinetype}>
+            <span class={style.line01} style={{"--n":"6"}}>TAXKO </span>
+            <span class={style.line2} style={{"--n":"60"}}>IS INDIA'S LEADING FILED TAX DATA MANAGEMENT PLATFORM.</span><br/><br/>
+            <span class={style.line3} style={{"--n":"17"}}>WE ARE ALL NEW </span>
+            <span class={style.line4} style={{"--n":"24"}}>CLOUD BASED POST FILING </span> 
+            <span class={style.line5} style={{"--n":"74"}}>PLATFORM FOR CORPORATE & INDIVIDUAL TO MANAGE THEIR TAX FILLING DATA.</span>
+          </div>
+
           <Link className={style.section04}>Scroll</Link>
           <Link
             href="#card-section"

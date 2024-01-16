@@ -1,4 +1,4 @@
-.profilerow{
+.profilerow {
   display: flex;
   width: 100%;
 }
@@ -11,43 +11,34 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
-.cardd a{  
-  text-decoration: none;
-}
-.cardd p{
-color: #649e07;
-cursor: pointer;
-}
-.cardd p:hover{
-  text-decoration: underline;
+
+.profileimg img {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 10px;
 }
 
-
-.profileimg img{
-width: 7rem;
-height: 7rem;
-border-radius: 10px;
-}
-.profileimg h3{
+.profileimg h3 {
   color: #363E5C;
 }
 
-.profileimg .info{
+.profileimg .info {
   text-align: left;
 }
 
-.centrecoloum{
+.centrecoloum {
   display: flex;
   flex-direction: column;
   text-align: left;
   padding: 1rem;
 }
 
-.profilerow .content{
+.profilerow .content {
   display: flex;
   align-items: center;
   padding: 1rem;
 }
+
 .cardd,
 .cardd1 {
   width: 28rem;
@@ -57,7 +48,8 @@ border-radius: 10px;
   flex-direction: row;
   align-items: center;
 }
-.cardd1{
+
+.cardd1 {
   width: 93%;
 }
 
@@ -131,6 +123,24 @@ border-radius: 10px;
   border-top: 0px solid #dee2e6 !important;
 }
 
+
+
+.cardd a {
+  text-decoration: none;
+}
+
+.cardd p {
+  color: #649e07;
+  cursor: pointer;
+}
+
+.cardd p:hover {
+  text-decoration: underline;
+}
+
+
 @media (max-width:768px) {
-  .cardd1{width: fit-content}
+  .cardd1 {
+    width: fit-content
+  }
 }

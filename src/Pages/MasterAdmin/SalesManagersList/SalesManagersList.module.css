@@ -8,6 +8,7 @@
     flex-direction: column;
     align-items: center;
     margin-left: auto;
+    min-width: 800px;
   }
   
   /* Top Row starts */
@@ -103,7 +104,7 @@
   .gdtxt6 {
     color: #f9d30c;
     font-weight: bold;
-    font-size: 1.5vw;
+    font-size: 1.2rem;
     margin-top: 1.5vh;
   }
   
@@ -133,30 +134,45 @@
   
   .an,
   .gdtxt2 {
-    width: 12vw;
+    width: 150px;
   }
   
   .pan,
   .gdtxt3 {
-    width: 9vw;
+    width: 100px;
     text-align: center;
   }
-  
   .mobile,
   .gdtxt4 {
-    width: 9vw;
+    width: 100px;
+    text-align: center;
+    color: #ffd401;
   }
   
+  .inputamount,
+  .gdtxt5 {
+    width: 100px;
+  }
+  .gdtxt5{
+    text-align: center;
+  }
+/*   
   .reference,
   .gdtxt5 {
     width: 7vw;
     text-align: center;
     color: #ffd401;
-  }
+  } */
   
-  .status,
-  .gdtxt6 {
+  .status
+   {
     width: 5vw;
+    text-align: center;
+  }
+
+  
+  .gdtxt6{
+    width: 100px;
     text-align: center;
   }
 
@@ -169,7 +185,8 @@
   .pan,
   .mobile,
   .reference,
-  .status {
+  .status,
+  .inputamount {
     margin-top: 2vh;
   }
 
@@ -181,7 +198,7 @@
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
     font-weight: bold;
-  font-size: 1vw;
+    font-size: 1vw;
 }
 
 .tab {
@@ -206,21 +223,59 @@
     flex: 1;
     padding: 1rem;
 }
-  
+
   /* Bottom Row ends */
   
   
   .btn_submit button {
     height: 2rem;
-    /* width: 75%; */
+    width: 100px;
     width: fit-content;
     border-radius: 10px;
     border: none;
     background-color: #ffd401;
     color: white;
     align-items: center;
-    font-size: 20px;
+    font-size: 18px;
     text-shadow: 2px 3px 5px #000000;
     margin: 10px;
     cursor: pointer;
   }
+
+  @media screen and (max-width:480px ) {
+    .tab_bar{
+      font-size: small;
+    }
+    .btn_submit button{
+      font-size:13px;
+    }
+  }
+  @media screen and (min-width:481px) and (max-width:768px ) {
+    .tab_bar{
+      font-size: medium;
+    }
+    .btn_submit button{
+      font-size:15px;
+    }
+  }
+
+  
+@media screen and (max-width:768px) {
+  .gdtxt1,
+.gdtxt2,
+.gdtxt3,
+.gdtxt4,
+.gdtxt5,
+.gdtxt6,
+.srno,
+.an,
+.pan,
+.amount,
+.mobile,
+.reference,
+.inputamount {
+  font-size: 0.9rem;
+}
+
+  
+}

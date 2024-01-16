@@ -342,7 +342,8 @@ async function getSalePersonData(){
           swal.fire("Failed!", `${result.message}`, "error");
         } else if (result.status === "UNAUTHORIZED") {
           swal.fire("Failed!", `${result.message}`, "error");
-        } else {
+        } else if(response.status===200){
+          localStorage.setItem('salesmanager_name', formdata.name);
           setFormdata({
             name: null,
             datebirth: null,
@@ -358,6 +359,7 @@ async function getSalePersonData(){
             password: null,
             confirmpassword: null,
           });
+                
           swal.fire(
             "Success",
             "Information updated.",

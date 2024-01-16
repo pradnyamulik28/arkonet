@@ -304,16 +304,6 @@ animation:         ca3_fade_move_down 2s ease-in-out infinite;
 
 
 
-
-
-
-
-
-
-
-
-
-
 .line1 {
   /* position: relative; */
   /* top: 50%; */
@@ -354,3 +344,109 @@ animation:         ca3_fade_move_down 2s ease-in-out infinite;
 @media only screen and (max-width: 991px) {
   .first_line,.second_line,.head_fs40{white-space-collapse: collapse;}
 }
+
+
+
+
+
+
+
+/* ===============    Type animation for small screens   =============== */
+.multilinetype {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 20px;
+  display: none;
+}
+.line01,
+.line2,
+.line3,
+.line4,
+.line5 {
+  color: #0000;
+}
+.line2,
+.line3,
+.line4,
+.line5 {
+  opacity: 0;
+}
+
+.line01 {
+  background: linear-gradient(-90deg, #fed300 5px, #0000 0) 10px 0,
+    linear-gradient(#fed300 0 0) 0 0;
+  -webkit-background-clip: padding-box, text;
+  background-size: calc(var(--n) * 1ch) 200%;
+  background-clip: padding-box, text;
+  background-repeat: no-repeat;
+  animation: 
+  b 0.7s infinite steps(1),
+    t calc(var(--n) * 0.3s) steps(var(--n)) forwards;
+}
+
+.line2 {
+  background: linear-gradient(-90deg, #fff 5px, #0000 0) 10px 0,
+    linear-gradient(#fff 0 0) 0 0;
+  -webkit-background-clip: padding-box, text;
+  background-size: calc(var(--n) * 1ch) 200%;
+  background-clip: padding-box, text;
+  background-repeat: no-repeat;
+  animation: b 0.7s infinite 1s steps(1),
+    t calc(var(--n) * 0.3s) 1s steps(var(--n)) forwards,
+    fadeIn 0s step-end 1s forwards;
+}
+.line3 {
+  background: linear-gradient(-90deg, #fff 5px, #0000 0) 10px 0,
+    linear-gradient(#fff 0 0) 0 0;
+  -webkit-background-clip: padding-box, text;
+  background-size: calc(var(--n) * 1ch) 200%;
+  background-clip: padding-box, text;
+  background-repeat: no-repeat;
+  animation: b 0.7s infinite 17s steps(1),
+    t calc(var(--n) * 0.3s) 17s steps(var(--n)) forwards,
+    fadeIn 0s step-end 17s forwards;
+}
+.line4 {
+  background: linear-gradient(-90deg, #fed300 5px, #0000 0) 10px 0,
+    linear-gradient(#fed300 0 0) 0 0;
+  -webkit-background-clip: padding-box, text;
+  background-size: calc(var(--n) * 1ch) 200%;
+  background-clip: padding-box, text;
+  background-repeat: no-repeat;
+  animation: b 0.7s infinite 21s steps(1),
+    t calc(var(--n) * 0.3s) 21s steps(var(--n)) forwards,
+    fadeIn 0s step-end 21s forwards;
+}
+
+.line5 {
+  background: linear-gradient(-90deg, #fff 5px, #0000 0) 10px 0,
+    linear-gradient(#fff 0 0) 0 0;
+  -webkit-background-clip: padding-box, text;
+  background-size: calc(var(--n) * 1ch) 200%;
+  background-clip: padding-box, text;
+  background-repeat: no-repeat;
+  animation: b 0.7s infinite 28s steps(1),
+    t calc(var(--n) * 0.3s) 28s steps(var(--n)) forwards,
+    fadeIn 0s step-end 28s forwards;
+}
+
+@keyframes t {
+  from {
+    background-size: 0 200%;
+  }
+}
+@keyframes b {
+  50% {
+    background-position: 0 -100%, 0 0;
+  }
+}
+
+  @media screen and (max-width:1024px) {
+    .multilinetype{
+      display: block;
+    } 
+    .container{
+      display: none;
+    }   
+  }

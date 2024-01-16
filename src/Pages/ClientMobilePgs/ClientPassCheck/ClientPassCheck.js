@@ -13,6 +13,7 @@ function ClientPassCheck() {
 
 
 
+  const clientTableName = useLocation().state.DataTableName;
   const clientpan = useLocation().state.clientpan;
   const [isPasswordNull, setIsPasswordNull] = useState(useLocation().state.isPasswordNull);
 
@@ -126,10 +127,19 @@ function ClientPassCheck() {
         }
         return response.json();
       })
-      .then(result => { //console.log(result)
+      .then(result => {
+        // console.log(result)
         // console.log(result.token)
+        // if (clientTableName === "Temp") {
+        //   localStorage.setItem("jwtToken", result.token);
+        //   localStorage.setItem("Tablename", clientTableName);
+        //   Navigate(`clienthome`);
+        //   // , { state: { clientid: data.users[0].clientId } }
+        // } else {
         localStorage.setItem("jwtToken", result.token);
+        localStorage.setItem("Tablename", clientTableName);
         handleLogin();
+        // }
       })
       .catch(error => console.log('error', error));
   }
@@ -162,12 +172,13 @@ function ClientPassCheck() {
         return response.json();
       })
       .then((data) => {
-        const jwtToken = storedToken;
-        //console.log(data);
+        // const jwtToken = storedToken;
+        console.log(data);
         //localStorage.setItem("jwtToken", jwtToken);
 
         if (data.users.length > 0)
           data.users.map((item) => {
+
             console.log(item.category);
             switch (item.category) {
               case "Income_Tax":
@@ -274,7 +285,7 @@ function ClientPassCheck() {
       };
 
       const response = await fetch(`${url_}/client/verify-otp?otp=${OTP}`, requestOptions);
-      const result = await response.text();
+      // const result = await response.text();
       if (response.status === 200) {
         handleSetPassword();
         //  getToken();

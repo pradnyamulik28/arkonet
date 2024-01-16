@@ -115,14 +115,14 @@ console.log(result)
       <div className={`${style.workport} `}>
 
         {/* Top Port Starts */}
-        <h2 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
+        <h4 className=' mt-2 d-flex justify-content-around align-items-center w-100'>
           <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
             &#8617;&nbsp;
           </div>
           <b>{userProf==="category"?userCategory:userProf}</b>
           <div>
           </div>
-        </h2>
+        </h4>
         <div className={`${style.top} `}>
           <div className={`${style.inputbox} `}>
             <div className={`${style.seachbox} `}>
@@ -131,7 +131,7 @@ console.log(result)
                 onChange={(e) => setSearchQuery(e.target.value)} />
             </div>
             <div className={`${style.seachlogo} `}>
-              <h1><i class="fa-solid fa-magnifying-glass"></i></h1>
+              <h4><i class="fa-solid fa-magnifying-glass"></i></h4>
             </div>
           </div>
         </div>

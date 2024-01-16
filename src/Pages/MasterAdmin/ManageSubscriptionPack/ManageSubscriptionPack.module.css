@@ -15,6 +15,7 @@
   padding: 20px 60px 30px 40px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   width: 90%;
+  overflow-x: auto;
 }
 
 .add_plan_btn span {

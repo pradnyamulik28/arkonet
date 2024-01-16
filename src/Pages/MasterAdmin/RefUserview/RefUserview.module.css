@@ -77,7 +77,7 @@
 
 .drow {
   height: 10%;
-  width: 90%;
+  width: 95%;
   background-color: #f1ffff;
   border-radius: 1.5rem;
   box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
@@ -104,7 +104,7 @@
 
 .ddata {
   height: 10%;
-  width: 90%;
+  width: 95%;
   background-color: #f1ffff;
   border-radius: 1.5rem;
   box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
@@ -125,7 +125,7 @@
 
 .an,
 .gdtxt2 {
-  width: 12vw;
+  width: 10vw;
 }
 
 .pan,
@@ -136,7 +136,7 @@
 
 .mobile,
 .gdtxt4 {
-  width: 9vw;
+  width: 13vw;
 }
 
 .reference,
