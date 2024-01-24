@@ -402,15 +402,15 @@ const DOCsFile = () => {
     <>
 
       <div className={`${style.header} mt-5`} >
-        <div className={`${style.leftear}`} >
+        <div className={`${style.leftear} d-flex m-2`} >
           <Link className={`${style.ancher}`}
             onClick={(e) => {
               e.preventDefault();
               Navigate(-1);
             }}><h3>
               <i class="fa-solid fa-angle-left"></i></h3></Link>
+              <h3>Documents</h3>
         </div>
-        <div className={`${style.eyes}`} ><h3>Documents</h3></div>
         <div className={`${style.rightear}`} ><h3>&nbsp;</h3></div>
       </div>
 

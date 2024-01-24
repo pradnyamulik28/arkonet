@@ -219,7 +219,7 @@ const SubLogin = () => {
 
       <div >
         <div className='d-flex flex-column align-items-center mt-4 mb-3'>
-          <h2 className='d-flex justify-content-center'><b>SUB LOGINS</b></h2>
+          <h4 className='d-flex justify-content-center'><b>SUB LOGINS</b></h4>
           <SubLoginRegister DaysRemaining={UserRemainingDays}>
             <div className='mt-3'>
               <button className={`${style.buysublogin_btn} d-flex justify-content-center`}><b>BUY LOGIN</b></button>
@@ -232,10 +232,10 @@ const SubLogin = () => {
       {sublogins.length === 0 ? (
         <div style={{ height: "35rem" }} className='d-flex flex-column '>
           <>
-            <h1 style={{
+            <h5 style={{
               margin: "10rem auto",
               fontFamily: "cursive"
-            }}>No SUB User's</h1>
+            }}>No SUB User's</h5>
           </>
 
         </div>

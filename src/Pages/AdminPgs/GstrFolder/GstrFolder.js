@@ -42,18 +42,21 @@ const GstrFolder = () => {
   }
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 mt-5" id={styles.maindiv}>
-          <h1 className={`d-flex align-items-center ${styles.h1}`}>
+      <div className='row'>
+      <h2 className={`mt-5 d-flex align-items-center ${styles.h1}`}>
             <div className='text-black' style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
               &#8617;&nbsp;
             </div>
             <b className='text-black'>GST</b>
-          </h1>
-          <span className='text-primary ml-5'>F.Y {year}</span>
+          </h2>
+          {/* <span className='text-primary ml-5'>F.Y {year}</span> */}
+      </div>
+             
+         
           <div className="row">
-            {folderTitle.map((title, index) => (
-              <div key={index} className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div className={`mt-2 ${styles.maindiv}`} id={styles.maindiv}>          
+          <div className={`${styles.folder_div}`}>
+            {folderTitle.map((title, index) => (              
                 <div className={styles.folderlink} onClick={() => GoTo(title)}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
                     <div className={styles.icon}>
@@ -66,12 +69,11 @@ const GstrFolder = () => {
                       <h5>{title}</h5>
                     </div>
                   </div>
-                </div>
-              </div>
+                </div>              
             ))}
-          </div>
-        </div>
-      </div>
+            </div>
+            </div>
+          </div>        
     </div>
   );
 }

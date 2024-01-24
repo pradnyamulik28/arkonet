@@ -40,12 +40,12 @@ const InvestNowView = () => {
 
   return (
     <div>
-      <div className='d-flex justify-content-around mt-4 mb-5'>
+      <div className='d-flex align-items-center mt-4 mb-5'>
         <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
           &#8617;&nbsp;
         </div>
-        <h3 className='display-3'><b>{title}</b></h3>
-        <div></div>
+        <h4 className='align-item-ceter' style={{"minWidth":"300px"}}><b>{title}</b></h4>
+        
       </div>
       <div>
         <table className="table table-striped">

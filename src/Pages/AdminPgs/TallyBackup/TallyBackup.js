@@ -49,10 +49,10 @@ function TallyBackup() {
 
   return (
     <div className="container">
-      <div className="row d-flex flex-column justify-content-center">
+      <div className="row d-flex flex-column justify-content-center ">
         <div className={`${styles.profileimg}`}>
           <img src={imageSrc} alt="" className="mt-4 mb-4" />
-          <h3>{username}</h3>
+          <p className="h4">{username}</p>
           <h5>{userpan}</h5>
           <h6>{userPro}</h6>
         </div>

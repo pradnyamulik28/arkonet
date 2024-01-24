@@ -69,17 +69,18 @@ const Gst = () => {
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 mt-5" id={styles.maindiv}>
-          <h1 className='d-flex align-items-center'>
-            <div className='text-primary' style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
+      <div className='row'>
+      <h2 className={` mt-5 d-flex align-items-center ${styles.h1}`}>
+      <div className='text-primary' style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
               &#8617;&nbsp;
             </div>
             <b className='text-primary'>GST</b>
-          </h1>
-          <div className="row">
-            {lastFiveYearsArray.map((year, index) => (
-              <div key={index} className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          </h2>
+      </div>
+      <div className="row">
+          <div className={`mt-2 ${styles.maindiv}`} id={styles.maindiv}>          
+          <div className={`${styles.folder_div}`}>
+            {lastFiveYearsArray.map((year, index) => (              
                 <div onClick={() => sendCountData(year)} className={styles.folderlink}> {/* Pass the year to SendData */}
                   <div className={`${styles.card} ${styles[`card${index + 1}`]}`} id={styles.card1}>
                     <div className={styles.icon}>
@@ -93,7 +94,7 @@ const Gst = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              
             ))}
           </div>
         </div>

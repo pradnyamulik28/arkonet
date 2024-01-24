@@ -248,8 +248,8 @@ Contact no : ${user_mobile}`);
         </div> */}
 
         <div className={` ${style.helptitle}`}>
-          <h2 className={``}>HELP</h2>
-          <h2 className={`w-100 text-center ${style.h41}`}>CREATE NEW TICKET</h2>
+          <h4 className={``}>HELP</h4>
+          <h4 className={`w-100 text-center ${style.h41}`}>CREATE NEW TICKET</h4>
           <h5 className={` mt-4 mb-5`}><b>We are happy to help you</b></h5>
         </div>
 

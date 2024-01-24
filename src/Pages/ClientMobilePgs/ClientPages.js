@@ -25,6 +25,7 @@ import ClientTallyBackup from "./ClientTallyBackup/ClientTallyBackup";
 import  ChatBot from "../../components/ChatBot/ChatBot"
 import ClientTallyView from "./ClientTallyBackup/ClientTallyView";
 import ProfileUpdate from "./ProfileUpdate/ProfileUpdate";
+import GSTRFiling from "./GSTRFiling/GSTRFiling";
 
 function ClientPages() {
   return (
@@ -57,7 +58,12 @@ function ClientPages() {
       <Route path="investnow" element={<InvestNow />} />            
       <Route path="help" element={<ClientHelp />} />
       <Route path="changepass" element={<ClientPassChange />} />
-      <Route path="updateinfo" element={<ProfileUpdate />} />            
+      <Route path="updateinfo" element={<ProfileUpdate />} />  
+
+
+      <Route path="gstr" element={<GSTRFiling />} />    
+
+              
 
 
     </Routes>

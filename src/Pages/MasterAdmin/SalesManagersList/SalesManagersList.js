@@ -5,11 +5,14 @@ import { url_ } from "../../../Config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import GenerateReport from "../GenerateReport/GenerateReport";
 
 const SalesManagersList = () => {
   const Navigate = useNavigate();
   const userProf = useLocation().state.userProfession;
   const storedToken = window.localStorage.getItem("jwtToken");
+  const reportGenRef = useRef(null);
+
   // console.log(userProf)
   useEffect(() => {
     GetUserDATA();
@@ -118,7 +121,8 @@ const SalesManagersList = () => {
     const index1 = isTargetExist.findIndex((item) => (item.pan === pan && item.year===new Date().getFullYear().toString()));
     const isExist = isTargetExist.filter((item) => (item.pan === pan ));
 
-    // console.log(isExist[0].fixdate)
+    const todate=new Date()
+    const fdate=`${todate.getFullYear()}-${todate.getMonth()+1}-01)`
     if (inputValues[index]) {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -128,7 +132,7 @@ const SalesManagersList = () => {
         salesmanid: id,
         pan: pan,
         date: new Date().toISOString().split("T")[0],
-        fixdate:isExist.length>0?isExist[0].fixdate:new Date().toISOString().split("T")[0],
+        fixdate:isExist.length>0?isExist[0].fixdate:fdate,
         year: new Date().getFullYear(),
         amount: parseInt(inputValues[index]),
       });
@@ -250,6 +254,11 @@ const SalesManagersList = () => {
   }
   const fixeddateRef=useRef(null)
 
+  const handleGenReportClick = () => {
+    if (reportGenRef.current) {
+      reportGenRef.current.click();
+    }
+  };
   return (
     <div className="d-flex w-100">
       <div className={`${style.workport} `}>
@@ -451,7 +460,8 @@ const SalesManagersList = () => {
                   <div className={`${style.name} `}>
                     <p className={`${style.status} `}>
                       <i id="permanentDelete" className="fa-solid fa-trash" title="Permenent Delete" style={{marginRight: "9px","cursor":"pointer"}} onClick={(e)=>{confirm(e,item.pan)}}></i>
-                      <i className="fas fa-file-excel" style={{ cursor: "pointer","color":"green" }} title="Generate report"></i>
+                      <i className="fas fa-file-excel" style={{ cursor: "pointer","color":"green" }} title="Generate report" onClick={handleGenReportClick}></i>
+                      <GenerateReport reportGenRef={reportGenRef} salmanagerpan={item.pan} />
                     </p>
                   </div>
                 )}

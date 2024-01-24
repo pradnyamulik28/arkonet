@@ -115,10 +115,10 @@ const InvestNow = () => {
                 className={`col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ${style.cards}`}
                 id={item.text}
               >
-                <a href="##" className={item.classname}>
-                  <img src={item.img_src} alt={item.img_alt} onClick={() => Goto(item.img_alt, item.text)} />
+                <Link onClick={(e) => {e.preventDefault();Goto(item.img_alt, item.text)}} className={item.classname}>
+                  <img src={item.img_src} alt={item.img_alt} />
                   <p>{item.text} </p>
-                </a>
+                </Link>
               </div>
             )
           })}

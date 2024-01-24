@@ -228,6 +228,7 @@ input:checked+.slider:before {
 
 .file_upload {
   background-color: #ffffff;
+  max-width: 211px;
   width: 211px;
   margin: 0 auto;
   padding: 20px;
@@ -265,7 +266,7 @@ input:checked+.slider:before {
   text-align: center;
 }
 
-.drag_text h3 {
+.drag_text h4 {
   color: #9ba4ab;
   padding: 0 0;
   font-weight: bold;
@@ -275,14 +276,25 @@ input:checked+.slider:before {
   height: 90px;
 }
 
-.filename_text {
+.filename_text,
+.filename_text2 {
   text-align: center;
   margin: 10px 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.filename_text{
+  font-size: 20px;
+  font-weight: bold;
+}
+.filename_text2{
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .file_upload i {
   color: red;
-  font-size: 8em;
+  font-size: 6em;
   display: flex;
   justify-content: center;
 }
@@ -335,4 +347,44 @@ input:checked+.slider:before {
   position: relative;
 
   right: 15px;
+}
+.files{
+  display: flex;
+  /* flex-direction: row; */
+  width: 100%;
+  min-width: 400px;
+}
+.filename{
+  display: flex;
+  min-width: 150px;
+}
+.minwidth{
+  min-width: 600px;
+}
+.neckbar{
+  min-width: 250px;
+  max-width: 600px;
+  margin-left: 2rem;
+}
+
+@media (max-width:768px) {
+
+  .file_upload i{
+    font-size: 4em;
+  }
+  .file_upload{
+    width: fit-content;
+  }
+  .filename_text{
+    font-size: medium;
+  }
+  .filename_text2{
+    font-size: small !important;
+  } 
+  
+}
+@media (max-width:992px) {
+  .filename{
+    flex-direction: column;
+  }
 }

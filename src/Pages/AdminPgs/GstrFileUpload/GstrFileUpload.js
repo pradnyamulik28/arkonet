@@ -647,93 +647,77 @@ const GstrFileUpload = () => {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   return (
-
+<>
     <div className="container">
-      <div className="row mt-5">
-
-
-        <div className="w-100" id="maindiv">
-
-          <div className="container">
-
-
-            <div className="uphead mb-5">
-              <div className="row">
-                <div className="col">
-                  <h1 className={`d-flex align-items-center ${style.h1}`}>
+    <div className="row m-3" style={{"minWidth":"300px"}} id="maindiv">
+                <div >
+                <h1 className={`d-flex align-items-center ${style.h1}`}>
                     <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
                       &#8617;&nbsp;
                     </div>
                     <b>{gst_title}</b>
-                  </h1>
+                  </h1>                
+              <p className={`${style.headpara}`}>F.Y {year}</p>
+
                 </div>
-
-              </div>
-              <h6 className={`${style.headpara}`}>F.Y {year}</h6>
-            </div>
-
-
-            <div className={`${style.neckbar}`}>
-              <div className="row d-flex justify-content-between">
-                <div className="" id="select">
+                
+        </div>
+        <div className={`${style.neckbar}`}>
+              <div className="d-flex">
+                <div className="col-4 col-sm-4 col-md-6 col-lg-9 col-xl-9" id="select">
                   {dbfilelength.length > 0
                     ? <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button>
                     : null}
                   {/* <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button> */}
                 </div>
-                <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="delet">
+                <div className="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 d-flex justify-content-center" id="delet">
                   <h2 className="icons">
                     {codeVisible && (
                       <i className="fa-solid fa-trash-can" onClick={DeleteFile}></i>
                     )}
                   </h2>
                 </div>
-                <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="share">
+                <div className="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 d-flex justify-content-center" id="share">
                   <h2 className="icons">
                     {codeVisible && (
                       <i className="fa-solid fa-share-from-square" ></i>
                     )}
                   </h2>
                 </div>
-                {/* <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="share">
-                  <h2 className="icons">
-                    {codeVisible && (
-                      <i className="fa-solid fa-share-from-square" onClick={DeleteFile}></i>
-                    )}
-                  </h2>
-                </div> */}
               </div>
             </div>
 
-
-            <div className='w-100'>
-
-
-
-
-
-
+    <div className={`w-100 d-flex align-items-center m-2 row ${style.minwidth}`}>
               {NEWARRAYUpdated.map((item, index) => (
-                <div className='d-flex align-items-center mb-2 w-100 row' key={index} >
-
-
-                  <div className={`${style.gstr1_mothn_filename} col`}>
-                    <h4 className={`${style.filename_text} text-danger`} >{item.month}</h4>
+               <>
+                  <div className={`col-4 col-sm-4 col-md-4 col-lg-5 col-xl-5 ${style.filename}`}> 
+                  <div className={`${style.gstr1_mothn_filename} col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 `}>
+                    <p className={`${style.filename_text} text-danger h4`} >{item.month}</p>
                   </div>
 
+                  <div className={`${style.gstr_1_file_toggle}  col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-flex justify-content-center `} style={{ margin: "auto" }}>
+                    <label className={`${style.switch}`}>
+                      <input type="checkbox" checked={item.filednotfiled === "yes" ? true : false} onChange={() => handleToggle(item.month)} />
+                      <span className={`${style.slider} ${style.round}`}></span>
+                    </label>
+                  </div>
+                  </div>
+                  
+
+                  <div className={`col-8 col-sm-8 col-md-8 col-lg-7 col-xl-7 ${style.files}`}> 
                   <div className={`${style.file_upload}  mr-2 ml-2 col`}>
                     <div className={style.image_upload_wrap}>
                       <input className={style.file_upload_input} type='file' onChange={(event) => handleFileUpload(event, item.month)} onClick={checkSubsriptionStatus} />
                       <div className={style.drag_text}>
                         <img src={upload} alt="" />
-                        <h4>Upload File</h4>
+                        <p className=''>Upload File</p>
                       </div>
                     </div>
                   </div>
 
-
+                  
                   {item.status ? (
-                    <div className=' col'>
+                    <div className=' col-6'>
 
                       <div className={style.file_upload}>
                         {codeVisible && (
@@ -756,36 +740,28 @@ const GstrFileUpload = () => {
 
 
                       </div>
-                      <h6 className={`${style.filename_text} w-100`} >
+                      <p className={`${style.filename_text2} w-100`} >
                         {item.filename}
-                      </h6>
+                      </p>
                     </div>
                   ) : (
 
-                    <div className=' col'></div>
+                    <div className=' col-6'></div>
 
 
                   )}
 
-                  <div className={`${style.gstr_1_file_toggle} col d-flex justify-content-center `} style={{ margin: "auto" }}>
-                    <label className={`${style.switch}`}>
-                      <input type="checkbox" checked={item.filednotfiled === "yes" ? true : false} onChange={() => handleToggle(item.month)} />
-                      <span className={`${style.slider} ${style.round}`}></span>
-                    </label>
+                  </div>      
 
-                  </div>
-
-
-                </div>
+                    </>
+                
               ))}
 
             </div>
-          </div>
-
-        </div>
-      </div>
 
     </div >
+
+    </>
 
   );
 }

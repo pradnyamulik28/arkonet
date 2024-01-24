@@ -2,7 +2,9 @@
     border: 1PX solid red;
 } */
 
-
+.maindiv{
+  width: 60%;
+}
 
 .folderlink {
   text-decoration: none;
@@ -10,7 +12,12 @@
   color: black;
 }
 
-
+.folder_div {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 31px 10px;
+}
 
 .icon {
   display: flex;
@@ -121,4 +128,9 @@
   left: 25px;
   top: 11px;
   color: #005eff;
+}
+@media (max-width:768px) {
+  .maindiv{
+    width: 100%;
+  }
 }

@@ -1,0 +1,158 @@
+[
+  { 
+    "statenm": "JAMMU AND KASHMIR", 
+    "statecode": "01"   ,
+    "aplhacode":"JK" },
+  { 
+    "statenm": "HIMACHAL PRADESH", 
+    "statecode": "02"    ,
+    "aplhacode":"HP" },
+  { 
+    "statenm": "PUNJAB", 
+    "statecode": "03"  ,
+    "aplhacode":"PB" },
+  { 
+    "statenm": "CHANDIGARH", 
+    "statecode": "04"  ,
+    "aplhacode":"CH" },
+  { 
+    "statenm": "UTTARAKHAND", 
+    "statecode": "05" ,
+    "aplhacode":"UA" },
+  { 
+    "statenm": "HARYANA", 
+    "statecode": "06" ,
+    "aplhacode":"HR" },
+  { 
+    "statenm": "DELHI", 
+    "statecode": "07"   ,
+    "aplhacode":"DL" },
+  { 
+    "statenm": "RAJASTHAN", 
+    "statecode": "08"   ,
+    "aplhacode":"RJ" },
+  { 
+    "statenm": "UTTAR PRADESH", 
+    "statecode": "09"   ,
+    "aplhacode":"UP" },
+  { 
+    "statenm": "BIHAR", 
+    "statecode": "10"   ,
+    "aplhacode":"BR" },
+  { 
+    "statenm": "SIKKIM", 
+    "statecode": "11"  ,
+    "aplhacode":"SK" },
+  { 
+    "statenm": "ARUNACHAL PRADESH", 
+    "statecode": "12"   ,
+    "aplhacode":"AP" },
+  { 
+    "statenm": "NAGALAND", 
+    "statecode": "13"    ,
+    "aplhacode":"NL" },
+  { 
+    "statenm": "MANIPUR", 
+    "statecode": "14" ,
+    "aplhacode":"MN" },
+  { 
+    "statenm": "MIZORAM", 
+    "statecode": "15" ,
+    "aplhacode":"MZ" },
+  { 
+    "statenm": "TRIPURA", 
+    "statecode": "16" ,
+    "aplhacode":"TR" },
+  { 
+    "statenm": "MEGHALAYA", 
+    "statecode": "17"   ,
+    "aplhacode":"ML" },
+  { 
+    "statenm": "ASSAM", 
+    "statecode": "18"   ,
+    "aplhacode":"AS" },
+  { 
+    "statenm": "WEST BENGAL", 
+    "statecode": "19" ,
+    "aplhacode":"WB" },
+  { 
+    "statenm": "JHARKHAND", 
+    "statecode": "20"   ,
+    "aplhacode":"JH" },
+  { 
+    "statenm": "ODISHA", 
+    "statecode": "21"  ,
+    "aplhacode":"OR" },
+  { 
+    "statenm": "CHATTISGARH", 
+    "statecode": "22" ,
+    "aplhacode":"CG" },
+  { 
+    "statenm": "MADHYA PRADESH", 
+    "statecode": "23"  ,
+    "aplhacode":"MP" },
+  { 
+    "statenm": "GUJARAT", 
+    "statecode": "24" ,
+    "aplhacode":"GJ" },
+  { 
+    "statenm": "DADRA AND NAGAR HAVELI AND DAMAN AND DIU", 
+    "statecode": "26"    ,
+    "aplhacode":"DD,DN" },
+  { 
+    "statenm": "MAHARASHTRA", 
+    "statecode": "27" ,
+    "aplhacode":"MH" },
+  { 
+    "statenm": "ANDHRA PRADESH(BEFORE DIVISION)", 
+    "statecode": "28" ,
+    "aplhacode":"AP" },
+  { 
+    "statenm": "KARNATAKA", 
+    "statecode": "29"   ,
+    "aplhacode":"KA" },
+  { 
+    "statenm": "GOA", 
+    "statecode": "30" ,
+    "aplhacode":"GA" },
+  { 
+    "statenm": "LAKSHADWEEP", 
+    "statecode": "31" ,
+    "aplhacode":"LD" },
+  { 
+    "statenm": "KERALA", 
+    "statecode": "32"  ,
+    "aplhacode":"KL" },
+  { 
+    "statenm": "TAMIL NADU", 
+    "statecode": "33"  ,
+    "aplhacode":"TN" },
+  { 
+    "statenm": "PUDUCHERRY", 
+    "statecode": "34"  ,
+    "aplhacode":"PY" },
+  { 
+    "statenm": "ANDAMAN AND NICOBAR ISLANDS", 
+    "statecode": "35" ,
+    "aplhacode":"AN" },
+  { 
+    "statenm": "TELANGANA", 
+    "statecode": "36"   ,
+    "aplhacode":"TS" },
+  { 
+    "statenm": "ANDHRA PRADESH", 
+    "statecode": "37"  ,
+    "aplhacode":"AP" },
+  { 
+    "statenm": "LADAKH", 
+    "statecode": "38"  ,
+    "aplhacode":"LA" },
+  { 
+    "statenm": "OTHER TERRITORY", 
+    "statecode": "97" ,
+    "aplhacode":"OT" },
+  { 
+    "statenm": "CENTRE JURISDICTION", 
+    "statecode": "99",
+    "aplhacode":"" }
+]

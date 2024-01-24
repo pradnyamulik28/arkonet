@@ -4,7 +4,14 @@
 .pusdouploadport{
     cursor: pointer;
 }
-
+.header{
+    max-width: fit-content;
+    min-width: 15rem;
+}
+.uploadcontainer{
+    min-width: 15rem;
+    margin-left: 2rem;
+}
 .btn{
     display: flex;
     justify-content: center;
@@ -36,3 +43,10 @@ min-width: 15rem;
 cursor: pointer;
 }
 
+@media (max-width:600px) {
+    .uploadcontainer{
+        width: 100%;
+        justify-content: center;
+        margin: 0;
+    }    
+}

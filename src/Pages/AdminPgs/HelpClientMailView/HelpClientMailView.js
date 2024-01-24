@@ -6,8 +6,20 @@ const HelpClientMailView = () => {
   const quarray = useLocation().state.ClientQuarry;
   const details = useLocation().state.ClientDetails;
   const date = useLocation().state.MailDate;
+  
+  const style={
+    border: "15px solid #ffd4018f",
+    margin:"2rem 2rem",
+    minWidth:"350px",
+  }
+  const mobileStyles = {
+    style: {
+      border: "10px solid #ffd4018f",
+      margin:"2rem 2rem",
+    }
+  };
   return (
-    <div style={{ border: "50px solid #ffd4018f", margin: "2rem 5rem" }}>
+    <div style={style}>
       <div style={{ fontFamily: "Arial, sans-serif", maxWidth: "600px", margin: " 4rem auto" }}>
         <p>
           <h6>From,</h6>

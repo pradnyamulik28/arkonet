@@ -437,13 +437,15 @@ fetchData();
           <div className={`${style.mainheadtextual}`}>
             {userInfo.end_date===null?``:<p className={`${style.p1}`}>Subscription Ends on</p>}
             {userInfo.end_date!==null  &&<><p className={`${style.p2}`}>{userInfo.end_date}&nbsp;&nbsp; {userInfo.end_time}</p>
-            <p className={`${style.sub_details}`}>Selected Pack:&nbsp;&nbsp;{userInfo.pack_type}  
-            &nbsp;&nbsp;&nbsp;&nbsp; Amount : &#8377;&nbsp;{userInfo.pack_amount}&nbsp;/- </p></>}
+            <p className={`${style.sub_details}`}>
+              <span> Selected Pack:&nbsp;&nbsp;{userInfo.pack_type} </span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp; Amount : &#8377;&nbsp;{userInfo.pack_amount}&nbsp;/- </span>
+            </p></>}
           </div>
           <div className={subscription_status==="on"?`${style.card2} ${style.active_subscription}`:`${style.card2}`}>
-            <p className={`${style.cardp} `} onClick={GOTO}> {subscription_status==="on"?`Active`:userInfo.end_date===null?`Subscribe`:`RENEW`}</p>
+            <span className={`${style.cardp} `} onClick={GOTO}> {subscription_status==="on"?`Active`:userInfo.end_date===null?`Subscribe`:`RENEW`}</span>
           </div>
-          <p><Link onClick={openTermConditions}  >View terms of service and privacy policy</Link></p>
+          <p style={{"marginTop":"5px"}}><Link onClick={openTermConditions}  >View terms of service and privacy policy</Link></p>
           <PdfViewerModal isOpen={modalIsOpen} onClose={closeModal} onData={handleChildData}/>
         </div>
 
@@ -460,15 +462,15 @@ fetchData();
 
         <div className={`${style.mainadbominal}`}>
           <div className={`${style.card3}`}>
-            <p className={`${style.cardp}`} id="referfriendbtn" onClick={openPanel}> REFER A FRIEND</p>
-            {isRefferFriend&&<h1><i class="fa-solid fa-caret-down" style={{ color: "#707070" }}></i></h1>}
+            <p className={`${style.cardp}`} id="referfriendbtn" onClick={openPanel}> REFFER A FRIEND</p>
+            {isRefferFriend&&<h3><i class="fa-solid fa-caret-down" style={{ color: "#707070" }}></i></h3>}
           </div>
           <div className={`${style.card3}`} >
             <p className={`${style.cardp}`} onClick={copyReferralLink}> COPY REFERAL LINK</p>
           </div>
           <div className={`${style.card3}`}>
             <p className={`${style.cardp}`} id="suggessionbtn" onClick={openPanel}> SUGGESSION</p>
-            {isSuggession&&<h1><i class="fa-solid fa-caret-down" style={{ color: "#707070" }}></i></h1>}
+            {isSuggession&&<h3><i class="fa-solid fa-caret-down" style={{ color: "#707070" }}></i></h3>}
           </div>          
         </div>
 
@@ -506,7 +508,7 @@ fetchData();
             </>}
 
             <div className={`${style.bottomdown}`}>
-              <button className={`${style.bottombtn}`} onClick={handleSubmit}>SUMBIT</button>
+              <button className={`${style.bottombtn}`} onClick={handleSubmit}>SUBMIT</button>
             </div>
 
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { url_ } from '../../../Config';
 import styles from './loginpage.module.css';
 import InputField from '../../../components/InputField/InputField'
@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 
 
 
-const CheckPan = () => {
+const CheckPan = ({setLoggedIn}) => {
   const Navigate = useNavigate();
 
   const storedToken = window.localStorage.getItem('jwtToken');
@@ -18,7 +18,9 @@ const CheckPan = () => {
     pan: ""
   })
 
-
+  useEffect(() => {
+    setLoggedIn(false)
+  }, [])
   const handleChange = (e) => {
 
     setuserPan({ ...userPan, [e.target.name]: e.target.value });

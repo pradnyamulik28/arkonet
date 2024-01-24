@@ -3,14 +3,16 @@ import React, { useState, useEffect } from 'react';
 import styles from './leftside.module.css';
 import Applogo from '../../../Images/taxko_logo.jpeg'
 import Cmpylogo from '../../../Images/Arkonet - Logo_page-0001.jpg'
-import { Link } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 
 const LeftSide = ({ loggedIn, setLoggedIn }) => {
   const subscription_status = localStorage.getItem(`subscription_status`)
   const Category = localStorage.getItem(`Category`)
+  const Navigate=useNavigate();
 
   useEffect(() => {
-    // setIsLoggedIn(loggedIn);
+    setLoggedIn(JSON.parse(localStorage.getItem('LogedIn')));
+   
     if (localStorage.length > 0) {
       // setIsLoggedIn(localStorage.getItem('LogedIn'));
       // setIsLoggedIn(true);
@@ -22,14 +24,65 @@ const LeftSide = ({ loggedIn, setLoggedIn }) => {
   const handleLogout = () => {
     localStorage.clear();
     setLoggedIn(false);
+    Navigate("/admin")
   };
 
   const [activeLink, setActiveLink] = useState(null);
 
-  const handleLinkClick = (link) => {
-    setActiveLink(link);
-  };
+
+  const handleLinkClick = (pglink) => {
+    setActiveLink(pglink);
+  switch (pglink) {
+    case "dashboard":
+    //   
+      Navigate("dashboard");
+      
+      break;
+    case "myclients":
+      Navigate("dashboard/tc");         
+      
+      break;
+
+    case "tallybackup":
+      Navigate("tallybackup");
+      break;
+
+    case "changepass":
+      Navigate("changepass");
+      break;
+
+    case "investNow":
+      Navigate("investNow");
+      
+      break;
+
+    case "sublogin":
+      Navigate("dashboard/sublogin");      
+      break;
+
+    case "leads":
+      Navigate("dashboard/leads");
+      
+      break;
+
+    case "userUpdate":
+      Navigate("userUpdate");
+      
+      break;
+      case "UserSubscriptionPage":
+        Navigate("UserSubscriptionPage");     
+
+        break;
+        case "help":
+        Navigate("help");     
+
+        break;
+    default:
+      
+  }
+};
   return (
+    <>
     <div className="container">
       <div className={`${styles.sidebar}`}>
         <div className={`d-flex flex-column justify-content-around ${styles.navbar}  `}>
@@ -80,7 +133,8 @@ const LeftSide = ({ loggedIn, setLoggedIn }) => {
 
                       <div style={{ marginTop: "1rem" }} className={styles.myprofilelink}>
                         <input id="check01" type="checkbox" name="menu" />
-                        <label for="check01" onClick={() => handleLinkClick('My Profile')}><h6 className={activeLink === 'My Profile' ? 'font-weight-bold' : ''}>My Profile</h6></label>
+                        <label for="check01" onClick={() => handleLinkClick('My Profile')}><h6 className={activeLink === 'My Profile' ? 'font-weight-bold' : ''}>My Profile</h6>
+                        </label>
                         <ul class={styles.submenu}>
                           <Link to="userUpdate" onClick={() => handleLinkClick('userUpdate')}>
                             <h6 className={activeLink === 'userUpdate' ? 'font-weight-bold' : ''}>Update Profile</h6>
@@ -119,6 +173,37 @@ const LeftSide = ({ loggedIn, setLoggedIn }) => {
         </div>
       </div>
     </div>
+    {true&&<div class={`${styles.navbarH}`}>
+                    <div class={`${styles.containerH} ${styles.navcontainer}`}>
+                        <input class={`${styles.checkbox}`} type="checkbox" name="" id="" />
+                        <div class={`${styles.hamburgerlines}`}>
+                            <small class={`${styles.line} ${styles.line1}`}></small>
+                            <small class={`${styles.line} ${styles.line2}`}></small>
+                            <small class={`${styles.line} ${styles.line3}`}></small>
+                        </div>
+
+                        <div class={`${styles.menuitems}`}>
+                          
+                            <li onClick={() => handleLinkClick('dashboard')}><span className={activeLink === 'dashboard' ? 'font-weight-bold ' : ''} style={{ cursor: "pointer" }}>Dashboard</span></li>
+                            <li onClick={() => handleLinkClick('myclients')}><span className={activeLink === 'myclients' ? 'font-weight-bold ' : ''} style={{ cursor: "pointer" }}>My Clients</span></li>
+                            <li onClick={() => handleLinkClick('tallybackup')}><span className={activeLink === 'tallybackup' ? 'font-weight-bold ' : ''} style={{ cursor: "pointer" }}>Tally Backup</span></li>
+                            <li onClick={() => handleLinkClick('changepass')}><span className={activeLink === 'changepass' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Change Password</span></li>
+                            <li onClick={() => handleLinkClick('investNow')}><span className={activeLink === 'investNow' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Invest Now</span></li>
+                            <li onClick={() => handleLinkClick('sublogin')}><span className={activeLink === 'sublogin' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Sub Login</span></li>
+                            <li onClick={() => handleLinkClick('leads')}><span className={activeLink === 'leads' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Leads</span></li>
+                            <li onClick={() => handleLinkClick('familygroup')}><span className={activeLink === 'familygroup' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Family Group</span></li>
+                            {/* <li onClick={() => handleLinkClick('My Profile')}><span className={activeLink === 'My Profile' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>My Profile</span></li> */}
+                            <li onClick={() => handleLinkClick('userUpdate')}><span className={activeLink === 'userUpdate' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Update Profile</span></li>
+                            <li onClick={() => handleLinkClick('UserSubscriptionPage')}><span className={activeLink === 'UserSubscriptionPage' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }}>Subcription</span></li>
+                            <li onClick={() => handleLinkClick('help')}><span className={activeLink === 'help' ? 'font-weight-bold  ' : ' '} style={{ cursor: "pointer" }} >Help</span></li>
+                            <li className={`${styles.logout_text}`} onClick={handleLogout}><span >Logout</span></li>
+
+
+                        </div>
+                    </div>
+                    
+                </div >}
+    </>
   );
 }
 

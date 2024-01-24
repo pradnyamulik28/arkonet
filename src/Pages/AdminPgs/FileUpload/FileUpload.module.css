@@ -13,6 +13,17 @@
   color: black;
   margin-bottom: 5%;
 } */
+.neckbar{
+  min-width: 250px;
+  max-width: 600px;
+  margin-left: 2rem;
+}
+.uploaddiv{
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 31px 10px;
+}
 
 .drag_text img {
   width: 70%;
@@ -34,6 +45,7 @@
 }
 
 .h1 {
+  width: 100%;
   color: #14c511;
   text-shadow: 1px 2px 2px #666666;
   margin-right: 30px;
@@ -337,3 +349,18 @@ input:checked+.slider:before {
   /* margin-right: 10px; */
   top: 6px;
 }
+
+/* @media screen and (min-width: 601px) and (max-width: 900px) {
+  .uplfiles{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+.uplfiles > div{
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+  
+} */

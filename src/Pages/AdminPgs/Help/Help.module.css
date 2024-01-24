@@ -1,14 +1,29 @@
 .help_btn button {
   height: 3rem;
-  width: 25rem;
+  width: 18rem;
   border-radius: 25px;
   border: none;
   background-color: #ffd401;
   color: white;
-
   font-weight: bolder;
-  font-size: 23px;
+  font-size: 20px;
   text-shadow: 2px 3px 5px #000000;
   margin-bottom: 10px;
   cursor: pointer;
+}
+.details{
+  /* max-width:500px; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.helpTable{
+  min-width: 320px;
+  overflow-x: auto;
+}
+@media (max-width:768px) {
+  .help_btn button{
+    height: 2.5rem;
+    width: 15rem;
+    font-size: 16px;
+  }
 }

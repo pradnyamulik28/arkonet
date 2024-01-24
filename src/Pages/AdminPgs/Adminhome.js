@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   // BrowserRouter as Switch,
   Routes,
@@ -57,7 +57,14 @@ const Adminhome = () => {
 
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('LogedIn'));
   //  console.log('admin', loggedIn);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+        const ismobile = window.innerWidth < 1199;
+        if (ismobile !== isMobile) setIsMobile(ismobile);
+    }, false);
+}, [isMobile]);
 
   return (
     <div>
@@ -69,7 +76,7 @@ const Adminhome = () => {
             <LeftSide loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           </div>
 
-          <div className={`col-sm-9 col-md-9 col-lg-9 col-xl-9`}>
+          <div className={isMobile ?`w-100`:`w-75 `}>
 
             <nav className={styles.navclass}>
               <img src={taxko} alt="" />
@@ -94,7 +101,7 @@ const Adminhome = () => {
 
 
 
-              <Route exact path='' element={<CheckPan />} />
+              <Route exact path='' element={<CheckPan setLoggedIn={setLoggedIn}/>} />
               <Route exact path='Ulogin' element={<Login setLoggedIn={setLoggedIn} />} />
               <Route path="User_registration" element={<Registration />} />
               <Route path="forgetpass" element={<ResetPass />} />

@@ -7,6 +7,9 @@
     width: 10rem;
     height: 10rem;
       }
+      .myfolder{
+        margin: 1rem;
+      }
     
   .myfolder_btn {
     /* justify-content: space-evenly; */
@@ -40,4 +43,11 @@
   
   .myfolder_folder a {
     text-decoration: none;
+  }
+
+  @media (max-width:768px) {
+    .profileimg img{
+      width: 6rem;
+      height: 6rem;
+        }    
   }

@@ -41,3 +41,9 @@
 .myfolder_folder a {
   text-decoration: none;
 }
+@media (max-width:768px) {
+  .profileimg img{
+    width: 8rem;
+    height: 8rem;
+      }
+}

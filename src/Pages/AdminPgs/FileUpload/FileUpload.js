@@ -504,74 +504,66 @@ const FileUpload = () => {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   return (
-
-    <div className="container">
-      <div className="row m-5">
-
-
-        <div className="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="maindiv">
-
-          <div className="container">
-
-
-            <div className="uphead">
-              <div className="row">
-                <div className="col">
-                  <h1 className={`d-flex align-items-center ${style.h1}`}>
-                    <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={GoBack}>
+<>
+    <div className="container mt-4">
+      {/* <div className="row m-3"> */}
+        <div className="row m-3" style={{"minWidth":"300px"}} id="maindiv">
+          {/* <div className="container"> */}
+            {/* <div className="uphead"> */}
+              {/* <div className="row"> */}
+                <div className="col-9 col-xl-6 col-lg-6">
+                  <h3 className={`d-flex align-items-center ${style.h1}`}>
+                    <div style={{ fontSize: "xx-large", cursor: "pointer" }} onClick={GoBack}>
                       &#8617;&nbsp;
                     </div>
                     <b>Income Tax</b>
-                  </h1>
+                  </h3>
+                  <p className={`h6 ${style.headpara}`}>A.Y {year}</p>
                 </div>
-                <div className="col">
-
+                <div className="col-3 d-flex align-items-center">
                   <label className={`${style.switch}`}>
                     <input type="checkbox" checked={fileResponse} onChange={handleToggle} />
                     <span className={`${style.slider} ${style.round}`}></span>
                   </label>
-
                 </div>
-              </div>
-              <h6 className={`${style.headpara}`}>A.Y {year}</h6>
-            </div>
-
-
-            <div className={`${style.neckbar}`}>
-              <div className="row">
-                <div className="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" id="select">
+              {/* </div> */}
+            {/* </div> */}
+          {/* </div> */}
+        </div>
+        
+      {/* </div> */}
+      <div className={`${style.neckbar}`}>
+              <div className="d-flex">
+                <div className="col-4 col-sm-4 col-md-6 col-lg-9 col-xl-9" id="select">
                   {dbfilelength > 0
                     ? <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button>
                     : null}
                   {/* <button type="button" className="btn btn-danger" onClick={toggleCodeVisibility}>Select</button> */}
                 </div>
-                <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="delet">
+                <div className="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 d-flex justify-content-center" id="delet">
                   <h2 className="icons">
                     {codeVisible && (
                       <i className="fa-solid fa-trash-can" onClick={DeleteFile}></i>
                     )}
                   </h2>
                 </div>
-                <div className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3" id="share">
+                <div className="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-3 d-flex justify-content-center" id="share">
                   <h2 className="icons">
                     {codeVisible && (
                       <i className="fa-solid fa-share-from-square" ></i>
                     )}
                   </h2>
                 </div>
-
               </div>
             </div>
-            <div className='container'>
-              <div className="row m-4">
-
-
-
+    </div >
+    
+    <div className='row m-4 justify-content-center'>
+              {/* <div className="row m-4"> */}
                 {filenameStatusArray.map(item => (
-                  <div className='col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6' key={item.fileId}>
+                  <div className={`col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6`} key={item.fileId}>
                     {item.status ? (
                       <div>
-
                         <div className={style.file_upload}>
                           {codeVisible && (
                             <label className={style.checkbox_label}>
@@ -614,14 +606,9 @@ const FileUpload = () => {
                   </div>
                 ))}
 
-              </div>
+              {/* </div> */}
             </div>
-
-          </div>
-        </div>
-      </div>
-    </div >
-
+</>
   );
 }
 

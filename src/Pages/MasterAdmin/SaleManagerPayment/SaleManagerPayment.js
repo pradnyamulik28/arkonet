@@ -35,9 +35,9 @@ const SaleManagerPayment = () => {
     await fetch(`${url_}/list/allpaid/amount`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result.filter((item) => item.pan !== 'XXXXX1111X'))
+        // console.log(result.filter((item) => item.salesman_pan !== 'XXXXX1111X'))
 
-        const filteredData = result.filter((item) => item.pan !== 'XXXXX1111X');
+        const filteredData = result.filter((item) => item.salesman_pan !== 'XXXXX1111X');
         setuserdata(filteredData)
         setisTargetExist(filteredData);
 

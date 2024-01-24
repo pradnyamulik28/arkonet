@@ -553,19 +553,22 @@ const DashBoard = () => {
   useEffect(() => { getProfileImage() }, [])
   const imageSrc = imgcontent ? `data:image/jpeg;base64,${imgcontent}` : imgprofile;
 
+
+
+
   return (
-    <div>
-      <div className="container">
-        <div className="row">
-          <div className="col-12 d-flex justify-content-center">
-            <div className={`card mt-4 mb-2 ${styles.cardd1} text-center`}>
+    <div >
+      <div className="w-100">
+        {/* <div className="row">
+          <div className={`col-12`}>
+            <div className={`card mt-4 mb-2 ml-4 ${styles.cardd1} text-center`}>
               <div className={`${styles.profilerow} row`}>
                 <div className='col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12'>
                   <div className={`${styles.profileimg}`}>
                     <img src={imageSrc} alt="" className="mt-2 mb-2" />
-                    <div style={{ "marginLeft": "2rem", "textAlign": "left" }}>
-                      <h3>{Sub_category !== "Sub User" ? username : localStorage.getItem("name")}</h3>
-                      <h5>{Sub_category !== "Sub User" ? userpan : localStorage.getItem("Sub_user_pan")}</h5>
+                    <div className={styles.profileinfo}>
+                      <p className='h4'>{Sub_category !== "Sub User" ? username : localStorage.getItem("name")}</p>
+                      <p className='h5'>{Sub_category !== "Sub User" ? userpan : localStorage.getItem("Sub_user_pan")}</p>
                     </div>
                   </div>
                 </div>
@@ -576,17 +579,53 @@ const DashBoard = () => {
                     ) : (
                       <h6 className='text-muted '>{Sub_category !== "Sub User" ? "" : "Sub-Login"}</h6>
                     )}
-                    {/* <h6 className='text-muted '>Date :  {todate}</h6> */}
                     <h6 className='text-muted '>&#128337;Login Time&nbsp;&nbsp;: {logintime}</h6>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> */}
 
+
+
+
+
+        <div className="row">
+          <div className={`col-12`}>
+            <div className={`card mt-4 mb-2 ml-4 ${styles.cardd1} text-center`}>
+              <div className={`${styles.profilerow} row`}>
+                <div className='col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12'>
+                  <div className={`${styles.profileimg}`}>
+                    <img src={imageSrc} alt="" className="mt-2 mb-2" />
+                  </div>
+                </div>
+                <div className={`col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 ${styles.content}`} >
+                  <div className={`col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ${styles.centrecoloum}`}>
+                      <p className='h4'>{Sub_category !== "Sub User" ? username : localStorage.getItem("name")}</p>
+                      <p className='h5'>{Sub_category !== "Sub User" ? userpan : localStorage.getItem("Sub_user_pan")}</p>
+                  </div>
+                  <div className={`col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ${styles.centrecoloum}`}>
+                    {Sub_category !== "Sub User" ? (
+                      <h6 className='text-muted '>Profession&nbsp;&nbsp;: {userPro}</h6>
+                    ) : (
+                      <h6 className='text-muted '>{Sub_category !== "Sub User" ? "" : "Sub-Login"}</h6>
+                    )}
+                    <h6 className='text-muted '>&#128337;Login Time&nbsp;&nbsp;: {logintime}</h6>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+
+
+
+
+
         <div className="row">
-          <div className="col-6">
+          <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
             <div className={`card m-4 ${styles.cardd} text-center`}>
               <div className={`m-3 w-100 `}>
                 <h5 className={`card-title font-weight-bold ${styles.green}`}>
@@ -723,7 +762,7 @@ const DashBoard = () => {
               </div>
             </div>
           </div>
-          <div className="col-6">
+          <div className={`col-xl-6 col-lg-6 col-md-12 col-sm-12 ${styles.reversecol} `}>
 
             <div className={`card m-4 ${styles.cardd} text-center`}>
               {/* <h2 className="ml-4">&lt;</h2> */}
@@ -771,7 +810,7 @@ const DashBoard = () => {
               </div>
             </div>
 
-            <div className={`card mt-4 ${styles.gst_cardd} `}>
+            <div className={`card m-4 ${styles.gst_cardd}`}>
               <div className={`m-4 w-100`}>
                 <div className="top d-flex justify-content-between">
                   <h3 className={`card-title font-weight-bold text-primary `}>

@@ -31,7 +31,7 @@ const MasterChangePass = () => {
 
 
         var requestOptions = {
-          method: 'POST',
+          method: 'PUT',
           headers: myHeaders,
           redirect: 'follow'
         };

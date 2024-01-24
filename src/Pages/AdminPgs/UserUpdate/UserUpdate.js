@@ -502,7 +502,7 @@ const UserUpdate = () => {
   const imageSrc = imgcontent ? `data:image/jpeg;base64,${imgcontent}` : profileimg;
 
   return (
-    <div>
+    <div style={{"paddingLeft":"7px","paddingRight":"7px","minWidth":"320px"}}>
       <div className={styles.right}>
         <div className={`${styles.regtitle} d-flex justify-content-around m-4`}>
           <span> C.A UPDATE FORM</span>

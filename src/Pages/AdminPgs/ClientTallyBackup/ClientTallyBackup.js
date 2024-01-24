@@ -17,17 +17,19 @@ function ClientTallyBackup(){
           });
     }
     return(<>
-        <div >
-        <h1 className='d-flex align-items-center mt-5'>
+        <div className="d-flex flex-column" >
+          <div>
+          <h4 className='d-flex align-items-center ml-3 mt-5'>
             <div style={{ fontSize: "xxx-large", cursor: "pointer" }} onClick={(e) => {    e.preventDefault();
                           Navigate(-1);
                         }}>
               &#8617;&nbsp;
             </div>
             <b>Client Tally Backup</b>
-          </h1>
+          </h4>
+          </div>
           <div className={styles.row}>
-          <div className="col-6">
+          <div>
           <div className={`${styles.folder} text-danger`} style={{ "background-color": "rgba(255, 0, 0, 0.1)" }} onClick={(e)=>{goToTallyView("user")}}>
             <div className={`${styles.icons}`}>
               <span className="mt-2">
@@ -42,7 +44,7 @@ function ClientTallyBackup(){
           </div>
           </div>
 
-        <div className="col-6">
+        <div>
           <div className={`${styles.folder} text-primary`} style={{ backgroundColor: "rgba(0, 55, 255, 0.1)" }} onClick={(e)=>{goToTallyView("client")}}>
             <div className={`${styles.icons}`}>
               <span className="mt-2">

@@ -25,7 +25,7 @@ const Loginpage = ({ setLoggedIn }) => {
   };
 
   useEffect(() => {
-    setLoggedIn(false)
+    setLoggedIn('false')
   }, [])
 
 

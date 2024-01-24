@@ -1,0 +1,123 @@
+.maindiv {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+  float: right;
+  width: 100%;
+  margin: 0rem 1rem;
+}
+.leftdiv {
+  width: 30%;
+}
+.rightdiv {
+  width: 70%;
+  margin-top: 2vh;
+}
+.headerleft {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+}
+.headtitle {
+  color: #174ae3;
+  font-weight: 700;
+}
+.headerleft p {
+  margin: 0;
+  padding: 0;
+}
+
+.subheadtitle  {
+  /* font-size: 25px; */
+  text-align: left;
+  font-weight: 500;
+  color: #6571b9;
+}
+.headinfo {
+  /* font-size: 8px; */
+  text-align: center;
+  font-weight: 600;
+}
+.rightdiv_headbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* ===============      Table format design      ================ */
+.gstrtable {
+  width: 75%;
+  margin-top: 5vh;
+}
+.invoiceno,
+.gstn,
+.name,
+.date,
+.pos,
+.taxv,
+.rate,
+.sgst,
+.cgst,
+.igst,
+.invv,
+.valuerow td {
+  /* width: 8%; */
+  margin-left: 0.25%;
+  margin-right: 0.25%;
+  text-align: center;
+}
+.titlerow,
+.valuerow,
+.totalrow {
+  height: 2rem;
+  margin-bottom: 2rem;
+}
+.titlerow th,
+.valuerow td,
+.totalrow td {
+  height: 2rem;
+}
+
+.titlerow th {
+  color: #204da8;
+  font-weight: 600;
+  text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+  font-size: 100%;
+}
+
+.titlerow th p,
+.valuerow td input,
+.totalrow td p {
+  height: 100%;
+  border-radius: 10px;
+  background-color: #f0ffff;
+  box-shadow: 0 4px 1px 0 rgba(191, 191, 191, 0.7);
+}
+.valuerow td input {
+  border: none;
+  text-align: center;
+}
+.disabledinput {
+  cursor: not-allowed;
+  cursor: none;
+  pointer-events: none;
+}
+.valuerow td input::placeholder {
+  text-align: center;
+}
+.valuerow td input,
+.totalrow td p {
+  /* font-weight: 700; */
+  text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+  font-size: 16px;
+}
+.totalrow td p {
+  background-color: #f9f3d1;
+}
+.invv *,
+.rate *,
+.sgst *,
+.cgst *,
+.igst *{
+  width: 70px !important;
+}

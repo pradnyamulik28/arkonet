@@ -234,6 +234,9 @@ const MyFolder = () => {
   return (
     <div>
       <div className='container'>
+      <div className={`${styles.myfolder_btn} mb-2 mt-3 w-100 text-center`}>
+              <span className='font-weight-bold h4'>Client Folders</span>
+            </div>
         <div className="row d-flex flex-column justify-content-center">
           <div className={`${styles.profileimg}`}>
             <img src={imageSrc} alt="" className='mt-4 mb-4' />
@@ -241,11 +244,7 @@ const MyFolder = () => {
             <h5>{clientpan}</h5>
             <h6>{clientPro}</h6>
           </div>
-          <div className={`${styles.myfolder}`}>
-            <div className={`${styles.myfolder_btn} mb-4 mt-5`}>
-              <span className='font-weight-bold '>My Folders</span>
-            </div>
-
+          <div className={`${styles.myfolder}`}>            
             <div className={`${styles.myfolder_folder}`}>
               {clientCategory === "Income_Tax" && (
                 <div onClick={GoToincome}>

@@ -490,22 +490,21 @@ if(file){
   return (
 <>
 
-    <div className={`${style.header}`} >
-<div className={`${style.leftear}`} >
-  <Link className={`${style.ancher}`}  
-  onClick={(e) => {    e.preventDefault();
+    <div className={`m-2 ${style.header}`} >
+      <div className={`d-flex`} >
+        <Link className={`${style.ancher}`}  
+                onClick={(e) => {    e.preventDefault();
                           Navigate(-1);
-                        }}><h3>
-  <i class="fa-solid fa-angle-left"></i></h3></Link>
-  </div>
-<div className={`${style.eyes}`} ><h3>{uploder==="client"?"Client Tally Backup":uploder==="user"&&"Uplod Client Tally Backup"}</h3></div>
-<div className={`${style.rightear}`} ><h3>&nbsp;</h3></div>
-</div>
+                        }}><span className='h4'>
+          <i class="fa-solid fa-angle-left"></i>&nbsp;&nbsp;</span></Link>
+          <h4>{uploder==="client"?"Client Tally Backup":uploder==="user"&&"Uplod Client Tally Backup"}</h4>
+      </div>
+    </div>
 
 {TallyFile.map((item) => {return(
 
 
-<>
+<div className={`d-flex ${style.uploadcontainer}`}>
 
 {(uploder==="user" && item.id==="user_tally_file")&&
   <div className={`${style.mainport}`} >
@@ -575,7 +574,7 @@ onChange={(e)=>handleFileChange(e,item.id)}  ref={item.fileRef}  style={{"displa
 </div>
 </div>
 </div>}
-</>
+</div>
 
 
 
