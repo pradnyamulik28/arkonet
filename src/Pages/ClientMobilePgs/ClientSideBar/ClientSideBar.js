@@ -1,53 +1,59 @@
 import style from "./ClientSideBar.module.css";
 import profile from "../../../Images/profile.png";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSidebar } from './SidebarContext';
-import { useState , useRef,useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import swal from "sweetalert2";
 import { url_ } from "../../../Config";
+import ClientsFamilyDropdown from "../ClientsFamilyDropdown/ClientsFamilyDropdown";
+
 
 function ClientSideBar(props) {
   const { isOpen, toggleSidebar } = useSidebar();
   const storedToken = window.localStorage.getItem("jwtToken");
-  const [profileImg,setProfileImg]=useState({
-    src:null,
-    imgUploadButton:"Upload",
-  selectedFile:null,
-maxSize:100
-});
+  const [profileImg, setProfileImg] = useState({
+    src: null,
+    imgUploadButton: "Upload",
+    selectedFile: null,
+    maxSize: 100
+  });
 
-async function getClientImage(){
+  async function getClientImage() {
 
-  const pan=localStorage.getItem("pan");
-  var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${storedToken}`);
+    const pan = localStorage.getItem("pan");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  redirect: 'follow'
-};
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
 
-fetch(`${url_}/getclientimage/${pan}`, requestOptions)
-  .then(response => response.json())
-  .then(result => {//console.log(result)
-    setProfileImg({...profileImg,src:`data:image/png;base64,${result.content}`})
-  })
-  .catch(error => console.log('error', error));
-}
+    fetch(`${url_}/getclientimage/${pan}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {//console.log(result)
+        setProfileImg({ ...profileImg, src: `data:image/png;base64,${result.content}` })
+      })
+      .catch(error => console.log('error', error));
+  }
 
-useEffect(() => {
-  getClientImage();
-}, []);
+  useEffect(() => {
+    getClientImage();
+  }, []);
 
-  
+
   //const clientName=localStorage.getItem("name");
 
-  const fullClientName = localStorage.getItem("name");
-  const clientName= !fullClientName?"":
-                    fullClientName.split(" ")[0];
+  // const Family_relation = "Primary_Memberb";
+  const Family_relation = localStorage.getItem("Login_fRelation");
 
-  const navigate =useNavigate();
+
+  const fullClientName = localStorage.getItem("name");
+  const clientName = !fullClientName ? "" : fullClientName.split(" ")[0];
+
+
+  const navigate = useNavigate();
   function handelLogout(e) {
     e.preventDefault();
     localStorage.clear();
@@ -59,83 +65,114 @@ useEffect(() => {
 
 
   return (
-    
-      <div className={isOpen ?`${style.row}`:`${style.closesidebar}`}>
-        {/* Background */}
 
-        {/* Mobile Viewport */}
-        <div
-          className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.mobileport}`}
-        >
-          {/* Headbar Starts*/}
-          <div className={`${style.headerbar}`}>
-            <div className={`${style.leftear}`}>
-              <div className={style.profileImg}>
-              <img className={style.img} src={profileImg.src ?  profileImg.src :profile} alt="" />
-              
-              </div>
-              <div className={`${style.greet}`}>
-                <p>Hello</p>
-                <h6>{clientName}</h6>
+    <div className={isOpen ? `${style.row}` : `${style.closesidebar}`}>
+      {/* Background */}
+
+      {/* Mobile Viewport */}
+      <div
+        className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.mobileport}`}
+      >
+        {Family_relation === "Primary_Member" &&
+          <div className={`row mb-5`}>
+            <div style={{ width: "85%" }}>
+              <div className={`${style.New_Header_left} `}>
+                <span >
+                  <img className={style.img} src={profileImg.src ? profileImg.src : profile} alt="" />
+                </span>
+                <span className={`${style.New_Header_L_T}`}>
+                  <p className="text-center">Hello</p>
+                  {Family_relation === "Primary_Member" ? (
+                    <div>
+                      <ClientsFamilyDropdown clientDefaultName={clientName}></ClientsFamilyDropdown>
+                    </div>
+                  ) : (
+                    <h6>{clientName}</h6>
+                  )}
+
+                </span>
               </div>
             </div>
-           
-            <div className={`${style.rightear}`}>
+            <div style={{ width: "15%" }} className="d-flex justify-content-center">
               <h4>
                 <i className="fa-solid fa-xmark" onClick={toggleSidebar}></i>
               </h4>
             </div>
           </div>
-          {/* Headbar Ends ....................................................................................................... */}
+        }
+        {/* Headbar Starts*/}
+        <div className={`${style.headerbar}`}>
+          {Family_relation !== "Primary_Member" &&
+            <>
+              <div className={`${style.leftear}`}>
+                <div className={style.profileImg}>
+                  <img className={style.img} src={profileImg.src ? profileImg.src : profile} alt="" />
 
-          {/* Adress Starts */}
-          <div
-            className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Addressport}`}
-          >
-            <h5>
-              <Link to='clientpasscheck/clienthome'  onClick={toggleSidebar}>Home</Link>
-            </h5>
-            <h5>
-              <Link to='clientdashboard'  onClick={toggleSidebar}>Dashboard</Link>
-            </h5>
-          
-            <h5>
-              <Link to='caprofile' onClick={toggleSidebar}>My CA</Link>              
-            </h5>
-            <h5>
-              <Link to="investnow" onClick={toggleSidebar}>Invest Now</Link>
-            </h5>
-            <h5>
-              <Link to="help" onClick={toggleSidebar}>Help</Link>
-            </h5>
-            <h5>
-              <Link to="changepass" onClick={toggleSidebar}>Change Password</Link>
-            </h5>
-            <h5>
-              <Link to="updateinfo" onClick={toggleSidebar}>Update Information</Link>
-            </h5>
-          </div>
-          {/* Adress Ends......................................................................................................... */}
+                </div>
+                <div className={`${style.greet}`}>
+                  <p>Hello</p>
+                  <h6>{clientName}</h6>
+                </div>
+              </div>
 
-          {/* Log Starts */}
-          <div
-            className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.logport}`}
-          >
-            <h5 onClick={handelLogout}>
-              <a href="##">
-                <i
-                  className="fa-solid fa-power-off"
-                  style={{ color: "#ffb405" }}
-                  id="logout"
-                ></i>
-                <label htmlFor="logout">Logout</label>
-              </a>
-            </h5>
-            <p>Version 2.0.1</p>
-          </div>
-          {/* Log Ends......................................................................................................... */}
+              <div className={`${style.rightear}`}>
+                <h4>
+                  <i className="fa-solid fa-xmark" onClick={toggleSidebar}></i>
+                </h4>
+              </div>
+            </>}
+
         </div>
+        {/* Headbar Ends ....................................................................................................... */}
+
+        {/* Adress Starts */}
+        <div
+          className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.Addressport}`}
+        >
+          <h5>
+            <Link to='clientpasscheck/clienthome' onClick={toggleSidebar}>Home</Link>
+          </h5>
+          <h5>
+            <Link to='clientdashboard' onClick={toggleSidebar}>Dashboard</Link>
+          </h5>
+
+          <h5>
+            <Link to='caprofile' onClick={toggleSidebar}>My CA</Link>
+          </h5>
+          <h5>
+            <Link to="investnow" onClick={toggleSidebar}>Invest Now</Link>
+          </h5>
+          <h5>
+            <Link to="help" onClick={toggleSidebar}>Help</Link>
+          </h5>
+          <h5>
+            <Link to="changepass" onClick={toggleSidebar}>Change Password</Link>
+          </h5>
+          <h5>
+            <Link to="updateinfo" onClick={toggleSidebar}>Update Information</Link>
+          </h5>
+        </div>
+        {/* Adress Ends......................................................................................................... */}
+
+        {/* Log Starts */}
+        <div
+          className={`col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ${style.logport}`}
+        >
+          <h5 onClick={handelLogout}>
+            <a href="##">
+              <i
+                className="fa-solid fa-power-off"
+                style={{ color: "#ffb405" }}
+                id="logout"
+              ></i>
+              <label htmlFor="logout">Logout</label>
+            </a>
+          </h5>
+          <p>Version 2.0.1</p>
+        </div>
+        {/* Log Ends......................................................................................................... */}
       </div>
+    </div>
   );
 }
 

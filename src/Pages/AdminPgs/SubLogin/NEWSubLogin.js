@@ -138,14 +138,70 @@ const NEWSubLogin = () => {
       SubUserId: clickedData.id || ""
     });
   };
+  const [errorMsg, setErrorMsg] = useState({
+    NameMsg: "",
+    PanMsg: "",
+    EmailMsg: "",
+    MobileMsg: ""
+  })
+
   const handleChange = (e) => {
+    // const { name, value } = e.target;
+    // switch (name) {
+    //   case "name":
+    //     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    //     if (specialCharRegex.test(value)) {
+    //       setErrorMsg({
+    //         NameMsg: "Special charachter not allowed!!!"
+    //       })
+    //     } else {
+    //       setValues({ ...values, [e.target.name]: e.target.value });
+    //       setErrorMsg({
+    //         NameMsg: ""
+    //       })
+    //     }
+    //     break;
+    //   case "pan":
+    //     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
 
-    setValues({ ...values, [e.target.name]: e.target.value });
+    //     if (!panRegex.test(value)) {
+    //       setErrorMsg({
+    //         PanMsg: "Invalid PAN !!!"
+    //       })
+    //     } else {
+    //       setValues({ ...values, [e.target.name]: e.target.value });
+    //       setErrorMsg({
+    //         PanMsg: ""
+    //       })
+    //     }
+    //     break;
+    //   case "email":
+    //     // Validate email format
+    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    //     if (!emailRegex.test(value)) {
+    //       setValues({ ...values, [e.target.name]: e.target.value });
+    //       setErrorMsg({
+    //         EmailMsg: ""
+    //       });
+    //     } else {
+
+    //       setErrorMsg({
+    //         EmailMsg: "Invalid Email !!!"
+    //       });
+    //     }
+
+    //     console.log(value)
+
+    //     break;
+
+    //   default:
+    //     break;
+    // }
 
 
+    setValues({ ...values, [e.target.name]: e.target.value.toUpperCase() });
   }
-
-
 
   const handleUpdate = async () => {
 
@@ -474,9 +530,13 @@ const NEWSubLogin = () => {
                 <div className='d-flex flex-column justify-content-center'>
 
                   <InputField placeholder='Enter name...' onChange={handleChange} lblname='Name' name='name' value={values.name} />
-                  <InputField placeholder='Enter PAN...' onChange={handleChange} lblname='PAN' name='pan' value={values.pan} />
+                  {/* //  validationmsg={errorMsg.NameMsg}  */}
+                  <InputField placeholder='Enter PAN...' onChange={handleChange} lblname='PAN' name='pan' value={values.pan} maxLength={10} />
+                  {/* // validationmsg={errorMsg.PanMsg}  */}
                   <InputField placeholder='Enter email...' onChange={handleChange} lblname='Email' name='email' value={values.email} />
-                  <InputField placeholder='Enter mobile...' onChange={handleChange} lblname='Mobile' name='mobile' value={values.mobile} />
+                  {/* // validationmsg={errorMsg.EmailMsg}  */}
+                  <InputField placeholder='Enter mobile...' onChange={handleChange} lblname='Mobile' name='mobile' value={values.mobile} maxLength={10} />
+                  {/* // validationmsg={errorMsg.MobileMsg}  */}
 
                 </div>
               </>

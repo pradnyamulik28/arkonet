@@ -1,5 +1,4 @@
 .maindiv {
-  margin: 0;
   padding: 0;
   box-sizing: 0;
   float: right;
@@ -9,14 +8,16 @@
 .leftdiv {
   width: 30%;
 }
-.rightdiv {
-  width: 70%;
-  margin-top: 2vh;
-}
+
 .headerleft {
   display: flex;
   flex-direction: column;
   margin-left: 40px;
+  width: 100%;
+}
+
+.headerleft .headtitle{
+  min-width: fit-content;
 }
 .headtitle {
   color: #174ae3;
@@ -38,19 +39,107 @@
   text-align: center;
   font-weight: 600;
 }
-.rightdiv_headbar {
+/* .rightdiv_headbar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+} */
+
+
+/*-----------------------------------------*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 51px;
+  height: 25px;
 }
 
-/* ===============      Table format design      ================ */
-.gstrtable {
-  width: 75%;
-  margin-top: 5vh;
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fc142b;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #0dff00;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+
+
+/* ////////////////////////////////////////////////////// */
+
+
+
+
+
+
+/* ===============      Table format design      ================ */
+
+.tablediv::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.tablediv{
+  overflow: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  max-height: 400px !important;
+  overflow-y: auto;
+  margin-top: 5vh;
+  margin-bottom: 3vh;
+}
+
+.gstrtable {
+  width: 75%;  
+  max-height: 100px !important;
+}
+
 .invoiceno,
 .gstn,
+.supplytype,
 .name,
 .date,
 .pos,
@@ -61,21 +150,32 @@
 .igst,
 .invv,
 .valuerow td {
-  /* width: 8%; */
-  margin-left: 0.25%;
-  margin-right: 0.25%;
+  /* margin-left: 0.25%;
+  margin-right: 0.25%; */
   text-align: center;
 }
+
 .titlerow,
 .valuerow,
 .totalrow {
-  height: 2rem;
-  margin-bottom: 2rem;
+  max-height: 1rem;
+  vertical-align: middle;
+  /* margin-bottom: 2rem; */
 }
 .titlerow th,
 .valuerow td,
 .totalrow td {
   height: 2rem;
+  vertical-align: middle !important;
+}
+.titlerow th p,.titlerow th input,
+.valuerow td p,.valuerow td input,.valuerow td select,
+.totalrow td p,.totalrow td input{
+ width: 120px;
+ max-height: 2rem;
+}
+.supplytype select{
+  cursor: pointer;
 }
 
 .titlerow th {
@@ -86,38 +186,123 @@
 }
 
 .titlerow th p,
-.valuerow td input,
+.valuerow td input,.valuerow td select,
 .totalrow td p {
   height: 100%;
   border-radius: 10px;
   background-color: #f0ffff;
   box-shadow: 0 4px 1px 0 rgba(191, 191, 191, 0.7);
 }
-.valuerow td input {
+.valuerow td input,
+.valuerow td select {
   border: none;
   text-align: center;
 }
-.disabledinput {
+.disabledinput,
+.disabledrow input,
+.disabledrow select,
+.totalrow * {
   cursor: not-allowed;
   cursor: none;
   pointer-events: none;
 }
-.valuerow td input::placeholder {
+
+.valuerow td i
+{
+  cursor: pointer;
+  width: 100%;
+}
+
+.menuitems{
+  background-color: #f0ffff;
+  box-shadow: 0 4px 1px 0 rgba(191, 191, 191, 0.7);
+  border-radius: 15px;
+  /* display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center; */
+}
+.menuitems button{
+  border-bottom: 1px solid black;
+  /* width: 80%; */
+}
+
+.cancelled.valuerow td input,
+.cancelled.valuerow td select{
+ background-color: #fff0f0 !important;
+}
+.disabledrow.valuerow td input,
+.disabledrow.valuerow td select{
+  background-color: #e8eaea;
+}
+.exported.valuerow td input,
+.exported.valuerow td select{
+  background-color: 	#c8f7c8  ;
+}
+.amended.valuerow td input,
+.amended.valuerow td select{
+  background-color: 	#fbcbe6;
+}
+
+.valuerow td input,
+.valuerow td select::placeholder {
   text-align: center;
 }
-.valuerow td input,
+.valuerow td input,.valuerow td select,
 .totalrow td p {
   /* font-weight: 700; */
   text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
-  font-size: 16px;
+  font-size: 75%;
 }
 .totalrow td p {
   background-color: #f9f3d1;
+  font-weight: bold;
 }
 .invv *,
 .rate *,
 .sgst *,
 .cgst *,
 .igst *{
-  width: 70px !important;
+  width: 80px !important;
 }
+.supplytype *{
+  width: 80px !important;
+}
+
+.invoiceno *{
+  width: 100px !important;
+}
+
+.valuerow .ellipsis,
+.titlerow .ellipsis{
+  width: 10px !important;
+  text-align: left;
+}
+
+.gstrtable th,.gstrtable td:first-child{
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: white;
+}
+
+.gstrtable th:first-child{
+  z-index: 2;
+}
+
+.gstrtable th{
+  top:0;
+}
+.btns{
+  color: white;
+  background-color: #174ae3;
+}
+.p{
+  width: fit-content;
+  cursor: pointer;
+}
+.p:hover{
+  text-decoration: underline;
+}
+

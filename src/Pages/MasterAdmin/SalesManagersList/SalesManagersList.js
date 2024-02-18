@@ -254,9 +254,12 @@ const SalesManagersList = () => {
   }
   const fixeddateRef=useRef(null)
 
-  const handleGenReportClick = () => {
-    if (reportGenRef.current) {
-      reportGenRef.current.click();
+  const [salemangerpan, setSaleManagerPan]=useState('')
+  const handleGenReportClick = (e,pan) => {
+    // console.log(pan)
+    setSaleManagerPan(pan);
+    if (reportGenRef.current && reportGenRef.current.fetchRecord) {
+      reportGenRef.current.fetchRecord(pan);
     }
   };
   return (
@@ -460,13 +463,14 @@ const SalesManagersList = () => {
                   <div className={`${style.name} `}>
                     <p className={`${style.status} `}>
                       <i id="permanentDelete" className="fa-solid fa-trash" title="Permenent Delete" style={{marginRight: "9px","cursor":"pointer"}} onClick={(e)=>{confirm(e,item.pan)}}></i>
-                      <i className="fas fa-file-excel" style={{ cursor: "pointer","color":"green" }} title="Generate report" onClick={handleGenReportClick}></i>
-                      <GenerateReport reportGenRef={reportGenRef} salmanagerpan={item.pan} />
+                      <i name={item.pan} className="fas fa-file-excel" style={{ cursor: "pointer","color":"green" }} title="Generate report" onClick={(e)=>{handleGenReportClick(e,item.pan)}}></i>
                     </p>
                   </div>
                 )}
               </div>
             ))}
+                      <GenerateReport reportGenRef={reportGenRef} salemangerpan={salemangerpan} />
+
         </div>
         {/* Bottom Port Ends */}
       </div>

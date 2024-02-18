@@ -51,6 +51,7 @@ import CheckPan from './Login/CheckPan';
 import SubUserLogin from './Login/SubUserLogin';
 import UserOTOVerify from './Login/UserOTOVerify';
 import FamilyGroup from './FamilyGroup/FamilyGroup';
+import NotificationsCA from './NotificationsCA/NotificationsCA';
 
 const Adminhome = () => {
 
@@ -61,10 +62,10 @@ const Adminhome = () => {
 
   useEffect(() => {
     window.addEventListener("resize", () => {
-        const ismobile = window.innerWidth < 1199;
-        if (ismobile !== isMobile) setIsMobile(ismobile);
+      const ismobile = window.innerWidth < 1199;
+      if (ismobile !== isMobile) setIsMobile(ismobile);
     }, false);
-}, [isMobile]);
+  }, [isMobile]);
 
   return (
     <div>
@@ -76,7 +77,7 @@ const Adminhome = () => {
             <LeftSide loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           </div>
 
-          <div className={isMobile ?`w-100`:`w-75 `}>
+          <div className={isMobile ? `w-100` : `w-75 `}>
 
             <nav className={styles.navclass}>
               <img src={taxko} alt="" />
@@ -95,13 +96,13 @@ const Adminhome = () => {
               <Route exact path='paymenttest' element={<PaymentGateway />} />
               <Route exact path='setpass' element={<CheckPassSetPass />} />
               <Route exact path='sublogin' element={<SubUserLogin setLoggedIn={setLoggedIn} />} />
-              <Route exact path='userotpverify' element={<UserOTOVerify />} />
+              <Route exact path='userotpverify' element={<UserOTOVerify setLoggedIn={setLoggedIn} />} />
               {/* <Route exact path='notification' element={<Notification />} /> */}
 
 
 
 
-              <Route exact path='' element={<CheckPan setLoggedIn={setLoggedIn}/>} />
+              <Route exact path='' element={<CheckPan setLoggedIn={setLoggedIn} />} />
               <Route exact path='Ulogin' element={<Login setLoggedIn={setLoggedIn} />} />
               <Route path="User_registration" element={<Registration />} />
               <Route path="forgetpass" element={<ResetPass />} />
@@ -114,6 +115,7 @@ const Adminhome = () => {
 
               <Route path="tallybackup" element={<Protected Cmp={TallyBackup} />} />
               <Route path="tallybackup/tallyview" element={<Protected Cmp={TallyBackupView} />} />
+              <Route path="notification" element={<Protected Cmp={NotificationsCA} />} />
 
 
               <Route path="/dashboard/tc/myfolder/tallyclient" element={<Protected Cmp={ClientTallyBackup} />} />

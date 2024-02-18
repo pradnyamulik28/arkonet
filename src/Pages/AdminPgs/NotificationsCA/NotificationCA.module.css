@@ -1,0 +1,359 @@
+.noti_First_Section {
+  display: flex;
+}
+
+.noti_Second_Section {
+
+  display: flex;
+  justify-content: center;
+}
+
+.noti_Titile {
+  color: #d11003;
+  margin: 20px 5px;
+}
+
+
+.noti_TextareaAndIMGarea {
+  background-color: #e2e3e4;
+  border-radius: 15px;
+  height: auto;
+  width: 99%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+.noti_input_area,
+.noti_img_area {
+  width: 50%;
+  /* border: 1px solid black; */
+}
+
+.noti_input_area {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.noti_img_area label {
+  color: #d11003;
+  font-size: 1.5rem;
+  margin: 0 20px;
+}
+
+.noti_img_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+
+
+.upload_btn_wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 20rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 25px;
+  color: gray;
+  background-color: #eef2fd;
+  padding: 8px 20px;
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload_btn_wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.TEXT_area {
+  width: 95%;
+}
+
+.text2 {
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  height: 12vh;
+  border: none;
+  text-align: left !important;
+  resize: none !important;
+  vertical-align: top !important;
+  font-family: 'Indie Flower', cursive;
+  font-family: 'Oswald', sans-serif;
+  box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+  width: 100%;
+}
+
+/* textarea.text2 {
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  height: 20vh;
+  border: none;
+  text-align: left !important;
+  font-family: 'Indie Flower', cursive;
+  font-family: 'Oswald', sans-serif;
+  box-shadow: 0 6px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+  resize: none;
+  width: 95%;
+} */
+
+.text2::placeholder {
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px;
+}
+
+.text2:focus {
+  outline: none;
+}
+
+.text2::placeholder {
+  color: #acaaaa;
+}
+
+.p2 {
+  margin-top: -1rem;
+  text-align: right;
+  text-shadow: 1px 4px 4px rgba(0, 0, 0, 0.24);
+  font-weight: 100;
+  color: rgb(8, 8, 8);
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.noti_Second_Section button {
+  height: 2.3rem;
+  width: 7rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #ffd401;
+  color: white;
+  font-weight: bolder;
+  font-size: 20px;
+  text-shadow: 2px 3px 5px #000000;
+  cursor: pointer;
+}
+
+.noti_Modal_footer_btn button {
+  height: 2.3rem;
+  width: 20rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #ffd401;
+  color: white;
+  font-weight: bolder;
+  font-size: 20px;
+  text-shadow: 2px 3px 5px #000000;
+  cursor: pointer;
+}
+
+.noti_lists {
+  /* border: 1px solid black; */
+  height: 48vh;
+  width: 99%;
+  overflow-y: scroll;
+}
+
+.noti_Client_lists {
+  height: 56vh;
+  overflow-y: scroll;
+}
+
+.noti_lists::-webkit-scrollbar-track,
+.noti_Client_lists::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.noti_lists::-webkit-scrollbar,
+.noti_Client_lists::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+
+}
+
+.noti_lists::-webkit-scrollbar-thumb,
+.noti_Client_lists::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #878685;
+}
+
+.noti_list {
+  border: 1px solid rgb(232, 232, 232);
+  margin: 25px 10px;
+  border-radius: 20px;
+  height: 2.5rem;
+  box-shadow: 2px 3px 2px gray;
+}
+
+.noti_list span {
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 600;
+
+}
+
+.noti_list span:nth-of-type(4) {
+  color: #ffd401;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 1000px) {
+
+  .noti_img_area {
+    flex-direction: column;
+  }
+
+}
+
+@media screen and (max-width: 700px) {
+  .noti_First_Section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .noti_input_area {
+    width: 100%;
+  }
+
+  .noti_list span {
+
+    font-size: 1em;
+
+
+  }
+}
+
+@media screen and (max-width: 350px) {
+
+
+  .noti_img_area label {
+    color: #d11003;
+    font-size: 1.3rem;
+    margin: 0 20px;
+  }
+
+  .upload_btn_wrapper {
+
+    width: 15rem;
+  }
+}
+
+
+/* ////////////////////////////// ----------Modal CSS----------////////////////////////////////// */
+
+.noti_Clients_Option {
+
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.noti_Clients_Option button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  height: 2.5rem;
+  box-shadow: inset 0px 0px 3px gray;
+  background-color: rgb(239, 235, 235);
+  cursor: pointer;
+  border: none;
+}
+
+/* .noti_Clients_Option div:active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  height: 2.5rem;
+  box-shadow: inset 1px 1px 20px gray;
+  cursor: pointer;
+} */
+
+.noti_Clients_Option button:focus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  height: 2.5rem;
+  box-shadow: inset 1px 1px 20px gray;
+  cursor: pointer;
+  border: none;
+}
+
+.Select_All {
+  margin-left: 2rem;
+  font-size: 1.5em;
+}
+
+.Select_All_Option input[type=checkbox] {
+  margin-right: 20px;
+}
+
+/* .table_tr {
+  display: block;
+} */
+
+@media screen and (max-width: 350px) {
+
+
+  .noti_Clients_Option button>span {
+    font-size: 11px;
+  }
+
+  .Select_All {
+    margin-left: 0.4rem;
+    font-size: 1em;
+  }
+
+  .noti_Client_lists {
+    height: 57vh;
+    overflow-y: scroll;
+  }
+
+  .table_tr {
+    display: none;
+  }
+}
+
+
+.image_container {
+  max-width: 100%;
+  height: 0;
+  padding-bottom: 75%;
+  /* 4:3 aspect ratio */
+  position: relative;
+  overflow: hidden;
+}
+
+.image_container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Ensures the image covers the container */
+}

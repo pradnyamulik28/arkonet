@@ -1,18 +1,48 @@
 
-import style from "./GstMonthly.module.css";
+import style from "./MonthFolders.module.css";
 import fd from "../../../Images/fourdots.svg";
 import { Link, useLocation,useNavigate } from "react-router-dom";
-function GstMonthly() {
+import { useEffect, useState } from "react";
+function MonthFolders() {
   const client_id=localStorage.getItem("client_id");
 
-  const gstrFolders=[
-    {category:"GSTR-1",goto:"month"},
-    {category:"GSTR-3B",goto:"gstfile"},
-    {category:"GSTR-2A",goto:"month"},
-    {category:"GSTR-9",goto:"gstfile"},
-    {category:"GSTR-9A",goto:"gstfile"},
-  ]
+  
+
+    const [monthFolders,setMonthFolders]=useState([
+    "March",
+    "February",
+    "January",
+    "December",
+    "November",
+    "October",
+    "September",
+    "August",
+    "June",
+    "July",
+    "May",
+    "April",
+    ]);
+  const gstCategory=useLocation().state.gstCategory;
   const year=useLocation().state.year;
+
+  const currentYear=new Date().getFullYear();
+ 
+  
+  function goto(e,month){
+
+    e.preventDefault();
+    Navigate(gstCategory==="GSTR-1"?"gstfile":
+    gstCategory==="GSTR-2A"&& "gst2a",
+    {state:{
+      fy:year,
+      year:(month==="January"||month==="February" || month==="March")?
+        year.split("-")[0].slice(0,2)+year.split("-")[1]:
+        year.split("-")[0],
+      month:month,
+      gstCategory:gstCategory}});
+  }
+  
+
   const Navigate=useNavigate()
   return (
 <div className={`row ${style.row1}`}>
@@ -25,7 +55,7 @@ function GstMonthly() {
                           e.preventDefault();
                           Navigate(-1);
                         }} style={{ fontSize: "2rem" , margin: "0.5rem", color: "black"}}> 
-<i className="fa-solid fa-angle-left" style={{ fontSize: "1.5rem" , color: "grey"}} ></i> &nbsp;GST</Link>
+<i className="fa-solid fa-angle-left" style={{ fontSize: "1.5rem" , color: "grey"}} ></i> &nbsp;{gstCategory}</Link>
 <h6 style={{ color: "#596fa4", marginLeft: "2rem"}}>FY {year}</h6>
 
 </div>
@@ -65,9 +95,10 @@ function GstMonthly() {
 {/* Cards Starts*/}
 <div className={`row ${style.row2}`}>
 {
-  gstrFolders.map((item,index)=>{
+  monthFolders.map((item,index)=>{
     return(
-      <div className='col-6' onClick={(e)=>{e.preventDefault();Navigate(`${item.goto}`,{state:{year:year,gstCategory:item.category}})}}>
+      <div className={`col-6 ${style.crd}`} 
+            onClick={(e)=>{goto(e,item)}}>
       <div className={`${style.uniclass} ${style[`card${index + 1}`]}`}>
       <div className={`${style.icons} `}>
       <div className={`${style.lefticons} `}>
@@ -79,7 +110,8 @@ function GstMonthly() {
       </div>
       <div className={`${style.textual} `}>
       <div className={`${style.uptext} `}>
-      <h5>{item.category}</h5>
+      <h5>{item}</h5>
+      <p style={{fontSize:"x-small"}}>{(item==="January"||item==="February" || item==="March")?year.split("-")[0].slice(0,2)+year.split("-")[1]:year.split("-")[0]}</p>
       </div>
       </div>
       </div>
@@ -97,4 +129,4 @@ function GstMonthly() {
   );
 }
 
-export default GstMonthly;
+export default MonthFolders;

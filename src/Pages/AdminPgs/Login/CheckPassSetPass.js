@@ -46,7 +46,7 @@ const CheckPassSetPass = () => {
         const result = response.text()
 
         if (response.status === 200) {
-          await Swal.fire("OTP Sent.", "Password set successfully.", "success")
+          await Swal.fire("Success.", "Password set successfully.", "success")
           setuserData({
             password: "",
             cpassword: ""

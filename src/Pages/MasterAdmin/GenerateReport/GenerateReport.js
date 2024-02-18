@@ -1,69 +1,15 @@
 import * as XLSX from "xlsx";
 import { url_ } from "../../../Config";
+import React from "react";
 
-function GenerateReport({ reportGenRef, salmanagerpan }) {
+function GenerateReport({ reportGenRef}) {
   const storedToken = window.localStorage.getItem("jwtToken");
 
-  // const jsonData=
+   // Forward the ref to a component instance or a DOM element
+   React.useImperativeHandle(reportGenRef, () => ({
+    fetchRecord,
+  }));
 
-  // {
-  //     "salesman_manager_distributor_ca": [
-  //         {
-  //             "regId": 3,
-  //             "name": "Ranveer abc ",
-  //             "datebirth": "1999-10-03",
-  //             "membership_No": "112233",
-  //             "profession": "Other",
-  //             "pan": "XXXXZ111Z",
-  //             "telephone": "78451236998",
-  //             "mobile": "7845269315",
-  //             "email": "veerpatil1@gmail.com.com",
-  //             "office_Address": "Pune",
-  //             "pin_code": "416001",
-  //             "state": "Maharashtra",
-  //             "whatsApp_Link": "Http/My",
-  //         }
-  //     ],
-  //     "salesman_manager_ca": [
-  //         {
-  //             "regId": 2,
-  //             "name": "Ranveer Jadhav 07",
-  //             "datebirth": "1999-10-03",
-  //             "membership_No": "112233",
-  //             "profession": "Other",
-  //             "pan": "XXXXZ111Z",
-  //             "telephone": "78451236998",
-  //             "mobile": "7845269315",
-  //             "email": "veerpatil1@gmail.com.com",
-  //             "office_Address": "Pune",
-  //             "pin_code": "416001",
-  //             "state": "Maharashtra",
-  //             "whatsApp_Link": "Http/My",
-  //         }
-
-  //     ],
-  //     "saleas_manager_all_incentive_records": [],
-  //     "saleas_manager_all_target_peryear": [],
-  //     "sales_manager": {
-  //         "id": 1,
-  //         "salesmanid": 1,
-  //         "name": "John Doe",
-  //         "datebirth": "1990-01-01",
-  //         "profession": "Sales",
-  //         "pan": "ABCDE1234F",
-  //         "telephone": "1234567890",
-  //         "mobile": "9876543210",
-  //         "email": "john.doe@example.com",
-  //         "address": "123 Main Street",
-  //         "pin_code": "123456",
-  //         "state": "Some State",
-  //         "whatsApp_Link": "https://whatsapp.com/johndoe",
-  //         "status": false,
-  //         "registrationdate": "2023-01-01",
-  //         "password": "123456"
-  //     },
-  //     "distributor":[]
-  // }
 
   const getLastRow = (worksheet) => {
     // Get the range of the worksheet
@@ -81,11 +27,11 @@ function GenerateReport({ reportGenRef, salmanagerpan }) {
     // return lastRow;
   };
 
-  const generateReport = (jsonData) => {
+  const generateReport = (jsonData,salmanagerpan) => {
     const workbook = XLSX.utils.book_new();
     let lastRow = 0;
     let sm_ca_list, sm_dm_ca_list;
-    let target_list, incentive_record;
+    let target_list, incentive_record,payment_record;
     const boldStyle = { font: { bold: true } };
     // ===================      SALE MANAGER DETAILS        ===========================================
 
@@ -208,31 +154,34 @@ function GenerateReport({ reportGenRef, salmanagerpan }) {
 
     const Incentivesheet = XLSX.utils.aoa_to_sheet(
       [["Target, Incentive and Payment record"]],
-      { origin: { r: 1, c: 4 } }
+      { origin: { r: 1, c: 4 } },
     );
     if (jsonData.saleas_manager_all_target_peryear.length > 0) {
-      const target_colNames = Object.keys(
-        jsonData.saleas_manager_all_target_peryear[0]
-      );
+      const targetobj=removeKeysFromObject(['id','salesmanid','pan'],jsonData.saleas_manager_all_target_peryear[0])
+
+      const target_colNames = Object.keys(targetobj);
       target_list = [
         ["Target Record"],
-        target_colNames,
+        ["Date","Year","Amount"],
         ...jsonData.saleas_manager_all_target_peryear.map((obj) =>
           target_colNames.map((key) => obj[key])
         ),
       ];
       XLSX.utils.sheet_add_aoa(Incentivesheet, target_list, {
-        origin: { r: 3, c: 2 },
+        origin: { r: 7, c: 2 },
       });
     }
 
     if (jsonData.saleas_manager_all_incentive_records.length > 0) {
-      const incentive_colNames = Object.keys(
-        jsonData.saleas_manager_all_incentive_records[0]
-      );
+      const incentiveObj=removeKeysFromObject(['id','salesmanid','pan','fixdate'],jsonData.saleas_manager_all_incentive_records[0])
+      XLSX.utils.sheet_add_aoa(Incentivesheet, [["Start Date",jsonData.saleas_manager_all_incentive_records[0].fixdate]], {
+        origin: { r: 3, c: 2 },
+      });
+
+      const incentive_colNames = Object.keys(incentiveObj);
       incentive_record = [
         ["Incentive Record"],
-        incentive_colNames,
+        ["Year","Target Amount","Qarter Start","Qarter End","Incentive Amount","Quaerter"],
         ...jsonData.saleas_manager_all_incentive_records.map((obj) =>
           incentive_colNames.map((key) => obj[key])
         ),
@@ -242,13 +191,28 @@ function GenerateReport({ reportGenRef, salmanagerpan }) {
       });
     }
 
-
-
-
+    if (jsonData.saleas_manager_total_paid_total_entry.length > 0) {
+      const paymentobj=removeKeysFromObject(['id','pan'],jsonData.saleas_manager_total_paid_total_entry[0])
+      const payment_colNames = Object.keys(paymentobj);
+      payment_record = [
+        ["Payment Record"],
+        ["Amount","Payment Date"],
+        ...jsonData.saleas_manager_total_paid_total_entry.map((obj) =>
+          payment_colNames.map((key) => obj[key])
+        )
+        
+      ];
+      XLSX.utils.sheet_add_aoa(Incentivesheet, payment_record, {
+        origin: { r: getLastRow(Incentivesheet) + 6, c: 2 },
+      });
+      XLSX.utils.sheet_add_aoa(Incentivesheet, [["Total Payment",jsonData.saleas_manager_total_paid.totalpaid]], {
+        origin: { r: getLastRow(Incentivesheet) + 2, c: 2 },
+      });
+    }
 
     XLSX.utils.book_append_sheet(workbook, Incentivesheet, "Incentive_Details");
 
-    XLSX.writeFile(workbook, "Sale_Manager_Report.xlsx");
+    XLSX.writeFile(workbook, `Sale_Manager_Report_${salmanagerpan}.xlsx`);
   };
 
   const removeKeysFromObject = ( keysToRemove,obj) => {
@@ -257,7 +221,8 @@ function GenerateReport({ reportGenRef, salmanagerpan }) {
     return newObj;
   };
 
-  const fetchRecord = async () => {
+  const fetchRecord = async (pan) => {
+    // console.log(pan)
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
@@ -268,82 +233,20 @@ function GenerateReport({ reportGenRef, salmanagerpan }) {
     };
 
     const response = await fetch(
-      `${url_}/all/disactivate/salesmanager/data/${salmanagerpan}`,
+      `${url_}/all/disactivate/salesmanager/data/${pan}`,
       requestOptions
     );
 
     if (response.status === 200) {
       const result = await response.json();
-    generateReport(result);
+    generateReport(result,pan);
 
     }
-    const jsonData = {
-      salesman_manager_distributor_ca: [
-        {
-          regId: 3,
-          name: "Ranveer abc ",
-          datebirth: "1999-10-03",
-          membership_No: "112233",
-          profession: "Other",
-          pan: "XXXXZ111Z",
-          telephone: "78451236998",
-          mobile: "7845269315",
-          email: "veerpatil1@gmail.com.com",
-          office_Address: "Pune",
-          pin_code: "416001",
-          state: "Maharashtra",
-          whatsApp_Link: "Http/My",
-        },
-      ],
-      salesman_manager_ca: [
-        {
-          regId: 2,
-          name: "Ranveer Jadhav 07",
-          datebirth: "1999-10-03",
-          membership_No: "112233",
-          profession: "Other",
-          pan: "XXXXZ111Z",
-          telephone: "78451236998",
-          mobile: "7845269315",
-          email: "veerpatil1@gmail.com.com",
-          office_Address: "Pune",
-          pin_code: "416001",
-          state: "Maharashtra",
-          whatsApp_Link: "Http/My",
-        },
-      ],
-      saleas_manager_all_incentive_records: [],
-      saleas_manager_all_target_peryear: [],
-      sales_manager: {
-        id: 1,
-        salesmanid: 1,
-        name: "John Doe",
-        datebirth: "1990-01-01",
-        profession: "Sales",
-        pan: "ABCDE1234F",
-        telephone: "1234567890",
-        mobile: "9876543210",
-        email: "john.doe@example.com",
-        address: "123 Main Street",
-        pin_code: "123456",
-        state: "Some State",
-        whatsApp_Link: "https://whatsapp.com/johndoe",
-        status: false,
-        registrationdate: "2023-01-01",
-        password: "123456",
-      },
-      distributor: [],
-    };
+    
   };
 
   return (
-    <div style={{ display: "none" }}>
-      <button
-        onClick={fetchRecord}
-        ref={reportGenRef}
-        style={{ display: "none" }}
-      ></button>
-    </div>
+    <></>
   );
 }
 export default GenerateReport;

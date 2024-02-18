@@ -25,7 +25,7 @@ const Loginpage = ({ setLoggedIn }) => {
   };
 
   useEffect(() => {
-    setLoggedIn('false')
+    setLoggedIn(false)
   }, [])
 
 
@@ -123,8 +123,8 @@ const Loginpage = ({ setLoggedIn }) => {
 
 
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
+
 
     const url = `${url_}/authenticate`;
 
@@ -167,7 +167,7 @@ const Loginpage = ({ setLoggedIn }) => {
 
 
         const sub_status = await checkSubscriptionStatus();
-        console.log(sub_status)
+        // console.log(sub_status)
         localStorage.setItem(`subscription_status`, sub_status);
         // await checkSubscriptionStatus();
         const subscription_status = localStorage.getItem(`subscription_status`)
@@ -254,22 +254,22 @@ const Loginpage = ({ setLoggedIn }) => {
             </div>
           </div>
           <div className={styles.main}>
-            <form onSubmit={handleLogin} autoComplete=''>
-              <div className={styles.form}>
-                {/* <div className={styles.user_id}>
+
+            <div className={styles.form}>
+              {/* <div className={styles.user_id}>
                   <InputField placeholder='Enter your PAN' onChange={handleChange} name='username' value={formdata.username} lblname='PAN' />
 
                 </div> */}
-                <div className={styles.user_pass}>
-                  <InputField placeholder='Enter your Password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
-                </div>
-
-                <div className={styles.btn_login}>
-                  <button type="submit">LOGIN</button>
-                </div>
-
+              <div className={styles.user_pass}>
+                <InputField placeholder='Enter your Password' onChange={handleChange} name='password' value={formdata.password} lblname='Password' type="password" />
               </div>
-            </form>
+
+              <div className={styles.btn_login}>
+                <button onClick={handleLogin}>LOGIN</button>
+              </div>
+
+            </div>
+
             <div className={styles.link}>
               <Link to="User_registration">New to TAXKO? Click Here</Link>
               <Link to="forgetpass">Forget Password</Link>

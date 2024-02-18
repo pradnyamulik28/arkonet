@@ -37,10 +37,10 @@ const DashBoard = () => {
   const [TotalGSTClients, setTotalGSTClients] = useState();
 
 
-  const [TotalclientPayment, setTotalclientPayment] = useState();
-  const [TotalclientpendingPayment, setTotalclientpendingPayment] = useState();
-  const [TotalClientsreceivedPayment, setTotalClientsreceivedPayment] = useState();
-  const [TotalClientsdiscountPayment, setTotalClientsdiscountPayment] = useState();
+  const [TotalclientPayment, setTotalclientPayment] = useState(0);
+  const [TotalclientpendingPayment, setTotalclientpendingPayment] = useState(0);
+  const [TotalClientsreceivedPayment, setTotalClientsreceivedPayment] = useState(0);
+  const [TotalClientsdiscountPayment, setTotalClientsdiscountPayment] = useState(0);
 
 
   const [filedata, setFiledata] = useState([]);
@@ -202,7 +202,7 @@ const DashBoard = () => {
 
           return yearA - yearB;
         });
-        // console.log(data.reverse())
+        console.log(data.reverse())
         setFiledata(data.reverse())
 
       })
@@ -232,8 +232,21 @@ const DashBoard = () => {
       })
     await fetch(`${url_}/getGSTDataBySubUserid?userid=${user_id}&subUserid=${sub_userid}`, requestOptions)
       .then((response) => response.json())
-      .then((data) => {
+      .then((result) => {
+        let data = [];
 
+        result["GSTR-1"].forEach((item, index) => {
+          data.push({
+            month: item.month,
+            GSTR1FD: item.filed,
+            GSTR1NFD: item.notfiled,
+            GSTR3BFD: result["GSTR-3B"][index].filed,
+            GSTR3BNFD: result["GSTR-3B"][index].notfiled,
+          });
+        });
+
+        // // console.log(data);
+        setgstdata(data)
         console.log(data);
       })
       .catch((error) => {
@@ -307,7 +320,7 @@ const DashBoard = () => {
 
       const response = await fetch(`${url_}/sumOFPaymentClientByUserid/${user_id}`, requestOptions);
       const result = await response.json();
-      // console.log(result);
+      console.log(result);
 
       setTotalclientPayment(result.totalPayment.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
       setTotalClientsreceivedPayment(result.receivedPayment.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 0 }))
@@ -602,8 +615,8 @@ const DashBoard = () => {
                 </div>
                 <div className={`col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 ${styles.content}`} >
                   <div className={`col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ${styles.centrecoloum}`}>
-                      <p className='h4'>{Sub_category !== "Sub User" ? username : localStorage.getItem("name")}</p>
-                      <p className='h5'>{Sub_category !== "Sub User" ? userpan : localStorage.getItem("Sub_user_pan")}</p>
+                    <p className='h4'>{Sub_category !== "Sub User" ? username : localStorage.getItem("name")}</p>
+                    <p className='h5'>{Sub_category !== "Sub User" ? userpan : localStorage.getItem("Sub_user_pan")}</p>
                   </div>
                   <div className={`col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ${styles.centrecoloum}`}>
                     {Sub_category !== "Sub User" ? (

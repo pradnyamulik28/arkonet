@@ -1,0 +1,75 @@
+.backlink a {
+  color: black;
+  font-weight: bold;
+  margin: 1.5rem;
+  font-size: 1rem;
+
+}
+
+.backlink {
+  margin: 0.5rem 0 1rem 0;
+  position: relative;
+  right: 0.5em;
+}
+
+.ClientNoti_Main_body {
+  width: 100%;
+  /* border: 1px solid black; */
+  height: 85vh;
+  overflow-y: scroll;
+}
+
+.ClientNoti_N_Lists {
+  height: 5.6rem;
+  /* border: 1px solid black; */
+  margin: 10px 5px;
+  /* background-color: #ffe35c; */
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+
+}
+
+.ClientNoti_N_Lists_A {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ClientNoti_N_Lists_A img {
+  width: 67px;
+}
+
+.ClientNoti_N_Lists_B {
+  width: 80%;
+}
+
+.ClientNoti_N_Lists hr {
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+.ClientNoti_N_Lists_B div {
+  font-size: smaller;
+  font-weight: 600;
+}
+
+.ClientNoti_N_Lists small {
+  width: 100%;
+  display: block;
+  text-align: end;
+  font-weight: 700;
+}
+
+.Client_image_container {
+  display: flex;
+  justify-content: center;
+}
+
+.Client_image_container img {
+  width: 60%;
+}

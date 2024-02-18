@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 
 
 
-const CheckPan = ({setLoggedIn}) => {
+const CheckPan = ({ setLoggedIn }) => {
   const Navigate = useNavigate();
 
   const storedToken = window.localStorage.getItem('jwtToken');

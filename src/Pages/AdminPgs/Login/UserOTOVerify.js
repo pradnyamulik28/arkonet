@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { url_ } from '../../../Config';
 import styles from './loginpage.module.css';
 import InputField from '../../../components/InputField/InputField'
@@ -8,7 +8,11 @@ import Swal from 'sweetalert2';
 
 
 
-const UserOTOVerify = () => {
+const UserOTOVerify = ({ setLoggedIn }) => {
+
+  useEffect(() => {
+    setLoggedIn(false)
+  }, [])
   const Navigate = useNavigate();
 
 
@@ -31,7 +35,7 @@ const UserOTOVerify = () => {
 
 
   const verifyOtp = async () => {
-    console.log(userData.otp);
+    // console.log(userData.otp);
 
 
     try {

@@ -1,0 +1,270 @@
+.maincontainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.pagetitle {
+  justify-content: center;
+}
+.pagetitle input{
+  width: fit-content;
+  max-width: 60px;
+  /* border: none; */
+}
+.blocktitle {
+  /* Create color gradient from #8E73C2 to #BEA9E1*/
+  background: linear-gradient(to right, #4eccc4, #61d9d1a8);
+  font-weight: bold;
+  height: 35px;
+  width: 100%;
+}
+
+.row {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 400px;
+  width: 100%;
+}
+
+
+.inputbox select:disabled,
+.inputbox input:disabled{
+  background-color: #e8ecef;
+}
+.details,
+.parbdetails {
+  padding: 5px;
+}
+.details table tr,
+.parbdetails table tr,
+.transacdetails table tr {
+  width: 100%;
+}
+
+.transacdetails {
+  flex-direction: column;
+}
+.transacdetails .docdetails {
+  width: 100%;
+  border: 1px solid #dee2e6;
+  margin-top: 5px;
+}
+.suplydiv {
+  align-items: flex-start;
+}
+
+.suplydiv span {
+  flex-direction: row;
+}
+
+.transacdetails input:not([type="radio"]),
+.transacdetails select {
+  min-width: 110px;
+  width: 110px;
+  max-width: 110px;
+}
+.doclabel {
+  width: 130px;
+}
+.translabel {
+  min-width: 130px;
+  max-width: 180px;
+}
+.suplabel {
+  font-weight: 500;
+  min-width: 120px;
+  width: 120px;
+  max-width: 120px;
+}
+
+.radiotype1 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.radiotype1 label {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+/* ========== Item table design================== */
+
+.productdetails {
+  width: 100%;
+  border: 1px solid #dee2e6;
+  padding: 5px;
+}
+.itemtable {
+  display: flex;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.itemtable tr td,
+.itemtable tr th {
+  min-width: 145px;
+  max-width: 100%;
+}
+.addelicon {
+  min-width: fit-content !important;
+}
+.addelicon i,
+.calender i {
+  cursor: pointer;
+}
+.itemtable.products {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.itemtable.products th {
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.itemtable tr {
+  overflow-x: scroll;
+}
+.itemtable td * {
+  width: 100%;
+}
+.itemtable td input,
+.itemtable td select {
+  border: 1px solid #dee2e6;
+}
+.itemtable td label {
+  height: 50px;
+}
+
+table td.lable {
+  width: 25%;
+}
+/* ========== Item table design================== */
+.blocktitle .lable {
+  /* margin-left: 1rem; */
+  padding: 5px;
+  width: 100%;
+}
+.inputbox {
+  width: 75%;
+}
+
+.mandatory::after {
+  content: " *";
+  color: red;
+  font-weight: bold;
+}
+.gstmandatory::after {
+  content: " *";
+  color: #347d34;
+  font-weight: bolder;
+}
+
+.inputbox input,
+.inputbox select,
+.inputbox label {
+  border: 1px solid #dee2e6;
+}
+.inputbox select {
+  width: 100%;
+}
+.pincode {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.pincode span {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+}
+
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #e8ecef;
+}
+.info {
+  background-color: #e8ecef;
+  width: 50px;
+  text-align: center;
+}
+.inputinfo {
+  border: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.inputinfo input {
+  border: none;
+  flex: 1;
+}
+
+.parbdetails {
+  width: 100%;
+}
+
+.parbdetails table {
+  background-color: #f8f9fb;
+  width: 100%;
+}
+.parbdetails table td {
+  width: 50%;
+}
+
+.calender {
+  background-color: #e8ecef;
+  width: 30px;
+  text-align: center;
+}
+.hide_datePicker{
+  display: none;
+}
+/* .inputcal {
+  margin-left: 5px;
+  border: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+} */
+.inputcal input {
+  background-color: #e8ecef;
+  border: none;
+  border-right: #c0c3c6;
+  width: 120px;
+  /* flex: 1; */
+}
+
+.buttons {
+  justify-content: center;
+  gap: 5px;
+}
+.buttons button {
+  min-width: 80px;
+  max-width: 100px;
+}
+
+@media (min-width: 700px) {
+  .translabel {
+    min-width: 130px;
+    width: fit-content;
+    max-width: 270px;
+  }
+}
+@media (max-width: 800px) {
+  .parbdetails table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

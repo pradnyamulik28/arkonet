@@ -19,26 +19,48 @@ const SubLoginRegister = (props) => {
 
   const [NumberofLogin, setNumberofLogin] = useState(null);
   const [AmountofLogin, setAmountofLogin] = useState(0);
-  // const [UserDays, setUserDays] = useState();
+  const [startDate, setStartDate] = useState("");
   const UserDays = props.DaysRemaining;
+  // const UserDays = 365;
 
   const handleNoChange = (e) => {
     const newNumber = e.target.value;
     setNumberofLogin(newNumber);
     // setUserDays(CalculateRemainingDays(End_Date))
-    const SingleDayforSUBLogin = 2.7 * UserDays
-    const PlanforSUBLogin = SingleDayforSUBLogin * newNumber
-    setAmountofLogin(PlanforSUBLogin)
 
+
+    const AmountToPay = 1000 / 365;
+    const totalAmountToPay = (Math.fround(AmountToPay) * UserDays)
+
+    // console.log(Math.fround(AmountToPay))
+    // console.log(Math.round(totalAmountToPay))
+
+
+
+    // const SingleDayforSUBLogin = 2.7 * UserDays
+    // const PlanforSUBLogin = SingleDayforSUBLogin * newNumber
+    setAmountofLogin(totalAmountToPay)
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+    const day = now.getDate().toString().padStart(2, '0');
+
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
+
+    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
+    setStartDate(formattedDate + '+00:00')
+    // console.log(formattedDate + '+00:00')
   };
 
 
 
 
 
-
   const handlePlaceOrder = async () => {
-
 
     try {
       var myHeaders = new Headers();
@@ -49,6 +71,7 @@ const SubLoginRegister = (props) => {
         "userid": user_id,
         "totalClients": NumberofLogin,
         "endDate": End_Date,
+        "startDate": startDate,
         "userpan": U_Pan
 
       });
@@ -136,15 +159,16 @@ const SubLoginRegister = (props) => {
             <div class="modal-footer">
               {NumberofLogin === null || NumberofLogin === '' ? (
                 <div className='mt-3 d-flex justify-content-center w-100'>
-                  <button className={`${style.buysublogin_btn} d-flex justify-content-center`} onClick={() => {
+                  <button className={`${style.buysublogin_btn} d - flex justify - content - center`} onClick={() => {
                     Swal.fire(
                       {
                         icon: "warning",
                         text: `Number of login can't be empty!!`
                       }
                     )
-                  }}><b>Place Order</b></button>
-                </div>
+
+                  }}> <b>Place Order</b></button >
+                </div >
               ) : (
 
                 <div className='mt-3 d-flex justify-content-center w-100'>
@@ -161,10 +185,10 @@ const SubLoginRegister = (props) => {
                   </PaymentGateway>
                 </div>
               )}
-            </div>
-          </div>
-        </div>
-      </div>
+            </div >
+          </div >
+        </div >
+      </div >
     </>
   );
 }
