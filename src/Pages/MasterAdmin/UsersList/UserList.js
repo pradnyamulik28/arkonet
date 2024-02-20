@@ -45,8 +45,8 @@ const UserList = () => {
                   userProf === "Tomorrow's Renewal" ? `${url_}/Renewal/tommarow` :
                     userProf === "Week's Renewal" ? `${url_}/Renewal/week` :
                       userProf === "Month's Renewal" ? `${url_}/Renewal/month` :
-                        userProf === "3 Months's Renewal" ? `${url_}/Renewal/threemonth` :
-                          userProf === "6 Months's Renewal" ? `${url_}/Renewal/sixmonth` :
+                        userProf === "Last Week Renewal" ? `${url_}/last_week/Renewal/week` :
+                          userProf === "Total Renewal" ? `${url_}/list/user/end/of/subscriptions` :
                             userProf === "Distributor List" ? `${url_}/all/distributor` :
                               userProf === "Sale Manager List" ? `${url_}/listofsalesmanager/formasteradmin` :
 

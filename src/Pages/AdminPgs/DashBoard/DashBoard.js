@@ -533,25 +533,22 @@ const DashBoard = () => {
 
   function getProfileImage() {
     try {
-
       fetch(`${url_}/getpaymentDetails/${user_id}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${storedToken}`
-        }
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${storedToken}`,
+        },
       })
-        .then(response => response.text())
-        .then(res => {
-          setImgContent(res.content)
-          // console.log(res)
-
+        .then((response) => response.json())
+        .then((res) => {
+          setImgContent(res.content);
         })
-        .catch(error => {
-          console.log(error)
+        .catch((error) => {
+          console.log(error);
         });
     } catch (error) {
-      console.warn("Error on function calling...")
+      console.warn("Error on function calling...");
     }
   }
 

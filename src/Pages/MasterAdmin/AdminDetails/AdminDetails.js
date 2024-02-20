@@ -372,12 +372,12 @@ function AdminDetails() {
                                     <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("Month's Renewal")} style={{ cursor: "pointer" }}><p className={`${style.pv} text-warning`}>{adminRenewal.Month}</p></div>
                                 </div>
                                 <div className={`${style.rbcol2}`}>
-                                    <div className={`${style.title}`}><p className={`${style.p}`}>3 Months</p></div>
-                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("3 Months's Renewal")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminRenewal.threeMonth}</p></div>
+                                    <div className={`${style.title}`}><p className={`${style.p}`}>Last week</p></div>
+                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("Last Week Renewal")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminRenewal.last_week}</p></div>
                                 </div>
                                 <div className={`${style.rbcol3}`}>
-                                    <div className={`${style.title}`}><p className={`${style.p}`}>6 Months</p></div>
-                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("6 Months's Renewal")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminRenewal.sixMonth}</p></div>
+                                    <div className={`${style.title}`}><p className={`${style.p}`}>Total</p></div>
+                                    <div className={`${style.value} d-flex justify-content-center`} onClick={() => GOTOuserList("Total Renewal")} style={{ cursor: "pointer" }}><p className={`${style.pv}`}>{adminRenewal.all_subscitption_over}</p></div>
                                 </div>
                             </div>
                         </div>

@@ -4,6 +4,7 @@ import GSTStateCode from "../../../ObjData/GSTStateCode.json"
 import Swal from 'sweetalert2';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { url_ } from '../../../Config';
+import InviteOnTaxko from '../InviteOnTaxko/InviteOnTaxko';
 
 
 function GSTRFiling(){
@@ -842,12 +843,12 @@ const [viewamendedinvoice,setviewamendedinvoice]=useState(false)
                         <button name='originalist_create' className="dropdown-item" type="button" onClick={(e)=>{createInvoice(e,invoice.invoiceid,"Create",invoice.id)}}>Create Invoice</button>
                         <button name='originalist_edit' className="dropdown-item" type="button" disabled={invoice.new||invoice.cancelled || invoice.amended} onClick={(e)=>{createInvoice(e,invoice.invoiceid,"Edit",invoice.id)}}>Edit Invoice</button>
                         <button name='originalist_amend' className="dropdown-item" type="button" disabled={invoice.new||invoice.cancelled || invoice.amended} onClick={(e)=>{createInvoice(e,invoice.invoiceid,"Amend",invoice.id)}}>Amend Invoice</button>
-                        <button name='originalist_view' className="dropdown-item" type="button" onClick={(e)=>{createInvoice(e,invoice.invoiceid,"View",invoice.id)}}>View Invoice</button>
-                        <button name='originalist_issuecred' className="dropdown-item" type="button">Issue Credit Note</button>
-                        <button name='originalist_cancel' className="dropdown-item" type="button" disabled={invoice.cancelled} onClick={(e)=>{changeCancelledStatus(e,invoice.invoiceid,invoice.id)}}>Mark Cancelled</button>
+                        <button name='originalist_view' className="dropdown-item" type="button" disabled={invoice.new} onClick={(e)=>{createInvoice(e,invoice.invoiceid,"View",invoice.id)}}>View Invoice</button>
+                        <button name='originalist_issuecred' className="dropdown-item" type="button" disabled={invoice.new}>Issue Credit Note</button>
+                        <button name='originalist_cancel' className="dropdown-item" type="button" disabled={invoice.cancelled || invoice.new} onClick={(e)=>{changeCancelledStatus(e,invoice.invoiceid,invoice.id)}}>Mark Cancelled</button>
                         <button name='originalist_rcm' className="dropdown-item" type="button">RCM</button>
                         <button name='originalist_property' className="dropdown-item" type="button">Properties</button>
-                        <button name='originalist_invite' className="dropdown-item" type="button">Invite on TAXKO</button>
+                        <button name='originalist_invite' className="dropdown-item" type="button" data-toggle="modal" data-target="#inviteontaxko">Invite on TAXKO</button>
                     </div>
                 </td>
             </tr>
@@ -885,12 +886,12 @@ const [viewamendedinvoice,setviewamendedinvoice]=useState(false)
                         <button name='amendlist_create' className="dropdown-item" type="button" onClick={(e)=>{createInvoice(e,invoice.invoiceid,"Create",invoice.id)}}>Create Invoice</button>
                         <button name='amendlist_edit' className="dropdown-item" type="button" disabled={invoice.new||invoice.cancelled || invoice.amended} onClick={(e)=>{createInvoice(e,invoice.invoiceid,"Edit",invoice.id)}}>Edit Invoice</button>
                         <button name='amendlist_amend' className="dropdown-item" type="button" disabled={invoice.new||invoice.cancelled || invoice.amended} onClick={(e)=>{createInvoice(e,invoice.invoiceid,"Amend",invoice.id)}}>Amend Invoice</button>
-                        <button name='amendlist_view' className="dropdown-item" type="button" onClick={(e)=>{createInvoice(e,invoice.invoiceid,"View",invoice.id)}}>View Invoice</button>
+                        <button name='amendlist_view' className="dropdown-item" type="button"  onClick={(e)=>{createInvoice(e,invoice.invoiceid,"View",invoice.id)}}>View Invoice</button>
                         <button name='amendlist_issuecred' className="dropdown-item" type="button">Issue Credit Note</button>
                         <button name='amendlist_cancel' className="dropdown-item" type="button" disabled={invoice.cancelled} onClick={(e)=>{changeCancelledStatus(e,invoice.invoiceid,invoice.id)}}>Mark Cancelled</button>
                         <button name='amendlist_rcm' className="dropdown-item" type="button">RCM</button>
                         <button name='amendlist_property' className="dropdown-item" type="button">Properties</button>
-                        <button name='amendlist_invite' className="dropdown-item" type="button">Invite on TAXKO</button>
+                        <button name='amendlist_invite' className="dropdown-item" type="button" data-toggle="modal" data-target="#inviteontaxko">Invite on TAXKO</button>
                     </div>
                 </td>
             </tr>
@@ -921,6 +922,7 @@ const [viewamendedinvoice,setviewamendedinvoice]=useState(false)
         </div>    
         <p className={style.p} onClick={(e)=>{setviewamendedinvoice(!viewamendedinvoice)}}>View {!viewamendedinvoice&&"Amended"} invoices</p>
         <p>HSN wise summary of outward invoices are auto gathered from create invoice option</p>
+        <InviteOnTaxko />
     </div>
     );
 }

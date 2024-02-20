@@ -41,7 +41,7 @@ function CreateInvoice(){
     
         documenttype:"Tax Invoice",	
     
-        documentno:"",	
+        documentno:useLocation().state.invoiceid,	
     
         documentdate:"",	
     
@@ -291,6 +291,16 @@ function CreateInvoice(){
         
         
         switch(name){
+            case "documenttype":
+                
+                if(value==="Tax Invoice"){
+                    setinvoice_fields({...invoice_fields,documentno:invoiceid,[name]:value})
+                }
+                else{
+                    setinvoice_fields({...invoice_fields,[name]:value})
+                }
+                
+                break;
             case "subtype":
                 
                 setinvoice_fields({...invoice_fields,[name]:value,deemexport:value==="Export" ? true : false,sez:value==="SEZ"?true:false})
@@ -439,6 +449,7 @@ function CreateInvoice(){
         
         
         invoice_fields.invoiceImport=true;
+        invoice_fields.rate=null;
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -557,17 +568,6 @@ function CreateInvoice(){
     }
 
     
-
-    const handleDateChange = (date) => {
-        const options = { 
-            day: '2-digit', 
-            month: '2-digit', 
-            year: 'numeric' 
-          };
-          
-          
-        setinvoice_fields({...invoice_fields,part_b_Transper_doc_no_date:date.toLocaleDateString('en-GB',options)});
-      };
 
 
       useEffect(()=>{
@@ -700,7 +700,7 @@ function CreateInvoice(){
         <div className={`${style.maincontainer}`}>
             <div className={`${style.row} ${style.pagetitle} flex-column`}>
                 <h4 className="text-center">{option} Invoice </h4>
-                <span>Invoice No :<input name="invoiceid" className="fit-content-input" onChange={handleChange} onBlur={handleBlur} value={invoice_fields.invoiceid} disabled={option==="Amend"||option==="Edit"}/></span>
+                <span>Invoice No :<input name="invoiceid" className="fit-content-input" onChange={handleChange} onBlur={handleBlur} value={invoice_fields.invoiceid} disabled={option==="Amend"||option==="Edit"||option==="View"}/></span>
                  
             </div>
             <div className={`${style.row}`}>
@@ -784,7 +784,7 @@ function CreateInvoice(){
                                 
                                 <span className="w-50">
                                     <label className={`${style.doclabel} ${style.mandatory}`}>Document No</label>
-                                    <input name="documentno" value={invoice_fields.documentno}  onChange={handleChange}/>
+                                    <input name="documentno" value={invoice_fields.documentno}  onChange={handleChange} disabled={invoice_fields.documenttype==="Tax Invoice"?true:false}/>
                                 </span>
                             </div>
 
@@ -1001,8 +1001,6 @@ function CreateInvoice(){
                     </div>
                 </div>
             </div>
-
-
 
 {/* ================        PRODUCT ITEM DETAILS        ================================== */}
 

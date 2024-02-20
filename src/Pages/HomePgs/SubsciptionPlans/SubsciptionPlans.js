@@ -106,9 +106,8 @@ function SubsciptionPlans() {
                       <div className={style.price_section}>
                         <div className={style.price_area}>
                           <div className={style.inner_area}>
-                            <span className={style.text}>₹</span>
                             <span className={style.price}>
-                              {item.subscriptionprice}
+                            ₹&nbsp;{item.subscriptionprice}
                             </span>
                           </div>
                         </div>
@@ -122,7 +121,7 @@ function SubsciptionPlans() {
                         </li>
                         <li>
                           <span className={style.list_name}>
-                            Client Access {item.accesscliet}
+                            Total Client Access {item.accesscliet}
                           </span>
                         </li>
                       </div>
